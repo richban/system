@@ -13,6 +13,9 @@ dotfiles:
   f_bash_profile:
     dst: ~/.bash_profile
     src: bash_profile
+  f_gitconfig:
+    dst: ~/.gitconfig
+    src: gitconfig
   f_init.toml:
     dst: ~/.SpaceVim.d/init.toml
     src: SpaceVim.d/init.toml
@@ -29,6 +32,9 @@ dotfiles:
     dst: ~/.zshrc
     src: zshrc
 profiles:
+  Richards-MacBook-Pro-2.local:
+    dotfiles:
+    - f_gitconfig
   richban-macbooks:
     dotfiles:
     - f_init.toml
