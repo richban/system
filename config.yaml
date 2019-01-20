@@ -10,10 +10,29 @@ config:
   showdiff: false
   workdir: ~/.config/dotdrop
 dotfiles:
+  f_bash_profile:
+    dst: ~/.bash_profile
+    src: bash_profile
+  f_init.toml:
+    dst: ~/.SpaceVim.d/init.toml
+    src: SpaceVim.d/init.toml
+  f_tmux.conf:
+    dst: ~/.tmux.conf
+    src: tmux.conf
   f_tmuxinator.zsh:
     dst: ~/tmuxinator.zsh
     src: tmuxinator.zsh
+  f_zshenv:
+    dst: ~/.zshenv
+    src: zshenv
+  f_zshrc:
+    dst: ~/.zshrc
+    src: zshrc
 profiles:
-  Richban-macbook:
+  richban-macbooks:
     dotfiles:
-    - f_tmuxinator.zsh
+    - f_init.toml
+    - f_tmux.conf
+    - f_zshrc
+    - f_zshenv
+    - f_bash_profile

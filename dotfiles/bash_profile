@@ -1,0 +1,36 @@
+echo .bash_profile
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Aliases
+alias vrep="$HOME/Developer/vrep-edu/vrep.app/Contents/MacOS/vrep"
+
+# mux project aliases
+alias omni='mux s omnicar -n omnicar'
+alias tachikoma='mux s tachikoma -n tachikoma'
+
+# VirtualEnvWrapper
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export WORKON_HOME=~/Developer/envs/
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Tell pyenv-virtualenvwrapper to use pyenv when creating new Python environments
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+
+# Spark PATH
+export PATH=$PATH:/usr/local/spark/bin
+
+# Export Python
+# export PATH="/Users/developer2/Library/Python/2.7/bin:$PATH"
+export PYTHON3_HOST_PROG="/usr/local/bin/python3:$PYTHON3_HOST_PROG"
+
+# source tmuxinator to manages sessions
+source ~/tmuxinator.bash
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f $HOME/Developer/google-cloud-sdk/path.bash.inc ]; then source $HOME/Developer/google-cloud-sdk/path.bash.inc; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f $HOME/Developer/google-cloud-sdk/completion.bash.inc ]; then source $HOME/Developer/google-cloud-sdk/completion.bash.inc; fi
