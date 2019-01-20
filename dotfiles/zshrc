@@ -105,3 +105,6 @@ alias ohmyzsh="mate ~/.oh-my-zsh"
 # Set Spaceship ZSH as a prompt
 # autoload -U promptinit; promptinit
 # prompt spaceship
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bashv

@@ -32,9 +32,6 @@ dotfiles:
     dst: ~/.zshrc
     src: zshrc
 profiles:
-  Richards-MacBook-Pro-2.local:
-    dotfiles:
-    - f_gitconfig
   richban-macbooks:
     dotfiles:
     - f_init.toml
