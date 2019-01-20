@@ -10,9 +10,18 @@ config:
   showdiff: false
   workdir: ~/.config/dotdrop
 dotfiles:
+  f_alias:
+    dst: ~/.alias
+    src: alias
   f_bash_profile:
     dst: ~/.bash_profile
     src: bash_profile
+  f_env:
+    dst: ~/.env
+    src: env
+  f_functions:
+    dst: ~/.functions
+    src: functions
   f_gitconfig:
     dst: ~/.gitconfig
     src: gitconfig
@@ -32,10 +41,13 @@ dotfiles:
     dst: ~/.zshrc
     src: zshrc
 profiles:
-  richban-macbooks:
+  richban-macbook:
     dotfiles:
     - f_init.toml
     - f_tmux.conf
     - f_zshrc
     - f_zshenv
     - f_bash_profile
+    - f_env
+    - f_alias
+    - f_functions
