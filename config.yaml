@@ -1,0 +1,19 @@
+config:
+  backup: true
+  banner: true
+  create: true
+  dotpath: dotfiles
+  ignoreempty: false
+  keepdot: false
+  link_by_default: false
+  longkey: false
+  showdiff: false
+  workdir: ~/.config/dotdrop
+dotfiles:
+  f_tmuxinator.zsh:
+    dst: ~/tmuxinator.zsh
+    src: tmuxinator.zsh
+profiles:
+  Richban-macbook:
+    dotfiles:
+    - f_tmuxinator.zsh
