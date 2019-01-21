@@ -34,6 +34,9 @@ dotfiles:
   f_tmuxinator.zsh:
     dst: ~/tmuxinator.zsh
     src: tmuxinator.zsh
+  f_tool-versions:
+    dst: ~/.tool-versions
+    src: tool-versions
   f_zshenv:
     dst: ~/.zshenv
     src: zshenv
@@ -51,3 +54,4 @@ profiles:
     - f_env
     - f_alias
     - f_functions
+    - f_tool-versions
