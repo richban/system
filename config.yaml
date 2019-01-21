@@ -31,6 +31,9 @@ dotfiles:
   f_tmux.conf:
     dst: ~/.tmux.conf
     src: tmux.conf
+  f_tmux.conf.local:
+    dst: ~/.tmux.conf.local
+    src: tmux.conf.local
   f_tmuxinator.zsh:
     dst: ~/tmuxinator.zsh
     src: tmuxinator.zsh
@@ -55,3 +58,4 @@ profiles:
     - f_alias
     - f_functions
     - f_tool-versions
+    - f_tmux.conf.local
