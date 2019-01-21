@@ -28,6 +28,9 @@ dotfiles:
   f_init.toml:
     dst: ~/.SpaceVim.d/init.toml
     src: SpaceVim.d/init.toml
+  f_matplotlibrc:
+    dst: ~/.matplotlib/matplotlibrc
+    src: matplotlib/matplotlibrc
   f_tmux.conf:
     dst: ~/.tmux.conf
     src: tmux.conf
@@ -59,3 +62,4 @@ profiles:
     - f_functions
     - f_tool-versions
     - f_tmux.conf.local
+    - f_matplotlibrc
