@@ -146,3 +146,6 @@ alias td="todo.sh"
 alias tda="todo.sh add"
 alias tdl="todo.sh list"
 alias tdd="todo.sh do"
+
+# dotdrop
+alias dotdrop="$HOME/Developer/dotfiles/dotdrop.sh --cfg=$HOME/Developer/dotfiles/config.yaml"
