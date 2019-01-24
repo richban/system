@@ -31,6 +31,9 @@ dotfiles:
   f_matplotlibrc:
     dst: ~/.matplotlib/matplotlibrc
     src: matplotlib/matplotlibrc
+  f_richban.zsh-theme:
+    dst: ~/.oh-my-zsh/custom/themes/richban.zsh-theme
+    src: oh-my-zsh/custom/themes/richban.zsh-theme
   f_tmux.conf:
     dst: ~/.tmux.conf
     src: tmux.conf
@@ -63,3 +66,4 @@ profiles:
     - f_tool-versions
     - f_tmux.conf.local
     - f_matplotlibrc
+    - f_richban.zsh-theme
