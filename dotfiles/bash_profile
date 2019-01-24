@@ -1,5 +1,5 @@
-echo .bash_profile
 
 if [ -f ~/.env ]; then . ~/.env; fi
 if [ -f ~/.alias ]; then . ~/.alias; fi
 if [ -f ~/.functions ]; then . ~/.functions; fi
+
