@@ -67,3 +67,4 @@ profiles:
     - f_tmux.conf.local
     - f_matplotlibrc
     - f_richban.zsh-theme
+    - f_gitconfig
