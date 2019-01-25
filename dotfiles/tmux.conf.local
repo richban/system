@@ -71,7 +71,7 @@ set -g status-fg colour15
 set -g status-attr dim
 
 # status bar right
-set -g status-right-length 20
+set -g status-right-length 60
 set -g status-right "#[fg=colour9] [#H] #[default]"
 
 # status bar left
