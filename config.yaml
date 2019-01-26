@@ -34,6 +34,9 @@ dotfiles:
   f_richban.zsh-theme:
     dst: ~/.oh-my-zsh/custom/themes/richban.zsh-theme
     src: oh-my-zsh/custom/themes/richban.zsh-theme
+  f_settings.json:
+    dst: ~/.vscode/settings.json
+    src: vscode/settings.json
   f_tmux.conf:
     dst: ~/.tmux.conf
     src: tmux.conf
@@ -68,3 +71,4 @@ profiles:
     - f_matplotlibrc
     - f_richban.zsh-theme
     - f_gitconfig
+    - f_settings.json
