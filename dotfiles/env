@@ -26,8 +26,25 @@ if [ -f $HOME/Developer/google-cloud-sdk/path.bash.inc ]; then source $HOME/Deve
 # The next line enables shell command completion for gcloud.
 if [ -f $HOME/Developer/google-cloud-sdk/completion.bash.inc ]; then source $HOME/Developer/google-cloud-sdk/completion.bash.inc; fi
 
+# ssh
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
 # Mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+export LDFLAGS=-L/usr/local/Cellar/libffi/3.2.1/lib
+export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig
+export MY_SESSION_BUS_SOCKET=/tmp/dbus/unix_richban_listener
+export PATH="/usr/local/opt/qt/bin:$PATH"
+export EDITOR="vim"
+
+# GoLang
+export GOPATH="${HOME}/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+# SML/NJ
+export PATH="$PATH:/usr/local/smlnj/bin"
 
 #####################################################
 #
