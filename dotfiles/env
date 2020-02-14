@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+#####################################################
+#
+#                   Environmenet Variables
+#
+#####################################################
+
+# ssh
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+#####################################################
+#
+#                   MacOS Specific
+#
+#####################################################
+{%@@ if profile == "richban-macbook" @@%}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -10,8 +26,14 @@ if [ -f $HOME/Developer/google-cloud-sdk/path.bash.inc ]; then source $HOME/Deve
 # The next line enables shell command completion for gcloud.
 if [ -f $HOME/Developer/google-cloud-sdk/completion.bash.inc ]; then source $HOME/Developer/google-cloud-sdk/completion.bash.inc; fi
 
-# ssh
-export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 # Mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+#####################################################
+#
+#                   Linux Specific
+#
+#####################################################
+{%@@ elif profile == "richban-ubuntu" @@%}
+
+{%@@ endif @@%}

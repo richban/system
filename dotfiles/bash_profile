@@ -1,5 +1,11 @@
+#!/bin/sh
+
+#####################################################
+#
+#                   Apply all configurations
+#
+#####################################################
 
 if [ -f ~/.env ]; then . ~/.env; fi
 if [ -f ~/.alias ]; then . ~/.alias; fi
 if [ -f ~/.functions ]; then . ~/.functions; fi
-

@@ -77,3 +77,18 @@ profiles:
     - f_gitconfig
     - f_settings.json
     - f_ghostwheel.zsh-theme
+  richban-ubuntu:
+    dotfiles:
+    - f_init.toml
+    - f_tmux.conf
+    - f_zshrc
+    - f_zshenv
+    - f_bash_profile
+    - f_env
+    - f_alias
+    - f_functions
+    - f_tool-versions
+    - f_tmux.conf.local
+    - f_matplotlibrc
+    - f_richban.zsh-theme
+    - f_gitconfig
