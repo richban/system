@@ -6,13 +6,17 @@
 # License: GPLv3
 # =============================================================================
 
+# Enable colorscheme layer
+[[layers]]
+  name = 'colorscheme'
+
 # All SpaceVim option below [option] section
 [options]
 # set spacevim theme. by default colorscheme layer is not loaded,
 # if you want to use more colorscheme, please load the colorscheme
 # layer
-colorscheme = "onedark"
-background = "dark"
+  colorscheme = "OceanicNext"
+  colorscheme_bg = "dark"
 # Disable guicolors in basic mode, many terminal do not support 24bit
 # true colors
 enable_guicolors = true
@@ -33,10 +37,6 @@ filemanager = "nerdtree"
 [[layers]]
   name = "lang#latex"
 
-# Enable colorscheme layer
-[[layers]]
-  name = 'colorscheme'
-
 [[layers]]
   name = 'VersionControl'
 
@@ -44,6 +44,9 @@ filemanager = "nerdtree"
   name = "lang#javascript"
   auto_fix = true
   enable_flow_syntax = true
+
+[[layers]]
+  name = "lang#go"
 
 [[layers]]
   name = "lang#typescript"
@@ -65,7 +68,7 @@ filemanager = "nerdtree"
 
 # Custom plugins
 [[custom_plugins]]
-  name = 'tpope/vim-obsession'
+  name = 'mhartington/oceanic-next'
+  merged = 0
   name = 'christoomey/vim-tmux-navigator'
-  name = 'liuchengxu/space-vim-dark'
   merged = 0

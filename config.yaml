@@ -5,10 +5,11 @@ config:
   dotpath: dotfiles
   ignoreempty: false
   keepdot: false
-  link_by_default: false
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
+  link_on_import: nolink
+  minversion: 0.31.0
 dotfiles:
   f_alias:
     dst: ~/.alias
@@ -55,6 +56,9 @@ dotfiles:
   f_zshrc:
     dst: ~/.zshrc
     src: zshrc
+  f_ghostwheel.zsh-theme:
+    src: oh-my-zsh/custom/themes/ghostwheel.zsh-theme
+    dst: ~/.oh-my-zsh/custom/themes/ghostwheel.zsh-theme
 profiles:
   richban-macbook:
     dotfiles:
@@ -72,3 +76,4 @@ profiles:
     - f_richban.zsh-theme
     - f_gitconfig
     - f_settings.json
+    - f_ghostwheel.zsh-theme

@@ -139,13 +139,16 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
-# Vrep
-alias vrep="$HOME/Developer/vrep-edu/vrep.app/Contents/MacOS/vrep"
-
 alias td="todo.sh"
 alias tda="todo.sh add"
 alias tdl="todo.sh list"
 alias tdd="todo.sh do"
 
 # dotdrop
-alias dotdrop="$HOME/Developer/dotfiles/dotdrop.sh --cfg=$HOME/Developer/dotfiles/config.yaml"
+alias dotdrop="$HOME/.dotfiles/dotdrop.sh --cfg=$HOME/.dotfiles/config.yaml"
+
+# tmuxinator
+alias mux="tmuxinator"
+
+# pdflatex.sj
+alias compilelatex="$HOME/Developer/pdflatex.sh/lualatex.sh"
