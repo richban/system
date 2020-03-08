@@ -59,6 +59,9 @@ dotfiles:
   f_ghostwheel.zsh-theme:
     src: oh-my-zsh/custom/themes/ghostwheel.zsh-theme
     dst: ~/.oh-my-zsh/custom/themes/ghostwheel.zsh-theme
+  f_iterm-profile.json:
+    src: iterm-profile.json
+    dst: ~/.iterm-profile.json
 profiles:
   richban-macbook:
     dotfiles:
@@ -77,6 +80,7 @@ profiles:
     - f_gitconfig
     - f_settings.json
     - f_ghostwheel.zsh-theme
+    - f_iterm-profile.json
   richban-ubuntu:
     dotfiles:
     - f_init.toml
