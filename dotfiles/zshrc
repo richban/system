@@ -15,7 +15,10 @@ fi
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-source $ZSH/custom/themes/ghostwheel.zsh-theme
+# source $ZSH/custom/themes/ghostwheel.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -119,4 +122,3 @@ bindkey -v
 source ~/.bash_profile
 
 source /Users/rbanyi/Library/Preferences/org.dystroy.broot/launcher/bash/br
-

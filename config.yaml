@@ -88,6 +88,9 @@ dotfiles:
   f_yank.sh:
     src: yank.sh
     dst: ~/yank.sh
+  f_p10k.zsh:
+    src: p10k.zsh
+    dst: ~/.p10k.zsh
 profiles:
   richban-macbook:
     dotfiles:
@@ -115,6 +118,7 @@ profiles:
     - f_yabairc
 
     - f_yank.sh
+    - f_p10k.zsh
   richban-ubuntu:
     dotfiles:
     - f_init.toml
