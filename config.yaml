@@ -6,10 +6,18 @@ config:
   ignoreempty: false
   keepdot: false
   longkey: false
-  showdiff: false
+  showdiff: true 
   workdir: ~/.config/dotdrop
   link_on_import: nolink
   minversion: 0.31.0
+
+actions:
+  pre:
+    spacevim-install: curl -sLf https://spacevim.org/install.sh | bash
+
+dynvariables:
+  os_name: uname
+
 dotfiles:
   f_alias:
     dst: ~/.alias
@@ -62,6 +70,25 @@ dotfiles:
   f_iterm-profile.json:
     src: iterm-profile.json
     dst: ~/.iterm-profile.json
+  f_bashrc:
+    src: bashrc
+    dst: ~/.bashrc
+  f_init.lua:
+    src: hammerspoon/init.lua
+    dst: ~/.hammerspoon/init.lua
+  f_shortcuts.lua:
+    src: hammerspoon/shortcuts.lua
+    dst: ~/.hammerspoon/shortcuts.lua
+  f_utils.lua:
+    src: hammerspoon/utils.lua
+    dst: ~/.hammerspoon/utils.lua
+  f_skhdrc:
+    src: skhdrc
+    dst: ~/.skhdrc
+  f_yabairc:
+    src: yabairc
+    dst: ~/.yabairc
+
 profiles:
   richban-macbook:
     dotfiles:
@@ -81,6 +108,13 @@ profiles:
     - f_settings.json
     - f_ghostwheel.zsh-theme
     - f_iterm-profile.json
+    - f_bashrc
+    - f_init.lua
+    - f_shortcuts.lua
+    - f_utils.lua
+    - f_skhdrc
+    - f_yabairc
+
   richban-ubuntu:
     dotfiles:
     - f_init.toml
@@ -96,6 +130,7 @@ profiles:
     - f_matplotlibrc
     - f_richban.zsh-theme
     - f_gitconfig
+
   debian:
     dotfiles:
     - f_init.toml
@@ -108,3 +143,11 @@ profiles:
     - f_alias
     - f_functions
     - f_ghostwheel.zsh-theme
+
+  # Installs Spacevim and dotfiles
+  spacevim:
+    dotfiles:
+      - f_init.toml
+    actions:
+      - spacevim-install
+
