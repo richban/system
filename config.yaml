@@ -6,18 +6,15 @@ config:
   ignoreempty: false
   keepdot: false
   longkey: false
-  showdiff: true 
+  showdiff: true
   workdir: ~/.config/dotdrop
   link_on_import: nolink
   minversion: 0.31.0
-
 actions:
   pre:
     spacevim-install: curl -sLf https://spacevim.org/install.sh | bash
-
 dynvariables:
   os_name: uname
-
 dotfiles:
   f_alias:
     dst: ~/.alias
@@ -88,7 +85,9 @@ dotfiles:
   f_yabairc:
     src: yabairc
     dst: ~/.yabairc
-
+  f_yank.sh:
+    src: yank.sh
+    dst: ~/yank.sh
 profiles:
   richban-macbook:
     dotfiles:
@@ -115,6 +114,7 @@ profiles:
     - f_skhdrc
     - f_yabairc
 
+    - f_yank.sh
   richban-ubuntu:
     dotfiles:
     - f_init.toml
@@ -147,7 +147,7 @@ profiles:
   # Installs Spacevim and dotfiles
   spacevim:
     dotfiles:
-      - f_init.toml
+    - f_init.toml
     actions:
-      - spacevim-install
+    - spacevim-install
 
