@@ -88,11 +88,11 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -106,6 +106,9 @@ export LC_ALL=en_US.UTF-8
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# enable vim mode
+bindkey -v
+
 # Set Spaceship ZSH as a prompt
 # autoload -U promptinit; promptinit
 # prompt spaceship
@@ -115,4 +118,5 @@ alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source ~/.bash_profile
 
-source /Users/richban/Library/Preferences/org.dystroy.broot/launcher/bash/br
+source /Users/rbanyi/Library/Preferences/org.dystroy.broot/launcher/bash/br
+
