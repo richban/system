@@ -17,30 +17,6 @@ echo -e "\e[1;40m" ; clear ; while :; do echo $LINES $COLUMNS $(( $RANDOM % $COL
 function matrix2() {
 echo -e "\e[1;40m" ; clear ; characters=$( jot -c 94 33 | tr -d '\n' ) ; while :; do echo $LINES $COLUMNS $(( $RANDOM % $COLUMNS)) $(( $RANDOM % 72 )) $characters ;sleep 0.05; done|gawk '{ letters=$5; c=$4; letter=substr(letters,c,1);a[$3]=0;for (x in a) {o=a[x];a[x]=a[x]+1; printf "\033[%s;%sH\033[2;32m%s",o,x,letter; printf "\033[%s;%sH\033[1;37m%s\033[0;0H",a[x],x,letter;if (a[x] >= $1) { a[x]=0; } }}'
 }
-
-# Use Mac OS Preview to open a man page in a more handsome format
-function manp() {
-  man -t $1 | open -f -a /Applications/Preview.app
-}
-
-# Show normally hidden system and dotfile types of files
-# in Mac OS Finder
-function showhiddenfiles() {
-  defaults write com.apple.Finder AppleShowAllFiles YES
-  osascript -e 'tell application "Finder" to quit'
-  sleep 0.25
-  osascript -e 'tell application "Finder" to activate'
-}
-
-# Hide (back to defaults) normally hidden system and dotfile types of files
-# in Mac OS Finder
-function hidehiddenfiles() {
-  defaults write com.apple.Finder AppleShowAllFiles NO
-  osascript -e 'tell application "Finder" to quit'
-  sleep 0.25
-  osascript -e 'tell application "Finder" to activate'
-}
-
 ## hammer a service with curl for a given number of times
 ## usage: curlhammer $url
 function curlhammer () {
@@ -131,3 +107,36 @@ function fo() {
   IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
+
+#####################################################
+#
+#                   MacOS Specific
+#
+#####################################################
+{%@@ if os_name == 'Darwin' @@%}
+
+
+# Use Mac OS Preview to open a man page in a more handsome format
+function manp() {
+  man -t $1 | open -f -a /Applications/Preview.app
+}
+
+# Show normally hidden system and dotfile types of files
+# in Mac OS Finder
+function showhiddenfiles() {
+  defaults write com.apple.Finder AppleShowAllFiles YES
+  osascript -e 'tell application "Finder" to quit'
+  sleep 0.25
+  osascript -e 'tell application "Finder" to activate'
+}
+
+# Hide (back to defaults) normally hidden system and dotfile types of files
+# in Mac OS Finder
+function hidehiddenfiles() {
+  defaults write com.apple.Finder AppleShowAllFiles NO
+  osascript -e 'tell application "Finder" to quit'
+  sleep 0.25
+  osascript -e 'tell application "Finder" to activate'
+}
+
+{%@@ endif @@%}

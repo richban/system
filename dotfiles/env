@@ -6,11 +6,7 @@
 #
 #####################################################
 
-# ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# python
-
 
 #####################################################
 #
@@ -18,20 +14,14 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 #
 #####################################################
 
-export NVM_DIR="$HOME/.nvm"
+{%@@ if profile == 'richban-macbook' @@%}
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f $HOME/Developer/google-cloud-sdk/path.bash.inc ]; then source $HOME/Developer/google-cloud-sdk/path.bash.inc; fi
-
+if [ -f $HOME/Developer/google-cloud-sdk/path.zsh.inc ]; then source $HOME/Developer/google-cloud-sdk/path.zsh.inc; fi
 # The next line enables shell command completion for gcloud.
-if [ -f $HOME/Developer/google-cloud-sdk/completion.bash.inc ]; then source $HOME/Developer/google-cloud-sdk/completion.bash.inc; fi
+if [ -f $HOME/Developer/google-cloud-sdk/completion.zsh.inc ]; then source $HOME/Developer/google-cloud-sdk/completion.zsh.inc; fi
 
-# ssh
-export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Mysql
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-
+export NVM_DIR="$HOME/.nvm"
 export LDFLAGS=-L/usr/local/Cellar/libffi/3.2.1/lib
 export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig
 export MY_SESSION_BUS_SOCKET=/tmp/dbus/unix_richban_listener
@@ -46,6 +36,7 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 # SML/NJ
 export PATH="$PATH:/usr/local/smlnj/bin"
 
+{%@@ endif @@%}
 #####################################################
 #
 #                   Linux Specific

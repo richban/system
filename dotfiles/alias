@@ -2,7 +2,7 @@
 
 #####################################################
 #
-#                   Aliases
+#                   Unix Aliases
 #
 #####################################################
 
@@ -74,8 +74,7 @@ alias port-forward-disable="sudo pfctl -F all -f /etc/pf.conf"
 alias port-forward-list="sudo pfctl -s nat"
 # Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
-# Vrep
-alias vrep="$HOME/Developer/vrep-edu/vrep.app/Contents/MacOS/vrep"
+
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
 
@@ -94,6 +93,7 @@ alias loadnvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && [ -s "$NVM_D
 #                   MacOS Specific
 #
 #####################################################
+{%@@ if os_name == 'Darwin' @@%}
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
@@ -120,20 +120,11 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 # Google Chrome
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 
-alias td="todo.sh"
-alias tda="todo.sh add"
-alias tdl="todo.sh list"
-alias tdd="todo.sh do"
-
 # Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
-alias td="todo.sh"
-alias tda="todo.sh add"
-alias tdl="todo.sh list"
-alias tdd="todo.sh do"
-
+{%@@ endif @@%}
 ####################################################
 #
 #                   Linux Specific
