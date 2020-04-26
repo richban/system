@@ -17,6 +17,7 @@ echo -e "\e[1;40m" ; clear ; while :; do echo $LINES $COLUMNS $(( $RANDOM % $COL
 function matrix2() {
 echo -e "\e[1;40m" ; clear ; characters=$( jot -c 94 33 | tr -d '\n' ) ; while :; do echo $LINES $COLUMNS $(( $RANDOM % $COLUMNS)) $(( $RANDOM % 72 )) $characters ;sleep 0.05; done|gawk '{ letters=$5; c=$4; letter=substr(letters,c,1);a[$3]=0;for (x in a) {o=a[x];a[x]=a[x]+1; printf "\033[%s;%sH\033[2;32m%s",o,x,letter; printf "\033[%s;%sH\033[1;37m%s\033[0;0H",a[x],x,letter;if (a[x] >= $1) { a[x]=0; } }}'
 }
+
 ## hammer a service with curl for a given number of times
 ## usage: curlhammer $url
 function curlhammer () {
@@ -64,29 +65,6 @@ function mkd() {
   mkdir -p "$@" && cd "$_";
 }
 
-# Generate Subresource Integrity hashes.
-# 1st argument is the filename.
-# 2nd argument, optional, is the hash algorithm
-# (currently the allowed prefixes are sha256, sha384, and sha512)
-# See http://www.w3.org/TR/SRI/ and
-# https://developer.mozilla.org/docs/Web/Security/Subresource_Integrity
-function sri() {
-  if [ -z "${1}" ]; then
-    echo "ERROR: No file specified.";
-    return 1;
-  fi;
-  local algorithm="${2:-sha512}"
-  if ! echo "${algorithm}" | egrep -q "^sha(256|384|512)$"; then
-    echo "ERROR: hash algorithm must be sha256, sha384 or sha512.";
-    return 1;
-  fi;
-  local filehash=$(openssl dgst "-${algorithm}" -binary "$1" | openssl base64 -A)
-  if [ -z "${filehash}" ]; then
-    return 1;
-  fi;
-  echo "${algorithm}-${filehash}";
-}
-
 ## output directory/file tree, excluding ignorables
 function tre(){
   tree -aC -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst "$@"
@@ -95,6 +73,7 @@ function tre(){
 function weather() {
   curl wttr.in/$1
 }
+
 function ipinfo(){
   curl ipinfo.io/$1
 }
@@ -122,8 +101,7 @@ function manp() {
 }
 
 # Show normally hidden system and dotfile types of files
-# in Mac OS Finder
-function showhiddenfiles() {
+function show() {
   defaults write com.apple.Finder AppleShowAllFiles YES
   osascript -e 'tell application "Finder" to quit'
   sleep 0.25
@@ -131,8 +109,7 @@ function showhiddenfiles() {
 }
 
 # Hide (back to defaults) normally hidden system and dotfile types of files
-# in Mac OS Finder
-function hidehiddenfiles() {
+function hide() {
   defaults write com.apple.Finder AppleShowAllFiles NO
   osascript -e 'tell application "Finder" to quit'
   sleep 0.25
