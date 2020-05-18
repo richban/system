@@ -108,6 +108,7 @@ fi
 
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vi='vi -c "let g:tty='\''$(tty)'\''"'
 
 # enable vim mode
 bindkey -v
@@ -120,5 +121,4 @@ bindkey -v
 . $HOME/.asdf/completions/asdf.bash
 
 source ~/.bash_profile
-
-source /Users/rbanyi/Library/Preferences/org.dystroy.broot/launcher/bash/br
+source $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br
