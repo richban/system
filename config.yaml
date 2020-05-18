@@ -94,6 +94,24 @@ dotfiles:
   f_vimrc:
     src: vimrc
     dst: ~/.vimrc
+  f_yank.vim:
+    src: vim/autoload/yank.vim
+    dst: ~/.vim/autoload/yank.vim
+  f_ayu.vim:
+    src: vim/colors/ayu.vim
+    dst: ~/.vim/colors/ayu.vim
+  f_typescript.vim:
+    src: vim/compiler/typescript.vim
+    dst: ~/.vim/compiler/typescript.vim
+  f_typescipt.vim:
+    src: vim/ftplugin/typescipt.vim
+    dst: ~/.vim/ftplugin/typescipt.vim
+  f_sshknownhosts.vim:
+    src: vim/syntax/sshknownhosts.vim
+    dst: ~/.vim/syntax/sshknownhosts.vim
+  f_plugin_yank.vim:
+    src: vim/plugin/yank.vim
+    dst: ~/.vim/plugin/yank.vim
 profiles:
   richban-macbook:
     dotfiles:
@@ -123,6 +141,12 @@ profiles:
     - f_yank.sh
     - f_p10k.zsh
     - f_vimrc
+    - f_yank.vim
+    - f_ayu.vim
+    - f_typescript.vim
+    - f_typescipt.vim
+    - f_sshknownhosts.vim
+    - f_plugin_yank.vim
   richban-ubuntu:
     dotfiles:
     - f_init.toml
