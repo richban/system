@@ -112,6 +112,12 @@ dotfiles:
   f_plugin_yank.vim:
     src: vim/plugin/yank.vim
     dst: ~/.vim/plugin/yank.vim
+  f_plug.vim:
+    src: vim/autoload/plug.vim
+    dst: ~/.vim/autoload/plug.vim
+  f_filetype.vim:
+    src: vim/filetype.vim
+    dst: ~/.vim/filetype.vim
 profiles:
   richban-macbook:
     dotfiles:
@@ -147,6 +153,8 @@ profiles:
     - f_typescipt.vim
     - f_sshknownhosts.vim
     - f_plugin_yank.vim
+    - f_plug.vim
+    - f_filetype.vim
   richban-ubuntu:
     dotfiles:
     - f_init.toml

@@ -1,7 +1,6 @@
 set nocompatible
 
-"" Plugins
-
+""" Plugins
 call plug#begin('~/.vim/plugged')
 	Plug 'majutsushi/tagbar'
 	Plug 'kien/ctrlp.vim'
@@ -11,28 +10,23 @@ call plug#begin('~/.vim/plugged')
     Plug 'godlygeek/tabular'
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     Plug 'tpope/vim-fugitive'
-    Plug 'plasticboy/vim-markdown'
     Plug 'ekalinin/Dockerfile.vim'
     Plug 'vim-airline/vim-airline'
-    Plug 'liuchengxu/space-vim-dark'
+    Plug 'ycm-core/YouCompleteMe'
+    Plug 'Yggdroot/indentLine'
 call plug#end()
 
 filetype plugin indent on       " Add filetype, plugin, and indent support
 syntax on
 
-"" Colorscheme
+""" Colorscheme
 
-" for vim 8
-if (has("termguicolors"))
-    set termguicolors
-endif
+set termguicolors
 let ayucolor="dark"
 colorscheme ayu
 
+let mapleader=" "
 set cursorline
-set fillchars=vert:│,fold:-
-let ayucolor="dark"
-colorscheme ayu
 
 "" Formating
 
@@ -43,13 +37,16 @@ set textwidth=79
 set colorcolumn=80
 set laststatus=2
 set linespace=1
-set autoindent
+set smartindent
 
 set mouse=a
 set ttymouse=sgr
 
-""" Whitespace
+""" Move selected lines
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
+""" Whitespace
 set nowrap                      " don't wrap lines
 set tabstop=4                   " a tab is two spaces (or set this to 4)
 set shiftwidth=4                   " a tab is two spaces (or set this to 4)
@@ -62,16 +59,18 @@ set hlsearch                   " highlight matches
 set incsearch                  " incremental searching
 set ignorecase                 " searches are case insensitive...
 set smartcase                  " ... unless they contain at least one capital letter
-set nu
+set number
+set relativenumber 
 
 set wildmenu
 
 " Useful for accessing commonly-used files
-nnoremap <leader>v :e $MYVIMRC<CR>
-nnoremap <leader>z :e ~/.zshrc<CR>
-nnoremap <leader>a :e ~/.alias<CR>
-nnoremap <leader>f :e ~/.functions<CR>
-nnoremap <leader>e :e ~/.env<CR>
+nnoremap <leader>cv :e $MYVIMRC<CR>
+nnoremap <leader>cz :e ~/.zshrc<CR>
+nnoremap <leader>ca :e ~/.alias<CR>
+nnoremap <leader>cf :e ~/.functions<CR>
+nnoremap <leader>ce :e ~/.env<CR>
+nnoremap <leader>ct :e ~/.tmux.conf<CR>
 
 " Toggle Paste mode
 nnoremap <leader>p :set paste!<CR>
@@ -83,20 +82,22 @@ vnoremap yy y<CR>:let @"=substitute(@", '\n', '', 'g')<CR>:call yank#Osc52Yank()
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 6/5)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 5/6)<CR>
 
-"" Swap/backup
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
 
+"" Swap/backup
 set backupdir=~/tmp
 set noswapfile
 set nowritebackup
 set nobackup
 
 "" ctrlp
-
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir']
 let g:ctrlp_switch_buffer = 'et'
 
-"" Syntax
-
+"" Syntastic 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -113,37 +114,33 @@ let g:syntastic_python_checkers=["mypy", "pep8", "python"]
 let g:syntastic_python_mypy_args="--python-version 3.6 --disallow-untyped-defs --warn-no-return"
 
 "" tagbar
-
 let g:tagbar_left = 1
 
 "" Nerdtree
-
-nmap <silent> te :NERDTreeToggle<CR>
-nmap <silent> <f1> :NERDTreeToggle<CR>
+nmap <silent> <leader>e :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
 let g:NERDTreeWinPos = "right"
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 "" Tagbar
-
-nmap <silent> tt :TagbarToggle<CR>
+nmap <silent> <Leader>t :TagbarToggle<CR>
 
 "" Syntastic
-
-nmap <silent> tc :SyntasticCheck<CR>
+nmap <silent> <Leader>c :SyntasticCheck<CR>
 
 "" Git
+nmap <silent> <Leader>g :Gstatus<CR>
+nmap <silent> <Leader>d :Gvdiff<CR>
+nmap <silent> <leader>gl :diffget //3<CR>
+nmap <silent> <leader>gh :diffget //2<CR>
 
-nmap <silent> tg :Gstatus<CR>
-nmap <silent> td :Gvdiff<CR>
 
 "" Move among buffers with CTRL
-
-map <C-H> :bnext<CR>
-map <C-L> :bprev<CR>
+map <C-L> :bnext<CR>
+map <C-R> :bprev<CR>
 
 "" Powerline
-
 let g:airline_section_x = '%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}'
 let g:airline_section_y = ''
 
@@ -152,25 +149,13 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'default'
 
-"" File-type specific
+""" Tabular
+if exists(":Tabularize")
+    nmap <Leader>= :Tab /=<CR>
+    vmap <Leader>= :Tab /=<CR>
+    nmap <Leader>: :Tab /:\zs<CR>
+    vmap <Leader>: :Tab /:\zs<CR>
+endif
 
-autocmd FileType hs setlocal shiftwidth=2 tabstop=2
-
-"" Recognize markdown objects in the tagbar. Requires separate ctags
-"" configuration.
-
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading:0:1',
-        \ 'i:Image:0:0',
-        \ 'f:Footnote:0:0',
-    \ ],
-    \ 'sort'    : 0,
-    \ }
-let g:tagbar_left = 1
-
-"" Markdown: enable math
-let g:vim_markdown_math = 1
-set conceallevel=0
-
+""" YCM
+nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
