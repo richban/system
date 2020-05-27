@@ -118,6 +118,10 @@ dotfiles:
   f_filetype.vim:
     src: vim/filetype.vim
     dst: ~/.vim/filetype.vim
+  vim:
+    src: vim
+    dst: ~/.vim/
+    link: link_children
 profiles:
   richban-macbook:
     dotfiles:
@@ -135,7 +139,6 @@ profiles:
     - f_richban.zsh-theme
     - f_gitconfig
     - f_settings.json
-    - f_ghostwheel.zsh-theme
     - f_iterm-profile.json
     - f_bashrc
     - f_init.lua
@@ -158,12 +161,9 @@ profiles:
     dotfiles:
     - f_tmux.conf
     - f_tmux.conf.local
-    - f_zshrc
-    - f_zshenv
-    - f_bash_profile
-    - f_env
     - f_alias
-    - f_functions
+    - vim
+    - f_vimrc
 
   # Installs Spacevim and dotfiles
   spacevim:
