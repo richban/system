@@ -143,7 +143,6 @@ profiles:
     - f_utils.lua
     - f_skhdrc
     - f_yabairc
-
     - f_yank.sh
     - f_p10k.zsh
     - f_vimrc
@@ -155,25 +154,8 @@ profiles:
     - f_plugin_yank.vim
     - f_plug.vim
     - f_filetype.vim
-  richban-ubuntu:
+  linux:
     dotfiles:
-    - f_init.toml
-    - f_tmux.conf
-    - f_zshrc
-    - f_zshenv
-    - f_bash_profile
-    - f_env
-    - f_alias
-    - f_functions
-    - f_tool-versions
-    - f_tmux.conf.local
-    - f_matplotlibrc
-    - f_richban.zsh-theme
-    - f_gitconfig
-
-  debian:
-    dotfiles:
-    - f_init.toml
     - f_tmux.conf
     - f_tmux.conf.local
     - f_zshrc
@@ -182,7 +164,6 @@ profiles:
     - f_env
     - f_alias
     - f_functions
-    - f_ghostwheel.zsh-theme
 
   # Installs Spacevim and dotfiles
   spacevim:
