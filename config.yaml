@@ -122,6 +122,9 @@ dotfiles:
     src: vim
     dst: ~/.vim/
     link: link_children
+  f_richban-iterm-profile.json:
+    src: richban-iterm-profile.json
+    dst: ~/richban-iterm-profile.json
 profiles:
   richban-macbook:
     dotfiles:
@@ -157,6 +160,7 @@ profiles:
     - f_plugin_yank.vim
     - f_plug.vim
     - f_filetype.vim
+    - f_richban-iterm-profile.json
   linux:
     dotfiles:
     - f_tmux.conf
