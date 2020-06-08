@@ -10,45 +10,27 @@ config:
   workdir: ~/.config/dotdrop
   link_on_import: nolink
   minversion: 0.31.0
-actions:
-  pre:
-    spacevim-install: curl -sLf https://spacevim.org/install.sh | bash
 dynvariables:
   os_name: uname
 dotfiles:
   f_alias:
     dst: ~/.alias
     src: alias
-  f_env:
-    dst: ~/.env
-    src: env
   f_functions:
     dst: ~/.functions
     src: functions
   f_gitconfig:
     dst: ~/.gitconfig
     src: gitconfig
-  f_init.toml:
-    dst: ~/.SpaceVim.d/init.toml
-    src: SpaceVim.d/init.toml
   f_matplotlibrc:
     dst: ~/.matplotlib/matplotlibrc
     src: matplotlib/matplotlibrc
-  f_richban.zsh-theme:
-    dst: ~/.oh-my-zsh/custom/themes/richban.zsh-theme
-    src: oh-my-zsh/custom/themes/richban.zsh-theme
   f_settings.json:
     dst: ~/.vscode/settings.json
     src: vscode/settings.json
   f_tmux.conf:
     dst: ~/.tmux.conf
     src: tmux.conf
-  f_tmux.conf.local:
-    dst: ~/.tmux.conf.local
-    src: tmux.conf.local
-  f_tmuxinator.zsh:
-    dst: ~/tmuxinator.zsh
-    src: tmuxinator.zsh
   f_tool-versions:
     dst: ~/.tool-versions
     src: tool-versions
@@ -58,15 +40,6 @@ dotfiles:
   f_zshrc:
     dst: ~/.zshrc
     src: zshrc
-  f_ghostwheel.zsh-theme:
-    src: oh-my-zsh/custom/themes/ghostwheel.zsh-theme
-    dst: ~/.oh-my-zsh/custom/themes/ghostwheel.zsh-theme
-  f_iterm-profile.json:
-    src: iterm-profile.json
-    dst: ~/.iterm-profile.json
-  f_bashrc:
-    src: bashrc
-    dst: ~/.bashrc
   f_init.lua:
     src: hammerspoon/init.lua
     dst: ~/.hammerspoon/init.lua
@@ -125,21 +98,15 @@ dotfiles:
 profiles:
   richban-macbook:
     dotfiles:
-    - f_init.toml
     - f_tmux.conf
     - f_zshrc
     - f_zshenv
-    - f_env
     - f_alias
     - f_functions
     - f_tool-versions
-    - f_tmux.conf.local
     - f_matplotlibrc
-    - f_richban.zsh-theme
     - f_gitconfig
     - f_settings.json
-    - f_iterm-profile.json
-    - f_bashrc
     - f_init.lua
     - f_shortcuts.lua
     - f_utils.lua
@@ -160,17 +127,6 @@ profiles:
   linux:
     dotfiles:
     - f_tmux.conf
-    - f_tmux.conf.local
     - f_alias
     - vim
     - f_vimrc
-
-  # Installs Spacevim and dotfiles
-  spacevim:
-    dotfiles:
-    - f_init.toml
-    actions:
-    - spacevim-install
-  alias:
-    dotfiles:
-    - f_alias
