@@ -78,10 +78,13 @@ nnoremap <leader>p :set paste!<CR>
 " Join yanked text on a yank (needed for terminal mode copies)
 vnoremap yy y<CR>:let @"=substitute(@", '\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>
 
-" Window management
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 6/5)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 5/6)<CR>
+" Adjusting splits
+nnoremap <silent> <C-Left> :vertical resize +3<CR>
+nnoremap <silent> <C-Right> :vertical resize -3<CR>
+nnoremap <silent> <C-Up> :resize +3<CR>
+nnoremap <silent> <C-Down> :resize -3<CR>
 
+" Window navigation 
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
@@ -138,7 +141,7 @@ nmap <silent> <leader>gh :diffget //2<CR>
 
 "" Move among buffers with CTRL
 map <C-L> :bnext<CR>
-map <C-R> :bprev<CR>
+map <C-H> :bprev<CR>
 
 "" Powerline
 let g:airline_section_x = '%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}'
