@@ -5,6 +5,7 @@
 #                   Unix Aliases
 #
 #####################################################
+
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -13,6 +14,16 @@ alias tree="tree -A"
 alias treed="tree -d"
 alias tree1="tree -d -L 1"
 alias tree2="tree -d -L 2"
+
+if type "exa" > /dev/null; then
+    alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+    alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+    alias ll='exa -l --color=always --group-directories-first'  # long format
+    alias lt='exa -aT --color=always --group-directories-first' # tree listing
+    alias tree="exa --tree"
+    alias tree1="exa --tree --level=1 --long"
+    alias tree2="exa --tree --level=2 --long"
+fi
 
 # List declared aliases, functions, paths
 alias aliases="alias | sed 's/=.*//'"
@@ -31,7 +42,7 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 alias reload="exec $SHELL -l"
 
 # dotdrop
-alias dotdrop="$HOME/.dotfiles/dotdrop.sh --cfg=$HOME/.dotfiles/config.yaml"
+alias dot="$HOME/.dotfiles/dotdrop.sh --cfg=$HOME/.dotfiles/config.yaml"
 
 # nvm 
 alias loadnvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
@@ -92,7 +103,6 @@ alias spoton="sudo mdutil -a -i on"
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; mas upgrade; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
 {%@@ endif @@%}
-
 ####################################################
 #
 #                   Linux Specific
@@ -100,17 +110,5 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 #####################################################
 
 {%@@ if os_name == 'Linux' @@%}
-
-# Always enable colored `grep` output
-# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'# Detect which `ls` flavor is in use
-
-# Always enable colored `grep` output
-# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 
 {%@@ endif @@%}

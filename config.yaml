@@ -171,4 +171,6 @@ profiles:
     - f_init.toml
     actions:
     - spacevim-install
-
+  alias:
+    dotfiles:
+    - f_alias
