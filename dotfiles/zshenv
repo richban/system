@@ -22,11 +22,12 @@ fi
 # Mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
+export PATH="$PATH:/Users/rbanyi/.asdf/installs/python/3.7.3/bin"
+
 export LDFLAGS=-L/usr/local/Cellar/libffi/3.2.1/lib
 export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig
 export MY_SESSION_BUS_SOCKET=/tmp/dbus/unix_richban_listener
 export PATH="/usr/local/opt/qt/bin:$PATH"
-export EDITOR="vim"
 
 # SML/NJ
 export PATH="$PATH:/usr/local/smlnj/bin"

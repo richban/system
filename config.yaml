@@ -95,6 +95,9 @@ dotfiles:
   f_richban-iterm-profile.json:
     src: richban-iterm-profile.json
     dst: ~/richban-iterm-profile.json
+  f_user.js:
+    src: firefox/workspace/user.js
+    dst: ~/.firefox/workspace/user.js
 profiles:
   richban-macbook:
     dotfiles:
@@ -124,6 +127,7 @@ profiles:
     - f_plug.vim
     - f_filetype.vim
     - f_richban-iterm-profile.json
+    - f_user.js
   linux:
     dotfiles:
     - f_tmux.conf

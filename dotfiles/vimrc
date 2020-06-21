@@ -10,10 +10,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'godlygeek/tabular'
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     Plug 'tpope/vim-fugitive'
-    Plug 'ekalinin/Dockerfile.vim'
     Plug 'vim-airline/vim-airline'
     Plug 'ycm-core/YouCompleteMe'
     Plug 'Yggdroot/indentLine'
+    Plug 'morhetz/gruvbox'
+    Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 filetype plugin indent on       " Add filetype, plugin, and indent support
@@ -22,8 +23,8 @@ syntax on
 """ Colorscheme
 
 set termguicolors
-let ayucolor="dark"
-colorscheme ayu
+autocmd vimenter * colorscheme gruvbox
+let g:gruvbox_contrast_dark = "hard"
 
 let mapleader=" "
 set cursorline
@@ -67,9 +68,9 @@ set wildmenu
 " Useful for accessing commonly-used files
 nnoremap <leader>cv :e $MYVIMRC<CR>
 nnoremap <leader>cz :e ~/.zshrc<CR>
+nnoremap <leader>ce :e ~/.zshenv<CR>
 nnoremap <leader>ca :e ~/.alias<CR>
 nnoremap <leader>cf :e ~/.functions<CR>
-nnoremap <leader>ce :e ~/.env<CR>
 nnoremap <leader>ct :e ~/.tmux.conf<CR>
 
 " Toggle Paste mode
@@ -116,8 +117,7 @@ let g:python_highlight_builtin_objs=1
 let g:syntastic_python_checkers=["mypy", "pep8", "python"]
 let g:syntastic_python_mypy_args="--python-version 3.6 --disallow-untyped-defs --warn-no-return"
 
-"" tagbar
-let g:tagbar_left = 1
+nmap <silent> <Leader>c :SyntasticCheck<CR>
 
 "" Nerdtree
 nmap <silent> <leader>e :NERDTreeToggle<CR>
@@ -127,14 +127,12 @@ let g:NERDTreeWinPos = "right"
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 "" Tagbar
+let g:tagbar_left = 1
 nmap <silent> <Leader>t :TagbarToggle<CR>
 
-"" Syntastic
-nmap <silent> <Leader>c :SyntasticCheck<CR>
-
 "" Git
-nmap <silent> <Leader>g :Gstatus<CR>
-nmap <silent> <Leader>d :Gvdiff<CR>
+nmap <silent> <Leader>gs :Gstatus<CR>
+nmap <silent> <Leader>gd :Gvdiff<CR>
 nmap <silent> <leader>gl :diffget //3<CR>
 nmap <silent> <leader>gh :diffget //2<CR>
 
