@@ -411,6 +411,6 @@
   "Unicode Normalization" : 0,
   "Visual Bell" : true,
   "ASCII Ligatures" : false,
-  "Custom Directory" : "Yes",
+  "Custom Directory" : "No",
   "Set Local Environment Vars" : false
 }
