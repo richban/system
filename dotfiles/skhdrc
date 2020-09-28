@@ -120,8 +120,10 @@ shift + alt - 5 : yabai -m window --space 5 && yabai -m space --focus 5
 shift + alt - 6 : yabai -m window --space 6 && yabai -m space --focus 6
 
 # Float and center window
+# grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 shift + alt - c : yabai -m window --toggle float;\
-                  yabai -m window --grid 4:4:1:1:2:2
+                  yabai -m window --toggle zoom-fullscreen
+                  # yabai -m window --grid 1:1:0:0:1:1
 
 # Equalize size of windows
 lctrl + alt - 0 : yabai -m space --balance

@@ -37,7 +37,7 @@ bindkey -v
 bindkey '^R' history-incremental-search-backward
 
 # asdf
-if type "asdf" > /dev/null; then
+if [[ -d ~/.asdf ]]; then
     . $HOME/.asdf/asdf.sh
     . $HOME/.asdf/completions/asdf.bash
 fi

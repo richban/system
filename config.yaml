@@ -67,9 +67,6 @@ dotfiles:
   f_yank.vim:
     src: vim/autoload/yank.vim
     dst: ~/.vim/autoload/yank.vim
-  f_ayu.vim:
-    src: vim/colors/ayu.vim
-    dst: ~/.vim/colors/ayu.vim
   f_typescript.vim:
     src: vim/compiler/typescript.vim
     dst: ~/.vim/compiler/typescript.vim
@@ -99,7 +96,7 @@ dotfiles:
     src: firefox/workspace/user.js
     dst: ~/.firefox/workspace/user.js
 profiles:
-  richban-macbook:
+   balthasar-2:
     dotfiles:
     - f_tmux.conf
     - f_zshrc
@@ -128,7 +125,7 @@ profiles:
     - f_filetype.vim
     - f_richban-iterm-profile.json
     - f_user.js
-  linux:
+   linux:
     dotfiles:
     - f_tmux.conf
     - f_alias

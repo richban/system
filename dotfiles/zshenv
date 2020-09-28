@@ -22,6 +22,7 @@ fi
 # Mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export PATH="$PATH:/Users/rbanyi/.asdf/installs/python/3.7.3/bin"
 
 export LDFLAGS=-L/usr/local/Cellar/libffi/3.2.1/lib
@@ -34,6 +35,7 @@ export PATH="$PATH:/usr/local/smlnj/bin"
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+export TERM=xterm-256color-italic
 
 #####################################################
 #
