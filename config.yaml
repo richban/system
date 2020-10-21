@@ -93,10 +93,10 @@ dotfiles:
     src: richban-iterm-profile.json
     dst: ~/richban-iterm-profile.json
   f_user.js:
-    src: firefox/workspace/user.js
-    dst: ~/.firefox/workspace/user.js
+    src: user.js
+    dst: ~/user.js
 profiles:
-   balthasar-2:
+  balthasar-2:
     dotfiles:
     - f_tmux.conf
     - f_zshrc
@@ -116,7 +116,6 @@ profiles:
     - f_p10k.zsh
     - f_vimrc
     - f_yank.vim
-    - f_ayu.vim
     - f_typescript.vim
     - f_typescipt.vim
     - f_sshknownhosts.vim
@@ -125,7 +124,7 @@ profiles:
     - f_filetype.vim
     - f_richban-iterm-profile.json
     - f_user.js
-   linux:
+  linux:
     dotfiles:
     - f_tmux.conf
     - f_alias
