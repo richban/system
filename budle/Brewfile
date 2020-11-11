@@ -1,0 +1,88 @@
+# ------------------------------ PACKAGES -------------------------------------
+
+tap "homebrew/cask"
+tap "homebrew/bundle"
+tap "homebrew/services"
+cask_args appdir: "/Applications"
+
+# ------------------------------ TOOLING --------------------------------------
+
+brew "ack"
+brew "ag"
+brew "bat"
+brew "coreutils"
+brew "dos2unix"
+brew "fzf"
+brew "fd"
+brew "jq"
+brew "tmux"
+brew "vim"
+brew "neovim"
+brew "asdf"
+brew "readline"
+brew "tldr"
+brew "git"
+brew "exa"
+brew "grep"
+brew "gnu-sed"
+brew "ripgrep"
+brew "shellcheck"
+brew "httpie"
+brew "yarn"
+brew "broot"
+brew "graphviz"
+brew "chromedriver"
+brew "koekeishiya/formulae/yabai"
+brew "koekeishiya/formulae/skhd"
+brew "zsh"
+brew "zsh-completions"
+brew "openssl"
+brew "pipenv"
+brew "curl"
+brew "alacritty"
+brew "htop"
+brew "screenfetch"
+
+# ------------------------------ DATABASE -------------------------------------
+
+"mysql"
+"sqlite"
+
+# ------------------------------ LANGUAGE -------------------------------------
+
+brew "lua"
+brew "go"
+brew "gcc"
+brew "node"
+brew "cmake"
+brew "python@3.8"
+
+# ------------------------------ FONTS ----------------------------------------
+
+tap  "homebrew/cask-fonts"
+cask "font-fontawesome"
+cask "font-hack-nerd-font"
+
+# ------------------------------ APPS -----------------------------------------
+
+cask "docker"
+cask "google-chrome"
+cask "firefox"
+cask "iterm2"
+cask "slack"
+cask "visual-studio-code"
+cask "notion"
+cask "spotify"
+cask "hammerspoon"
+cask "alfred"
+cask "zoomus"
+cask "discord"
+cask "gpg-suite"
+cask "sequel-pro"
+cask "karabiner-elements"
+
+mas "Xcode", id: 497799835
+mas "Instapaper", id: 1481302432
+mas "WeChat", id: 836500024
+mas "Notability", id: 736189492
+
