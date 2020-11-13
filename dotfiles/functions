@@ -1,71 +1,21 @@
 #!/bin/sh
 
-#####################################################
-#
-#                   Utility Functions
-#
-#####################################################
-
-## curlheader will return only a specific response header or all response headers for a given URL
-## usage: curlheader $header $url
-## usage: curlheader $url
-function curlheader() {
-  if [[ -z "$2" ]]; then
-    echo "curl -k -s -D - $1 -o /dev/null"
-    curl -k -s -D - $1 -o /dev/null:
-  else
-    echo "curl -k -s -D - $2 -o /dev/null | grep $1:"
-    curl -k -s -D - $2 -o /dev/null | grep $1:
-  fi
-}
-
-## get the timings for a curl to a URL
-## usage: curltime $url
-function curltime(){
-  curl -w "   time_namelookup:  %{time_namelookup}\n\
-      time_connect:  %{time_connect}\n\
-   time_appconnect:  %{time_appconnect}\n\
-  time_pretransfer:  %{time_pretransfer}\n\
-     time_redirect:  %{time_redirect}\n\
-time_starttransfer:  %{time_starttransfer}\n\
---------------------------\n\
-        time_total:  %{time_total}\n" -o /dev/null -s "$1"
-}
-
 function fixperms(){
     find . \( -name "*.sh" -or -type d \) -exec chmod 755 {} \; && find . -type f ! -name "*.sh" -exec chmod 644 {} \;
 }
 
-# fo [FUZZY PATTERN] - Open the selected file with the default editor
-#   - Bypass fuzzy finder if there's only one match (--select-1)
-#   - Exit if there's no match (--exit-0)
-function fo() {
-  local files
-  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
-  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-}
 
-#####################################################
-#
-#                   MacOS Specific
-#
-#####################################################
-{%@@ if os_name == 'Darwin' @@%}
-
-# Show normally hidden system and dotfile types of files
-function showhf() {
+function showdf() {
   defaults write com.apple.Finder AppleShowAllFiles YES
   osascript -e 'tell application "Finder" to quit'
   sleep 0.25
   osascript -e 'tell application "Finder" to activate'
 }
 
-# Hide (back to defaults) normally hidden system and dotfile types of files
-function hidehf() {
+function hidedf() {
   defaults write com.apple.Finder AppleShowAllFiles NO
   osascript -e 'tell application "Finder" to quit'
   sleep 0.25
   osascript -e 'tell application "Finder" to activate'
 }
 
-{%@@ endif @@%}

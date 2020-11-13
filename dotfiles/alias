@@ -1,11 +1,5 @@
 #!/bin/sh
 
-#####################################################
-#
-#                   Unix Aliases
-#
-#####################################################
-
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -16,9 +10,10 @@ alias tree1="tree -d -L 1"
 alias tree2="tree -d -L 2"
 
 if type "exa" > /dev/null; then
-    alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-    alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-    alias ll='exa -l --color=always --group-directories-first'  # long format
+    alias l='exa -l --icons --header --long --git --color=always --group-directories-first --sort=ext' # my preferred listing
+    alias la='exa -a --header --long --git --color=always --group-directories-first --sort=ext'  # all files and dirs
+    alias ll='exa -lh --links --blocks --accessed --created --header --long --git --color=always --modified --group-directories-first'  # long format
+    alias ld='exa -D --color=always --group-directories-first --sort=ext' # my preferred listing
     alias lt='exa -aT --color=always --group-directories-first' # tree listing
     alias tree="exa --tree"
     alias tree1="exa --tree --level=1 --long"
@@ -44,17 +39,8 @@ alias reload="exec $SHELL -l"
 # dotdrop
 alias dot="$HOME/.dotfiles/dotdrop.sh --cfg=$HOME/.dotfiles/config.yaml"
 
-# nvm 
+# nvm
 alias loadnvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
-
-alias vi='vi -c "let g:tty='\''$(tty)'\''"'
-
-#####################################################
-#
-#                   MacOS Specific
-#
-#####################################################
-{%@@ if os_name == 'Darwin' @@%}
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -65,14 +51,10 @@ alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
 # Show network connections
-# Often useful to prefix with SUDO to see more system level network usage
-alias network.connections='lsof -l -i +L -R -V'
-alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
-alias network.externalip='curl -s http://checkip.dyndns.org/ | sed "s/[a-zA-Z<>/ :]//g"'
-alias network.internalip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
-
-# Lock the screen (when going AFK)
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+alias n.connections='lsof -l -i +L -R -V'
+alias n.established='lsof -l -i +L -R -V | grep ESTABLISHED'
+alias n.externalip='curl -s http://checkip.dyndns.org/ | sed "s/[a-zA-Z<>/ :]//g"'
+alias n.internalip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
 
 # recursive dos2unix in current directory
 alias dos2lf='dos2unix `find ./ -type f`'
@@ -80,37 +62,9 @@ alias dos2lf='dos2unix `find ./ -type f`'
 # Flush the DNS on Mac
 alias dnsflush='dscacheutil -flushcache'
 
-# Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
-# Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-# Files being opened
-alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
-
-# Files used, anywhere on the filesystem
-alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
-
-# Files in use in the Users directory
-alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
-
 # Disable Spotlight
 alias spotoff="sudo mdutil -a -i off"
 
 # Enable Spotlight
-
 alias spoton="sudo mdutil -a -i on"
 
-# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; mas upgrade; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
-
-{%@@ endif @@%}
-####################################################
-#
-#                   Linux Specific
-#
-#####################################################
-
-{%@@ if os_name == 'Linux' @@%}
-
-{%@@ endif @@%}

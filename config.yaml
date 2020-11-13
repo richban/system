@@ -95,6 +95,9 @@ dotfiles:
   f_user.js:
     src: user.js
     dst: ~/user.js
+  f_fzf.zsh:
+    src: fzf.zsh
+    dst: ~/.fzf.zsh
 profiles:
   balthasar-2:
     dotfiles:
@@ -124,6 +127,7 @@ profiles:
     - f_filetype.vim
     - f_richban-iterm-profile.json
     - f_user.js
+    - f_fzf.zsh
   linux:
     dotfiles:
     - f_tmux.conf
