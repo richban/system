@@ -98,6 +98,9 @@ dotfiles:
   d_hammerspoon:
     src: hammerspoon
     dst: ~/.hammerspoon
+  f_xterm-256color-italic.terminfo:
+    src: xterm-256color-italic.terminfo
+    dst: ~/xterm-256color-italic.terminfo
 profiles:
   balthasar-2:
     dotfiles:
@@ -128,6 +131,7 @@ profiles:
     - f_richban-iterm-profile.json
     - f_user.js
     - d_hammerspoon
+    - f_xterm-256color-italic.terminfo
   linux:
     dotfiles:
     - f_tmux.conf
