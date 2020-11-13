@@ -89,18 +89,9 @@ dotfiles:
     src: vim
     dst: ~/.vim/
     link: link_children
-  f_richban-iterm-profile.json:
-    src: richban-iterm-profile.json
-    dst: ~/richban-iterm-profile.json
-  f_user.js:
-    src: user.js
-    dst: ~/user.js
   d_hammerspoon:
     src: hammerspoon
     dst: ~/.hammerspoon
-  f_xterm-256color-italic.terminfo:
-    src: xterm-256color-italic.terminfo
-    dst: ~/xterm-256color-italic.terminfo
 profiles:
   balthasar-2:
     dotfiles:
@@ -118,7 +109,6 @@ profiles:
     - f_utils.lua
     - f_skhdrc
     - f_yabairc
-    - f_yank.sh
     - f_p10k.zsh
     - f_vimrc
     - f_yank.vim
@@ -128,10 +118,7 @@ profiles:
     - f_plugin_yank.vim
     - f_plug.vim
     - f_filetype.vim
-    - f_richban-iterm-profile.json
-    - f_user.js
     - d_hammerspoon
-    - f_xterm-256color-italic.terminfo
   linux:
     dotfiles:
     - f_tmux.conf
