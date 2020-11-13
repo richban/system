@@ -45,7 +45,7 @@ function print_result() {
     if [ "$1" -eq 0 ]; then
         print_success "$2"
     else
-        print_error "$2"
+        error "$2"
     fi
 
     return "$1"

@@ -29,7 +29,7 @@ if [ "${DOTDROP_AUTOUPDATE-yes}" = yes ] ; then
   git submodule update --remote dotdrop
 fi
 # launch dotdrop
-PYTHONPATH=dotdrop python3 -m dotdrop.dotdrop "${args[@]}"
+PYTHONPATH=dotdrop python -m dotdrop.dotdrop "${args[@]}"
 ret="$?"
 # pivot back
 cd "${opwd}" || { echo "Directory \"${opwd}\" doesn't exist, aborting." && exit 1; }

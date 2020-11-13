@@ -64,9 +64,9 @@ General() {
 
 	# ========== Automatically hide and show the menu bar ==========
 	# - Checked
-	defaults write .GlobalPreferences _HIHideMenuBar -bool true
+	# defaults write .GlobalPreferences _HIHideMenuBar -bool true
 	# - Unchecked
-	# defaults write .GlobalPreferences _HIHideMenuBar -bool false
+	defaults write .GlobalPreferences _HIHideMenuBar -bool false
 
 	# ========== Show scroll bars ==========
 	# - Automatically based on mouse or trackpad
@@ -85,21 +85,21 @@ General() {
 	# ========== Default web browser ==========
     # FIX: make Firefox default browser
 	# - Google Chrome
-	LSSC=("http" "https" "mailto")
-	LSCT=("public.xhtml" "public.html")
-	PLIST="${HOME}/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist"
-	HNUM=$(/usr/libexec/PlistBuddy -c "Print LSHandlers:" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
-	for idx in $(seq 0 $(expr ${HNUM} - 1)); do
-		THIS_LSSC=$(/usr/libexec/PlistBuddy -c "Print LSHandlers:${idx}:LSHandlerURLScheme" ${PLIST} 2>/dev/null)
-		if [[ ${LSSC[@]} =~ $THIS_LSSC ]]; then
-			/usr/libexec/PlistBuddy -c "Set LSHandlers:${idx}:LSHandlerRoleAll com.google.chrome" ${PLIST}
-		fi
+	# LSSC=("http" "https" "mailto")
+	# LSCT=("public.xhtml" "public.html")
+	# PLIST="${HOME}/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist"
+	# HNUM=$(/usr/libexec/PlistBuddy -c "Print LSHandlers:" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
+	# for idx in $(seq 0 $(expr ${HNUM} - 1)); do
+	# 	THIS_LSSC=$(/usr/libexec/PlistBuddy -c "Print LSHandlers:${idx}:LSHandlerURLScheme" ${PLIST} 2>/dev/null)
+	# 	if [[ ${LSSC[@]} =~ $THIS_LSSC ]]; then
+	# 		/usr/libexec/PlistBuddy -c "Set LSHandlers:${idx}:LSHandlerRoleAll com.google.chrome" ${PLIST}
+	# 	fi
 
-		THIS_LSCT=$(/usr/libexec/PlistBuddy -c "Print LSHandlers:${idx}:LSHandlerContentType" ${PLIST} 2>/dev/null)
-		if [[ ${LSCT[@]} =~ $THIS_LSCT ]]; then
-			/usr/libexec/PlistBuddy -c "Set LSHandlers:${idx}:LSHandlerRoleAll com.google.chrome" ${PLIST}
-		fi
-	done
+	# 	THIS_LSCT=$(/usr/libexec/PlistBuddy -c "Print LSHandlers:${idx}:LSHandlerContentType" ${PLIST} 2>/dev/null)
+	# 	if [[ ${LSCT[@]} =~ $THIS_LSCT ]]; then
+	# 		/usr/libexec/PlistBuddy -c "Set LSHandlers:${idx}:LSHandlerRoleAll com.google.chrome" ${PLIST}
+	# 	fi
+	# done
 
 	# ========== Ask to keep changes when closing documents ==========
 	# - Checked
@@ -158,11 +158,11 @@ General() {
 
 DesktopScreenSaver() {
 	# ========== Desktop Picture ==========
-	osascript -e "
-		tell application \"Finder\"
-			set desktop picture to \"${EXEPATH}/desktop.jpg\" as POSIX file
-		end tell
-	"
+	# osascript -e "
+	# 	tell application \"Finder\"
+	# 		set desktop picture to \"${EXEPATH}/desktop.jpg\" as POSIX file
+	# 	end tell
+	# "
 
 	# ========== desktop ==========
 	# !!! You can forcely command below to set, but you SHOULD NOT.
@@ -174,29 +174,29 @@ DesktopScreenSaver() {
 	# - Center
 	# - Tile
 	# @string: choose preferred item.
-	osascript -e "
-		tell application \"System Preferences\"
-			activate
-			reveal pane id \"com.apple.preference.desktopscreeneffect\"
-		end tell
-		tell application \"System Events\"
-			tell application process \"System Preferences\"
-				repeat while not (window 1 exists)
-				end repeat
-				tell window 1
-					tell tab group 1
-						tell pop up button 2
-							click
-							delay 1
-							tell menu 1
-								click menu item \"Fill Screen\"
-							end tell
-						end tell
-					end tell
-				end tell
-			end tell
-		end tell
-	"
+	# osascript -e "
+	# 	tell application \"System Preferences\"
+	# 		activate
+	# 		reveal pane id \"com.apple.preference.desktopscreeneffect\"
+	# 	end tell
+	# 	tell application \"System Events\"
+	# 		tell application process \"System Preferences\"
+	# 			repeat while not (window 1 exists)
+	# 			end repeat
+	# 			tell window 1
+	# 				tell tab group 1
+	# 					tell pop up button 2
+	# 						click
+	# 						delay 1
+	# 						tell menu 1
+	# 							click menu item \"Fill Screen\"
+	# 						end tell
+	# 					end tell
+	# 				end tell
+	# 			end tell
+	# 		end tell
+	# 	end tell
+	# "
 
 	# ========== ScreenSaver Picture ==========
 	osascript -e "
@@ -252,9 +252,9 @@ Dock() {
 
 	# ========== Magnification ==========
 	# - Checked
-	# defaults write com.apple.dock magnification -bool true
+	defaults write com.apple.dock magnification -bool true
 	# - Unchecked
-	defaults delete com.apple.dock magnification
+	# defaults delete com.apple.dock magnification
 
 	# ========== `Magnification` Bar ==========
 	# @int: size
@@ -264,7 +264,7 @@ Dock() {
 	# - Left
 	# defaults write com.apple.dock orientation -string "left"
 	# - Bottom
-	defaults delete com.apple.dock orientation
+	defaults write com.apple.dock orientation -string "bottom"
 	# - Right
 	# defaults write com.apple.dock orientation -string "right"
 
@@ -286,9 +286,9 @@ Dock() {
 	# - Checked
 	# `Double-click a window's title bar to` pop up menu
 	#	- minimize
-	defaults write .GlobalPreferences AppleActionOnDoubleClick -string "Minimize"
+	# defaults write .GlobalPreferences AppleActionOnDoubleClick -string "Minimize"
 	#	- zoom
-	# defaults write .GlobalPreferences AppleActionOnDoubleClick -string "Maximize"
+	defaults write .GlobalPreferences AppleActionOnDoubleClick -string "Maximize"
 	# - Unchecked
 	# defaults write .GlobalPreferences AppleActionOnDoubleClick -string "None"
 
@@ -344,9 +344,9 @@ MissionControl() {
 
 	# ========== Displays have separate Spaces ==========
 	# - Checked
-	defaults write com.apple.spaces spans-displays -bool true
+	# defaults write com.apple.spaces spans-displays -bool true
 	# - Unchecked
-	# defaults write com.apple.spaces spans-displays -bool false
+	defaults write com.apple.spaces spans-displays -bool false
 
 	# ========== Dashboard ==========
 	# - Off
@@ -442,7 +442,7 @@ Spotlight() {
 LanguageRegion() {
 	# ========== Preferred languages ==========
 	# @string: languages abbreviation
-	defaults write .GlobalPreferences AppleLanguages -array en ja
+	defaults write .GlobalPreferences AppleLanguages -array en
 
 	# ========== Region ==========
 	# - Japan
@@ -965,15 +965,15 @@ Keyboard() {
 
 	# ========== Input Sources ==========
 	# FIX: inputmethod US
-	GJIME=$(defaults read com.apple.HIToolbox AppleEnabledInputSources | grep "InputSourceKind = \"Keyboard Input Method\"")
-	HNUM=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
-	if [[ -z  ${GJIME} ]]; then
-		/usr/libexec/PlistBuddy \
-	 		-c "Add AppleEnabledInputSources:${HNUM} dict" \
-	 		-c "Add AppleEnabledInputSources:${HNUM}:InputSourceKind string \"Keyboard Input Method\"" \
-	 		-c "Add AppleEnabledInputSources:${HNUM}:\"Bundle ID\" string \"com.google.inputmethod.Japanese\"" \
-			${HOME}/Library/Preferences/com.apple.HIToolbox.plist
-	fi
+	# GJIME=$(defaults read com.apple.HIToolbox AppleEnabledInputSources | grep "InputSourceKind = \"Keyboard Input Method\"")
+	# HNUM=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
+	# if [[ -z  ${GJIME} ]]; then
+	# 	/usr/libexec/PlistBuddy \
+	#  		-c "Add AppleEnabledInputSources:${HNUM} dict" \
+	#  		-c "Add AppleEnabledInputSources:${HNUM}:InputSourceKind string \"Keyboard Input Method\"" \
+	#  		-c "Add AppleEnabledInputSources:${HNUM}:\"Bundle ID\" string \"com.google.inputmethod.Japanese\"" \
+	# 		${HOME}/Library/Preferences/com.apple.HIToolbox.plist
+	# fi
 
 	# ========== Show Input menu in menu bar ==========
 	# - Checked
@@ -1224,23 +1224,23 @@ Finder() {
 
 	# ========== Show Toolbar ==========
 	# - Checked
-	defaults write com.apple.finder ShowSidebar -bool true
-	defaults write com.apple.finder ShowPreviewPane -bool true
+	# defaults write com.apple.finder ShowSidebar -bool true
+	# defaults write com.apple.finder ShowPreviewPane -bool true
 	# - Unchecked
-	# defaults write com.apple.finder ShowSidebar -bool false
-	# defaults write com.apple.finder ShowPreviewPane -bool false
+	defaults write com.apple.finder ShowSidebar -bool false
+	defaults write com.apple.finder ShowPreviewPane -bool false
 
 	# ========== Show Path Bar ==========
 	# - Checked
-	defaults write com.apple.finder ShowPathbar -bool true
+	# defaults write com.apple.finder ShowPathbar -bool true
 	# - Unchecked
-	# defaults write com.apple.finder ShowPathbar -bool false
+	defaults write com.apple.finder ShowPathbar -bool false
 
 	# ========== Show Tab Bar ==========
 	# - Checked
-	defaults write com.apple.finder ShowTabView -bool true
+	# defaults write com.apple.finder ShowTabView -bool true
 	# - Unchecked
-	# defaults write com.apple.finder ShowTabView -bool false
+	defaults write com.apple.finder ShowTabView -bool false
 
 	# ========== Show Status Bar ==========
 	# - Checked
@@ -1353,7 +1353,7 @@ ScreenShot() {
 ## ----------------------------------------
 ExtraSettings() {
 	# ========== Dock Applications ==========
-	defaults delete com.apple.dock persistent-apps
+	# defaults delete com.apple.dock persistent-apps
 	# dockitem=(
 	# 	"Mail"                "com.apple.mail"                            "file:///Applications/Mail.app/"
 	# 	"Docker"              "com.docker.docker"                         "file:///Applications/Docker.app/"
@@ -1448,8 +1448,8 @@ ExtraSettings() {
 	defaults write com.apple.finder AppleShowAllFiles true
 
 	# ========== Show Directory Details ==========
-	defaults write com.apple.finder ShowPathbar -bool true
-	defaults write com.apple.finder ShowStatusBar -bool true
+	# defaults write com.apple.finder ShowPathbar -bool true
+	# defaults write com.apple.finder ShowStatusBar -bool true
 	defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 	# ========== Search current directory when exec search in Finder ==========
