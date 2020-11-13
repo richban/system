@@ -1,5 +1,3 @@
-local hyper = { "cmd", "alt", "ctrl", "shift" }
-
 --- A closure function
 function open(name)
     return function()
@@ -10,8 +8,3 @@ function open(name)
     end
 end
 
---- quick open applications
-hs.hotkey.bind(hyper, "f", open("Finder"))
-hs.hotkey.bind(hyper, "c", open("Google Chrome"))
-hs.hotkey.bind(hyper, "t", open("iTerm"))
-hs.hotkey.bind(hyper, "v", open("Visual Studio Code"))

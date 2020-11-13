@@ -1,3 +1,8 @@
+--------------------------------------------------------------------------------
+-- Unsupported Spaces extension. Uses private APIs but works okay.
+-- (http://github.com/asmagill/hammerspoon_asm.undocumented)
+spaces = require("hs._asm.undocumented.spaces")
+
 require('utils')
 require('shortcuts')
 
@@ -7,47 +12,62 @@ hs.hotkey.bind(hyper, "0", function()
   hs.reload()
 end)
 
+--- quick open applications
+hs.hotkey.bind(hyper, "f", function()
+        local shell_cmd = "open ~/Developer"
+        hs.execute(shell_cmd)
+end)
+
+hs.hotkey.bind(hyper, "c", open("Google Chrome"))
+hs.hotkey.bind(hyper, "t", open("iTerm"))
+hs.hotkey.bind(hyper, "v", open("Visual Studio Code"))
+
+--- Conect to Adam
+hs.hotkey.bind(hyper, "a", function()
+    local _, output = hs.osascript.applescriptFromFile("adam.applescript")    
+    hs.notify.new({title="Hammerspoon", informativeText=output}):send()
+end)
+
+--- Connect to Eva
+hs.hotkey.bind(hyper, "e", function()
+    local _, output = hs.osascript.applescriptFromFile("eva.applescript")    
+    hs.notify.new({title="Hammerspoon", informativeText=output}):send()
+end)
+
+hs.hotkey.bind(hyper, "p", function()
+    hs.network.ping.ping("8.8.8.8", 1, 0.01, 1.0, "any", pingResult)
+end)
+
+--- draw mouse 
+hs.hotkey.bind(hyper, "M", mouseHighlight)
+
 hs.notify.new({title="Hammerspoon", informativeText="Config loaded"}):send()
 
---------------------------------
--- START VIM CONFIG
---------------------------------
-local VimMode = hs.loadSpoon("VimMode")
-local vim = VimMode:new()
+--- Toogle Microphone 
 
--- Configure apps you do *not* want Vim mode enabled in
--- For example, you don't want this plugin overriding your control of Terminal
--- vim
-vim
-  :disableForApp('Code')
-  :disableForApp('zoom.us')
-  :disableForApp('iTerm')
-  :disableForApp('iTerm2')
-  :disableForApp('Terminal')
+function displayMicMuteStatus()
+    local currentAudioInput = hs.audiodevice.current(true)
+    local currentAudioInputObject = hs.audiodevice.findInputByUID(currentAudioInput.uid)
+    muted = currentAudioInputObject:inputMuted()
+    if muted then
+        hs.alert.show("Microphone Muted")
+    else
+        hs.alert.show("Microphone Unmuted")
+    end
+end
 
--- If you want the screen to dim (a la Flux) when you enter normal mode
--- flip this to true.
-vim:shouldDimScreenInNormalMode(false)
+for i,dev in ipairs(hs.audiodevice.allInputDevices()) do
+   dev:watcherCallback(displayMicMuteStatus):watcherStart()
+end
 
--- If you want to show an on-screen alert when you enter normal mode, set
--- this to true
-vim:shouldShowAlertInNormalMode(true)
+function toggleMicMuteStatus()
+    local currentAudioInput = hs.audiodevice.current(true)
+    local currentAudioInputObject = hs.audiodevice.findInputByUID(currentAudioInput.uid)
+    currentAudioInputObject:setInputMuted(not muted)
+    displayMicMuteStatus()
+end
 
--- You can configure your on-screen alert font
-vim:setAlertFont("Courier New")
+displayMicMuteStatus()
 
--- Enter normal mode by typing a key sequence
-vim:enterWithSequence('jk')
+hs.hotkey.bind(hyper, "m", toggleMicMuteStatus)
 
--- if you want to bind a single key to entering vim, remove the
--- :enterWithSequence('jk') line above and uncomment the bindHotKeys line
--- below:
---
--- To customize the hot key you want, see the mods and key parameters at:
---   https://www.hammerspoon.org/docs/hs.hotkey.html#bind
---
--- vim:bindHotKeys({ enter = { {'ctrl'}, ';' } })
-
---------------------------------
--- END VIM CONFIG
---------------------------------
