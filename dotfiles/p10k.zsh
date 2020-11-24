@@ -38,10 +38,10 @@
 
   # Prompt colors.
   local grey='242'
-  local red='#FF5C57'
+  local red='#FB4934'
   local yellow='#F3F99D'
-  local blue='#00B0FE'
-  local magenta='#FF6AC1'
+  local blue='#458588'
+  local magenta='#B16286'
   local cyan='#9AEDFE'
   local white='#F1F1F0'
 
@@ -66,7 +66,9 @@
     asdf                      # tool versions from asdf
     pyenv                     # python environment
     nvm                       # node.js environment
-    context                   # user@host
+    azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
+    # gcloud                  # google cloud cli account and project (https://cloud.google.com/)
+    # google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
     # time                    # current time
     # =========================[ Line #2 ]=========================
     newline                   # \n

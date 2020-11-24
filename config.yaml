@@ -92,6 +92,15 @@ dotfiles:
   d_hammerspoon:
     src: hammerspoon
     dst: ~/.hammerspoon
+  f_tmux-gruvbox-dark.conf:
+    src: tmux/plugins/tmux-gruvbox/tmux-gruvbox-dark.conf
+    dst: ~/.tmux/plugins/tmux-gruvbox/tmux-gruvbox-dark.conf
+  f_init.vim:
+    src: config/nvim/init.vim
+    dst: ~/.config/nvim/init.vim
+  f_tmux.remote.conf:
+    src: tmux.remote.conf
+    dst: ~/.tmux.remote.conf
 profiles:
   balthasar-2:
     dotfiles:
@@ -119,6 +128,9 @@ profiles:
     - f_plug.vim
     - f_filetype.vim
     - d_hammerspoon
+    - f_tmux-gruvbox-dark.conf
+    - f_init.vim
+    - f_tmux.remote.conf
   linux:
     dotfiles:
     - f_tmux.conf

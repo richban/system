@@ -26,7 +26,7 @@ export HADOOP_HOME="$HOME/Developer/spark-3.0.1-bin-hadoop2.7"
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vi -c "let g:tty='\''$(tty)'\''"'
 else
-    export EDITOR='vi -c "let g:tty='\''$(tty)'\''"'
+    export EDITOR='nvim -c "let g:tty='\''$(tty)'\''"'
 fi
 
 export CVSEDITOR="${EDITOR}"

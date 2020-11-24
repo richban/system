@@ -10,7 +10,7 @@ alias tree1="tree -d -L 1"
 alias tree2="tree -d -L 2"
 
 if type "exa" > /dev/null; then
-    alias l='exa -l --icons --header --long --git --color=always --group-directories-first --sort=ext' # my preferred listing
+    alias l='exa -l --icons --classify --header --long --git --group-directories-first --sort=ext' # my preferred listing
     alias la='exa -a --header --long --git --color=always --group-directories-first --sort=ext'  # all files and dirs
     alias ll='exa -lh --links --blocks --accessed --created --header --long --git --color=always --modified --group-directories-first'  # long format
     alias ld='exa -D --color=always --group-directories-first --sort=ext' # my preferred listing
@@ -68,3 +68,6 @@ alias spotoff="sudo mdutil -a -i off"
 # Enable Spotlight
 alias spoton="sudo mdutil -a -i on"
 
+alias vi='vi -c "let g:tty='\''$(tty)'\''"'
+alias nvim='nvim -c "let g:tty='\''$(tty)'\''"'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
