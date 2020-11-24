@@ -39,6 +39,13 @@ symlink_dotfiles() {
 	fi
 }
 
+dotdrop_install_dotfiles() {
+	git clone --recursive https://github.com/richban/dotfiles.git "$HOME"/.dotfiles
+	pip3 install --user -r "$HOME"/.dotfiles/dotdrop/requirements.txt
+	$HOME/.dotfiles/dotdrop/bootstrap.sh
+	$HOME/.dotfiles/dotdrop.sh install --profile=${PROFILE}
+}
+
 configure_system() {
 	CWD=${EXEPATH}/system
 	osascript -e 'tell application "System Preferences" to quit' > /dev/null 2>&1
@@ -227,6 +234,11 @@ if [[ ${argv[@]} =~ "--test" ]]; then
 	argv=( ${argv[@]/"--test"} )
 fi
 
+if [[ ${argv[@]} =~ "--profile"]]; then
+	read -r -p "Which profile wish you to install? " profile;
+	PROFILE=profile
+fi
+
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
@@ -235,9 +247,9 @@ for opt in ${argv[@]}; do
 		--init)     running "init"; initialize; print_result $? "Error"  ;;
 		--bundle)   running "bundle"; install_bundle; print_result $? "Error";;
 		--system)   running "system"; configure_system; print_result $? "Error";;
-		--dotfiles) running "dotfiles"; symlink_dotfiles; print_result $?
+		--dotfiles) running "dotfiles"; dotdrop_install_dotfiles; print_result $?
 			"Error";;
-		--all)      running "all"; install_bundle; symlink_dotfiles;
+		--all)      running "all"; install_bundle; dotdrop_install_dotfiles;
 			configure_system; print_result $? "Error";;
 		*)          echo "invalid option $1"; ;;
 	esac

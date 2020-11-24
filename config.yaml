@@ -131,9 +131,32 @@ profiles:
     - f_tmux-gruvbox-dark.conf
     - f_init.vim
     - f_tmux.remote.conf
-  linux:
+  casper-03:
     dotfiles:
     - f_tmux.conf
+    - f_zshrc
+    - f_zshenv
     - f_alias
-    - vim
+    - f_functions
+    - f_tool-versions
+    - f_matplotlibrc
+    - f_gitconfig
+    - f_settings.json
+    - f_init.lua
+    - f_shortcuts.lua
+    - f_utils.lua
+    - f_skhdrc
+    - f_yabairc
+    - f_p10k.zsh
     - f_vimrc
+    - f_yank.vim
+    - f_typescript.vim
+    - f_typescipt.vim
+    - f_sshknownhosts.vim
+    - f_plugin_yank.vim
+    - f_plug.vim
+    - f_filetype.vim
+    - d_hammerspoon
+    - f_tmux-gruvbox-dark.conf
+    - f_init.vim
+    - f_tmux.remote.conf
