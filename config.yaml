@@ -114,8 +114,12 @@ dotfiles:
   f_gruvbox.itermcolors:
     src: gruvbox.itermcolors
     dst: ~/gruvbox.itermcolors
+  f_karabiner.json:
+    src: config/karabiner/karabiner.json
+    dst: ~/.config/karabiner/karabiner.json
+    chmod: '600'
 profiles:
-  balthasar-2:
+  balthasar-02:
     dotfiles:
     - f_tmux.conf
     - f_zshrc
@@ -144,6 +148,9 @@ profiles:
     - f_tmux-gruvbox-dark.conf
     - f_init.vim
     - f_tmux.remote.conf
+    - f_prefs.js
+    - f_gruvbox.itermcolors
+    - f_karabiner.json
   casper-03:
     dotfiles:
     - f_tmux.conf
@@ -173,9 +180,6 @@ profiles:
     - f_tmux-gruvbox-dark.conf
     - f_init.vim
     - f_tmux.remote.conf
-  balthasar-02:
-    dotfiles:
-    - f_zshenv_1
-    - f_zshrc_1
     - f_prefs.js
     - f_gruvbox.itermcolors
+    - f_karabiner.json
