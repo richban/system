@@ -661,8 +661,8 @@ Displays() {
 EnergySaver() {
 	# ========== Show Battery status in menu bar ==========
 	# - Checked
-	IS_BATTERY=$(defaults read com.apple.systemuiserver menuExtras | grep "Battery")
-	[[ -z ${IS_BATTERY} ]] && /usr/libexec/PlistBuddy -c "Add menuExtras \"/System/Library/CoreServices/Menu Extras/Battery.menu\"" ${HOME}/Library/Preferences/com.apple.systemuiserver.plist
+	# IS_BATTERY=$(defaults read com.apple.systemuiserver menuExtras | grep "Battery")
+	# [[ -z ${IS_BATTERY} ]] && /usr/libexec/PlistBuddy -c "Add menuExtras \"/System/Library/CoreServices/Menu Extras/Battery.menu\"" ${HOME}/Library/Preferences/com.apple.systemuiserver.plist
 	# - Unchecked
 	# IS_BATTERY=$(defaults read com.apple.systemuiserver menuExtras | grep "Battery")
 	# [[ -n ${IS_BATTERY} ]] && /usr/libexec/PlistBuddy -c "Delete menuExtras:\"/System/Library/CoreServices/Menu Extras/Battery.menu\"" ${HOME}/Library/Preferences/com.apple.systemuiserver.plist

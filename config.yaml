@@ -107,6 +107,13 @@ dotfiles:
   f_zshrc_1:
     src: zshrc
     dst: ~/.zshrc
+  f_prefs.js:
+    src: config/firefox/prefs.js
+    dst: ~/.config/firefox/prefs.js
+    chmod: '600'
+  f_gruvbox.itermcolors:
+    src: gruvbox.itermcolors
+    dst: ~/gruvbox.itermcolors
 profiles:
   balthasar-2:
     dotfiles:
@@ -170,3 +177,5 @@ profiles:
     dotfiles:
     - f_zshenv_1
     - f_zshrc_1
+    - f_prefs.js
+    - f_gruvbox.itermcolors
