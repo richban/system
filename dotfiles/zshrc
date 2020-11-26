@@ -43,7 +43,10 @@ if [[ -d ~/.asdf ]]; then
     . $HOME/.asdf/completions/asdf.bash
 fi
 
-eval "$(pyenv init -)"
+if type "pyenv" > /dev/null; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # -------------------------- FZF ----------------------------------------------
 export FZF_DEFAULT_COMMAND="rg --files"

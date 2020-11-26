@@ -195,7 +195,8 @@ extra(){
 	sudo cp ./bundle/Hostsfile /etc/hosts
 }
 
-python(){
+python() {
+	CWD=${EXEPATH}/bundle
 
 	pyenv install 3.8.5
 	pyenv install 2.7.8
