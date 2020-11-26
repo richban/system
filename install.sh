@@ -39,7 +39,7 @@ symlink_dotfiles() {
 	fi
 }
 
-dotdrop_install_dotfiles() {
+install_dotfiles() {
 	git clone --recursive https://github.com/richban/dotfiles.git "$HOME"/.dotfiles
 	pip3 install --user -r "$HOME"/.dotfiles/dotdrop/requirements.txt
 	$HOME/.dotfiles/dotdrop/bootstrap.sh
@@ -149,7 +149,7 @@ install_bundle() {
 	## ========== VSCode ==========
 	## - code --list-extensions > Vsplug
 	if ! ${TESTMODE}; then
-		plugins=($(cat ${CWD}/Vsplug))
+		plugins=($(cat ${CWD}/VSCodeplug))
 		for plugin in ${plugins}; do
 			code --install-extension ${plugin}
 		done
@@ -263,7 +263,7 @@ for opt in ${argv[@]}; do
 		--bundle)   running "bundle"; install_bundle; print_result $? "Error";;
 		--system)   running "system"; configure_system; print_result $? "Error";;
 		--python)   running "python"; python; print_result $? "Error";;
-		--dotfiles) running "dotfiles"; dotdrop_install_dotfiles; print_result $?
+		--dotfiles) running "dotfiles"; install_dotfiles; print_result $?
 			"Error";;
 		--all)      running "all"; configure_system;
 			install_bundle;
