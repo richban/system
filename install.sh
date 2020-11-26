@@ -67,9 +67,15 @@ install_bundle() {
 	npm update -g npm
 	npm install -g $(cat ${CWD}/Npmfile)
 
-	## ========== Pip ==========
-	pip3 install --upgrade pip
-	pip3 install -r ${CWD}/Pipfile
+	# ## ========== asdf ==========
+	# if [[ ! -d "$HOME"/.asdf/plugins/python ]]; then
+	# 	"$HOME"/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+	# fi
+	# if [[ ! -d "$HOME"/.asdf/installs/python ]]; then
+	# 	"$HOME"/.asdf/bin/asdf plugin add python
+	# 	"$HOME"/.asdf/bin/asdf install python 3.8.5
+	# fi
+
 
 	## ========== Rust ==========
 	# rustup-init -y
@@ -128,10 +134,6 @@ install_bundle() {
 	# 	"
 	# fi
 
-	## ========== Yabai ==========
-	# brew services start skhd
-	# brew services start yabai
-
 	## ========== Docker ==========
 	mkdir -p ${HOME}/.zsh/completion
 	curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
@@ -153,14 +155,9 @@ install_bundle() {
 		done
 	fi
 
-	## ========== asdf ==========
-	if [[ ! -d "$HOME"/.asdf/plugins/python ]]; then
-    "$HOME"/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
-	fi
-	if [[ ! -d "$HOME"/.asdf/installs/python ]]; then
-    "$HOME"/.asdf/bin/asdf plugin add python
-    "$HOME"/.asdf/bin/asdf install python 3.8.5
-	fi
+	## ========== Yabai ==========
+	# brew services start skhd
+	# brew services start yabai
 }
 
 initialize() {
@@ -196,6 +193,24 @@ extra(){
 	# Overwrite /etc/hosts with the ad-blocking hosts file
 	sudo cp /etc/hosts /etc/hosts.backup
 	sudo cp ./bundle/Hostsfile /etc/hosts
+}
+
+python(){
+
+	pyenv install 3.8.5
+	pyenv install 2.7.8
+
+	pyenv virtualenv 2.7.8 neovim2
+	pip install neovim
+	pyenv which python
+
+	pyenv virtualenv 3.8.5 neovim3
+	pip install neovim
+	pyenv which python
+
+	## ========== Pip ==========
+	pip3 install --upgrade pip
+	pip3 install -r ${CWD}/Pipfile
 }
 
 usage() {
@@ -247,10 +262,14 @@ for opt in ${argv[@]}; do
 		--init)     running "init"; initialize; print_result $? "Error"  ;;
 		--bundle)   running "bundle"; install_bundle; print_result $? "Error";;
 		--system)   running "system"; configure_system; print_result $? "Error";;
+		--python)   running "python"; python; print_result $? "Error";;
 		--dotfiles) running "dotfiles"; dotdrop_install_dotfiles; print_result $?
 			"Error";;
-		--all)      running "all"; install_bundle; dotdrop_install_dotfiles;
-			configure_system; print_result $? "Error";;
+		--all)      running "all"; configure_system;
+			install_bundle;
+			extra;
+			dotdrop_install_dotfiles; \
+			print_result $? "Error";;
 		*)          echo "invalid option $1"; ;;
 	esac
 done

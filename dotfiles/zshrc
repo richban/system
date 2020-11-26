@@ -35,17 +35,15 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 # -------------------------- PACKAGES -----------------------------------------
 
+[[ -f ~/.alias ]] && source ~/.alias
+[[ -f ~/.functions ]] && source ~/.functions
+
 if [[ -d ~/.asdf ]]; then
     . $HOME/.asdf/asdf.sh
     . $HOME/.asdf/completions/asdf.bash
 fi
 
-if type "broot" > /dev/null; then
-    source $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br
-fi
-
-[[ -f ~/.alias ]] && source ~/.alias
-[[ -f ~/.functions ]] && source ~/.functions
+eval "$(pyenv init -)"
 
 # -------------------------- FZF ----------------------------------------------
 export FZF_DEFAULT_COMMAND="rg --files"

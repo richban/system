@@ -21,6 +21,8 @@ export MY_SESSION_BUS_SOCKET=/tmp/dbus/unix_richban_listener
 export TERM=xterm-256color-italic
 export SPARK_HOME="$HOME/Developer/spark-3.0.1-bin-hadoop2.7"
 export HADOOP_HOME="$HOME/Developer/spark-3.0.1-bin-hadoop2.7"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 # -------------------------- EDITOR -------------------------------------------
 if [[ -n $SSH_CONNECTION ]]; then

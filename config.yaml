@@ -101,6 +101,12 @@ dotfiles:
   f_tmux.remote.conf:
     src: tmux.remote.conf
     dst: ~/.tmux.remote.conf
+  f_zshenv_1:
+    src: zshenv
+    dst: ~/.zshenv
+  f_zshrc_1:
+    src: zshrc
+    dst: ~/.zshrc
 profiles:
   balthasar-2:
     dotfiles:
@@ -160,3 +166,7 @@ profiles:
     - f_tmux-gruvbox-dark.conf
     - f_init.vim
     - f_tmux.remote.conf
+  balthasar-02:
+    dotfiles:
+    - f_zshenv_1
+    - f_zshrc_1
