@@ -249,7 +249,7 @@ if [[ ${argv[@]} =~ "--test" ]]; then
 	argv=( ${argv[@]/"--test"} )
 fi
 
-if [[ ${argv[@]} =~ "--profile"]]; then
+if [[ ${argv[@]} =~ "--profile" ]]; then
 	read -r -p "Which profile wish you to install? " profile;
 	PROFILE=profile
 fi

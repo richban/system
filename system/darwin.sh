@@ -306,7 +306,7 @@ Dock() {
 
 	# ========== Automatically hide and show the Dock ==========
 	# - Checked
-	defaults write com.apple.dock autohide -bool true
+	# defaults write com.apple.dock autohide -bool true
 	# - Unchecked
 	# defaults delete com.apple.dock autohide
 
@@ -597,32 +597,32 @@ Sound() {
 }
 
 Displays() {
-	# ========== Resolution ==========
-	# Resolution
-	# - Default for display
-	# - Scaled
-	#	- Larger Text
-	# 	- Second Larger Text
-	# 	- Middle
-	# 	- Default
-	# 	- More Space
-	osascript -e "
-		tell application \"System Preferences\"
-			activate
-			reveal anchor \"displaysDisplayTab\" of pane id \"com.apple.preference.displays\"
-		end tell
-		tell application \"System Events\"
-			delay 0.5
-			tell application process \"System Preferences\" to tell window \"Built-in Retina Display\"
-				click radio button \"Scaled\" of radio group 1 of tab group 1
-				click radio button 4 of radio group 1 of group 2 of tab group 1
-				delay 0.5
-				try
-					click button \"OK\" of sheet 1
-				end try
-			end tell
-		end tell
-	"
+#	# ========== Resolution ==========
+#	# Resolution
+#	# - Default for display
+#	# - Scaled
+#	#	- Larger Text
+#	# 	- Second Larger Text
+#	# 	- Middle
+#	# 	- Default
+#	# 	- More Space
+#	osascript -e "
+#		tell application \"System Preferences\"
+#			activate
+#			reveal anchor \"displaysDisplayTab\" of pane id \"com.apple.preference.displays\"
+#		end tell
+#		tell application \"System Events\"
+#			delay 0.5
+#			tell application process \"System Preferences\" to tell window \"Built-in Retina Display\"
+#				click radio button \"Scaled\" of radio group 1 of tab group 1
+#				click radio button 4 of radio group 1 of group 2 of tab group 1
+#				delay 0.5
+#				try
+#					click button \"OK\" of sheet 1
+#				end try
+#			end tell
+#		end tell
+#	"
 
 	# ========== Show mirroring options in the menu bar when available ==========
 	# - Checked
@@ -897,71 +897,71 @@ Keyboard() {
 	defaults write .GlobalPreferences NSAutomaticDashSubstitutionEnabled -bool false
 	defaults write .GlobalPreferences NSAutomaticQuoteSubstitutionEnabled -bool false
 
-	# ========== Input Sources Shortcut ==========
-	osascript -e "
-		tell application \"System Preferences\"
-			activate
-			reveal anchor \"shortcutsTab\" of pane id \"com.apple.preference.keyboard\"
-		end tell
-		tell application \"System Events\"
-			tell application process \"System Preferences\"
-				repeat while not (window 1 exists)
-				end repeat
-			tell window 1
-			repeat while not (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1 exists)
-			end repeat
-			repeat with current_row in (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1)
-				if value of static text 1 of current_row is equal to \"Input Sources\" then
-					select current_row
-					exit repeat
-				end if
-			end repeat
-			repeat while not (rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1 exists)
-			end repeat
-			repeat with current_row in rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1
-				if name of UI element 2 of current_row is equal to \"Select next source in input menu\" then
-					select current_row
-					click checkbox of UI element 1 of current_row
-					exit repeat
-				end if
-			end repeat
-			end tell
-			end tell
-		end tell
-	"
+	# # ========== Input Sources Shortcut ==========
+	# osascript -e "
+	# 	tell application \"System Preferences\"
+	# 		activate
+	# 		reveal anchor \"shortcutsTab\" of pane id \"com.apple.preference.keyboard\"
+	# 	end tell
+	# 	tell application \"System Events\"
+	# 		tell application process \"System Preferences\"
+	# 			repeat while not (window 1 exists)
+	# 			end repeat
+	# 		tell window 1
+	# 		repeat while not (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1 exists)
+	# 		end repeat
+	# 		repeat with current_row in (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1)
+	# 			if value of static text 1 of current_row is equal to \"Input Sources\" then
+	# 				select current_row
+	# 				exit repeat
+	# 			end if
+	# 		end repeat
+	# 		repeat while not (rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1 exists)
+	# 		end repeat
+	# 		repeat with current_row in rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1
+	# 			if name of UI element 2 of current_row is equal to \"Select next source in input menu\" then
+	# 				select current_row
+	# 				click checkbox of UI element 1 of current_row
+	# 				exit repeat
+	# 			end if
+	# 		end repeat
+	# 		end tell
+	# 		end tell
+	# 	end tell
+	# "
 
-	# ========== Spotlight Shortcut ==========
-	osascript -e "
-		tell application \"System Preferences\"
-			activate
-			reveal anchor \"shortcutsTab\" of pane id \"com.apple.preference.keyboard\"
-		end tell
-		tell application \"System Events\"
-			tell application process \"System Preferences\"
-				repeat while not (window 1 exists)
-				end repeat
-			tell window 1
-			repeat while not (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1 exists)
-			end repeat
-			repeat with current_row in (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1)
-				if value of static text 1 of current_row is equal to \"Spotlight\" then
-					select current_row
-					exit repeat
-				end if
-			end repeat
-			repeat while not (rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1 exists)
-			end repeat
-			repeat with current_row in rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1
-				if name of UI element 2 of current_row is equal to \"Show Spotlight search\" then
-					select current_row
-					click checkbox of UI element 1 of current_row
-					exit repeat
-				end if
-			end repeat
-			end tell
-			end tell
-		end tell
-	"
+	# # ========== Spotlight Shortcut ==========
+	# osascript -e "
+	# 	tell application \"System Preferences\"
+	# 		activate
+	# 		reveal anchor \"shortcutsTab\" of pane id \"com.apple.preference.keyboard\"
+	# 	end tell
+	# 	tell application \"System Events\"
+	# 		tell application process \"System Preferences\"
+	# 			repeat while not (window 1 exists)
+	# 			end repeat
+	# 		tell window 1
+	# 		repeat while not (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1 exists)
+	# 		end repeat
+	# 		repeat with current_row in (rows of table 1 of scroll area 1 of splitter group 1 of tab group 1)
+	# 			if value of static text 1 of current_row is equal to \"Spotlight\" then
+	# 				select current_row
+	# 				exit repeat
+	# 			end if
+	# 		end repeat
+	# 		repeat while not (rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1 exists)
+	# 		end repeat
+	# 		repeat with current_row in rows of outline 1 of scroll area 2 of splitter group 1 of tab group 1
+	# 			if name of UI element 2 of current_row is equal to \"Show Spotlight search\" then
+	# 				select current_row
+	# 				click checkbox of UI element 1 of current_row
+	# 				exit repeat
+	# 			end if
+	# 		end repeat
+	# 		end tell
+	# 		end tell
+	# 	end tell
+	# "
 
 	# ========== Input Sources ==========
 	# FIX: inputmethod US
@@ -1412,8 +1412,8 @@ ExtraSettings() {
 	# 		-c "Add persistent-apps:${idx}:tile-data:file-data:_CFURLStringType integer 15" \
 	# 		${PLIST}
 	# done
-	killall cfprefsd
-	killall Dock
+	# killall cfprefsd
+	# killall Dock
 
 	# ========== Default Application ==========
 	# - Editor - TextEdit
@@ -1534,24 +1534,24 @@ ExtraSettings() {
 
 }
 
-## ----------------------------------------
-##	Main
-## ----------------------------------------
-MACOS=$(/usr/libexec/PlistBuddy -c "Print:ProductVersion" /System/Library/CoreServices/SystemVersion.plist | awk -F. '{print $1"."$2}')
-if [[ $MACOS == "10.15" ]]; then
-	# This is Catalina Version.
-	# If the latest version is updated, add warning message here.
-	:
-elif [[ $MACOS == "10.14" ]]; then
-	echo "You are using Mojave OS. It may cause errors since this shell is maintained with Catalina OS."
-	read -p "Will you continue? (Y/n): " Ans;
-	[[ $Ans != 'Y' ]] && echo 'Canceled' && exit 0;
-else
-	echo "MacOS upper than Mojave is supported."
-	exit 1
-fi
+### ----------------------------------------
+###	Main
+### ----------------------------------------
+#MACOS=$(/usr/libexec/PlistBuddy -c "Print:ProductVersion" /System/Library/CoreServices/SystemVersion.plist | awk -F. '{print $1"."$2}')
+#if [[ $MACOS == "10.15" ]]; then
+#	# This is Catalina Version.
+#	# If the latest version is updated, add warning message here.
+#	:
+#elif [[ $MACOS == "10.14" ]]; then
+#	echo "You are using Mojave OS. It may cause errors since this shell is maintained with Catalina OS."
+#	read -p "Will you continue? (Y/n): " Ans;
+#	[[ $Ans != 'Y' ]] && echo 'Canceled' && exit 0;
+#else
+#	echo "MacOS upper than Mojave is supported."
+#	exit 1
+#fi
 
-Appstore
+AppStore
 Bluetooth
 DateTime
 Desktop
