@@ -13,7 +13,6 @@ brew "sqlite"
 # ------------------------------ LANGUAGE -------------------------------------
 
 brew "lua"
-brew "go"
 brew "gcc"
 brew "node"
 brew "cmake"
@@ -83,7 +82,6 @@ cask "karabiner-elements"
 cask "alacritty"
 cask "chromedriver"
 
-mas "Instapaper", id: 1481302432
 mas "WeChat", id: 836500024
 mas "Notability", id: 736189492
 mas "NordVPN IKE", id: 1116599239

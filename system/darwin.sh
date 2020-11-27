@@ -1590,6 +1590,6 @@ if ! ${TESTMODE}; then
 		"Contacts" "Dock" "Finder" "Mail" "Messages" \
 		"SystemUIServer" "Terminal" "Transmission" "iCal"
 	do
-		killall ${app}
+		# killall ${app}
 	done
 fi

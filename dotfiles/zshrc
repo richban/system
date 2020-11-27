@@ -48,6 +48,11 @@ if type "pyenv" > /dev/null; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
+if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+	[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
+	alias imgcat='/usr/local/bin/imgcat'
+fi
+
 # -------------------------- FZF ----------------------------------------------
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_COMPLETION_TRIGGER='**'
@@ -121,6 +126,3 @@ zinit load voronkovich/gitignore.plugin.zsh
 # -------------------------- PROMPT -------------------------------------------
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 [ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
