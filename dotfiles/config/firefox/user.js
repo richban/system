@@ -1,4 +1,3 @@
-// Firefox Settings Nov 2020 @richban
 user_pref("app.normandy.api_url", "");
 user_pref("app.normandy.enabled", false);
 user_pref("app.shield.optoutstudies.enabled", false);
