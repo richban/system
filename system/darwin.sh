@@ -669,9 +669,9 @@ EnergySaver() {
 
 	# ========== Show Battery percentage in menu bar ==========
 	# - Show
-	# defaults write com.apple.menuextra.battery ShowPercent -string "Yes"
+	defaults write com.apple.menuextra.battery ShowPercent -string "Yes"
 	# - Hide
-	defaults write com.apple.menuextra.battery ShowPercent -string "NO"
+	# defaults write com.apple.menuextra.battery ShowPercent -string "NO"
 
 	# ========== Turn display off after ==========
 	# @int: minutes
@@ -1208,9 +1208,9 @@ Finder() {
 
 	# ========== View ==========
 	# - as Icons
-	# defaults write com.apple.Finder FXPreferredViewStyle -string icnv
+	defaults write com.apple.Finder FXPreferredViewStyle -string icnv
 	# - as Columns
-	defaults write com.apple.Finder FXPreferredViewStyle -string Nlsv
+	# defaults write com.apple.Finder FXPreferredViewStyle -string Nlsv
 	# - as Gallary View
 	# defaults write com.apple.Finder FXPreferredViewStyle -string clmv
 	# - as List

@@ -40,10 +40,9 @@ symlink_dotfiles() {
 }
 
 install_dotfiles() {
-	git clone --recursive https://github.com/richban/dotfiles.git "$HOME"/.dotfiles
-	pip3 install --user -r "$HOME"/.dotfiles/dotdrop/requirements.txt
-	$HOME/.dotfiles/dotdrop/bootstrap.sh
-	$HOME/.dotfiles/dotdrop.sh install --profile=${PROFILE}
+	CWD=${EXEPATH}/dotdrop
+	pip3 install --user -r ${CWD}/requirements.txt
+	${CWD}/dotdrop.sh install --profile=${PROFILE}
 }
 
 configure_system() {
@@ -250,7 +249,7 @@ if [[ ${argv[@]} =~ "--test" ]]; then
 	argv=( ${argv[@]/"--test"} )
 fi
 
-if [[ ${argv[@]} =~ "--profile" ]]; then
+if [[ ${argv[@]} =~ "--dotfiles" ]]; then
 	read -r -p "Which profile wish you to install? " profile;
 	PROFILE=profile
 fi
@@ -262,7 +261,7 @@ for opt in ${argv[@]}; do
 	case $opt in
 		--init)     running "init"; initialize; print_result $? "Error"  ;;
 		--bundle)   running "bundle"; install_bundle; print_result $? "Error";;
-		--system)   running "system"; configure_system; print_result $? "Error";;
+		--system)   running "system"; extra; configure_system; print_result $? "Error";;
 		--python)   running "python"; python; print_result $? "Error";;
 		--dotfiles) running "dotfiles"; install_dotfiles; print_result $?
 			"Error";;
