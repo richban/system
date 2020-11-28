@@ -107,9 +107,9 @@ dotfiles:
   f_zshrc_1:
     src: zshrc
     dst: ~/.zshrc
-  f_prefs.js:
-    src: config/firefox/prefs.js
-    dst: ~/.config/firefox/prefs.js
+  f_user.js:
+    src: config/firefox/user.js
+    dst: ~/.config/firefox/user.js
     chmod: '600'
   f_gruvbox.itermcolors:
     src: gruvbox.itermcolors
@@ -118,6 +118,15 @@ dotfiles:
     src: config/karabiner/karabiner.json
     dst: ~/.config/karabiner/karabiner.json
     chmod: '600'
+  f_vimium-options.json:
+    src: config/firefox/vimium-options.json
+    dst: ~/.config/firefox/vimium-options.json
+  f_ctags:
+    src: ctags
+    dst: ~/.ctags
+  f_spoof_mac_address.sh:
+    src: config/spoof_mac_address.sh
+    dst: ~/.config/spoof_mac_address.sh
 profiles:
   balthasar-02:
     dotfiles:
@@ -148,9 +157,12 @@ profiles:
     - f_tmux-gruvbox-dark.conf
     - f_init.vim
     - f_tmux.remote.conf
-    - f_prefs.js
+    - f_user.js
     - f_gruvbox.itermcolors
     - f_karabiner.json
+    - f_vimium-options.json
+    - f_ctags
+    - f_spoof_mac_address.sh
   casper-03:
     dotfiles:
     - f_tmux.conf
@@ -180,6 +192,6 @@ profiles:
     - f_tmux-gruvbox-dark.conf
     - f_init.vim
     - f_tmux.remote.conf
-    - f_prefs.js
+    - f_user.js
     - f_gruvbox.itermcolors
     - f_karabiner.json
