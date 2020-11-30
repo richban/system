@@ -102,6 +102,7 @@ zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_
 zinit wait lucid for \
 atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \
+    OMZP::colored-man-pages \
  blockf \
     zsh-users/zsh-completions \
  atload"!_zsh_autosuggest_start" \
@@ -109,19 +110,19 @@ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
 
 # diff-so-fancy
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
-zinit load zdharma/zsh-diff-so-fancy
+zinit light zdharma/zsh-diff-so-fancy
 
 # zsh-autopair
 zinit ice wait lucid
-zinit load hlissner/zsh-autopair
+zinit light hlissner/zsh-autopair
 
 # a next-generation cd
 zinit ice wait lucid
-zinit load b4b4r07/enhancd
+zinit light b4b4r07/enhancd
 
 # Gitignore plugin – commands gii and gi
 zinit ice wait"2" lucid
-zinit load voronkovich/gitignore.plugin.zsh
+zinit light voronkovich/gitignore.plugin.zsh
 
 # -------------------------- PROMPT -------------------------------------------
 zinit ice depth=1; zinit light romkatv/powerlevel10k

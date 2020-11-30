@@ -127,6 +127,9 @@ dotfiles:
   f_spoof_mac_address.sh:
     src: config/spoof_mac_address.sh
     dst: ~/.config/spoof_mac_address.sh
+  f_gitignore:
+    src: gitignore
+    dst: ~/.gitignore
 profiles:
   balthasar-02:
     dotfiles:
@@ -163,6 +166,7 @@ profiles:
     - f_vimium-options.json
     - f_ctags
     - f_spoof_mac_address.sh
+    - f_gitignore
   casper-03:
     dotfiles:
     - f_tmux.conf

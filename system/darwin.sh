@@ -414,7 +414,7 @@ Spotlight() {
 		# Spreadsheets
 		"SPREADSHEETS"               true
 		# Spotlight Suggestions
-		"MENU_SPOTLIGHT_SUGGESTIONS" true
+		"MENU_SPOTLIGHT_SUGGESTIONS" false
 		# System Preferences
 		"SYSTEM_PREFS"               true
 	)

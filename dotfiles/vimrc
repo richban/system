@@ -7,32 +7,57 @@ call plug#begin('~/.vim/plugged')
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     Plug 'majutsushi/tagbar'
     Plug 'tpope/vim-fugitive'
+    Plug 'yuttie/comfortable-motion.vim'
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'Lokaltog/vim-easymotion'
+    Plug 'tpope/vim-commentary'
+    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
     " UI
     Plug 'gruvbox-community/gruvbox'
+    Plug 'sainnhe/gruvbox-material'
     Plug 'vim-airline/vim-airline'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'sheerun/vim-polyglot'
     " Text formating
     Plug 'Yggdroot/indentLine'
     Plug 'Raimondi/delimitMate'
     Plug 'godlygeek/tabular'
     Plug 'tpope/vim-surround'
     " LSP
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'mattn/vim-lsp-settings'
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'prabirshrestha/vim-lsp' | Plug 'mattn/vim-lsp-settings'
+    Plug 'prabirshrestha/asyncomplete.vim' | Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    " Profile Vim startup
+    Plug 'dstein64/vim-startuptime'
+    Plug 'wakatime/vim-wakatime'
+    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(1) } }
 call plug#end()
 
 filetype plugin indent on       " Add filetype, plugin, and indent support
 syntax on
 
 """ Colorscheme
-let g:gruvbox_italic=1
 set termguicolors
-let g:gruvbox_contrast_dark = "hard"
-set background=dark    " Setting dark mode
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
 
-autocmd vimenter * colorscheme gruvbox
+" Gruvbox theme
+" set background=dark
+" let g:gruvbox_contrast_dark = "hard"
+" let g:gruvbox_invert_selection='0'
+" let g:gruvbox_sign_column = 'bg0'
+" let g:gruvbox_vert_split = 'bg0'
+
+" Gruvboc-material
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_palette = 'mix'
+let g:gruvbox_material_sign_column_background = 'none'
+
+colorscheme gruvbox-material
 
 let mapleader=" "
 set cursorline
@@ -45,9 +70,41 @@ set colorcolumn=80
 set laststatus=2
 set linespace=1
 set smartindent
-
+set updatetime=50
 set mouse=a
-set ttymouse=sgr
+" Give more space for displaying messages.
+set cmdheight=1
+
+if has('nvim')
+    set clipboard+=unnamedplus
+    let g:python_host_prog = "/Users/rbanyi/.pyenv/versions/neovim2/bin/python"
+    let g:python3_host_prog = "/Users/rbanyi/.pyenv/versions/neovim3/bin/python"
+    let g:firenvim_config = {
+    \ 'globalSettings': {
+        \ 'alt': 'all',
+    \  },
+    \ 'localSettings': {
+        \ '.*': {
+            \ 'cmdline': 'neovim',
+            \ 'priority': 0,
+            \ 'selector': 'textarea',
+            \ 'takeover': 'always',
+        \ },
+    \ }
+\ }
+    let fc = g:firenvim_config['localSettings']
+    let fc['https://youtube.com.*'] = { 'takeover': 'never', 'priority': 1 }
+    let fc['https?://instagram.com.*'] = { 'takeover': 'never', 'priority': 1 }
+    let fc['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 }
+    let fc['https://.*gmail.com.*'] = { 'takeover': 'never', 'priority': 1 }
+    let fc['https?://.*twitch.tv.*'] = { 'takeover': 'never', 'priority': 1 }
+    let fc['https?://notion.so.*'] = { 'takeover': 'never', 'priority': 1 }
+else
+    set ttymouse=sgr
+endif
+
+" Join yanked text on a yank (needed for terminal mode copies)
+vnoremap yy y<CR>:let @"=substitute(@", '\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>
 
 """ Move selected lines
 vnoremap J :m '>+1<CR>gv=gv
@@ -67,8 +124,7 @@ set incsearch                  " incremental searching
 set ignorecase                 " searches are case insensitive...
 set smartcase                  " ... unless they contain at least one capital letter
 set number
-set relativenumber 
-
+set relativenumber
 set wildmenu
 
 " Commonly-used files
@@ -78,12 +134,11 @@ nnoremap <leader>ce :e ~/.zshenv<CR>
 nnoremap <leader>ca :e ~/.alias<CR>
 nnoremap <leader>cf :e ~/.functions<CR>
 nnoremap <leader>ct :e ~/.tmux.conf<CR>
+nnoremap <leader>cy :e ~/.yabairc<CR>
+nnoremap <leader>cs :e ~/.skhdrc<CR>
 
 " Toggle Paste mode
 nnoremap <leader>p :set paste!<CR>
-
-" Join yanked text on a yank (needed for terminal mode copies)
-vnoremap yy y<CR>:let @"=substitute(@", '\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>
 
 " Adjusting splits
 nnoremap <silent> <Leader>< :vertical resize +10<CR>
@@ -91,17 +146,24 @@ nnoremap <silent> <Leader>> :vertical resize -10<CR>
 nnoremap <silent> <Leader>+ :resize +10<CR>
 nnoremap <silent> <Leader>- :resize -10<CR>
 
-" Window navigation 
+" Window navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+let g:python_highlight_all = 1
 
 "" Swap/backup
 set backupdir=~/tmp
 set noswapfile
 set nowritebackup
 set nobackup
+
+"" utilsnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 "" fzf
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
@@ -118,7 +180,10 @@ nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
 "" Nerdtree
 nmap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>f :NERDTreeFind<CR>
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
 let g:NERDTreeWinPos = "right"
+let NERDTreeNaturalSort = 1
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 "" Tagbar
@@ -152,13 +217,14 @@ if exists(":Tabularize")
 endif
 
 " Autocompletion
-
+let g:asyncomplete_auto_completeopt = 0
 set completeopt=menuone,noinsert,noselect
+
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 """ LSP
 function! s:on_lsp_buffer_enabled() abort
@@ -173,13 +239,32 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
     nmap <buffer> K <plug>(lsp-hover)
-    nmap <buffer> <Leader>dd :LspDocumentDiagnostics<CR> 
-    nmap <buffer> <Leader>df :LspDocumentFormat<CR>
+    nmap <buffer> <Leader>fd :LspDocumentDiagnostics<CR>
+    nmap <buffer> <Leader>ff :LspDocumentFormat<CR>
     " refer to doc to add more commands
 endfunction
+
+" easy motion
+let g:comfortable_motion_scroll_down_key = "j"
+let g:comfortable_motion_scroll_up_key = "k"
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
 
 augroup lsp_install
     au!
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+augroup richban
+    autocmd!
+    autocmd BufWritePre * :call TrimWhitespace()
+    autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
+    au BufEnter github.com_*.txt set filetype=markdown
 augroup END
