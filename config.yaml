@@ -130,6 +130,9 @@ dotfiles:
   f_gitignore:
     src: gitignore
     dst: ~/.gitignore
+  f_starship.toml:
+    src: config/starship.toml
+    dst: ~/.config/starship.toml
 profiles:
   balthasar-02:
     dotfiles:
@@ -167,6 +170,7 @@ profiles:
     - f_ctags
     - f_spoof_mac_address.sh
     - f_gitignore
+    - f_starship.toml
   casper-03:
     dotfiles:
     - f_tmux.conf

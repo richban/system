@@ -1,9 +1,8 @@
 #!/bin/sh
 
 function fixperms(){
-    find . \( -name "*.sh" -or -type d \) -exec chmod 755 {} \; && find . -type f ! -name "*.sh" -exec chmod 644 {} \;
+  find . \( -name "*.sh" -or -type d \) -exec chmod 755 {} \; && find . -type f ! -name "*.sh" -exec chmod 644 {} \;
 }
-
 
 function showdf() {
   defaults write com.apple.Finder AppleShowAllFiles YES
@@ -19,3 +18,14 @@ function hidedf() {
   osascript -e 'tell application "Finder" to activate'
 }
 
+init_ipykernel () {
+  echo "Setting up pipenv environment"
+  echo "Installing ipython kernel"
+  pipenv install --dev ipykernel
+  # get name of environment and remove checksum for pretty name
+  venv_name=$(basename -- $(pipenv --venv))
+  venv_prettyname=$(echo $venv_name | cut -d '-' -f 1)
+  echo "Adding ipython kernel to list of jupyter kernels"
+  $(pipenv --py) -m ipykernel install --name $venv_name \
+  --display-name "Python3 ($venv_prettyname)"
+}
