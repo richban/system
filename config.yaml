@@ -133,6 +133,9 @@ dotfiles:
   f_starship.toml:
     src: config/starship.toml
     dst: ~/.config/starship.toml
+  f_plugins.lua:
+    src: config/nvim/plugins.lua
+    dst: ~/.config/nvim/plugins.lua
 profiles:
   balthasar-02:
     dotfiles:
@@ -171,6 +174,7 @@ profiles:
     - f_spoof_mac_address.sh
     - f_gitignore
     - f_starship.toml
+    - f_plugins.lua
   casper-03:
     dotfiles:
     - f_tmux.conf

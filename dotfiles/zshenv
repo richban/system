@@ -8,6 +8,10 @@ if [ -f $HOME/Developer/google-cloud-sdk/completion.zsh.inc ]; then
     source $HOME/Developer/google-cloud-sdk/completion.zsh.inc;
 fi
 
+export XDG_CONFIG_HOME="$HOME/.config"       # /etc
+export XDG_DATA_HOME="$HOME/.local/share"    # /usr/share
+export XDG_CACHE_HOME="$HOME/.cache"         # /var/cache
+
 export PATH="/usr/local/opt/qt/bin:$PATH"
 export PATH=${PATH}:/usr/local/sbin
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
@@ -23,8 +27,11 @@ export SPARK_HOME="$HOME/Developer/spark-3.0.1-bin-hadoop2.7"
 export HADOOP_HOME="$HOME/Developer/spark-3.0.1-bin-hadoop2.7"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/bin/icu-config:$PATH"
+export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 
 # -------------------------- EDITOR -------------------------------------------
+
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vi -c "let g:tty='\''$(tty)'\''"'
 else
@@ -36,7 +43,10 @@ export GIT_EDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 
 # -------------------------- LANGUAGE -----------------------------------------
+
 export LANGUAGE="en_US.UTF-8"
 export LANG="${LANGUAGE}"
 export LC_ALL="${LANGUAGE}"
 export LC_CTYPE="${LANGUAGE}"
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
