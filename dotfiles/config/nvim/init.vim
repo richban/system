@@ -34,6 +34,8 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
     " LSP
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/completion-nvim'
+    Plug 'nvim-lua/lsp-status.nvim'
+    Plug 'tjdevries/lsp_extensions.nvim'
     " Profile Vim startup
     Plug 'tweekmonster/startuptime.vim'
     " Vim statistics
@@ -91,13 +93,6 @@ set nowritebackup
 set nobackup
 " Perhaps fix emojis
 set noemoji
-" Disable automatic comment insertion
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-"" Just softabs for the homies
-autocmd Filetype css setlocal  tabstop=2 shiftwidth=2 softtabstop=2  " Set tabs to 2 spaces in html and css
-autocmd Filetype html setlocal  tabstop=2 shiftwidth=2 softtabstop=2 " Set tabs to 2 spaces in html and css
-autocmd Filetype javascript  setlocal  tabstop=2 shiftwidth=2 softtabstop=2  " Set tabs to 2 spaces in html and css
 
 if has('nvim')
     set clipboard+=unnamedplus
@@ -123,10 +118,17 @@ let g:gruvbox_material_sign_column_background = 'none'
 
 colorscheme spaceduck
 
-" -- MAPPINGS -----------------------------------------------------------------
-
 let mapleader=" "
 let maplocalleader = '\'
+
+" Disable automatic comment insertion
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+"" Just softabs for the homies
+autocmd Filetype css setlocal  tabstop=2 shiftwidth=2 softtabstop=2  " Set tabs to 2 spaces in html and css
+autocmd Filetype html setlocal  tabstop=2 shiftwidth=2 softtabstop=2 " Set tabs to 2 spaces in html and css
+autocmd Filetype javascript  setlocal  tabstop=2 shiftwidth=2 softtabstop=2  " Set tabs to 2 spaces in html and css
+
+" -- MAPPINGS -----------------------------------------------------------------
 
 com! W w
 
@@ -178,6 +180,12 @@ map <Leader>h :bprev<CR>
 nnoremap <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+
+" -- LUA ----------------------------------------------------------------------
+
+:lua require('utils.events')
+:lua require('utils.remaps')
+:lua require('filetypes')
 
 " -- FIRENVIM -----------------------------------------------------------------
 
@@ -243,27 +251,9 @@ nmap <silent> <leader>gh :diffget //2<CR>
 
 " -- LIGHTLINE  ---------------------------------------------------------------
 
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
+:lua require('lightline')
 
-let g:lightline = {
-      \ 'colorscheme': 'spaceduck',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch','cocstatus', 'readonly', 'relativepath', 'modified', 'method'] ],
-      \ 'right': [ [ 'lineinfo' ],
-      \            [ 'percent' ],
-      \            [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name',
-      \   'method': 'NearestMethodOrFunction',
-      \   'cocstatus': 'coc#status',
-      \ }
-      \ }
-
-" set showtabline=2 "Always show tabline for bufferline on top
+set showtabline=2 "Always show tabline for bufferline on top
 
 " -- TABULARIZE  ---------------------------------------------------------------
 
@@ -293,30 +283,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " -- LSP ----------------------------------------------------------------------
 
-nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>gD :lua vim.lsp.buf.declaration()<CR>
-nnoremap <leader>gi :lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>gsh :lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>grr :lua vim.lsp.buf.references()<CR>
-nnoremap <leader>grn :lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>gh :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>gca :lua vim.lsp.buf.code_action()<CR>
-nnoremap <leader>gsd :lua vim.lsp.util.show_line_diagnostics()<CR>
-nnoremap <leader>gtd :lua vim.lsp.buf.type_definition()<CR>
-nnoremap <leader>tf :lua vim.lsp.buf.formating()<CR>
-
-:lua << EOF
-  local nvim_lsp = require('lspconfig')
-  local on_attach = function(_, bufnr)
-    require('completion').on_attach()
-  end
-  local servers = {'jsonls', 'pyls_ms', 'vimls', 'clangd', 'tsserver', 'cssls', 'html'}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      on_attach = on_attach,
-    }
-  end
-EOF
+:lua require('lsp')
 
 " -- EASY MOTION --------------------------------------------------------------
 
@@ -362,7 +329,21 @@ nmap <leader>l <Plug>(iron-send-line)
 " Send cell to IronRepl and move to next cell.
 nmap ]x ctrih/^# %%<CR><CR>
 
-luafile $HOME/.config/nvim/plugins.lua
+:lua << EOF
+    local iron = require('iron')
+    iron.core.add_repl_definitions {
+      python = {
+        venv_python = {
+          command =  "pipenv run ipython"
+        }
+      }
+    }
+    iron.core.set_config {
+      preferred = {
+        python = "venv_python",
+      }
+    }
+EOF
 
 " -- JUPYTER NOTEBOOK ---------------------------------------------------------
 
@@ -386,7 +367,7 @@ endfunction
 
 function! ConnectToPipenvKernel()
     let l:kernel = GetKernelFromPipenv()
-    call IPyConnect('--kernel', l:kernel, '--no-window')
+    call IPyConnect('--kernel', l:kernel)
 endfunction
 
 function! GetPoetryVenv()
@@ -455,6 +436,6 @@ endfun
 augroup richban
     autocmd!
     autocmd BufWritePre * :call TrimWhitespace()
-    " autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
+    autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
     au BufEnter github.com_*.txt set filetype=markdown
 augroup END
