@@ -4,7 +4,7 @@ local lsp_status  = require('lsp-status')
 local diagnostics  = require('lsp.diagnostics')
 
 local function on_attach(client)
-    lsp_status.onattach(client)
+    lsp_status.on_attach(client)
     lsp_completion.on_attach(client)
 end
 
@@ -27,13 +27,13 @@ local servers = {
   pyls_ms = {},
   sumneko_lua = {
     -- :LspInstallInfo sumneko_lua
-    cmd = { '$HOME/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/macOS/lua-language-server' },
+    cmd = { '/Users/rbanyi/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/macOS/lua-language-server' },
     settings = {
         Lua = {
             diagnostics = {
                 globals = {
                     'vim',
-                   'use',
+                    'use',
                     'imap',
                     'nmap',
                     'vmap',

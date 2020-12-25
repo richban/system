@@ -59,8 +59,7 @@ return require('packer').startup {
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
     -- snippets
-    use 'SirVer/ultisnips'
-    use 'honza/vim-snippets'
+    use 'norcalli/snippets.nvim'
     -- markdown
     use {
         'iamcco/markdown-preview.nvim',
@@ -91,10 +90,10 @@ return require('packer').startup {
     use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
     -- Language packs
-    use {
-      'nvim-treesitter/nvim-treesitter',
-      run = function() vim.cmd [[TSUpdate]] end
-    }
+    -- use {
+    --   'nvim-treesitter/nvim-treesitter',
+    --   run = function() vim.cmd [[TSUpdate]] end
+    -- }
     -- firenvim
     use {
       'glacambre/firenvim',

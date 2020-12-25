@@ -122,7 +122,7 @@ let mapleader=" "
 let maplocalleader = '\'
 
 " Disable automatic comment insertion
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 "" Just softabs for the homies
 autocmd Filetype css setlocal  tabstop=2 shiftwidth=2 softtabstop=2  " Set tabs to 2 spaces in html and css
 autocmd Filetype html setlocal  tabstop=2 shiftwidth=2 softtabstop=2 " Set tabs to 2 spaces in html and css
@@ -183,9 +183,8 @@ nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " -- LUA ----------------------------------------------------------------------
 
-:lua require('utils.events')
-:lua require('utils.remaps')
-:lua require('filetypes')
+:lua require('utils')
+:lua require('events')
 
 " -- FIRENVIM -----------------------------------------------------------------
 
@@ -251,7 +250,7 @@ nmap <silent> <leader>gh :diffget //2<CR>
 
 " -- LIGHTLINE  ---------------------------------------------------------------
 
-:lua require('lightline')
+:lua require('plugins/_lightline')
 
 set showtabline=2 "Always show tabline for bufferline on top
 

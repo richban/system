@@ -1,4 +1,5 @@
 local vimcmd
+
 if vim.api ~= nil then
     vimcmd = vim.api.nvim_command
 else
@@ -9,10 +10,10 @@ local globalListenerName = 'globallistenername' -- change this to be unique acro
 local autocmdhandlers = {}
 
 _G[globalListenerName] = function (name)
-  autocmdhandlers[name]()
+    autocmdhandlers[name]()
 end
 
-function addEventListener (name, events, cb)
+function addEventListener(name, events, cb)
     autocmdhandlers[name] = cb
     vimcmd('augroup ' .. name)
     vimcmd('autocmd!')
@@ -23,10 +24,18 @@ function addEventListener (name, events, cb)
     vimcmd('augroup end')
 end
 
-function removeEventListener (name)
+function removeEventListener(name)
     vimcmd('augroup ' .. name)
     vimcmd('autocmd!')
     vimcmd('augroup end')
     autocmdhandlers[name] = nil
 end
 
+function map(mode, lhs, rhs, opts)
+    options = vim.tbl_extend('keep', opts or {}, {
+        noremap = true,
+        silent = true,
+        expr = false
+    })
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end

@@ -139,6 +139,12 @@ dotfiles:
   d_lua:
     src: config/nvim/lua
     dst: ~/.config/nvim/lua
+  f_nvim_init.lua:
+    src: config/nvim/init.lua
+    dst: ~/.config/nvim/init.lua
+  d_plugin:
+    src: config/nvim/plugin
+    dst: ~/.config/nvim/plugin
 profiles:
   balthasar-02:
     dotfiles:
@@ -179,6 +185,8 @@ profiles:
     - f_starship.toml
     - f_plugins.lua
     - d_lua
+    - f_nvim_init.lua
+    - d_plugin
   casper-03:
     dotfiles:
     - f_tmux.conf
