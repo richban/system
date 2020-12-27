@@ -14,46 +14,46 @@ local default_lsp_config = {on_attach = on_attach, capabilities = lsp_status.cap
 
 -- :LspInstall needed
 local servers = {
-  diagnosticls = diagnostics.options,
-  bashls = {},
-  vimls = {},
-  dockerls = {},
-  yamlls = {},
-  rust_analyzer = {},
-  jsonls = {},
-  tsserver = {},
-  html = {},
-  cssls = {},
-  pyls_ms = {},
-  sumneko_lua = {
-    -- :LspInstallInfo sumneko_lua
-    cmd = { '/Users/rbanyi/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/macOS/lua-language-server' },
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = {
-                    'vim',
-                    'use',
-                    'imap',
-                    'nmap',
-                    'vmap',
-                    'tmap',
-                    'inoremap',
-                    'nnoremap',
-                    'vnoremap',
-                    'tnoremap'
-                }
-            },
-            workspace = {
-                library = {
-                    ['$VIMRUNTIME/lua'] = true,
+    diagnosticls = diagnostics.options,
+    bashls = {},
+    vimls = {},
+    dockerls = {},
+    yamlls = {},
+    rust_analyzer = {},
+    jsonls = {},
+    tsserver = {},
+    html = {},
+    cssls = {},
+    pyls_ms = {},
+    sumneko_lua = {
+        -- :LspInstallInfo sumneko_lua
+        cmd = { '/Users/rbanyi/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/macOS/lua-language-server' },
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = {
+                        'vim',
+                        'use',
+                        'imap',
+                        'nmap',
+                        'vmap',
+                        'tmap',
+                        'inoremap',
+                        'nnoremap',
+                        'vnoremap',
+                        'tnoremap'
+                    }
+                },
+                workspace = {
+                    library = {
+                        ['$VIMRUNTIME/lua'] = true,
+                    }
                 }
             }
         }
-    }
-  },
+    },
 }
 
 for server, config in pairs(servers) do
-  lsp[server].setup(vim.tbl_deep_extend("force", default_lsp_config, config))
+    lsp[server].setup(vim.tbl_deep_extend("force", default_lsp_config, config))
 end

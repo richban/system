@@ -1,6 +1,6 @@
 -- FIRENVIM -----------------------------------------------------------------
 
-require('plugins/_firenvim')
+require('plugins/firenvim')
 
 -- TMUX-NAVIGATOR ------------------------------------------------------------
 
@@ -31,7 +31,7 @@ vim.g.NERDTreeDirArrowExpandable = ''
 vim.g.NERDTreeDirArrowCollapsible = ''
 vim.g.NERDTreeWinPos = "left"
 vim.g.NERDTreeNaturalSort = 1
-vim.g.NERDTreeIgnore = { ".git$", ".idea$", "node_modules" }
+vim.g.NERDTreeIgnore = { ".git$", ".idea$", "node_modules", ".DS_Store" }
 
 -- Indicate every single untracked file under an untracked dir
 vim.g.NERDTreeGitStatusUntrackedFilesMode = 'all'
@@ -49,7 +49,7 @@ map('n', '<leader>gh', '<cmd>diffget //2<CR>')
 
 --- LIGHTLINE  ---------------------------------------------------------------
 
-require('plugins/_lightline')
+require('plugins/lightline')
 
 --- TABULARIZE  ---------------------------------------------------------------
 
@@ -74,7 +74,7 @@ require('telescope').setup{
     prompt_position = "bottom",
     prompt_prefix = ">",
     selection_strategy = "reset",
-    sorting_strategy = "descending",
+    sorting_strategy = "ascending",
     layout_strategy = "horizontal",
     width = 0.75,
   }
@@ -99,7 +99,7 @@ vim.g.vim_markdown_conceal_code_blocks = 0
 
 ---- PYTHON ------------------------------------------------------------------
 
-require('plugins/_python')
+require('plugins/python')
 
 ---- VISTA-VIM ----------------------------------------------------------------
 
@@ -114,6 +114,19 @@ vim.api.nvim_exec([[
   " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
   let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" }
 ]], '')
+
+map('n','<leader>t', ':Vista<CR>')
+
+---- TREESITTER ----------------------------------------------------------------
+
+local treesitter = require'nvim-treesitter.configs'
+
+treesitter.setup {
+  ensure_installed = "all",
+  highlight = {
+    enable = true,
+  },
+}
 
 ---- FUNCTIONS ------------------------------------------------------------------
 

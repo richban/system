@@ -1,34 +1,13 @@
-local vimcmd
-
-if vim.api ~= nil then
-    vimcmd = vim.api.nvim_command
-else
-    vimcmd = vim.command
-end
-
-local globalListenerName = 'globallistenername' -- change this to be unique across multiple plugin name
-local autocmdhandlers = {}
-
-_G[globalListenerName] = function (name)
-    autocmdhandlers[name]()
-end
-
-function addEventListener(name, events, cb)
-    autocmdhandlers[name] = cb
-    vimcmd('augroup ' .. name)
-    vimcmd('autocmd!')
-    for _, v in ipairs(events) do
-        local cmd = 'lua ' .. globalListenerName .. '("' .. name ..'")'
-        vimcmd('au ' .. v .. ' ' .. cmd)
+function nvim_create_augroups(definitions)
+    for group_name, definition in pairs(definitions) do
+        vim.api.nvim_command('augroup '..group_name)
+        vim.api.nvim_command('autocmd!')
+        for _, def in ipairs(definition) do
+        local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
+        vim.api.nvim_command(command)
+        end
+        vim.api.nvim_command('augroup END')
     end
-    vimcmd('augroup end')
-end
-
-function removeEventListener(name)
-    vimcmd('augroup ' .. name)
-    vimcmd('autocmd!')
-    vimcmd('augroup end')
-    autocmdhandlers[name] = nil
 end
 
 function map(mode, lhs, rhs, opts)

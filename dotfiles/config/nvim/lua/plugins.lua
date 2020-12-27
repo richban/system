@@ -63,7 +63,8 @@ return require('packer').startup {
     -- markdown
     use {
         'iamcco/markdown-preview.nvim',
-        run = function() vimcmd [[cd app && yarn install]] end
+        run = 'cd app && yarn install',
+        cmd = 'MarkdownPreview'
     }
     -- colors and theme
     use 'sainnhe/gruvbox-material'
@@ -90,15 +91,15 @@ return require('packer').startup {
     use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
     -- Language packs
-    -- use {
-    --   'nvim-treesitter/nvim-treesitter',
-    --   run = function() vim.cmd [[TSUpdate]] end
-    -- }
+    use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate'
+    }
     -- firenvim
     use {
       'glacambre/firenvim',
       run = function()
-        vim.fn['firenvim#install'](0)
+        vim.fn['firenvim#install'](1)
       end
     }
   end
