@@ -36,7 +36,8 @@ return require('packer').startup {
     use 'ojroques/nvim-lspfuzzy'
     -- git
     use 'tpope/vim-fugitive'
-    use 'airblade/vim-gitgutter'
+    -- use 'airblade/vim-gitgutter'
+    use 'lewis6991/gitsigns.nvim'
     -- utils
     use 'scrooloose/nerdtree'
     use 'christoomey/vim-tmux-navigator'
@@ -46,7 +47,8 @@ return require('packer').startup {
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
     use 'liuchengxu/vista.vim'
-    use 'wakatime/vim-wakatime'
+    use 'dstein64/nvim-scrollview'
+    -- use 'wakatime/vim-wakatime'
     -- motion
     use 'yuttie/comfortable-motion.vim'
     use 'easymotion/vim-easymotion'
@@ -60,28 +62,42 @@ return require('packer').startup {
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
     -- snippets
     use 'norcalli/snippets.nvim'
+    use 'hrsh7th/vim-vsnip'
+    use 'hrsh7th/vim-vsnip-integ'
     -- markdown
     use {
         'iamcco/markdown-preview.nvim',
         run = 'cd app && yarn install',
         cmd = 'MarkdownPreview'
     }
+    use 'junegunn/goyo.vim'
     -- colors and theme
+    use 'morhetz/gruvbox'
     use 'sainnhe/gruvbox-material'
     use 'pineapplegiant/spaceduck'
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
-    use 'sheerun/vim-polyglot'
+    -- highlight hex, rgb colors
+    use 'norcalli/nvim-colorizer.lua'
     -- status line
     use 'itchyny/lightline.vim'
-    -- Autocomplete & Linters
+    -- LSP
+    use 'anott03/nvim-lspinstall'
     use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/completion-nvim'
+    -- use 'nvim-lua/completion-nvim'
+    use 'glepnir/lspsaga.nvim'
+    use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'
+    use {
+      'hrsh7th/nvim-compe', branch = 'master'
+    }
     -- jupyter
+    use 'untitled-ai/jupyter_ascending.vim'
     use 'bfredl/nvim-ipy'
     use 'hkupty/iron.nvim'
+    use 'Vimjas/vim-python-pep8-indent'
+    use 'heavenshell/vim-pydocstring'
     use 'GCBallesteros/jupytext.vim'
     use 'kana/vim-textobj-line'
     use 'kana/vim-textobj-user'

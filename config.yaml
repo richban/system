@@ -145,6 +145,13 @@ dotfiles:
   d_plugin:
     src: config/nvim/plugin
     dst: ~/.config/nvim/plugin
+  f_run_pyls_with_venv.sh:
+    src: config/run_pyls_with_venv.sh
+    dst: ~/.config/run_pyls_with_venv.sh
+    chmod: '744'
+  d_nvim:
+    src: config/nvim
+    dst: ~/.config/nvim
 profiles:
   balthasar-02:
     dotfiles:
@@ -187,6 +194,8 @@ profiles:
     - d_lua
     - f_nvim_init.lua
     - d_plugin
+    - f_run_pyls_with_venv.sh
+    - d_nvim
   casper-03:
     dotfiles:
     - f_tmux.conf

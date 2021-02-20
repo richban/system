@@ -18,3 +18,10 @@ function map(mode, lhs, rhs, opts)
     })
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
+
+-- reload_module = require('plenary.reload').reload_module
+
+-- reload = function(name)
+--     reload_module(name)
+--     return require(name)
+-- end

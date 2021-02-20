@@ -1,57 +1,86 @@
-local custom = {}
-custom.organize_imports_sync = function(timeout_ms)
-  print('test')
-  -- local context = { source = { organizeImports = true } }
-  -- vim.validate { context = { context, 't', true } }
-  -- local params = vim.lsp.util.make_range_params()
-  -- params.context = context
+local M = {}
 
-  -- local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
-  -- if not result then return end
-  -- result = result[1].result
-  -- if not result then return end
-  -- edit = result[1].edit
-  -- vim.lsp.util.apply_workspace_edit(edit)
+function M.set(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local opts = { noremap=true, silent=true }
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- gives definition & references
+  buf_set_keymap('n', '<leader>gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
+
+  -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  -- buf_set_keymap('n','<leader>th', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', '<leader>H', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
+  buf_set_keymap('n', '<leader>gs', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
+
+  -- Diagnostic
+  -- buf_set_keymap('n','<leader>fe', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- buf_set_keymap('n','<leader>fe', '<cmd>:LspDiagnostics 0<CR>', opts)
+   buf_set_keymap('n','<leader>fd', "<cmd>lua require('lt.lsp.functions').show_diagnostics()<CR>", opts)
+  -- buf_set_keymap('n','<leader>fE', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n','<leader>fD', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
+  -- buf_set_keymap('n','[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  -- buf_set_keymap('n',']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '[d', "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>", opts)
+  buf_set_keymap('n', ']d', "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>", opts);
+
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+
+  buf_set_keymap('n','<leader>Lc', ':lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>', opts)
+  buf_set_keymap('n','<leader>Ll', ":lua print(vim.lsp.get_log_path())<CR>", opts)
+  -- buf_set_keymap('n','<leader>fcl', ":lua vim.cmd('e'..vim.lsp.get_log_path())<CR>", opts)
+  buf_set_keymap('n','<leader>Li', ':LspInfo()<CR>', opts)
+
+  if client.definitionProvider then
+    buf_set_keymap('n', '<leader>gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    buf_set_keymap('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n','<leader>gtd', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  end
+
+  if client.implementationProvider then
+    buf_set_keymap('n','<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  end
+
+  if client.referencesProvider then
+    -- buf_set_keymap('n','<leader>tr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n','<leader>gR', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
+  end
+
+  if client.codeActionProvider then
+    -- buf_set_keymap('n','<leader>fa', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", opts)
+    buf_set_keymap('n','<leader>fa', "<cmd>lua require('telescope.builtin').lsp_code_actions({ timeout = 1000 })<CR>", opts)
+    buf_set_keymap('v', '<leader>fa', "<cmd>lua require('telescope.builtin').lsp_range_code_actions({ timeout = 1000 })<CR>", opts)
+    -- buf_set_keymap('n', '<leader>fa', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
+    -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", opts) ]]
+    buf_set_keymap('n', '<leader>fo', '<cmd>lua require("lt.lsp.functions").organize_imports()<CR>', opts)
+  end
+
+  if client.renameProvider then
+    -- buf_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n','<leader>rr', "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
+  end
+
+  vim.api.nvim_exec(
+  [[
+  inoremap <silent><expr> <C-p> compe#complete()
+  inoremap <silent><expr> <Tab> compe#complete()
+  inoremap <silent><expr> <CR>  compe#confirm('<CR>')
+  ]],
+  true)
+
+  -- using tab for navigating in completion
+  vim.api.nvim_exec(
+  [[
+  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  ]],
+  true)
+
 end
 
--- function Lint()
---   silent :CocCommand eslint.executeAutofix
--- endfunction
-
-map('n', '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', '<leader>ltd', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
--- map('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-map('n', '<leader>li', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-map('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', '<leader>lh', '<cmd>lua vim.lsp.buf.hover()<CR>')
-	-- map('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-map('n', '<leader>lds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-
-map('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', '<leader>lsd', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
-map('n', '<leader>ld0', '<cmd>:LspDiagnostics 0<CR>')
-
-map('n', '<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-map('n', '<leader>oi', '<cmd>lua custom.organize_import_sync()<CR>')
-
-map('n', '<leader>lr','<cmd>lua vim.lsp.buf.rename()<CR>')
-
--- using tab for navigating in completion
-vim.api.nvim_exec([[
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-imap <Tab> <Plug>(completion_smart_tab)
-imap <S-Tab> <Plug>(completion_smart_s_tab)
-]], true)
-
-
-	-- map('n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
-	-- map('n','gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
-	-- map('n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
-	-- map('n','<leader>ah','<cmd>lua vim.lsp.buf.hover()<CR>')
-	-- map('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>')
-	-- map('n','<leader>ee','<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
-	-- map('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
-	-- map('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-  --
-
+return M

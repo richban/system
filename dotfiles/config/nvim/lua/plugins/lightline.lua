@@ -1,5 +1,5 @@
 vim.g.lightline = {
-  colorscheme = 'spaceduck',
+  colorscheme = 'gruvbox_material',
   active = {
     left =  {
       { 'mode', 'pastfugitive#heade' },
@@ -24,10 +24,10 @@ vim.g.lightline = {
     lsp_status = 'not vim.tbl_isempty(vim.lsp.buf_get_clients(0))',
   },
   mode_map = {
-    n = 'N',
-    i = 'I',
-    R = 'R',
-    v = 'V',
+    n = 'Normal',
+    i = 'Insert',
+    R = 'Replace',
+    v = 'Visual',
     V = 'VL',
     ["<C-v>"] = 'VB',
     c = 'C',
@@ -36,17 +36,17 @@ vim.g.lightline = {
     ["<C-s>"] = 'SB',
     t = 'T',
   },
-  subseparator = {
-    left = '\\uE0B5',
-    right = '\\uE0B7'
-  },
-  separator = {
-    left = '',
-    right = ''
-  },
+  -- subseparator = {
+  --   left = '\\uE0B5',
+    -- right = '\\uE0B7'
+  -- },
+  -- separator = {
+  --   left = '',
+  --   right = ''
+  -- },
 }
 
-local result = vim.api.nvim_exec([[
+vim.api.nvim_exec([[
 function! LspStatus() abort
   if luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
      return luaeval("require('lsp-status').status()")

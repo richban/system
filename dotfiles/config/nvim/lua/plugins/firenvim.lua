@@ -15,14 +15,14 @@ if vim.g.started_by_firenvim then
                 selector= textarea,
                 takeover= always,
             },
-            -- ['https://youtube.com.*'] = { 'takeover': 'never', 'priority': 1 },
-            -- ['https?://instagram.com.*'] = { 'takeover': 'never', 'priority': 1 },
+            -- ['https://youtube.com*'] = { 'takeover': 'never', 'priority': 1 },
+            -- ['https?://instagram.com*'] = { 'takeover': 'never', 'priority': 1 },
             -- ['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 },
-            -- ['https://.*gmail.com.*'] = { 'takeover': 'never', 'priority': 1 },
-            -- ['https://.*google.com.*'] = { 'takeover': 'never', 'priority': 1 },
-            -- ['https?://.*twitch.tv.*'] = { 'takeover': 'never', 'priority': 1 },
-            -- ['https?://notion.so.*'] = { 'takeover': 'never', 'priority': 1 },
-            -- ['https?://reddit.com.*'] = { 'takeover': 'never', 'priority': 1 }
+            -- ['https://.*gmail.com*'] = { 'takeover': 'never', 'priority': 1 },
+            -- ['https://.*google.com*'] = { 'takeover': 'never', 'priority': 1 },
+            -- ['https?://.*twitch.tv*'] = { 'takeover': 'never', 'priority': 1 },
+            -- ['https?://notion.so*'] = { 'takeover': 'never', 'priority': 1 },
+            -- ['https?://reddit.com*'] = { 'takeover': 'never', 'priority': 1 },
         }
     }
 

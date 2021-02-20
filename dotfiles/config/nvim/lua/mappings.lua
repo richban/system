@@ -1,7 +1,7 @@
 local mappings = {}
 
 function mappings.setup()
-    map('t', '<ESC>', 'C-\\><C-n>')
+    vim.cmd [[tnoremap <Esc> '<C-\><C-n>' ]]
     map('i', '<C-c>', '<ESC>')
     -- Join yanked text on a yank (needed for terminal mode copies)
     map("v", "yy", "y<CR>:let @\"=substitute(@\", \'\\n\', \'\', \'g\')<CR>:call yank#Osc52Yank()<CR>")
@@ -18,7 +18,8 @@ function mappings.setup()
     map('n', '<leader>cy', ':e ~/.yabairc<CR>')
     map('n', '<leader>cs', ':e ~/.skhdrc<CR>')
     -- resource init.vim
-    map('n', '<Leader><CR>', ':source $MYVIMRC<CR>')
+    -- map('n', '<Leader><CR>', ':source $MYVIMRC<CR>', { noremap = true, silent = false })
+    map('n', '<leader><CR>', ':lua reload()<CR>')
     -- Toggle Paste mode
     map('n', '<leader>p', ':set paste!<CR>')
     -- Window navigation

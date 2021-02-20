@@ -15,9 +15,8 @@ function autocmd.setup()
             {'BufWritePre', '*', 'call TrimWhitespace()'},
             -- show diagnostic popup on cursor hold
             {'CursorHold', '<Buffer>', 'lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false })'},
-            {'BufWritePost', 'plugins.lua', 'PackerCompile'}
+            {'BufWritePost', 'plugins.lua', 'PackerCompile'},
         };
-
         ft = {
             { 'FileType', '*', 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o' },
             { 'FileType', 'css,html,html,javascript', 'setlocal  tabstop=2 shiftwidth=2 softtabstop=2' },
