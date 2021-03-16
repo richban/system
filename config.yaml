@@ -152,6 +152,15 @@ dotfiles:
   d_nvim:
     src: config/nvim
     dst: ~/.config/nvim
+  f_pycodestyle:
+    src: config/pycodestyle
+    dst: ~/.config/pycodestyle
+  f_jupyter_qtconsole_config.py:
+    src: jupyter/jupyter_qtconsole_config.py
+    dst: ~/.jupyter/jupyter_qtconsole_config.py
+  f_ipython_config.py:
+    src: ipython/profile_default/ipython_config.py
+    dst: ~/.ipython/profile_default/ipython_config.py
 profiles:
   balthasar-02:
     dotfiles:
@@ -196,6 +205,9 @@ profiles:
     - d_plugin
     - f_run_pyls_with_venv.sh
     - d_nvim
+    - f_pycodestyle
+    - f_jupyter_qtconsole_config.py
+    - f_ipython_config.py
   casper-03:
     dotfiles:
     - f_tmux.conf
