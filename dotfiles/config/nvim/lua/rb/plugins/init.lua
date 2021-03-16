@@ -4,7 +4,7 @@ require'colorizer'.setup()
 
 -- FIRENVIM -----------------------------------------------------------------
 
-require('plugins/firenvim')
+require('rb.plugins.firenvim')
 
 -- TMUX-NAVIGATOR ------------------------------------------------------------
 
@@ -22,8 +22,6 @@ vim.g.fzf_layout = {
 
 vim.g.fzf_preview_window = { 'down', 'ctrl-/' }
 vim.env.FZF_DEFAULT_OPTS = '--reverse'
-
-map('n','<leader>ml', '<cmd>Marks<CR>')
 
 ---- NERDTree -----------------------------------------------------------------
 
@@ -43,15 +41,6 @@ vim.g.DevIconsEnableFoldersOpenClose = 1
 vim.g.NERDTreeGitStatusUntrackedFilesMode = 'all'
 -- To hide the boring brackets ([ ])
 vim.g.NERDTreeGitStatusConcealBrackets = 0
-
-map('n','<leader>n', ':NERDTreeToggle<CR>')
-
----- VIM-FUGITIVE -------------------------------------------------------------
-
-map('n', '<Leader>gs', '<cmd>Gstatus<CR>')
-map('n', '<Leader>gvd', '<cmd>Gvdiffsplit<CR>')
-map('n', '<leader>gl', '<cmd>diffget //3<CR>')
-map('n', '<leader>gh', '<cmd>diffget //2<CR>')
 
 ---- GITGUTTER -------------------------------------------------------------
 
@@ -87,18 +76,11 @@ require('gitsigns').setup {
 
 --- STATUSLINE  ----------------------------------------------------------------
 
-require('plugins/lightline')
-
---- TABULARIZE  ---------------------------------------------------------------
-
-map('v', '<Leader>=',  '<cmd>Tab /=<CR>')
-map('n', '<Leader>:',  '<cmd>Tab /:\\zs<CR>')
-map('v', '<Leader>:',  '<cmd>Tab /:\\zs<CR>')
-map('n', '<Leader>=', '<cmd>Tab /=<CR>')
+require('rb.plugins.lightline')
 
 ---- LSP ----------------------------------------------------------------------
 
-local ok, msg = pcall(function() require('lsp') end)
+local ok, msg = pcall(function() require('rb.lsp') end)
 if not ok then
   print(msg)
 end
@@ -145,74 +127,8 @@ vim.g.comfortable_motion_scroll_up_key = "k"
 
 ---- TELESCOPE ----------------------------------------------------------------
 
-local actions = require('telescope.actions')
-local telescope = require('telescope')
-
-telescope.setup{
-    defaults = {
-        timeoutlen = 2000,
-        mappings = {i = {["<esc>"] = actions.close, }},
-        vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case'
-        },
-        prompt_position = "bottom",
-        prompt_prefix = ">",
-        initial_mode = "insert",
-        selection_strategy = "reset",
-        sorting_strategy = "ascending",
-        layout_strategy = "horizontal",
-        layout_defaults = {
-            -- TODO add builtin options.
-        },
-        file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-        file_ignore_patterns = {".backup",".swap",".langsevers",".session",".undo","*.git","node_modules","vendor",".cache",".vscode-server",".Desktop",".Documents","classes"},
-        generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-        shorten_path = true,
-        winblend = 0,
-        width = 0.75,
-        preview_cutoff = 120,
-        results_height = 1,
-        results_width = 0.8,
-        border = {},
-        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-        color_devicons = true,
-        use_less = true,
-        set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-        file_previewer = require'telescope.previewers'.cat.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_cat.new`
-        grep_previewer = require'telescope.previewers'.vimgrep.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_vimgrep.new`
-        qflist_previewer = require'telescope.previewers'.qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
-
-        -- Developer configurations: Not meant for general override
-        -- buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
-    },
-    extensions = {
-        fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
-        },
-    },
-}
-
-pcall(require('telescope').load_extension, 'fzy_native')
-
-map('n', '<C-p>', ':lua require(\'telescope.builtin\').git_files()<CR>')
-map('n', '<leader>pw', ':lua require(\'telescope.builtin\').grep_string { search = vim.fn.expand("<cword>") }<CR>')
-map('n', '<leader>pf', ':lua require(\'telescope.builtin\').find_files()<cr>')
-map('n', '<leader>pg', ':lua require(\'telescope.builtin\').live_grep()<cr>')
-map('n', '<leader>b', ':lua require(\'telescope.builtin\').buffers()<cr>')
-map('n', '<leader>ht', ':lua require(\'telescope.builtin\').help_tags()<cr>')
-
-map('n', '<leader>/h', "<cmd>lua require('telescope.builtin').command_history()<CR>")
-map('n', '<leader>/c', "<cmd>lua require('telescope.builtin').commands()<CR>")
-map('n', '<leader>/r', "<cmd>lua require('telescope.builtin').registers()<CR>")
-map('n', '<leader>/m', "<cmd>lua require('telescope.builtin').marks()<CR>")
-map('n', '<leader>/t', "<cmd>lua require('telescope.builtin').treesitter()<CR>")
+require('rb.telescope')
+require('rb.telescope.mappings')
 
 ---- INDENT-LINE --------------------------------------------------------------
 
@@ -226,7 +142,7 @@ vim.g.vim_markdown_conceal_code_blocks = 0
 
 ---- PYTHON ------------------------------------------------------------------
 
-require('plugins/python')
+require('rb.plugins.python')
 
 ---- VISTA-VIM ----------------------------------------------------------------
 
@@ -241,8 +157,6 @@ vim.api.nvim_exec([[
   " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
   let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" }
 ]], '')
-
-map('n','<leader>V', ':Vista<CR>')
 
 ---- TREESITTER ----------------------------------------------------------------
 
@@ -264,5 +178,3 @@ local result = vim.api.nvim_exec([[
       call winrestview(l:save)
   endfun
 ]], true)
-
-print(result)

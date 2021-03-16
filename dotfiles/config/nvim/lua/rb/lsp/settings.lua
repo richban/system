@@ -1,14 +1,14 @@
 local lsp = require('lspconfig')
 -- local lsp_completion = require('completion')
 local lsp_status  = require('lsp-status')
-local diagnostics  = require('lsp.diagnostics')
-local remaps  = require('lsp.remaps')
+local diagnostics  = require('rb.lsp.diagnostics')
+local remaps  = require('rb.lsp.remaps')
 
 -- for debugging lsp
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
 -- vim.lsp.set_log_level("info")
 
-local saga = require 'lspsaga'
+-- local saga = require 'lspsaga'
 
 -- add your config value here
 -- default value
@@ -33,37 +33,43 @@ local saga = require 'lspsaga'
 -- border_style = 1
 -- rename_prompt_prefix = '➤',
 
-saga.init_lsp_saga {
-  use_saga_diagnostic_sign = false,
-  finder_definition_icon = ' ',
-  finder_reference_icon = ' ',
-  rename_prompt_prefix = '',
-}
+-- saga.init_lsp_saga {
+--   use_saga_diagnostic_sign = false,
+--   finder_definition_icon = ' ',
+--   finder_reference_icon = ' ',
+--   rename_prompt_prefix = '',
+-- }
 
-saga.init_lsp_saga()
+-- saga.init_lsp_saga()
 
+
+-- adds beatiful icon to completion
+_ = require('lspkind').init()
+require('rb.lsp.status').activate()
+require('rb.lsp.handlers')
 
 local function on_attach(client, bufnr)
     remaps.set(client.server_capabilities, bufnr)
     lsp_status.on_attach(client, bufnr)
     -- lsp_completion.on_attach(client)
+
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = {
-      spacing = 0,
-      prefix = "■",
-    },
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+--   vim.lsp.diagnostic.on_publish_diagnostics, {
+--     virtual_text = {
+--       spacing = 0,
+--       prefix = "■",
+--     },
 
-    -- see: ":help vim.lsp.diagnostic.set_signs()"
-    signs = true,
+--     -- see: ":help vim.lsp.diagnostic.set_signs()"
+--     signs = true,
 
-    update_in_insert = false,
-  }
-)
+--     update_in_insert = false,
+--   }
+-- )
 
-lsp_status.register_progress()
+-- lsp_status.register_progress()
 
 local default_lsp_config = {on_attach = on_attach, capabilities = lsp_status.capabilities}
 local servers_path = vim.fn.stdpath("cache") .. "/lspconfig/"

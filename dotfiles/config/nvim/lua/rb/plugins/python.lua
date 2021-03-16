@@ -8,27 +8,15 @@ vim.g.jupytext_style = 'hydrogen'
 vim.cmd[[ nnoremap <silent><c-x> <Plug>JupyterExecute ]]
 vim.cmd[[ nnoremap <silent><c-X> <Plug>JupyterExecuteAll ]]
 
-map('n', '<silent> <c-x>', '<Plug>JupyterExecute')
-map('n', '<silent> <c-X>', '<Plug>JupyterExecuteAll')
-
 ---- NVIM-IPY -----------------------------------------------------------------
 
 vim.g.nvim_ipy_perform_mappings = 0
 vim.g.ipy_celldef = '# %%'
 
 vim.cmd [[map <silent><c-s> <Plug>(IPy-Run)]]
-vim.cmd [[map <leader>c <Plug>(IPy-RunCell)]]
-
-map('', '<silent> <c-s>', '<Plug>(IPy-Run)')
-map('', '<silent> <leader>c', '<Plug>(IPy-RunCell)')
+vim.cmd [[map <leader>rc <Plug>(IPy-RunCell)]]
 
 ---- IRON-REPL ----------------------------------------------------------------
-
-map('n', '<leader>v', '<Plug>(iron-visual-send)')
-map('n', '<leader>l', '<Plug>(iron-send-line)')
-
--- " Send cell to IronRepl and move to next cell.
-map('n', ']x', 'ctrih/^# %%<CR><CR>')
 
 local iron = require('iron')
 
@@ -46,12 +34,20 @@ iron.core.set_config {
   }
 }
 
+vim.cmd [[nnoremap <silent><c-v> <Plug>(iron-visual-send)]]
+vim.cmd [[nnoremap <C-l> <Plug>(iron-send-line)]]
+
+-- " Send cell to IronRepl and move to next cell.
+vim.cmd [[nmap ]x ctrih/^# %%<CR><CR>]]
+vim.cmd [[nmap [x ctrah/^# %%<CR><CR>]]
+
 ---- JUPYTER NOTEBOOK ---------------------------------------------------------
 
 vim.api.nvim_exec([[
     function! GetKernelFromPipenv()
         let l:kernel = tolower(system('basename $(pipenv --venv)'))
         " Remove control characters (most importantly newline)
+        " echo substitute(l:kernel, '[[:cntrl:\]\]', '', 'g')
         return substitute(l:kernel, '[[:cntrl:\]\]', '', 'g')
     endfunction
 
@@ -69,7 +65,8 @@ vim.api.nvim_exec([[
 
     function! ConnectToPipenvKernel()
         let l:kernel = GetKernelFromPipenv()
-        call IPyConnect('--kernel', l:kernel)
+        " TODO: Strip the \n from the kernel name
+        call IPyConnect('--existing')
     endfunction
 
     function! GetPoetryVenv()
@@ -103,11 +100,16 @@ vim.api.nvim_exec([[
         endif
     endfunction
 
+    " Starts Qt console and connect to pipenv ipykernel
     command! -nargs=0 RunQtPipenv call StartConsolePipenv('jupyter qtconsole')
+    " Starts Qt console and connect to an existing ipykernel
     command! -nargs=0 RunQtConsole call jobstart("jupyter qtconsole --existing")
+    " Starts pipenv ipykernel
     command! -nargs=0 RunPipenvKernel terminal /bin/bash -i -c 'pipenv run python -m ipykernel'
     command! -nargs=0 RunPoetryKernel terminal /bin/bash -i -c 'poetry run python -m ipykernel'
+    " Connects nvim-ipy to the existing ipykernel (non-interactive)
     command! -nargs=0 ConnectToPipenvKernel call ConnectToPipenvKernel()
+    " Connects nvim-ipy to the existing ipykernel (interactive)
     command! -nargs=0 ConnectConsole terminal /bin/bash -i -c 'jupyter console --existing'
     command! -nargs=0 AddFilepathToSyspath call AddFilepathToSyspath()
-]], '')
+]], false)

@@ -19,9 +19,16 @@ function map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
--- reload_module = require('plenary.reload').reload_module
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
 
--- reload = function(name)
---     reload_module(name)
---     return require(name)
--- end
+if pcall(require, 'plenary') then
+  RELOAD = require('plenary.reload').reload_module
+
+  R = function(name)
+    RELOAD(name)
+    return require(name)
+  end
+end

@@ -1,6 +1,6 @@
-local eslint = require('lsp.linters.eslint')
-local prettier = require('lsp.formatters.prettier')
-local prettier_standard = require('lsp.formatters.prettier_standard')
+local eslint = require('rb.lsp.linters.eslint')
+local prettier = require('rb.lsp.formatters.prettier')
+local prettier_standard = require('rb.lsp.formatters.prettier_standard')
 
 local M = {}
 

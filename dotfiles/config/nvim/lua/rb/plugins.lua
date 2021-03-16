@@ -37,7 +37,17 @@ return require('packer').startup {
     -- git
     use 'tpope/vim-fugitive'
     -- use 'airblade/vim-gitgutter'
-    use 'lewis6991/gitsigns.nvim'
+    -- Github integration
+    use {
+        'pwntester/octo.nvim',
+        -- cmd = { 'Octo' },
+      }
+    use {
+      'lewis6991/gitsigns.nvim',
+      requires = {
+        'nvim-lua/plenary.nvim'
+      },
+    }
     -- utils
     use 'scrooloose/nerdtree'
     use 'christoomey/vim-tmux-navigator'
@@ -92,20 +102,20 @@ return require('packer').startup {
     use {
       'hrsh7th/nvim-compe', branch = 'master'
     }
+    use 'Vimjas/vim-python-pep8-indent'
+    use 'heavenshell/vim-pydocstring'
     -- jupyter
     use 'untitled-ai/jupyter_ascending.vim'
     use 'bfredl/nvim-ipy'
     use 'hkupty/iron.nvim'
-    use 'Vimjas/vim-python-pep8-indent'
-    use 'heavenshell/vim-pydocstring'
     use 'GCBallesteros/jupytext.vim'
     use 'kana/vim-textobj-line'
     use 'kana/vim-textobj-user'
     use 'GCBallesteros/vim-textobj-hydrogen'
     -- telescope
     use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
+    use 'nvim-telescope/telescope-fzy-native.nvim'
     -- Language packs
     use {
       'nvim-treesitter/nvim-treesitter',
