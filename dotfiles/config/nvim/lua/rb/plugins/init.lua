@@ -46,8 +46,8 @@ vim.g.NERDTreeGitStatusConcealBrackets = 0
 
 require('gitsigns').setup {
     signs = {
-      add          = {hl = 'GruvboxGreen' , text = '+', numhl='GitSignsAddNr'},
-      change       = {hl = 'GruvboxAqua', text = '+', numhl='GitSignsChangeNr'},
+      add          = {hl = 'GruvboxGreen' , text = '│', numhl='GitSignsAddNr'},
+      change       = {hl = 'GruvboxAqua', text = '│', numhl='GitSignsChangeNr'},
       delete       = {hl = 'GruvboxRed', text = '_', numhl='GitSignsDeleteNr'},
       topdelete    = {hl = 'GruvboxRed', text = '‾', numhl='GitSignsDeleteNr'},
       changedelete = {hl = 'GruvboxAqua', text = '~', numhl='GitSignsChangeNr'},
