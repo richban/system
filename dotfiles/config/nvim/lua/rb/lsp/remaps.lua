@@ -13,6 +13,8 @@ function M.set(client, bufnr)
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+  -- install servers
+  buf_set_keymap('n', '<leader>li', "<cmd>lua require('rb.lsp.install_servers').lsp_install_servers()<CR>", opts)
   -- gives definition & references
   buf_set_keymap('n', '<leader>gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
 
@@ -24,7 +26,7 @@ function M.set(client, bufnr)
   -- Diagnostic
   -- buf_set_keymap('n','<leader>fe', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- buf_set_keymap('n','<leader>fe', '<cmd>:LspDiagnostics 0<CR>', opts)
-   buf_set_keymap('n','<leader>fd', "<cmd>lua require('rb.lsp.functions').show_diagnostics()<CR>", opts)
+  buf_set_keymap('n','<leader>fd', "<cmd>lua require('rb.lsp.functions').show_diagnostics()<CR>", opts)
   -- buf_set_keymap('n','<leader>fE', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n','<leader>fD', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
   -- buf_set_keymap('n','[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)

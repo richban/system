@@ -57,7 +57,10 @@ brew "git-secrets"
 brew "xz"
 brew "pipx"
 brew "pyqt"
-brew "pandoc"
+brew "redis"
+brew "gh"
+brew "editorconfig"
+brew "wget"
 
 # ------------------------------ FONTS ----------------------------------------
 

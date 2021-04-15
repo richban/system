@@ -72,6 +72,8 @@ end
 -- lsp_status.register_progress()
 
 local default_lsp_config = {on_attach = on_attach, capabilities = lsp_status.capabilities}
+
+
 local servers_path = vim.fn.stdpath("cache") .. "/lspconfig/"
 
 local function project_root_or_cur_dir(path)

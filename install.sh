@@ -10,7 +10,7 @@ fi
 shopt -s dotglob
 TESTMODE=false
 EXEPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
-DEV_PATH=developer
+DEV_PATH=Developer
 USER=richban
 EMAIL=rbanyi@me.com
 

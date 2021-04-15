@@ -5,15 +5,15 @@ local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-  execute 'packadd packer.nvim'
+-- Only required if you have packer configured as `opt`
+-- vim.cmd [[packadd packer.nvim]]
 end
 
-print(vim.inspect(install_path))
 
 return require('packer').startup {
   function(use)
     -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim'}
     -- fzf
     use {'junegunn/fzf', run = './install --all' }
     use {'junegunn/fzf.vim'}
@@ -76,6 +76,8 @@ return require('packer').startup {
     -- status line
     use 'itchyny/lightline.vim'
     -- LSP
+    use 'prabirshrestha/vim-lsp'
+    use 'mattn/vim-lsp-settings'
     use 'anott03/nvim-lspinstall'
     use 'neovim/nvim-lspconfig'
     -- use 'nvim-lua/completion-nvim'

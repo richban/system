@@ -69,20 +69,20 @@ function settings.setup()
     vim.o.updatetime = 1000
     vim.g.mapleader = ' '
     -- providers
-    vim.g.python_host_prog = '/Users/rbanyi/.pyenv/versions/neovim2/bin/python'
-    vim.g.python3_host_prog = '/Users/rbanyi/.pyenv/versions/neovim3/bin/python'
-    vim.g.pydocstring_doq_path = '/Users/rbanyi/.pyenv/versions/neovim3/bin/doq'
+    vim.g.python_host_prog = '$HOME/.pyenv/versions/neovim2/bin/python'
+    vim.g.python3_host_prog = '$HOME/.pyenv/versions/neovim3/bin/python'
+    vim.g.pydocstring_doq_path = 'HOME/.pyenv/versions/neovim3/bin/doq'
     vim.g.pydocstring_formatter = "google"
     -- theme
     -- gruvbox
-    vim.g.background = 'dark'
-    vim.g.gruvbox_material_background = 'hard'
-    vim.g.gruvbox_material_enable_italic = 1
-    vim.g.gruvbox_material_enable_bold = 1
-    vim.g.gruvbox_material_better_performance = 1
-    vim.g.gruvbox_material_palette = 'mix'
-    -- vim.g.gruvbox_material_sign_column_background = 'none'
-    vim.cmd('colorscheme gruvbox-material')
+    -- vim.g.background = 'dark'
+    -- vim.g.gruvbox_material_background = 'hard'
+    -- vim.g.gruvbox_material_enable_italic = 1
+    -- vim.g.gruvbox_material_enable_bold = 1
+    -- vim.g.gruvbox_material_better_performance = 1
+    -- vim.g.gruvbox_material_palette = 'mix'
+    -- -- vim.g.gruvbox_material_sign_column_background = 'none'
+    -- vim.cmd('colorscheme gruvbox-material')
 end
 
 return settings

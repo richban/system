@@ -29,13 +29,21 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="/usr/local/opt/icu4c/bin/icu-config:$PATH"
 export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
+export PATH="/Users/$(whoami)/.local/bin:$PATH"
+
+export PATH="$PATH:/Users/$(whoami)/.local/bin"
+export PYTHONPATH='/Users/$(whoami)/.local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
+
+export PATH="$HOME/.poetry/bin:$PATH"
+export PYTHONPATH='/Users/$(whoami).local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
+
 
 # -------------------------- EDITOR -------------------------------------------
 
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vi -c "let g:tty='\''$(tty)'\''"'
 else
-    export EDITOR='nvim -c "let g:tty='\''$(tty)'\''"'
+    export EDITOR='~/Developer/nvim-osx64/bin/nvim -c "let g:tty='\''$(tty)'\''"'
 fi
 
 export CVSEDITOR="${EDITOR}"

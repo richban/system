@@ -35,7 +35,6 @@ function mappings.setup()
     map('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>')
     -- map <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
     -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
-    -- map <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
     map('n','<leader>ml', '<cmd>Marks<CR>')
     map('n','<leader>n', ':NERDTreeToggle<CR>')
     map('n','<leader>V', ':Vista<CR>')

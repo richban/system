@@ -1,7 +1,5 @@
 local autocmd = {}
 
-print("autocmd")
-
 function autocmd.setup()
     local definitions = {
         wins = {

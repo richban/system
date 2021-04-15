@@ -1,3 +1,20 @@
+actions:
+  pre:
+    init_mac: sh actions/init_brew_xcode.sh
+    init_yabai: brew install koekeishiya/formulae/yabai && brew install koekeishiya/formulae/skhd
+    init_zinit: mkdir ~/.zinit && git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+    install_python: sh actions/python.sh
+    install_neovim: sh actions/nvim_python.sh
+    config_mac:
+      EXEPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
+      CWD=${EXEPATH}/system osascript -e 'tell application "System Preferences" to quit' > /dev/null 2>&1
+      /bin/bash ${CWD}/darwin.sh
+  install_packages: sh actions/install_packages.sh
+  vscode-install-extensions: >-
+    xargs -n 1 code --force --install-extension < {0}
+  post:
+    start_zinit: source ~/.zinit/bin/zinit.zsh; exec $SHELL; zinit self-update
+    start_yabai: brew services start skhd && brew services start yabai
 config:
   backup: true
   banner: true
@@ -16,36 +33,41 @@ dotfiles:
   f_alias:
     dst: ~/.alias
     src: alias
+    link: link
   f_functions:
     dst: ~/.functions
     src: functions
+    link: link
   f_gitconfig:
     dst: ~/.gitconfig
     src: gitconfig
+    link: link
   f_matplotlibrc:
     dst: ~/.matplotlib/matplotlibrc
     src: matplotlib/matplotlibrc
-  f_settings.json:
-    dst: ~/.vscode/settings.json
-    src: vscode/settings.json
   f_tmux.conf:
     dst: ~/.tmux.conf
     src: tmux.conf
+    link: link
   f_tool-versions:
     dst: ~/.tool-versions
     src: tool-versions
   f_zshenv:
     dst: ~/.zshenv
     src: zshenv
+    link: link
   f_zshrc:
     dst: ~/.zshrc
     src: zshrc
+    link: link
   f_skhdrc:
     src: skhdrc
     dst: ~/.skhdrc
+    link: link
   f_yabairc:
     src: yabairc
     dst: ~/.yabairc
+    link: link
   f_yank.sh:
     src: yank.sh
     dst: ~/yank.sh
@@ -55,6 +77,7 @@ dotfiles:
   f_vimrc:
     src: vimrc
     dst: ~/.vimrc
+    link: link
   d_vim:
     src: vim
     dst: ~/.vim/
@@ -62,12 +85,11 @@ dotfiles:
   d_hammerspoon:
     src: hammerspoon
     dst: ~/.hammerspoon
-  f_tmux-gruvbox-dark.conf:
-    src: tmux/plugins/tmux-gruvbox/tmux-gruvbox-dark.conf
-    dst: ~/.tmux/plugins/tmux-gruvbox/tmux-gruvbox-dark.conf
+    link: link
   f_tmux.remote.conf:
     src: tmux.remote.conf
     dst: ~/.tmux.remote.conf
+    link: link
   d_firefox:
     src: config/firefox
     dst: ~/.config/firefox
@@ -87,119 +109,42 @@ dotfiles:
   f_gitignore:
     src: gitignore
     dst: ~/.gitignore
+    link: link
   f_starship.toml:
     src: config/starship.toml
     dst: ~/.config/starship.toml
-  f_run_pyls_with_venv.sh:
+    link: link
+  f_run_pyls_with_venv:
     src: config/run_pyls_with_venv.sh
     dst: ~/.config/run_pyls_with_venv.sh
     chmod: "744"
-  d_nvim:
-    src: config/nvim
-    dst: ~/.config/nvim
   f_pycodestyle:
     src: config/pycodestyle
     dst: ~/.config/pycodestyle
-  f_jupyter_qtconsole_config.py:
+  f_jupyter_qtconsole_config:
     src: jupyter/jupyter_qtconsole_config.py
     dst: ~/.jupyter/jupyter_qtconsole_config.py
-  f_ipython_config.py:
+  f_ipython_config:
     src: ipython/profile_default/ipython_config.py
     dst: ~/.ipython/profile_default/ipython_config.py
+  d_nvim:
+    src: config/nvim
+    dst: ~/.config/nvim
+    chmod: "775"
+    link: link
+  f_vscode_settings.json:
+    dst: ~/.vscode/settings.json
+    src: vscode/settings.json
+    link: link
+  f_vscode_extensions.txt:
+    src: vscode/vscode-extensions.txt
+    dst: "{{@@ vscode_tmp_dst @@}}"
+    actions:
+      # This action installs VSCode extensions listed in the dotfile on-the-fly
+      - vscode-install-extensions '{{@@ vscode_tmp_dst @@}}'
+    # This transformation actually creates the dotfile.
+    trans_write: vscode-list-extensions
 profiles:
-<<<<<<< HEAD
-  balthasar-02:
-    dotfiles:
-    - f_tmux.conf
-    - f_zshrc
-    - f_zshenv
-    - f_alias
-    - f_functions
-    - f_tool-versions
-    - f_matplotlibrc
-    - f_gitconfig
-    - f_settings.json
-    - f_init.lua
-    - f_shortcuts.lua
-    - f_utils.lua
-    - f_skhdrc
-    - f_yabairc
-    - f_p10k.zsh
-    - f_vimrc
-    - f_yank.vim
-    - f_typescript.vim
-    - f_typescipt.vim
-    - f_sshknownhosts.vim
-    - f_plugin_yank.vim
-    - f_plug.vim
-    - f_filetype.vim
-    - d_hammerspoon
-    - f_tmux-gruvbox-dark.conf
-    - f_init.vim
-    - f_tmux.remote.conf
-    - f_user.js
-    - f_gruvbox.itermcolors
-    - f_karabiner.json
-    - f_vimium-options.json
-    - f_ctags
-    - f_spoof_mac_address.sh
-    - f_gitignore
-    - f_starship.toml
-    - f_plugins.lua
-    - d_lua
-    - f_nvim_init.lua
-    - d_plugin
-    - f_run_pyls_with_venv.sh
-    - d_nvim
-    - f_pycodestyle
-    - f_jupyter_qtconsole_config.py
-    - f_ipython_config.py
-||||||| parent of a885077 (Update)
-  balthasar-02:
-    dotfiles:
-    - f_tmux.conf
-    - f_zshrc
-    - f_zshenv
-    - f_alias
-    - f_functions
-    - f_tool-versions
-    - f_matplotlibrc
-    - f_gitconfig
-    - f_settings.json
-    - f_init.lua
-    - f_shortcuts.lua
-    - f_utils.lua
-    - f_skhdrc
-    - f_yabairc
-    - f_p10k.zsh
-    - f_vimrc
-    - f_yank.vim
-    - f_typescript.vim
-    - f_typescipt.vim
-    - f_sshknownhosts.vim
-    - f_plugin_yank.vim
-    - f_plug.vim
-    - f_filetype.vim
-    - d_hammerspoon
-    - f_tmux-gruvbox-dark.conf
-    - f_init.vim
-    - f_tmux.remote.conf
-    - f_user.js
-    - f_gruvbox.itermcolors
-    - f_karabiner.json
-    - f_vimium-options.json
-    - f_ctags
-    - f_spoof_mac_address.sh
-    - f_gitignore
-    - f_starship.toml
-    - f_plugins.lua
-    - d_lua
-    - f_nvim_init.lua
-    - d_plugin
-    - f_run_pyls_with_venv.sh
-    - d_nvim
-=======
->>>>>>> a885077 (Update)
   casper-03:
     dotfiles:
       - f_tmux.conf
@@ -210,22 +155,60 @@ profiles:
       - f_tool-versions
       - f_matplotlibrc
       - f_gitconfig
-      - f_settings.json
+      - f_vscode_settings.json
       - f_skhdrc
       - f_yabairc
       - f_vimrc
-      - f_tmux-gruvbox-dark.conf
-      - f_init.vim
       - f_tmux.remote.conf
       - f_karabiner.json
       - f_ctags
       - f_spoof_mac_address.sh
       - f_gitignore
       - f_starship.toml
-      - f_plugins.lua
-      - f_run_pyls_with_venv.sh
-      - d_nvim
+      - f_run_pyls_with_venv
       - d_vim
       - d_firefox
       - d_hammerspoon
       - d_iterm
+      - d_nvim
+  zsh:
+    dotfiles:
+      - f_zshenv
+      - f_zshrc
+      - f_tmux.conf
+      - f_tmux.remote.conf
+      - f_starship.toml
+    actions:
+      - init_zinit
+      - start_zinit
+  neovim:
+    dotfiles:
+      - d_nvim
+    actions:
+      - install_neovim
+  python:
+    dotfiles:
+      - f_run_pyls_with_venv
+      - f_jupyter_qtconsole_config
+      - f_tool-versions
+      - f_ipython_config
+      - f_pycodestyle
+      - f_matplotlibrc
+    actions:
+      - install_python
+  darwin:
+    dotfiles:
+      - f_ctags
+    actions:
+      - config_mac
+  vscode:
+    dotfiles:
+      - f_vscode_extensions.txt
+      - f_vscode_settings.json
+    dynvariables:
+      vscode_tmp_dst: mktemp /tmp/vscode-tmp.XXX
+    variables:
+      is_headless: false
+
+trans_write:
+  vscode-list-extensions: code --list-extensions > {1}

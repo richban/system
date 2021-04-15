@@ -3,3 +3,12 @@ jupyter
 numpy
 requests
 matplotlib
+doq
+qtconsole
+mypy-ls
+pyls-black
+flake8
+pep8-naming
+jedi
+jupyter_qtconsole_colorschemes
+jupyter_ascending
