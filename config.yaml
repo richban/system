@@ -40,15 +40,6 @@ dotfiles:
   f_zshrc:
     dst: ~/.zshrc
     src: zshrc
-  f_init.lua:
-    src: hammerspoon/init.lua
-    dst: ~/.hammerspoon/init.lua
-  f_shortcuts.lua:
-    src: hammerspoon/shortcuts.lua
-    dst: ~/.hammerspoon/shortcuts.lua
-  f_utils.lua:
-    src: hammerspoon/utils.lua
-    dst: ~/.hammerspoon/utils.lua
   f_skhdrc:
     src: skhdrc
     dst: ~/.skhdrc
@@ -64,28 +55,7 @@ dotfiles:
   f_vimrc:
     src: vimrc
     dst: ~/.vimrc
-  f_yank.vim:
-    src: vim/autoload/yank.vim
-    dst: ~/.vim/autoload/yank.vim
-  f_typescript.vim:
-    src: vim/compiler/typescript.vim
-    dst: ~/.vim/compiler/typescript.vim
-  f_typescipt.vim:
-    src: vim/ftplugin/typescipt.vim
-    dst: ~/.vim/ftplugin/typescipt.vim
-  f_sshknownhosts.vim:
-    src: vim/syntax/sshknownhosts.vim
-    dst: ~/.vim/syntax/sshknownhosts.vim
-  f_plugin_yank.vim:
-    src: vim/plugin/yank.vim
-    dst: ~/.vim/plugin/yank.vim
-  f_plug.vim:
-    src: vim/autoload/plug.vim
-    dst: ~/.vim/autoload/plug.vim
-  f_filetype.vim:
-    src: vim/filetype.vim
-    dst: ~/.vim/filetype.vim
-  vim:
+  d_vim:
     src: vim
     dst: ~/.vim/
     link: link_children
@@ -95,32 +65,19 @@ dotfiles:
   f_tmux-gruvbox-dark.conf:
     src: tmux/plugins/tmux-gruvbox/tmux-gruvbox-dark.conf
     dst: ~/.tmux/plugins/tmux-gruvbox/tmux-gruvbox-dark.conf
-  f_init.vim:
-    src: config/nvim/init.vim
-    dst: ~/.config/nvim/init.vim
   f_tmux.remote.conf:
     src: tmux.remote.conf
     dst: ~/.tmux.remote.conf
-  f_zshenv_1:
-    src: zshenv
-    dst: ~/.zshenv
-  f_zshrc_1:
-    src: zshrc
-    dst: ~/.zshrc
-  f_user.js:
-    src: config/firefox/user.js
-    dst: ~/.config/firefox/user.js
-    chmod: '600'
-  f_gruvbox.itermcolors:
-    src: gruvbox.itermcolors
-    dst: ~/gruvbox.itermcolors
+  d_firefox:
+    src: config/firefox
+    dst: ~/.config/firefox
+  d_iterm:
+    src: config/iterm
+    dst: ~/.config/iterm
   f_karabiner.json:
     src: config/karabiner/karabiner.json
     dst: ~/.config/karabiner/karabiner.json
-    chmod: '600'
-  f_vimium-options.json:
-    src: config/firefox/vimium-options.json
-    dst: ~/.config/firefox/vimium-options.json
+    chmod: "600"
   f_ctags:
     src: ctags
     dst: ~/.ctags
@@ -133,22 +90,10 @@ dotfiles:
   f_starship.toml:
     src: config/starship.toml
     dst: ~/.config/starship.toml
-  f_plugins.lua:
-    src: config/nvim/plugins.lua
-    dst: ~/.config/nvim/plugins.lua
-  d_lua:
-    src: config/nvim/lua
-    dst: ~/.config/nvim/lua
-  f_nvim_init.lua:
-    src: config/nvim/init.lua
-    dst: ~/.config/nvim/init.lua
-  d_plugin:
-    src: config/nvim/plugin
-    dst: ~/.config/nvim/plugin
   f_run_pyls_with_venv.sh:
     src: config/run_pyls_with_venv.sh
     dst: ~/.config/run_pyls_with_venv.sh
-    chmod: '744'
+    chmod: "744"
   d_nvim:
     src: config/nvim
     dst: ~/.config/nvim
@@ -162,6 +107,7 @@ dotfiles:
     src: ipython/profile_default/ipython_config.py
     dst: ~/.ipython/profile_default/ipython_config.py
 profiles:
+<<<<<<< HEAD
   balthasar-02:
     dotfiles:
     - f_tmux.conf
@@ -208,7 +154,8 @@ profiles:
     - f_pycodestyle
     - f_jupyter_qtconsole_config.py
     - f_ipython_config.py
-  casper-03:
+||||||| parent of a885077 (Update)
+  balthasar-02:
     dotfiles:
     - f_tmux.conf
     - f_zshrc
@@ -240,3 +187,45 @@ profiles:
     - f_user.js
     - f_gruvbox.itermcolors
     - f_karabiner.json
+    - f_vimium-options.json
+    - f_ctags
+    - f_spoof_mac_address.sh
+    - f_gitignore
+    - f_starship.toml
+    - f_plugins.lua
+    - d_lua
+    - f_nvim_init.lua
+    - d_plugin
+    - f_run_pyls_with_venv.sh
+    - d_nvim
+=======
+>>>>>>> a885077 (Update)
+  casper-03:
+    dotfiles:
+      - f_tmux.conf
+      - f_zshrc
+      - f_zshenv
+      - f_alias
+      - f_functions
+      - f_tool-versions
+      - f_matplotlibrc
+      - f_gitconfig
+      - f_settings.json
+      - f_skhdrc
+      - f_yabairc
+      - f_vimrc
+      - f_tmux-gruvbox-dark.conf
+      - f_init.vim
+      - f_tmux.remote.conf
+      - f_karabiner.json
+      - f_ctags
+      - f_spoof_mac_address.sh
+      - f_gitignore
+      - f_starship.toml
+      - f_plugins.lua
+      - f_run_pyls_with_venv.sh
+      - d_nvim
+      - d_vim
+      - d_firefox
+      - d_hammerspoon
+      - d_iterm

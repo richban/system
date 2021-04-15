@@ -58,6 +58,7 @@ install_bundle() {
 	brew upgrade
 	brew bundle --file ${CWD}/Brewfile
 
+
 	## ========== Xcode ==========
 	sudo xcodebuild -license accept
 
@@ -65,6 +66,9 @@ install_bundle() {
 	## - npm list -g --depth 0 | sed '1d' | awk '{ print $2 }' | awk -F'@[0-9]' '{ print $1 }' > Npmfile
 	npm update -g npm
 	npm install -g $(cat ${CWD}/Npmfile)
+
+	## ========== nvm ==========
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 	# ## ========== asdf ==========
 	# if [[ ! -d "$HOME"/.asdf/plugins/python ]]; then
@@ -97,16 +101,16 @@ install_bundle() {
 	## ========== Git ==========
 	sudo ln -sfnv /usr/local/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin/diff-highlight
 
-	## ========== Zsh ==========
+	## ========== Zinit ==========
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
-	zinit self-update
-	source ${HOME}/.zshrc
+	# zinit self-update
+	# source ${HOME}/.zshrc
 
 	## ========== Vim ==========
-	curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	vim +'PlugInstall --sync' +qa
-	curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	nvim +'PlugInstall --sync' +qa
+	# curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	# vim +'PlugInstall --sync' +qa
+	# curl -fLo ${HOME}/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	# nvim +'PlugInstall --sync' +qa
 
 	## ========== Tmux ==========
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -121,7 +125,7 @@ install_bundle() {
 	curl https://sdk.cloud.google.com | /bin/bash -s -- --disable-prompts
 
 	## ========== iTerm2 ==========
-	curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
+	# curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
 
 	## ========== Anyenv ==========
 	# if [ ! -d ${HOME}/.config/anyenv/anyenv-install ]; then
@@ -139,11 +143,11 @@ install_bundle() {
 	curl -L https://raw.githubusercontent.com/docker/machine/v0.16.0/contrib/completion/zsh/_docker-machine > ~/.zsh/completion/_docker-machine
 
 	## ========== Remote pbcopy ==========
-	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-		curl -fsSLo pbcopy-linux-amd64.tar.gz https://github.com/skaji/remote-pbcopy-iterm2/releases/latest/download/pbcopy-linux-amd64.tar.gz
-		tar --remove-files xf pbcopy-linux-amd64.tar.gz
-		mv pbcopy ~/pbcopy
-	fi
+	# if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+	# 	curl -fsSLo pbcopy-linux-amd64.tar.gz https://github.com/skaji/remote-pbcopy-iterm2/releases/latest/download/pbcopy-linux-amd64.tar.gz
+	# 	tar --remove-files xf pbcopy-linux-amd64.tar.gz
+	# 	mv pbcopy ~/pbcopy
+	# fi
 
 	## ========== VSCode ==========
 	## - code --list-extensions > Vsplug

@@ -119,27 +119,27 @@ General() {
 	# - 10
 	# - 15
 	# @string: choose preferred item.
-	osascript -e "
-		tell application \"System Preferences\"
-			activate
-			set current pane to pane \"com.apple.preference.general\"
-		end tell
-		tell application \"System Events\"
-			tell application process \"System Preferences\"
-				repeat while not (window 1 exists)
-				end repeat
-				tell window 1
-					tell pop up button 4
-						delay 1
-						click
-						tell menu 1
-							click menu item \"None\"
-						end tell
-					end tell
-				end tell
-			end tell
-		end tell
-	"
+	# osascript -e "
+	# 	tell application \"System Preferences\"
+	# 		activate
+	# 		set current pane to pane \"com.apple.preference.general\"
+	# 	end tell
+	# 	tell application \"System Events\"
+	# 		tell application process \"System Preferences\"
+	# 			repeat while not (window 1 exists)
+	# 			end repeat
+	# 			tell window 1
+	# 				tell pop up button 4
+	# 					delay 1
+	# 					click
+	# 					tell menu 1
+	# 						click menu item \"None\"
+	# 					end tell
+	# 				end tell
+	# 			end tell
+	# 		end tell
+	# 	end tell
+	# "
 
 	# ========== Allow Handoff between this Mac and your iCloud devices ==========
 	# - Checked
@@ -199,28 +199,28 @@ DesktopScreenSaver() {
 	# "
 
 	# ========== ScreenSaver Picture ==========
-	osascript -e "
-		tell application \"System Preferences\"
-			activate
-			reveal pane id \"com.apple.preference.desktopscreeneffect\"
-		end tell
-		tell application \"System Events\"
-			tell application process \"System Preferences\"
-				repeat while not (window 1 exists)
-				end repeat
-				tell window 1
-					tell tab group 1
-						repeat with current_group in list 1 of list 1 of scroll area 1
-							if name of image of current_group is equal to \"Drift\" then
-								click image of current_group
-								every UI element
-							end if
-						end repeat
-					end tell
-				end tell
-			end tell
-		end tell
-	"
+	# osascript -e "
+	# 	tell application \"System Preferences\"
+	# 		activate
+	# 		reveal pane id \"com.apple.preference.desktopscreeneffect\"
+	# 	end tell
+	# 	tell application \"System Events\"
+	# 		tell application process \"System Preferences\"
+	# 			repeat while not (window 1 exists)
+	# 			end repeat
+	# 			tell window 1
+	# 				tell tab group 1
+	# 					repeat with current_group in list 1 of list 1 of scroll area 1
+	# 						if name of image of current_group is equal to \"Drift\" then
+	# 							click image of current_group
+	# 							every UI element
+	# 						end if
+	# 					end repeat
+	# 				end tell
+	# 			end tell
+	# 		end tell
+	# 	end tell
+	# "
 
 	# ========== Start After ==========
 	# @int: seconds
@@ -597,32 +597,32 @@ Sound() {
 }
 
 Displays() {
-#	# ========== Resolution ==========
-#	# Resolution
-#	# - Default for display
-#	# - Scaled
-#	#	- Larger Text
-#	# 	- Second Larger Text
-#	# 	- Middle
-#	# 	- Default
-#	# 	- More Space
-#	osascript -e "
-#		tell application \"System Preferences\"
-#			activate
-#			reveal anchor \"displaysDisplayTab\" of pane id \"com.apple.preference.displays\"
-#		end tell
-#		tell application \"System Events\"
-#			delay 0.5
-#			tell application process \"System Preferences\" to tell window \"Built-in Retina Display\"
-#				click radio button \"Scaled\" of radio group 1 of tab group 1
-#				click radio button 4 of radio group 1 of group 2 of tab group 1
-#				delay 0.5
-#				try
-#					click button \"OK\" of sheet 1
-#				end try
-#			end tell
-#		end tell
-#	"
+	#	# ========== Resolution ==========
+	#	# Resolution
+	#	# - Default for display
+	#	# - Scaled
+	#	#	- Larger Text
+	#	# 	- Second Larger Text
+	#	# 	- Middle
+	#	# 	- Default
+	#	# 	- More Space
+	#	osascript -e "
+	#		tell application \"System Preferences\"
+	#			activate
+	#			reveal anchor \"displaysDisplayTab\" of pane id \"com.apple.preference.displays\"
+	#		end tell
+	#		tell application \"System Events\"
+	#			delay 0.5
+	#			tell application process \"System Preferences\" to tell window \"Built-in Retina Display\"
+	#				click radio button \"Scaled\" of radio group 1 of tab group 1
+	#				click radio button 4 of radio group 1 of group 2 of tab group 1
+	#				delay 0.5
+	#				try
+	#					click button \"OK\" of sheet 1
+	#				end try
+	#			end tell
+	#		end tell
+	#	"
 
 	# ========== Show mirroring options in the menu bar when available ==========
 	# - Checked
@@ -848,26 +848,26 @@ Keyboard() {
 	# - Quick Actions
 
 	# ========== Show keyboard and emoji viewers in menu bar ==========
-	PLIST="${HOME}/Library/Preferences/com.apple.HIToolbox.plist"
-	IS_EMOJI=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep 'com.apple.CharacterPaletteIM')
-	HNUM=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
-	# - Checked
-	if [[ -z  ${IS_EMOJI} ]]; then
-		/usr/libexec/PlistBuddy \
-	 		-c "Add AppleEnabledInputSources:${HNUM} dict" \
-	 		-c "Add AppleEnabledInputSources:${HNUM}:InputSourceKind string \"Non Keyboard Input Method\"" \
-	 		-c "Add AppleEnabledInputSources:${HNUM}:\"Bundle ID\" string \"com.apple.CharacterPaletteIM\"" \
-			${PLIST}
-	fi
-	# - Unchecked
-	if [[ -n  ${IS_EMOJI} ]]; then
-		for idx in $(seq 0 $(expr ${HNUM} - 1)); do
-			BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources:${idx}:\"Bundle ID\"" ${PLIST} 2>/dev/null)
-			if [[ $BUNDLE_ID == "com.apple.CharacterPaletteIM" ]]; then
-				/usr/libexec/PlistBuddy -c "Delete AppleEnabledInputSources:${idx}" ${PLIST}
-			fi
-		done
-	fi
+	# PLIST="${HOME}/Library/Preferences/com.apple.HIToolbox.plist"
+	# IS_EMOJI=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep 'com.apple.CharacterPaletteIM')
+	# HNUM=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
+	# # - Checked
+	# if [[ -z  ${IS_EMOJI} ]]; then
+	# 	/usr/libexec/PlistBuddy \
+	#  		-c "Add AppleEnabledInputSources:${HNUM} dict" \
+	#  		-c "Add AppleEnabledInputSources:${HNUM}:InputSourceKind string \"Non Keyboard Input Method\"" \
+	#  		-c "Add AppleEnabledInputSources:${HNUM}:\"Bundle ID\" string \"com.apple.CharacterPaletteIM\"" \
+	# 		${PLIST}
+	# fi
+	# # - Unchecked
+	# if [[ -n  ${IS_EMOJI} ]]; then
+	# 	for idx in $(seq 0 $(expr ${HNUM} - 1)); do
+	# 		BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources:${idx}:\"Bundle ID\"" ${PLIST} 2>/dev/null)
+	# 		if [[ $BUNDLE_ID == "com.apple.CharacterPaletteIM" ]]; then
+	# 			/usr/libexec/PlistBuddy -c "Delete AppleEnabledInputSources:${idx}" ${PLIST}
+	# 		fi
+	# 	done
+	# fi
 
 	# ========== Correct spelling automatically ==========
 	# - Checked
@@ -964,7 +964,7 @@ Keyboard() {
 	# "
 
 	# ========== Input Sources ==========
-	# FIX: inputmethod US
+	# FIXME: inputmethod US
 	# GJIME=$(defaults read com.apple.HIToolbox AppleEnabledInputSources | grep "InputSourceKind = \"Keyboard Input Method\"")
 	# HNUM=$(/usr/libexec/PlistBuddy -c "Print AppleEnabledInputSources" ${PLIST} | grep -P '^[\s]*Dict' | wc -l | tr -d ' ')
 	# if [[ -z  ${GJIME} ]]; then
@@ -1590,6 +1590,6 @@ if ! ${TESTMODE}; then
 		"Contacts" "Dock" "Finder" "Mail" "Messages" \
 		"SystemUIServer" "Terminal" "Transmission" "iCal"
 	do
-		# killall ${app}
+		killall ${app}
 	done
 fi

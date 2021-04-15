@@ -16,7 +16,6 @@ brew "lua"
 brew "gcc"
 brew "node"
 brew "cmake"
-brew "python@3.8"
 
 # ------------------------------ TOOLING --------------------------------------
 
@@ -56,12 +55,17 @@ brew "tree"
 brew "neofetch"
 brew "git-secrets"
 brew "xz"
+brew "pipx"
+brew "pyqt"
+brew "pandoc"
 
 # ------------------------------ FONTS ----------------------------------------
 
 tap  "homebrew/cask-fonts"
 cask "font-fontawesome"
 cask "font-hack-nerd-font"
+cask "font-firamono-nerd-font"
+cask "font-firacode-nerd-font"
 
 # ------------------------------ APPS -----------------------------------------
 
@@ -79,7 +83,6 @@ cask "discord"
 cask "gpg-suite"
 cask "sequel-pro"
 cask "karabiner-elements"
-cask "alacritty"
 cask "chromedriver"
 
 mas "WeChat", id: 836500024
