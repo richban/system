@@ -64,7 +64,6 @@ export FZF_DEFAULT_OPTS="
 # -------------------------- ZINIT --------------------------------------------
 
 if [[ -f $HOME/.zinit/bin/zinit.zsh ]]; then
-  print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b"
   source "$HOME/.zinit/bin/zinit.zsh"
   autoload -Uz _zinit
   (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -110,3 +109,5 @@ fi
 
 # -------------------------- PROMPT -------------------------------------------
 eval "$(starship init zsh)"
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform

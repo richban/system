@@ -73,6 +73,7 @@ function settings.setup()
     vim.g.python3_host_prog = '$HOME/.pyenv/versions/neovim3/bin/python'
     vim.g.pydocstring_doq_path = 'HOME/.pyenv/versions/neovim3/bin/doq'
     vim.g.pydocstring_formatter = "google"
+    vim.g.lsp_settings_servers_dir = vim.fn.stdpath("cache") .. "/lspconfig"
     -- theme
     -- gruvbox
     -- vim.g.background = 'dark'

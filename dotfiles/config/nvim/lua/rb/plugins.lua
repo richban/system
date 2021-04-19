@@ -41,7 +41,7 @@ return require('packer').startup {
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
     use 'liuchengxu/vista.vim'
-    use 'dstein64/nvim-scrollview'
+    -- use 'dstein64/nvim-scrollview'
     -- use 'wakatime/vim-wakatime'
     -- motion
     use 'yuttie/comfortable-motion.vim'
@@ -66,6 +66,7 @@ return require('packer').startup {
     }
     use 'junegunn/goyo.vim'
     -- colors and theme
+    use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
     use 'morhetz/gruvbox'
     use 'sainnhe/gruvbox-material'
     use 'pineapplegiant/spaceduck'
@@ -74,15 +75,21 @@ return require('packer').startup {
     -- highlight hex, rgb colors
     use 'norcalli/nvim-colorizer.lua'
     -- status line
-    use 'itchyny/lightline.vim'
+    -- use 'itchyny/lightline.vim'
+    use {
+      'hoob3rt/lualine.nvim',
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
     -- LSP
+    -- used to install LSP Servers
     use 'prabirshrestha/vim-lsp'
     use 'mattn/vim-lsp-settings'
-    use 'anott03/nvim-lspinstall'
+
     use 'neovim/nvim-lspconfig'
     -- use 'nvim-lua/completion-nvim'
     use 'glepnir/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
+
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'
     use {

@@ -37,7 +37,7 @@ export PYTHONPATH='/Users/$(whoami)/.local/pipx/venvs/pdm/lib/python3.9/site-pac
 export PATH="$HOME/.poetry/bin:$PATH"
 export PYTHONPATH='/Users/$(whoami).local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
 
-
+export DOTREPO="~/.dotfiles/"
 # -------------------------- EDITOR -------------------------------------------
 
 if [[ -n $SSH_CONNECTION ]]; then

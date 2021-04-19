@@ -4,7 +4,7 @@ CWD=${EXEPATH}/../bundle
 ## ========== Brew Bundle ==========
 brew upgrade
 brew bundle --file ${CWD}/Brewfile
-
+brew cleanup
 
 ## ========== Xcode ==========
 sudo xcodebuild -license accept

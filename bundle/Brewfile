@@ -3,6 +3,7 @@
 tap "homebrew/cask"
 tap "homebrew/bundle"
 tap "homebrew/services"
+tap "hashicorp/tap"
 cask_args appdir: "/Applications"
 
 # ------------------------------ DATABASE -------------------------------------
@@ -61,6 +62,7 @@ brew "redis"
 brew "gh"
 brew "editorconfig"
 brew "wget"
+brew "hashicorp/tap/terraform"
 
 # ------------------------------ FONTS ----------------------------------------
 
@@ -87,6 +89,8 @@ cask "gpg-suite"
 cask "sequel-pro"
 cask "karabiner-elements"
 cask "chromedriver"
+cask "signal"
+cask "obsidian"
 
 mas "WeChat", id: 836500024
 mas "Notability", id: 736189492

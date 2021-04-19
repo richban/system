@@ -37,7 +37,10 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 alias reload="exec $SHELL -l"
 
 # dotdrop
-alias dot="$HOME/.dotfiles/dotdrop.sh --cfg=$HOME/.dotfiles/config.yaml"
+alias dot="$HOME/.dotfiles/dotdrop/dotdrop.sh --cfg=$HOME/.dotfiles/config.yaml"
+alias dotdrop="$DOTREPO/dotdrop.sh"
+alias dotgit="git -C $DOTREPO"
+alias dotsync="dotgit pull && dotgit add -A && dotgit commit && dotgit push; dotdrop install"
 
 # nvm
 alias loadnvm='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
@@ -69,5 +72,5 @@ alias spotoff="sudo mdutil -a -i off"
 alias spoton="sudo mdutil -a -i on"
 
 alias vi='vi -c "let g:tty='\''$(tty)'\''"'
-alias nvim='nvim -c "let g:tty='\''$(tty)'\''"'
+alias nvim='~/Developer/nvim-macos/bin/nvim -c "let g:tty='\''$(tty)'\''"'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
