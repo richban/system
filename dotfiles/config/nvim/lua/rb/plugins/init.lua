@@ -23,24 +23,24 @@ vim.g.fzf_layout = {
 vim.g.fzf_preview_window = { 'down', 'ctrl-/' }
 vim.env.FZF_DEFAULT_OPTS = '--reverse'
 
----- NERDTree -----------------------------------------------------------------
+---- File Tree -----------------------------------------------------------------
 
-vim.g.NERDTreeMinimalMenu = 1
-vim.g.NERDTreeMinimalUI = 1
-vim.g.NERDTreeShowHidden = 1
-vim.g.NERDTreeWinSize = 35
-vim.g.NERDTreeDirArrowExpandable = ''
-vim.g.NERDTreeDirArrowCollapsible = ''
-vim.g.NERDTreeWinPos = "left"
-vim.g.NERDTreeNaturalSort = 1
-vim.g.NERDTreeIgnore = { ".git$", ".idea$", "node_modules", ".DS_Store", "__pycache__" }
+-- vim.g.NERDTreeMinimalMenu = 1
+-- vim.g.NERDTreeMinimalUI = 1
+-- vim.g.NERDTreeShowHidden = 1
+-- vim.g.NERDTreeWinSize = 35
+-- vim.g.NERDTreeDirArrowExpandable = ''
+-- vim.g.NERDTreeDirArrowCollapsible = ''
+-- vim.g.NERDTreeWinPos = "left"
+-- vim.g.NERDTreeNaturalSort = 1
+-- vim.g.NERDTreeIgnore = { ".git$", ".idea$", "node_modules", ".DS_Store", "__pycache__" }
 
-vim.g.DevIconsEnableFoldersOpenClose = 1
+-- vim.g.DevIconsEnableFoldersOpenClose = 1
 
--- Indicate every single untracked file under an untracked dir
-vim.g.NERDTreeGitStatusUntrackedFilesMode = 'all'
--- To hide the boring brackets ([ ])
-vim.g.NERDTreeGitStatusConcealBrackets = 0
+-- -- Indicate every single untracked file under an untracked dir
+-- vim.g.NERDTreeGitStatusUntrackedFilesMode = 'all'
+-- -- To hide the boring brackets ([ ])
+-- vim.g.NERDTreeGitStatusConcealBrackets = 0
 
 ---- GITGUTTER -------------------------------------------------------------
 
@@ -76,7 +76,8 @@ require('gitsigns').setup {
 
 --- STATUSLINE  ----------------------------------------------------------------
 
-require('rb.plugins.lightline')
+-- require('rb.plugins.lightline')
+require('rb.plugins.statusline')
 
 ---- LSP ----------------------------------------------------------------------
 

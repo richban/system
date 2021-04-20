@@ -33,7 +33,7 @@ return require('packer').startup {
       },
     }
     -- utils
-    use 'scrooloose/nerdtree'
+    -- use 'scrooloose/nerdtree'
     use 'christoomey/vim-tmux-navigator'
     use 'mhinz/vim-startify'
     use 'tweekmonster/startuptime.vim'
@@ -67,9 +67,9 @@ return require('packer').startup {
     use 'junegunn/goyo.vim'
     -- colors and theme
     use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
-    use 'morhetz/gruvbox'
-    use 'sainnhe/gruvbox-material'
-    use 'pineapplegiant/spaceduck'
+    -- use 'morhetz/gruvbox'
+    -- use 'sainnhe/gruvbox-material'
+    -- use 'pineapplegiant/spaceduck'
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
     -- highlight hex, rgb colors
@@ -98,13 +98,13 @@ return require('packer').startup {
     use 'Vimjas/vim-python-pep8-indent'
     use 'heavenshell/vim-pydocstring'
     -- jupyter
-    use 'untitled-ai/jupyter_ascending.vim'
-    use 'bfredl/nvim-ipy'
-    use 'hkupty/iron.nvim'
-    use 'GCBallesteros/jupytext.vim'
-    use 'kana/vim-textobj-line'
-    use 'kana/vim-textobj-user'
-    use 'GCBallesteros/vim-textobj-hydrogen'
+    -- use 'untitled-ai/jupyter_ascending.vim'
+    -- use 'bfredl/nvim-ipy'
+    -- use 'hkupty/iron.nvim'
+    -- use 'GCBallesteros/jupytext.vim'
+    -- use 'kana/vim-textobj-line'
+    -- use 'kana/vim-textobj-user'
+    -- use 'GCBallesteros/vim-textobj-hydrogen'
     -- telescope
     use 'nvim-lua/popup.nvim'
     use 'nvim-telescope/telescope.nvim'

@@ -73,8 +73,9 @@ end
 
 local default_lsp_config = {on_attach = on_attach, capabilities = lsp_status.capabilities}
 
-
-local servers_path = vim.fn.stdpath("cache") .. "/lspconfig/"
+-- Servers PATH on MacOS/Linux
+-- local servers_path = "~/.local/share/vim-lsp-settings/servers"
+local servers_path = vim.fn.stdpath("cache") .. "/lspconfig"
 
 local function project_root_or_cur_dir(path)
     return lsp.util.root_pattern('pyproject.toml', 'Pipfile', '.git')(path) or vim.fn.getcwd()
@@ -97,23 +98,26 @@ else
     print("Unsupported system for sumneko")
 end
 
--- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
-local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-language-server'
+-- set the path to the sumneko installation; if you previously installed via the now deprecated :LspIn
+local sumneko_root_path = servers_path.."/sumneko-lua-language-server/extension/server"
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 local servers = {
     diagnosticls = diagnostics.options,
-    bashls = {
-        cmd = { servers_path .. "bash-language-server/bash-language-server", "--stdio"}
-    },
+    bashls = {},
     vimls = {},
     dockerls = {},
     yamlls = {},
-    rust_analyzer = {},
+    terraformls = {
+        cmd = { "terraform-ls", "serve" },
+        filetypes = { "terraform", "hcl" }
+    },
+    -- rust_analyzer = {},
     jsonls = {},
     tsserver = {},
     html = {},
     cssls = {},
+    vuels = {},
     -- pyls_ms = {
     --     cmd = { 'dotnet', 'exec', '/Users/rbanyi/Developer/python-language-server/output/bin/Debug/Microsoft.Python.LanguageServer.dll'},
     --     settings = {
