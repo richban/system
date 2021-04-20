@@ -55,20 +55,6 @@ local function on_attach(client, bufnr)
 
 end
 
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---   vim.lsp.diagnostic.on_publish_diagnostics, {
---     virtual_text = {
---       spacing = 0,
---       prefix = "■",
---     },
-
---     -- see: ":help vim.lsp.diagnostic.set_signs()"
---     signs = true,
-
---     update_in_insert = false,
---   }
--- )
-
 -- lsp_status.register_progress()
 
 local default_lsp_config = {on_attach = on_attach, capabilities = lsp_status.capabilities}

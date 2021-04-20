@@ -42,6 +42,8 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 -- -- To hide the boring brackets ([ ])
 -- vim.g.NERDTreeGitStatusConcealBrackets = 0
 
+map('n','<leader>n', ':CHADopen<CR>')
+
 ---- GITGUTTER -------------------------------------------------------------
 
 require('gitsigns').setup {

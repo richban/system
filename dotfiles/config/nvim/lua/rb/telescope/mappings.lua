@@ -53,6 +53,7 @@ map_tele('<leader>fg', 'live_grep')
 map_tele('<leader>fd', 'fd')
 map_tele('<leader>ps', 'project_search')
 map_tele('<leader>fe', 'file_browser')
+map_tele('<leader>fm', 'media_files')
 
 -- Nvim
 map_tele('<leader>fb', 'buffers')
@@ -61,6 +62,7 @@ map_tele('<leader>fa', 'installed_plugins')
 map_tele('<leader>fi', 'search_all_files')
 map_tele('<leader>ff', 'curbuf')
 map_tele('<leader>fh', 'help_tags')
+
 map_tele('<leader>so', 'vim_options')
 map_tele('<leader>gp', 'grep_prompt')
 

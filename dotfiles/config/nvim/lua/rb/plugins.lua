@@ -34,6 +34,12 @@ return require('packer').startup {
     }
     -- utils
     -- use 'scrooloose/nerdtree'
+    use {
+      'ms-jpq/chadtree',
+      branch = 'chad',
+      run = 'python3 -m chadtree deps'
+
+    }
     use 'christoomey/vim-tmux-navigator'
     use 'mhinz/vim-startify'
     use 'tweekmonster/startuptime.vim'
@@ -98,9 +104,9 @@ return require('packer').startup {
     use 'Vimjas/vim-python-pep8-indent'
     use 'heavenshell/vim-pydocstring'
     -- jupyter
+    use 'bfredl/nvim-ipy'
+    use 'hkupty/iron.nvim'
     -- use 'untitled-ai/jupyter_ascending.vim'
-    -- use 'bfredl/nvim-ipy'
-    -- use 'hkupty/iron.nvim'
     -- use 'GCBallesteros/jupytext.vim'
     -- use 'kana/vim-textobj-line'
     -- use 'kana/vim-textobj-user'
@@ -109,6 +115,19 @@ return require('packer').startup {
     use 'nvim-lua/popup.nvim'
     use 'nvim-telescope/telescope.nvim'
     use 'nvim-telescope/telescope-fzy-native.nvim'
+    use 'nvim-telescope/telescope-fzf-writer.nvim'
+    use 'nvim-telescope/telescope-packer.nvim'
+    -- preview media files
+    use 'nvim-telescope/telescope-media-files.nvim'
+    -- intelligent prioritization when selecting files
+    use {
+      "nvim-telescope/telescope-frecency.nvim",
+      config = function()
+        require"telescope".load_extension("frecency")
+      end
+    }
+    use 'tami5/sql.nvim'
+    use 'nvim-telescope/telescope-cheat.nvim'
     -- Language packs
     use {
       'nvim-treesitter/nvim-treesitter',

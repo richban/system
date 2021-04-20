@@ -131,7 +131,7 @@ dotfiles:
     src: config/nvim
     dst: ~/.config/nvim
     chmod: "775"
-    link: link
+    link: link_children
   f_vscode_settings.json:
     dst: ~/.vscode/settings.json
     src: vscode/settings.json

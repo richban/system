@@ -8,9 +8,9 @@ function autocmd.setup()
             {'BufNew,BufEnter', '*.md,*.markdown,*.wiki', 'set conceallevel=0'},
             {'BufNew,BufEnter', '*.html,*.css', 'execute "IndentLinesToggle"'},
             {'TextYankPost', '*', 'lua vim.highlight.on_yank()'},
-            {'User LspDiagnosticsChanged', '', 'call lightline#update()'},
-            {'User LspMessageUpdate', '', 'call lightline#update()'},
-            {'User LspStatusUpdate', '', 'call lightline#update()'},
+            -- {'User LspDiagnosticsChanged', '', 'call lightline#update()'},
+            -- {'User LspMessageUpdate', '', 'call lightline#update()'},
+            -- {'User LspStatusUpdate', '', 'call lightline#update()'},
             {'VimEnter', '*', 'call vista#RunForNearestMethodOrFunction()'},
             {'BufWritePre', '*', 'call TrimWhitespace()'},
             -- show diagnostic popup on cursor hold

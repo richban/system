@@ -36,7 +36,6 @@ function mappings.setup()
     -- map <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
     -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
     map('n','<leader>ml', '<cmd>Marks<CR>')
-    map('n','<leader>n', ':NERDTreeToggle<CR>')
     map('n','<leader>V', ':Vista<CR>')
     ---- VIM-FUGITIVE -------------------------------------------------------------
     map('n', '<leader>gs', '<cmd>Gstatus<CR>')

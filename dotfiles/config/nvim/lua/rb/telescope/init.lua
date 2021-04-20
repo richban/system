@@ -37,7 +37,7 @@ telescope.setup{
         selection_caret = '❯ ',
         initial_mode = "insert",
         selection_strategy = "reset",
-        sorting_strategy = "ascending",
+        sorting_strategy = "descending",
         layout_strategy = "horizontal",
          layout_defaults = {
             horizontal = {
@@ -77,6 +77,21 @@ telescope.setup{
             override_generic_sorter = false,
             override_file_sorter = true,
         },
+        media_files = {
+          -- filetypes whitelist
+          -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+          filetypes = {"png", "webp", "jpg", "jpeg"},
+          find_cmd = "rg" -- find command (defaults to `fd`)
+        },
+        fzf_writer = {
+          use_highlighter = false,
+          minimum_grep_characters = 6,
+        },
+        frecency = {
+          workspaces = {
+            ["conf"] = "~/.config/nvim/",
+          }
+        }
     },
 }
 
@@ -87,6 +102,11 @@ pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 
 require('telescope').load_extension('octo')
+
+if pcall(require('telescope').load_extension, 'frecency') then
+  -- frecency
+  vim.cmd [[highlight TelescopeBufferLoaded guifg=yellow]]
+end
 
 local M = {}
 
@@ -115,6 +135,10 @@ end
 
 function M.fd()
   require('telescope.builtin').fd()
+end
+
+function M.media_files()
+  require('telescope').extensions.media_files.media_files()
 end
 
 
