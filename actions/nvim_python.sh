@@ -29,3 +29,18 @@ if [[ ! -d ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]]; then
     git clone https://github.com/wbthomason/packer.nvim \
       ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 fi
+
+# Install language servers
+npm i -g neovim
+npm i -g diagnostic-languageserver
+npm i -g bash-language-server
+npm i -g vscode-html-languageserver-bin
+npm i -g vscode-css-languageserver-bin
+npm i -g vim-language-server
+npm i -g yaml-language-server
+npm i -g vscode-json-languageserver
+npm i -g typescript-language-server
+npm i -g sql-language-server
+npm i -g vue-language-server
+npm i -g dockerfile-language-server-nodejs
+npm i -g vls
