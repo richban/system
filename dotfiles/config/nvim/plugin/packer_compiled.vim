@@ -36,6 +36,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim"
   },
+  chadtree = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/chadtree"
+  },
   ["comfortable-motion.vim"] = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/comfortable-motion.vim"
@@ -64,13 +68,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/goyo.vim"
   },
-  gruvbox = {
+  ["gruvbox.nvim"] = {
     loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/gruvbox"
-  },
-  ["gruvbox-material"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/gruvbox-material"
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/gruvbox.nvim"
   },
   indentLine = {
     loaded = true,
@@ -79,18 +79,6 @@ _G.packer_plugins = {
   ["iron.nvim"] = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/iron.nvim"
-  },
-  ["jupyter_ascending.vim"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/jupyter_ascending.vim"
-  },
-  ["jupytext.vim"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/jupytext.vim"
-  },
-  ["lightline.vim"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/lightline.vim"
   },
   ["lsp-status.nvim"] = {
     loaded = true,
@@ -108,15 +96,19 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
   },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+  },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/lush.nvim"
+  },
   ["markdown-preview.nvim"] = {
     commands = { "MarkdownPreview" },
     loaded = false,
     needs_bufread = false,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim"
-  },
-  nerdtree = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/nerdtree"
   },
   ["nvim-colorizer.lua"] = {
     loaded = true,
@@ -137,14 +129,6 @@ _G.packer_plugins = {
   ["nvim-lspfuzzy"] = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/nvim-lspfuzzy"
-  },
-  ["nvim-lspinstall"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
-  },
-  ["nvim-scrollview"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/nvim-scrollview"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -174,9 +158,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/snippets.nvim"
   },
-  spaceduck = {
+  ["sql.nvim"] = {
     loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/spaceduck"
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/sql.nvim"
   },
   ["startuptime.vim"] = {
     loaded = true,
@@ -186,9 +170,30 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/tabular"
   },
+  ["telescope-cheat.nvim"] = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/telescope-cheat.nvim"
+  },
+  ["telescope-frecency.nvim"] = {
+    config = { "\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0" },
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim"
+  },
+  ["telescope-fzf-writer.nvim"] = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/telescope-fzf-writer.nvim"
+  },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
+  },
+  ["telescope-media-files.nvim"] = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/telescope-media-files.nvim"
+  },
+  ["telescope-packer.nvim"] = {
+    loaded = true,
+    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/telescope-packer.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
@@ -250,18 +255,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/vim-surround"
   },
-  ["vim-textobj-hydrogen"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/vim-textobj-hydrogen"
-  },
-  ["vim-textobj-line"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/vim-textobj-line"
-  },
-  ["vim-textobj-user"] = {
-    loaded = true,
-    path = "/Users/richban/.local/share/nvim/site/pack/packer/start/vim-textobj-user"
-  },
   ["vim-tmux-navigator"] = {
     loaded = true,
     path = "/Users/richban/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator"
@@ -280,6 +273,8 @@ _G.packer_plugins = {
   }
 }
 
+-- Config for: telescope-frecency.nvim
+try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
 
 -- Command lazy-loads
 vim.cmd [[command! -nargs=* -range -bang -complete=file MarkdownPreview lua require("packer.load")({'markdown-preview.nvim'}, { cmd = "MarkdownPreview", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]

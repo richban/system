@@ -18,7 +18,7 @@ setopt auto_menu
 setopt share_history
 setopt auto_param_slash
 setopt magic_equal_subst
-export HISTSIZE=100
+export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTFILE=${HOME}/.zsh_history
 export FPATH="${HOME}/.zinit/completions:${FPATH}"

@@ -74,6 +74,10 @@ function settings.setup()
     vim.g.pydocstring_doq_path = 'HOME/.pyenv/versions/neovim3/bin/doq'
     vim.g.pydocstring_formatter = "google"
     vim.g.lsp_settings_servers_dir = vim.fn.stdpath("cache") .. "/lspconfig"
+
+    -- shows spaces
+    vim.o.list = true
+    vim.o.listchars= 'eol:¬,tab:>·,trail:~,extends:>,precedes:<'
     -- theme
     -- gruvbox
     -- vim.g.background = 'dark'

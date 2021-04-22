@@ -40,6 +40,7 @@ return require('packer').startup {
       run = 'python3 -m chadtree deps'
 
     }
+    use 'editorconfig/editorconfig-vim'
     use 'christoomey/vim-tmux-navigator'
     use 'mhinz/vim-startify'
     use 'tweekmonster/startuptime.vim'

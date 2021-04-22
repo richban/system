@@ -15,6 +15,7 @@ actions:
   post:
     start_zinit: source ~/.zinit/bin/zinit.zsh; exec $SHELL; zinit self-update
     start_yabai: brew services start skhd && brew services start yabai
+    auto_update_yabai: YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
 config:
   backup: true
   banner: true
@@ -187,6 +188,13 @@ profiles:
     actions:
       - init_zinit
       - start_zinit
+  win_manager:
+    dotfiles:
+      - f_skhdrc
+      - f_yabairc
+    actions:
+      - init_yabai
+      - auto_update_yabai
   neovim:
     dotfiles:
       - d_nvim

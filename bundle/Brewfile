@@ -64,6 +64,7 @@ brew "editorconfig"
 brew "wget"
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
+brew "git-delta"
 
 # ------------------------------ FONTS ----------------------------------------
 

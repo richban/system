@@ -34,16 +34,31 @@ end
 -- )
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  require('lsp_extensions.workspace.diagnostic').handler, {
-    signs = {
-      severity_limit = "Error",
-    },
-    underline = {
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = {
+      spacing = 0,
+      prefix = "■",
       severity_limit = "Warning",
     },
-    virtual_text = true,
+
+    -- see: ":help vim.lsp.diagnostic.set_signs()"
+    signs = true,
+
+    update_in_insert = true,
   }
 )
+
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+--   require('lsp_extensions.workspace.diagnostic').handler, {
+--     signs = {
+--       severity_limit = "Error",
+--     },
+--     underline = {
+--       severity_limit = "Warning",
+--     },
+--     virtual_text = true,
+--   }
+-- )
 
 vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
 

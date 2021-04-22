@@ -19,9 +19,10 @@ function autocmd.setup()
         };
         ft = {
             { 'FileType', '*', 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o' },
-            { 'FileType', 'css,html,html,javascript', 'setlocal  tabstop=2 shiftwidth=2 softtabstop=2' },
+            { 'FileType', 'css,html,html,javascript,typescript', 'setlocal  tabstop=2 shiftwidth=2 softtabstop=2' },
         };
     }
+
 
     nvim_create_augroups(definitions)
 end

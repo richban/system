@@ -6,60 +6,119 @@
   user = richban
 
 [alias]
-  ad  = add
-  ada = add -A
-  adf = !git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git add
-  adu = !git diff --name-only --cached | fzf -m --print0 | xargs -0 git restore --staged
-  br  = branch -av
-  brd = !git branch | fzf -m --print0 | tr -d ' ' | xargs -0 git branch -D
-  bl  = !"f() { git blame $1 | fzf --preview 'echo {} | cut -f1 -d\" \" | xargs git show --color'; }; f"
-  cm  = commit --verbose
-  cl  = clean -fd
+
+  # add
+  a = add
+  aa = add --all
+  ap = add --patch
+  af = !git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git add
+  au = !git diff --name-only --cached | fzf -m --print0 | xargs -0 git restore --staged
+  
+  # branch
+  b = branch
+  ba  = branch -av
+  bd = branch -d
+  bm = branch -m
+  bdf = !git branch | fzf -m --print0 | tr -d ' ' | xargs -0 git branch -D
+
+  # checkout
   co  = checkout
   cob = checkout -b
   coc = !git branch | fzf | xargs git checkout
   cof = !git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git checkout
-  ; cor = !hub pr checkout `hub pr list | fzf`
-  cor = !"f() { git fetch -p; git checkout -b $1 origin/$1; }; f"
-  cp  = cherry-pick
+  
+  # commit
+  c  = commit
+  cv  = commit --verbose
+  ca = commit --amend --no-edit
+  caa = commit --all
+  car = commit --amend
+  cx = commit --fixup
+  
+  # clean
+  cl  = clean -fd
+
+  # cherry-pick
+  cp = cherry-pick
+  cpa = cherry-pick --abort
+  cpc = cherry-pick --continue
+  cpn = cherry-pick --no-commit
+
+  # diff
+  d = diff
+  dh = diff HEAD
+  ds = diff --staged
+  dc = diff --cached
+  dr = !git diff origin `git rev-parse --abbrev-ref HEAD`
+  dt = difftool
+
   del = !git branch -r --merged | grep -v 'master\\|develop' | sed 's/origin\\///' | xargs -n 1 git push --delete origin && git fetch origin --prune
-  df  = diff
-  dfc = diff --cached
-  dfh = diff HEAD
-  dfr = !git diff origin `git rev-parse --abbrev-ref HEAD`
-  dft = difftool
+
+  # fetch
+  f   = fetch
   fp  = fetch -p
-  g   = !ghq get
+  
+  # log
   lg  = log --stat
   lgg = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lgs = !git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit | fzf --preview 'echo {} | cut -f1 -d\" \" | xargs git show --color'
   lgp = log -p
+  
+  # merge
+  m = merge --log
+  ma = merge --abort
+  mc = merge --continue
+  mf = merge --log --no-ff
+  mff = merge --ff-only
   mt  = mergetool
+
+  # hub browse
   op  = !hub browse
   opg = !hub browse `ghq list | fzf | cut -d "/" -f 2,3`
   opi = !hub issue show `hub issue | fzf`
   opp = !hub pr show `hub pr list | fzf`
   opr = !hub api --paginate -XGET user/repos -f affiliation=owner -f per_page=100 | jq -r '.[].name' | fzf | xargs hub browse
   opt = !hub api --paginate -XGET gists -f affiliation=owner -f per_page=100 | jq -r '.[] | \"\\(.files | keys[]) \\(.id)\"' | fzf | awk -F' ' '{print $NF}' | xargs -I{} open -a "Google Chrome" https://gist.github.com/ulwlu/{}
-  ps  = !git push origin `git rev-parse --abbrev-ref HEAD`
-  pl  = !git pull origin `git rev-parse --abbrev-ref HEAD`
+  
+  # status
+  s  = status
+
+  # stash
+  sts  = stash --save
+  stc  = stash --clear
+  stl  = !git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'
+  stp  = !git stash pop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
+  std  = !git stash drop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
+  
+  # rebase
+  rb = rebase
+  rba = rebase --abort
+  rbc = rebase --continue
+  rbi = rebase --interactive
+
+  # reset
+  rs = reset
+  rsk = reset --keep
+  rsm = reset --mixed
+  rsh = reset --hard
+
+  # pull
+  pl = pull
   plr = pull --rebase
+  pll  = !git pull origin `git rev-parse --abbrev-ref HEAD`
+
+  # push
+  ps = push
+  psf = push --force
+  pss  = !git push origin `git rev-parse --abbrev-ref HEAD`
+  
   pr  = !"f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request' | head -n 1; }; f"
   ra  = !"f() { echo $1 | sed 's/https/git/g' | sed 's/$/.git/g' | xargs git remote add forked }; f"
-  rb  = rebase
   rf  = reflog --format='%C(auto)%h %<|(20)%gd %C(blue)%ci%C(reset) %gs (%s)'
   rfs = !git reflog --format='%C(auto)%h %<|(20)%gd %C(blue)%ci%C(reset) %gs (%s)' | awk -F' ' '{print $2}' | xargs git reset --hard
-  rs  = reset
-  rsh = reset --hard
   rmg = !ghq list -p | fzf -m --print0 | xargs -0 rm -rf
   rv  = !"f() { git revert $1^..$2; }; f"
   sca = secrets --scan-history
-  st  = status
-  ss  = stash save
-  sc  = stash clear
-  sl  = !git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'
-  sp  = !git stash pop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
-  sd  = !git stash drop `git stash list | awk -F':' '{print $1}' | fzf --preview 'git -c color.ui=always stash show -p {}'`
   sk  = update-index --skip-worktree
   usk = update-index --no-skip-worktree
   vi  = !nvim ~/.gitconfig
@@ -144,6 +203,9 @@
 
 [pull]
   ff = only
+
+[fetch]
+  prune = true
 
 [push]
   default = matching

@@ -1,6 +1,6 @@
 vim.fn.sign_define(
     "LspDiagnosticsSignError",
-    {text = "", texthl = "LspDiagnosticsSignError"}
+    {text = "", texthl = "GruvboxRed"}
 )
 vim.fn.sign_define(
     "LspDiagnosticsSignWarning",

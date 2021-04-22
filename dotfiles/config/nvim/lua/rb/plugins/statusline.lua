@@ -18,6 +18,7 @@ local colors = {
     magenta  = '#c678dd',
     blue     = '#51afef';
     red      = '#ec5f67';
+    aqua     = '#8ec07c';
 }
 
 local conditions = {
@@ -125,8 +126,9 @@ ins_right {
     end
     return msg
   end,
-  icon = ' LSP:',
-  color = {fg = colors.cyan, gui = 'bold'}
+  -- icon = ' LSP:',
+  icon = ' ',
+  color = {fg = colors.aqua, gui = 'bold'}
 }
 
 -- Add components to right sections

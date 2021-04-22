@@ -9,6 +9,7 @@ M.lsp_install_servers = function()
         end
     end
 
+    -- this are install with npm i -g
     -- installLanguageServer('typescript', 'typescript-language-server')
     installLanguageServer('lua', 'sumneko-lua-language-server')
     -- installLanguageServer('sh', 'bash-language-server')
