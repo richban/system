@@ -17,12 +17,13 @@ actions:
     start_zinit: source ~/.zinit/bin/zinit.zsh; exec $SHELL; zinit self-update
     start_yabai: brew services start skhd && brew services start yabai
     auto_update_yabai: YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
-    hostname: sudo scutil --set HostName ${HOSTNAME}
+    hostname: >-
+      sudo scutil --set HostName ${HOSTNAME}
       sudo scutil --set LocalHostName ${LOCALHOSTNAME}
       sudo scutil --set ComputerName ${COMPUTERNAME}
       dscacheutil -flushcache
       sudo cp /etc/hosts /etc/hosts.backup
-	    sudo cp ./bundle/Hostsfile /etc/hosts
+      sudo cp ./bundle/Hostsfile /etc/hosts
 config:
   backup: true
   banner: true
@@ -186,7 +187,7 @@ profiles:
   darwin:
     dotfiles:
       - f_ctags
-      - f_spoof_mac_address
+      - f_spoof_mac_address.sh
       - d_iterm
       - d_firefox
       - d_hammerspoon

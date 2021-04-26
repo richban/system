@@ -38,7 +38,7 @@ function mappings.setup()
     map('n','<leader>ml', '<cmd>Marks<CR>')
     map('n','<leader>V', ':Vista<CR>')
     ---- VIM-FUGITIVE -------------------------------------------------------------
-    map('n', '<leader>gs', '<cmd>Gstatus<CR>')
+    map('n', '<leader>gs', '<cmd>Git<CR>')
     map('n', '<leader>gvd', '<cmd>Gvdiffsplit<CR>')
     map('n', '<leader>gl', '<cmd>diffget //3<CR>')
     map('n', '<leader>gh', '<cmd>diffget //2<CR>')
