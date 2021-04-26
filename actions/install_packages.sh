@@ -1,13 +1,13 @@
 EXEPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 CWD=${EXEPATH}/../bundle
 
+## ========== Xcode ==========
+sudo xcodebuild -license accept
+
 ## ========== Brew Bundle ==========
 brew upgrade
 brew bundle --file ${CWD}/Brewfile
 brew cleanup
-
-## ========== Xcode ==========
-sudo xcodebuild -license accept
 
 ## ========== Npm ==========
 ## - npm list -g --depth 0 | sed '1d' | awk '{ print $2 }' | awk -F'@[0-9]' '{ print $1 }' > Npmfile

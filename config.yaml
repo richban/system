@@ -1,6 +1,6 @@
 actions:
   pre:
-    init_mac: sh actions/init_brew_xcode.sh
+    init_brew_xcode: sh actions/init_brew_xcode.sh
     init_yabai: brew install koekeishiya/formulae/yabai && brew install koekeishiya/formulae/skhd
     init_zinit: mkdir ~/.zinit && git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
     install_python: sh actions/python.sh
@@ -9,6 +9,7 @@ actions:
       EXEPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
       CWD=${EXEPATH}/system osascript -e 'tell application "System Preferences" to
       quit' > /dev/null 2>&1 /bin/bash ${CWD}/darwin.sh
+    init_ssh: sh action/ssh_keys.sh
   install_packages: sh actions/install_packages.sh
   vscode-install-extensions: >-
     xargs -n 1 code --force --install-extension < {0}
@@ -16,6 +17,12 @@ actions:
     start_zinit: source ~/.zinit/bin/zinit.zsh; exec $SHELL; zinit self-update
     start_yabai: brew services start skhd && brew services start yabai
     auto_update_yabai: YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
+    hostname: sudo scutil --set HostName ${HOSTNAME}
+      sudo scutil --set LocalHostName ${LOCALHOSTNAME}
+      sudo scutil --set ComputerName ${COMPUTERNAME}
+      dscacheutil -flushcache
+      sudo cp /etc/hosts /etc/hosts.backup
+	    sudo cp ./bundle/Hostsfile /etc/hosts
 config:
   backup: true
   banner: true
@@ -176,6 +183,24 @@ profiles:
       - d_iterm
       - d_nvim
       - f_hosts
+  darwin:
+    dotfiles:
+      - f_ctags
+      - f_spoof_mac_address
+      - d_iterm
+      - d_firefox
+      - d_hammerspoon
+    actions:
+      - init_brew_xcode
+      - install_packages
+      - config_mac
+      - hostname
+  git:
+    dotfiles:
+      - f_gitconfig
+      - f_gitignore
+    actions:
+      - init_ssh
   zsh:
     dotfiles:
       - f_zshenv
@@ -210,11 +235,6 @@ profiles:
       - f_matplotlibrc
     actions:
       - install_python
-  darwin:
-    dotfiles:
-      - f_ctags
-    actions:
-      - config_mac
   vscode:
     dotfiles:
       - f_vscode_extensions.txt
