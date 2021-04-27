@@ -68,6 +68,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # - This can be automated by expect, but can't be public.
 # - [Ref] https://gist.github.com/Mins/4602864
 
+## ========== Docker ==========
+mkdir -p ${HOME}/.zsh/completion
+curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
+curl -L https://raw.githubusercontent.com/docker/machine/v0.16.0/contrib/completion/zsh/_docker-machine > ~/.zsh/completion/_docker-machine
+
+
 ## ========== Gcloud ==========
 curl https://sdk.cloud.google.com | /bin/bash -s -- --disable-prompts
 
@@ -83,11 +89,6 @@ curl https://sdk.cloud.google.com | /bin/bash -s -- --disable-prompts
 # 		expect eof
 # 	"
 # fi
-
-## ========== Docker ==========
-mkdir -p ${HOME}/.zsh/completion
-curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
-curl -L https://raw.githubusercontent.com/docker/machine/v0.16.0/contrib/completion/zsh/_docker-machine > ~/.zsh/completion/_docker-machine
 
 ## ========== Remote pbcopy ==========
 # if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then

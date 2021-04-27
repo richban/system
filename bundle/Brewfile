@@ -65,14 +65,15 @@ brew "wget"
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
 brew "git-delta"
+brew "starship"
 
 # ------------------------------ FONTS ----------------------------------------
 
 tap  "homebrew/cask-fonts"
 cask "font-fontawesome"
 cask "font-hack-nerd-font"
-cask "font-firamono-nerd-font"
-cask "font-firacode-nerd-font"
+cask "font-fira-mono"
+cask "font-fira-code"
 
 # ------------------------------ APPS -----------------------------------------
 
@@ -85,7 +86,7 @@ cask "visual-studio-code"
 cask "notion"
 cask "spotify"
 cask "hammerspoon"
-cask "zoomus"
+cask "zoom"
 cask "discord"
 cask "gpg-suite"
 cask "sequel-pro"

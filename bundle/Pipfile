@@ -12,3 +12,8 @@ pep8-naming
 jedi
 jupyter_qtconsole_colorschemes
 jupyter_ascending
+neovim
+pynvim
+doq
+qtconsole
+'python_language_server[all]'
