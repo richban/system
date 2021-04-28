@@ -135,7 +135,7 @@ unset CREATE_SSH_KEYS
 # If remote origin is https, it's not ssh
 echo "$GIT_ORIGIN" | grep 'https' > /dev/null 2>&1 && {
     echo '\e[32m[INFO]\e[0m Changing this repository remote to use SSH'
-
+    # FIXME: this does not work on OSX
     # Changing this repository URL to use SSH
     echo "$GIT_ORIGIN" | \
         sed -E -e 's|https://(.+?)/(.+?)/(.+?)(.git)?|git@\1:\2/\3.git|' \

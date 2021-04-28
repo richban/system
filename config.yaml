@@ -1,5 +1,7 @@
 actions:
   pre:
+    vim-plug-install: test -e ~/.vim/autoload/plug.vim || (mkdir -p ~/.vim/autoload;
+      curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim)
     init_brew_xcode: sh actions/init_brew_xcode.sh
     init_yabai: brew install koekeishiya/formulae/yabai && brew install koekeishiya/formulae/skhd
     init_zinit: mkdir ~/.zinit && git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
@@ -11,6 +13,7 @@ actions:
       quit' > /dev/null 2>&1 /bin/bash ${CWD}/darwin.sh
     init_ssh: sh actions/ssh_keys.sh
   install_packages: sh actions/install_packages.sh
+  vim-plug: vim +PlugInstall +qall
   vscode-install-extensions: >-
     xargs -n 1 code --force --install-extension < {0}
   post:
@@ -81,6 +84,9 @@ dotfiles:
     src: vimrc
     dst: ~/.vimrc
     link: link
+    actions:
+      - vim-plug-install
+      - vim-plug
   d_vim:
     src: vim
     dst: ~/.vim/
@@ -240,5 +246,8 @@ profiles:
       vscode_tmp_dst: mktemp /tmp/vscode-tmp.XXX
     variables:
       is_headless: false
+  vim:
+    dotfiles:
+      - f_vimrc
 trans_write:
   vscode-list-extensions: code --list-extensions > {1}
