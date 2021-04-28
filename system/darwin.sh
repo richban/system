@@ -360,15 +360,15 @@ MissionControl() {
 Siri() {
 	# ========== Enable Adk Siri ==========
 	# - Checked
-	# defaults write com.apple.assistant.support.plist Assistant Enabled -bool true
+	defaults write com.apple.assistant.support.plist Assistant Enabled -bool true
 	# - Unchecked
-	defaults write com.apple.assistant.support.plist "Assistant Enabled" -bool false
+	# defaults write com.apple.assistant.support.plist "Assistant Enabled" -bool false
 
 	# ========== Show Siri in menu bar ==========
 	# - Checked
-	# defaults write com.apple.Siri StatusMenuVisible -bool true
+	defaults write com.apple.Siri StatusMenuVisible -bool true
 	# - Unchecked
-	defaults write com.apple.Siri StatusMenuVisible -bool false
+	# defaults write com.apple.Siri StatusMenuVisible -bool false
 }
 
 Spotlight() {
@@ -626,11 +626,11 @@ Displays() {
 
 	# ========== Show mirroring options in the menu bar when available ==========
 	# - Checked
-	# defaults write com.apple.airplay showInMenuBarIfPresent -bool true
-	# defaults write com.apple.airplay "NSStatusItem Visible com.apple.menuextra.airplay" -bool true
+	defaults write com.apple.airplay showInMenuBarIfPresent -bool true
+	defaults write com.apple.airplay "NSStatusItem Visible com.apple.menuextra.airplay" -bool true
 	# - Unchecked
-	defaults write com.apple.airplay showInMenuBarIfPresent -bool false
-	defaults write com.apple.airplay "NSStatusItem Visible com.apple.menuextra.airplay" -bool false
+	# defaults write com.apple.airplay showInMenuBarIfPresent -bool false
+	# defaults write com.apple.airplay "NSStatusItem Visible com.apple.menuextra.airplay" -bool false
 
 	# ========== Brightness ==========
 	# @int: 1.Lightest 0.Darkest
@@ -803,11 +803,11 @@ TimeMachine() {
 Keyboard() {
 	# ========== Key Repeat ==========
 	# @int: 15 is the fastest in GUI, but real is 10
-	defaults write .GlobalPreferences InitialKeyRepeat -int 10
+	defaults write .GlobalPreferences InitialKeyRepeat -int 15
 
 	# ========== Delay Until Repeat ==========
 	# @int: 2 is the fastest in GUI, but real is 1
-	defaults write .GlobalPreferences KeyRepeat -int 1
+	defaults write .GlobalPreferences KeyRepeat -int 2
 
 	# ========== Adjust keyboard brightness in low light ==========
 	NPLIST="/private/var/root/Library/Preferences/com.apple.CoreBrightness.plist"
@@ -1178,9 +1178,9 @@ Finder() {
 
 	# ========== Show all filename extensions ==========
 	# - Checked
-	defaults write -g AppleShowAllExtensions -bool true
+	# defaults write -g AppleShowAllExtensions -bool true
 	# - Unchecked
-	# defaults write -g AppleShowAllExtensions -bool false
+	defaults write -g AppleShowAllExtensions -bool false
 
 	# ========== Show warning before changing an extension ==========
 	# - Checked
