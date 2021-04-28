@@ -14,7 +14,7 @@ function M.set(client, bufnr)
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- install servers
-  buf_set_keymap('n', '<leader>li', "<cmd>lua require('rb.lsp.install_servers').lsp_install_servers()<CR>", opts)
+  buf_set_keymap('n', '<leader>lsp', "<cmd>lua require('rb.lsp.install_servers').lsp_install_servers()<CR>", opts)
   -- gives definition & references
   buf_set_keymap('n', '<leader>gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
 

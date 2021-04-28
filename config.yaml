@@ -215,6 +215,7 @@ profiles:
       - f_yabairc
     actions:
       - init_yabai
+      - start_yabai
       - auto_update_yabai
   neovim:
     dotfiles:
