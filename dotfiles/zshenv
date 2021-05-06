@@ -43,7 +43,7 @@ export DOTREPO="~/.dotfiles/"
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vi -c "let g:tty='\''$(tty)'\''"'
 else
-    export EDITOR='~/Developer/nvim-osx64/bin/nvim -c "let g:tty='\''$(tty)'\''"'
+    export EDITOR='~/Developer/nvim-macos/bin/nvim -c "let g:tty='\''$(tty)'\''"'
 fi
 
 export CVSEDITOR="${EDITOR}"
