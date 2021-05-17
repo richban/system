@@ -37,6 +37,11 @@ export PYTHONPATH='/Users/$(whoami)/.local/pipx/venvs/pdm/lib/python3.9/site-pac
 export PATH="$HOME/.poetry/bin:$PATH"
 export PYTHONPATH='/Users/$(whoami).local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
 
+if [ -n "$PYTHONPATH" ]; then
+  export PYTHONPATH="/Users/$(whoami)/.local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582":$PYTHONPATH
+else
+  export PYTHONPATH="/Users/$(whoami)/.local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582"
+fi
 export DOTREPO="~/.dotfiles/"
 # -------------------------- EDITOR -------------------------------------------
 
