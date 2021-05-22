@@ -7,4 +7,5 @@ if [ ${#gstatus} -ne 0 ]; then
 	git add --all
 	git commit -q -m "Last Sync: $gstatus"
 	git push
+  terminal-notifier -title '🚀' -message 'Dotfiles Updated'
 fi
