@@ -13,7 +13,7 @@ hs.hotkey.bind(hyper, "0", function()
 end)
 
 --- quick open applications
-hs.hotkey.bind(hyper, "f", function()
+hs.hotkey.bind(hyper, "o", function()
         local shell_cmd = "open ~/Developer"
         hs.execute(shell_cmd)
 end)
@@ -24,13 +24,13 @@ hs.hotkey.bind(hyper, "v", open("Visual Studio Code"))
 
 --- Conect to Adam
 hs.hotkey.bind(hyper, "a", function()
-    local _, output = hs.osascript.applescriptFromFile("adam.applescript")    
+    local _, output = hs.osascript.applescriptFromFile("adam.applescript")
     hs.notify.new({title="Hammerspoon", informativeText=output}):send()
 end)
 
 --- Connect to Eva
 hs.hotkey.bind(hyper, "e", function()
-    local _, output = hs.osascript.applescriptFromFile("eva.applescript")    
+    local _, output = hs.osascript.applescriptFromFile("eva.applescript")
     hs.notify.new({title="Hammerspoon", informativeText=output}):send()
 end)
 
@@ -38,12 +38,12 @@ hs.hotkey.bind(hyper, "p", function()
     hs.network.ping.ping("8.8.8.8", 1, 0.01, 1.0, "any", pingResult)
 end)
 
---- draw mouse 
+--- draw mouse
 hs.hotkey.bind(hyper, "M", mouseHighlight)
 
 hs.notify.new({title="Hammerspoon", informativeText="Config loaded"}):send()
 
---- Toogle Microphone 
+--- Toogle Microphone
 
 function displayMicMuteStatus()
     local currentAudioInput = hs.audiodevice.current(true)

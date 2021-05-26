@@ -122,23 +122,21 @@ local servers = {
     -- },
     pyls = {
         cmd = {path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh")},
-        -- cmd = { "pyls" },
         enable = true,
         root_dir = project_root_or_cur_dir,
-        -- on_init = ncm2.register_lsp_source,
         settings = {
             pyls = {
                 plugins ={
                     pyflakes = {enabled = true},
                     pydocstyle = {enabled = true},
-                    pylint = {enabled = false},
+                    pylint = {enabled = true},
                     mypy_ls = {
                         enabled = false,
                         live_mode = true
                     }
                 }
             }
-        }
+        },
     },
     sqlls = {
         cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"}

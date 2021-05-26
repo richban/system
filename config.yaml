@@ -7,19 +7,20 @@ actions:
     init_zinit: mkdir ~/.zinit && git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
     install_python: sh actions/python.sh
     install_neovim: sh actions/nvim_python.sh
-    config_mac:
-      EXEPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
+    config_mac: EXEPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
       CWD=${EXEPATH}/system osascript -e 'tell application "System Preferences" to
       quit' > /dev/null 2>&1 /bin/bash ${CWD}/darwin.sh
     init_ssh: sh actions/ssh_keys.sh
   install_packages: sh actions/install_packages.sh
   vim-plug: vim +PlugInstall +qall
+  simple-bar: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
   vscode-install-extensions: >-
     xargs -n 1 code --force --install-extension < {0}
   post:
     start_zinit: source ~/.zinit/bin/zinit.zsh; exec $SHELL; zinit self-update
     start_yabai: brew services start skhd && brew services start yabai
-    auto_update_yabai: YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
+    auto_update_yabai: YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")"
+      &
     hostname: sh actions/hostname.sh
 config:
   backup: true
@@ -85,8 +86,8 @@ dotfiles:
     dst: ~/.vimrc
     link: link
     actions:
-      - vim-plug-install
-      - vim-plug
+    - vim-plug-install
+    - vim-plug
   d_vim:
     src: vim
     dst: ~/.vim/
@@ -108,7 +109,7 @@ dotfiles:
   f_karabiner.json:
     src: config/karabiner/karabiner.json
     dst: ~/.config/karabiner/karabiner.json
-    chmod: "600"
+    chmod: '600'
   f_ctags:
     src: ctags
     dst: ~/.ctags
@@ -126,7 +127,7 @@ dotfiles:
   f_run_pyls_with_venv:
     src: config/run_pyls_with_venv.sh
     dst: ~/.config/run_pyls_with_venv.sh
-    chmod: "744"
+    chmod: '744'
   f_pycodestyle:
     src: config/pycodestyle
     dst: ~/.config/pycodestyle
@@ -139,7 +140,7 @@ dotfiles:
   d_nvim:
     src: config/nvim
     dst: ~/.config/nvim
-    chmod: "775"
+    chmod: '775'
     link: link_children
   f_vscode_settings.json:
     dst: ~/.vscode/settings.json
@@ -147,51 +148,54 @@ dotfiles:
     link: link
   f_vscode_extensions.txt:
     src: vscode/vscode-extensions.txt
-    dst: "{{@@ vscode_tmp_dst @@}}"
+    dst: '{{@@ vscode_tmp_dst @@}}'
     actions:
       # This action installs VSCode extensions listed in the dotfile on-the-fly
-      - vscode-install-extensions '{{@@ vscode_tmp_dst @@}}'
+    - vscode-install-extensions '{{@@ vscode_tmp_dst @@}}'
     # This transformation actually creates the dotfile.
     trans_write: vscode-list-extensions
   f_hosts:
     src: etc/hosts
     dst: /etc/hosts
+  f_alacritty.yml:
+    src: config/alacritty/alacritty.yml
+    dst: ~/.config/alacritty/alacritty.yml
 profiles:
   casper-03:
     dotfiles:
-      - f_tmux.conf
-      - f_zshrc
-      - f_zshenv
-      - f_alias
-      - f_functions
-      - f_tool-versions
-      - f_matplotlibrc
-      - f_gitconfig
-      - f_vscode_settings.json
-      - f_skhdrc
-      - f_yabairc
-      - f_vimrc
-      - f_tmux.remote.conf
-      - f_karabiner.json
-      - f_ctags
-      - f_spoof_mac_address.sh
-      - f_gitignore
-      - f_starship.toml
-      - f_run_pyls_with_venv
-      - d_vim
-      - d_firefox
-      - d_hammerspoon
-      - d_iterm
-      - d_nvim
-      - f_hosts
+    - f_tmux.conf
+    - f_zshrc
+    - f_zshenv
+    - f_alias
+    - f_functions
+    - f_tool-versions
+    - f_matplotlibrc
+    - f_gitconfig
+    - f_vscode_settings.json
+    - f_skhdrc
+    - f_yabairc
+    - f_vimrc
+    - f_tmux.remote.conf
+    - f_karabiner.json
+    - f_ctags
+    - f_spoof_mac_address.sh
+    - f_gitignore
+    - f_starship.toml
+    - f_run_pyls_with_venv
+    - d_vim
+    - d_firefox
+    - d_hammerspoon
+    - d_iterm
+    - d_nvim
+    - f_hosts
   darwin:
     dotfiles:
-      - f_ctags
-      - f_spoof_mac_address.sh
-      - d_iterm
-      - d_firefox
-      - d_hammerspoon
-      - f_karabiner.json
+    - f_ctags
+    - f_spoof_mac_address.sh
+    - d_iterm
+    - d_firefox
+    - d_hammerspoon
+    - f_karabiner.json
     # actions:
     #   - init_brew_xcode
     #   - install_packages
@@ -199,55 +203,57 @@ profiles:
     #   - hostname
   git:
     dotfiles:
-      - f_gitconfig
-      - f_gitignore
+    - f_gitconfig
+    - f_gitignore
     actions:
-      - init_ssh
+    - init_ssh
   zsh:
     dotfiles:
-      - f_zshenv
-      - f_zshrc
-      - f_tmux.conf
-      - f_tmux.remote.conf
-      - f_starship.toml
-      - f_alias
-      - f_functions
+    - f_zshenv
+    - f_zshrc
+    - f_tmux.conf
+    - f_tmux.remote.conf
+    - f_starship.toml
+    - f_alias
+    - f_functions
+    - f_alacritty.yml
     actions:
-      - init_zinit
-      - start_zinit
+    - init_zinit
+    - start_zinit
   win_manager:
     dotfiles:
-      - f_skhdrc
-      - f_yabairc
+    - f_skhdrc
+    - f_yabairc
     actions:
-      - init_yabai
-      - start_yabai
-      - auto_update_yabai
+    - simple-bar
+    - init_yabai
+    - start_yabai
+    - auto_update_yabai
   neovim:
     dotfiles:
-      - d_nvim
+    - d_nvim
     actions:
-      - install_neovim
+    - install_neovim
   python:
     dotfiles:
-      - f_run_pyls_with_venv
-      - f_jupyter_qtconsole_config
-      - f_tool-versions
-      - f_ipython_config
-      - f_pycodestyle
-      - f_matplotlibrc
+    - f_run_pyls_with_venv
+    - f_jupyter_qtconsole_config
+    - f_tool-versions
+    - f_ipython_config
+    - f_pycodestyle
+    - f_matplotlibrc
     actions:
-      - install_python
+    - install_python
   vscode:
     dotfiles:
-      - f_vscode_extensions.txt
-      - f_vscode_settings.json
+    - f_vscode_extensions.txt
+    - f_vscode_settings.json
     dynvariables:
       vscode_tmp_dst: mktemp /tmp/vscode-tmp.XXX
     variables:
       is_headless: false
   vim:
     dotfiles:
-      - f_vimrc
+    - f_vimrc
 trans_write:
   vscode-list-extensions: code --list-extensions > {1}

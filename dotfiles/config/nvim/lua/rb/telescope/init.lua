@@ -114,7 +114,7 @@ function M.edit_neovim()
   require('telescope.builtin').find_files {
     prompt_title = "~ dotfiles ~",
     shorten_path = false,
-    cwd = "~/.config/nvim",
+    cwd = "~/.dotfiles/dotfiles/config/nvim",
 
     layout_strategy = 'horizontal',
     layout_config = {

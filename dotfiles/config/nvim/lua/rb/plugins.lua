@@ -73,6 +73,7 @@ return require('packer').startup {
     }
     use 'junegunn/goyo.vim'
     -- colors and theme
+    use 'marko-cerovac/material.nvim'
     use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
     -- use 'morhetz/gruvbox'
     -- use 'sainnhe/gruvbox-material'

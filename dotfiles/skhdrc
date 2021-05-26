@@ -48,6 +48,9 @@ shift + alt - 6 : yabai -m window --space 6 && yabai -m space --focus 6
 shift + alt - c : yabai -m window --toggle float;\
                   yabai -m window --toggle zoom-fullscreen
                   # yabai -m window --grid 1:1:0:0:1:1
+# Float & center
+hyper - c: yabai -m window --toggle float && \
+           yabai -m window --grid 4:4:1:1:2:2
 
 # Equalize size of windows
 lctrl + alt - 0 : yabai -m space --balance
@@ -96,6 +99,14 @@ alt - c : yabai -m space --create
 
 # Delete focused space and focus first space on display
 alt - d : yabai -m space --destroy
+
+# Switch layout (bsp|float)
+hyper - b: yabai -m space --layout bsp
+hyper - f: yabai -m space --layout float
+
+# Swap
+hyper - up: yabai -m window --swap west
+hyper - down: yabai -m window --swap east
 
 # Restart Yabai
 shift + lctrl + alt - r :

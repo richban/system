@@ -42,6 +42,14 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 -- -- To hide the boring brackets ([ ])
 -- vim.g.NERDTreeGitStatusConcealBrackets = 0
 
+local chadtree_settings = {
+  ["theme.text_colour_set"] =  "env",
+  ["ignore.name_exact"] = {"node_modules", "dist", ".DS_Store", ".directory", "thumbs.db", ".git", "__pycache__"},
+  ["ignore.name_glob"] = {"*.js", "*.js.map"}
+}
+
+vim.api.nvim_set_var("chadtree_settings", chadtree_settings)
+
 map('n','<leader>n', ':CHADopen<CR>')
 
 ---- GITGUTTER -------------------------------------------------------------
@@ -139,9 +147,10 @@ vim.g.indentLine_char = '▏'
 vim.g.indentLine_color_gui = '#474747'
 vim.g.indentLine_enabled = 1
 
-vim.g.vim_json_syntax_conceal = 0
-vim.g.vim_markdown_conceal = 0
-vim.g.vim_markdown_conceal_code_blocks = 0
+vim.g.indentLine_setConceal = 0
+-- vim.g.vim_json_syntax_conceal = 0
+-- vim.g.vim_markdown_conceal = 0
+-- vim.g.vim_markdown_conceal_code_blocks = 0
 
 ---- PYTHON ------------------------------------------------------------------
 
