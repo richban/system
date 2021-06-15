@@ -48,6 +48,7 @@ return require('packer').startup {
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
     use 'liuchengxu/vista.vim'
+    use 'Pocco81/ISuckAtSpelling.nvim'
     -- use 'dstein64/nvim-scrollview'
     -- use 'wakatime/vim-wakatime'
     -- motion

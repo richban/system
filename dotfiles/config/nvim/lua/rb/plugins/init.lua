@@ -45,7 +45,7 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 local chadtree_settings = {
   ["theme.text_colour_set"] =  "env",
   ["ignore.name_exact"] = {"node_modules", "dist", ".DS_Store", ".directory", "thumbs.db", ".git", "__pycache__"},
-  ["ignore.name_glob"] = {"*.js", "*.js.map"}
+  ["ignore.name_glob"] = {"*.js.map"}
 }
 
 vim.api.nvim_set_var("chadtree_settings", chadtree_settings)

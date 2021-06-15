@@ -34,8 +34,8 @@ iron.core.set_config {
   }
 }
 
-vim.cmd [[nnoremap <silent><c-v> <Plug>(iron-visual-send)]]
-vim.cmd [[nnoremap <C-l> <Plug>(iron-send-line)]]
+-- vim.cmd [[nnoremap <silent><c-v> <Plug>(iron-visual-send)]]
+-- vim.cmd [[nnoremap <C-l> <Plug>(iron-send-line)]]
 
 -- " Send cell to IronRepl and move to next cell.
 vim.cmd [[nmap ]x ctrih/^# %%<CR><CR>]]
