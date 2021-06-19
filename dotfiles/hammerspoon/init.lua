@@ -19,7 +19,7 @@ hs.hotkey.bind(hyper, "o", function()
 end)
 
 hs.hotkey.bind(hyper, "c", open("Google Chrome"))
-hs.hotkey.bind(hyper, "t", open("iTerm"))
+hs.hotkey.bind(hyper, "t", open("Alacritty"))
 hs.hotkey.bind(hyper, "v", open("Visual Studio Code"))
 
 --- Conect to Adam

@@ -1,6 +1,7 @@
 [user]
   name = richban
 	email = 6967088+richban@users.noreply.github.com
+	signingkey = rbanyi@me.com
 
 [github]
   user = richban
