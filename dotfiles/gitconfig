@@ -1,7 +1,7 @@
 [user]
   name = richban
 	email = 6967088+richban@users.noreply.github.com
-	signingkey = rbanyi@me.com
+	signingkey = 93D5B2A60893E8E9
 
 [github]
   user = richban
@@ -240,3 +240,5 @@
 
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
+[commit]
+	gpgsign = true
