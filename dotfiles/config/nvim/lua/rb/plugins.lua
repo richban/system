@@ -50,7 +50,7 @@ return require('packer').startup {
     use 'liuchengxu/vista.vim'
     use 'Pocco81/ISuckAtSpelling.nvim'
     -- use 'dstein64/nvim-scrollview'
-    -- use 'wakatime/vim-wakatime'
+    use 'wakatime/vim-wakatime'
     -- motion
     use 'yuttie/comfortable-motion.vim'
     use 'easymotion/vim-easymotion'
