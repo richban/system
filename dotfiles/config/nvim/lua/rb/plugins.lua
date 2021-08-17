@@ -12,6 +12,7 @@ end
 
 return require('packer').startup {
   function(use)
+    use {'nathangrigg/vim-beancount'}
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim'}
     -- fzf
@@ -72,6 +73,7 @@ return require('packer').startup {
         run = 'cd app && yarn install',
         cmd = 'MarkdownPreview'
     }
+    use 'heavenshell/vim-jsdoc'
     use 'junegunn/goyo.vim'
     -- colors and theme
     use 'marko-cerovac/material.nvim'
@@ -105,7 +107,10 @@ return require('packer').startup {
       'hrsh7th/nvim-compe', branch = 'master'
     }
     use 'Vimjas/vim-python-pep8-indent'
-    use 'heavenshell/vim-pydocstring'
+    use {
+      'heavenshell/vim-pydocstring',
+      run = 'make install'
+    }
     -- jupyter
     use 'bfredl/nvim-ipy'
     use 'hkupty/iron.nvim'

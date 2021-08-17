@@ -13,64 +13,94 @@ end
 
 reloader()
 
-local actions = require('telescope.actions')
-local telescope = require('telescope')
-local sorters = require('telescope.sorters')
-local themes = require('telescope.themes')
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local action_mt = require "telescope.actions.mt"
+local sorters = require "telescope.sorters"
+local themes = require "telescope.themes"
+
+local set_prompt_to_entry_value = function(prompt_bufnr)
+  local entry = action_state.get_selected_entry()
+  if not entry or not type(entry) == "table" then
+    return
+  end
+
+  action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
+end
 
 
-telescope.setup{
+require("telescope").setup {
     defaults = {
-        timeoutlen = 2000,
-        mappings = {i = {["<esc>"] = actions.close, }},
-        vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case'
-        },
-        prompt_position = "bottom",
-        prompt_prefix = '❯ ',
-        selection_caret = '❯ ',
-        initial_mode = "insert",
-        selection_strategy = "reset",
-        sorting_strategy = "descending",
-        layout_strategy = "horizontal",
-         layout_defaults = {
-            horizontal = {
-              width_padding = 0.1,
-              height_padding = 0.1,
-              preview_width = 0.6,
-            },
-            vertical = {
-              width_padding = 0.05,
-              height_padding = 1,
-              preview_height = 0.5,
-            }
-          },
-        file_sorter =  sorters.get_fzy_sorter,
-        file_ignore_patterns = {".backup",".swap",".langsevers",".session",".undo","*.git","node_modules","vendor",".cache",".vscode-server",".Desktop",".Documents","classes"},
-        generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-        shorten_path = true,
-        winblend = 0,
-        width = 0.75,
-        preview_cutoff = 120,
-        results_height = 1,
-        results_width = 0.8,
-        border = {},
-        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-        color_devicons = true,
-        use_less = true,
-        set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-        file_previewer = require('telescope.previewers').vim_buffer_cat.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_cat.new`
-        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_vimgrep.new`
-        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
+      timeoutlen = 2000,
+      mappings = {i = {["<esc>"] = actions.close, }},
+      vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case'
+      },
 
-        -- Developer configurations: Not meant for general override
-        -- buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+      prompt_prefix = '❯ ',
+      selection_caret = '❯ ',
+
+      initial_mode = "insert",
+      selection_strategy = "reset",
+      sorting_strategy = "descending",
+      
+      layout_strategy = "horizontal",
+      layout_config = {
+        width = 0.95,
+        height = 0.85,
+        -- preview_cutoff = 120,
+        prompt_position = "bottom",
+  
+        horizontal = {
+          -- width_padding = 0.1,
+          -- height_padding = 0.1,
+          preview_width = function(_, cols, _)
+            if cols > 200 then
+              return math.floor(cols * 0.4)
+            else
+              return math.floor(cols * 0.6)
+            end
+          end,
+        },
+  
+        vertical = {
+          -- width_padding = 0.05,
+          -- height_padding = 1,
+          width = 0.9,
+          height = 0.95,
+          preview_height = 0.5,
+        },
+  
+        flex = {
+          horizontal = {
+            preview_width = 0.9,
+          },
+        },
+      },
+
+      file_sorter =  sorters.get_fzy_sorter,
+      file_ignore_patterns = {".backup",".swap",".langsevers",".session",".undo","*.git","node_modules","vendor",".cache",".vscode-server",".Desktop",".Documents","classes"},
+      generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+      -- path_display = true,
+      winblend = 0,
+      border = {},
+      borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+      color_devicons = true,
+      use_less = true,
+      set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+      
+      file_previewer = require('telescope.previewers').vim_buffer_cat.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_cat.new`
+      grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_vimgrep.new`
+      qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
+
+      -- Developer configurations: Not meant for general override
+      -- buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
     },
     extensions = {
         fzy_native = {
