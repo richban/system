@@ -1,6 +1,8 @@
+local protocol = require "vim.lsp.protocol"
+
 vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
   if not result or vim.tbl_isempty(result) then
-    print("[LSP] Could not find definition")
+    print "[LSP] Could not find definition"
     return
   end
 

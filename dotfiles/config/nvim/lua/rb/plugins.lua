@@ -103,6 +103,7 @@ return require('packer').startup {
 
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'
+    use 'ray-x/lsp_signature.nvim'
     use {
       'hrsh7th/nvim-compe', branch = 'master'
     }

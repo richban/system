@@ -40,7 +40,7 @@ function mappings.setup()
     ---- VIM-FUGITIVE -------------------------------------------------------------
     map('n', '<leader>gs', '<cmd>Git<CR>')
     map('n', '<leader>gvd', '<cmd>Gvdiffsplit<CR>')
-    map('n', '<leader>gd', '<cmd>Gvdiff<CR>')
+    -- map('n', '<leader>gd', '<cmd>Gvdiff<CR>')
     map('n', '<leader>gl', '<cmd>diffget //3<CR>')
     map('n', '<leader>gh', '<cmd>diffget //2<CR>')
     --- TABULARIZE  ---------------------------------------------------------------

@@ -15,13 +15,17 @@
 
 require'compe'.setup {
   enabled = true,
-  debug = false,
+  debug = true,
   min_length = 2,
-  -- preselect = 'enable' || 'disable' || 'always';
-  -- throttle_time = ... number ...;
-  -- source_timeout = ... number ...;
-  -- incomplete_delay = ... number ...;
-  -- allow_prefix_unmatch = false;
+  -- enabled = true,
+  -- autocomplete = true,
+  -- debug = false,
+  -- min_length = 1,
+  -- preselect = "enable",
+  -- throttle_time = 200,
+  -- source_timeout = 200,
+  -- incomplete_delay = 400,
+  -- allow_prefix_unmatch = false,
 
   source = {
     vsnip = {
