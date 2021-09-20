@@ -1,5 +1,4 @@
 local lsp = require('lspconfig')
--- local lsp_completion = require('completion')
 local lsp_status  = require('lsp-status')
 local diagnostics  = require('rb.lsp.diagnostics')
 local remaps  = require('rb.lsp.remaps')
@@ -43,10 +42,6 @@ local filetype_attach = setmetatable({
   
     rust = function()  
       vim.cmd [[
-        autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
-      ]]
-  
-      vim.cmd [[
         augroup lsp_buf_format
           au! BufWritePre <buffer>
           autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting(nil, 5000)
@@ -60,13 +55,25 @@ local filetype_attach = setmetatable({
     end,
   })
 
-local function on_attach(client, bufnr)
+local custom_init = function(client)
+  client.config.flags = client.config.flags or {}
+  client.config.flags.allow_incremental_sync = true
+end
+
+local function custom_attach(client, bufnr)
     print(client.name)
+    
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
-    remaps.set(client.server_capabilities, bufnr)
+    remaps.set(client, bufnr)
+
+    if filetype == "ts" then
+      remaps.set_typescript(client, bufnr)
+      -- disable tsserver formatting if you plan on formatting via null-ls
+      client.resolved_capabilities.document_formatting = false
+    end
+    
     lsp_status.on_attach(client, bufnr)
-    -- lsp_completion.on_attach(client)
 
     -- add signature autocompletion while typing
     require'lsp_signature'.on_attach()
@@ -95,21 +102,18 @@ local function on_attach(client, bufnr)
     filetype_attach[filetype](client)
 end
 
--- local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
---     updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
---     updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
---     updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
---     updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
---     properties = {
---         "documentation",
---         "detail",
---         "additionalTextEdits",
---     },
--- }
-
--- lsp_status.register_progress()
-
--- local default_lsp_config = {on_attach = on_attach, capabilities = lsp_status.capabilities}
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+    updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
+    updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
+    -- LSP this is needed for LSP completions in CSS along with the snippets plugin
+    updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        "documentation",
+        "detail",
+        "additionalTextEdits",
+    },
+}
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
@@ -141,7 +145,7 @@ local sumneko_root_path = servers_path.."/sumneko-lua-language-server/extension/
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 local servers = {
-    efm = require('rb.lsp.efm')(),
+    -- efm = require('rb.lsp.efm')(),
     diagnosticls = diagnostics.options,
     bashls = true,
     vimls = true,
@@ -236,10 +240,6 @@ local servers = {
     }
 }
 
--- for server, config in pairs(servers) do
---     lsp[server].setup(vim.tbl_deep_extend("force", default_lsp_config, config))
--- end
-
 local setup_server = function(server, config)
     if not config then
       return
@@ -250,8 +250,9 @@ local setup_server = function(server, config)
     end
   
     config = vim.tbl_deep_extend("force", {
-      on_attach = on_attach,
-      -- capabilities = updated_capabilities,
+      on_init = custom_init,
+      on_attach = custom_attach,
+      capabilities = updated_capabilities,
       flags = {
         debounce_text_changes = 50,
       },

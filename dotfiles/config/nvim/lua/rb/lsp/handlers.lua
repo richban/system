@@ -48,6 +48,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       prefix = "■",
       severity_limit = "Warning",
     },
+    update_in_insert = true,
   }
 )
 

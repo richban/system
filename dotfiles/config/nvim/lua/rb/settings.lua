@@ -90,6 +90,7 @@ function settings.setup()
     -- vim.cmd('colorscheme gruvbox-material')
 
     vim.g.markdown_fenced_languages = { "html", "javascript", "typescript", "css", "scss", "lua", "vim" }
+    vim.g.cursorhold_updatetime = 100
 
 end
 

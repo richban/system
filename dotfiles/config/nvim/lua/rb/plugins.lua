@@ -15,6 +15,7 @@ return require('packer').startup {
     use {'nathangrigg/vim-beancount'}
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim'}
+
     -- fzf
     use {'junegunn/fzf', run = './install --all' }
     use {'junegunn/fzf.vim'}
@@ -92,6 +93,7 @@ return require('packer').startup {
       'hoob3rt/lualine.nvim',
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
+    use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     -- LSP
     -- used to install LSP Servers
     -- use 'prabirshrestha/vim-lsp'

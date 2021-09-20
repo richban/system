@@ -175,6 +175,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/nvim-ipy"
   },
+  ["nvim-lsp-ts-utils"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/nvim-lsp-ts-utils"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
@@ -279,14 +283,6 @@ _G.packer_plugins = {
   ["vim-jsdoc"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/vim-jsdoc"
-  },
-  ["vim-lsp"] = {
-    loaded = true,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/vim-lsp"
-  },
-  ["vim-lsp-settings"] = {
-    loaded = true,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/vim-lsp-settings"
   },
   ["vim-man"] = {
     loaded = true,
