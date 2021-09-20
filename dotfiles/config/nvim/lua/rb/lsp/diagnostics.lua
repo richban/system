@@ -1,6 +1,8 @@
-local eslint = require('rb.lsp.linters.eslint')
-local prettier = require('rb.lsp.formatters.prettier')
-local prettier_standard = require('rb.lsp.formatters.prettier_standard')
+local prettier_d = require "rb.lsp.formatters.prettier_d"
+local eslint_d = require "rb.lsp.linters.eslint_d"
+
+local formatter = prettier_d
+local linter = eslint_d
 
 local M = {}
 
@@ -32,33 +34,13 @@ M.options = {
             ["typescript.tsx"] = 'prettier'
         },
         linters = {
-            eslint = eslint
+            eslint = eslint_d
         },
         formatters = {
-            prettier_standard = prettier_standard,
-            prettier = prettier
+            -- prettier_standard = prettier_standard,
+            prettier = prettier_d
         }
     }
 }
-
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---   vim.lsp.diagnostic.on_publish_diagnostics, {
---     -- This will disable virtual text, like doing:
---     virtual_text = {
---       spacing = 0,
---       prefix = "~"
---     },
-
---     -- This is similar to:
---     -- let g:diagnostic_show_sign = 1
---     -- To configure sign display,
---     --  see: ":help vim.lsp.diagnostic.set_signs()"
---     signs = true,
-
---     -- This is similar to:
---     -- "let g:diagnostic_insert_delay = 1"
---     update_in_insert = false,
---   }
--- )
 
 return M

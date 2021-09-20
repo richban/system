@@ -27,6 +27,7 @@ return require('packer').startup {
         'pwntester/octo.nvim',
         -- cmd = { 'Octo' },
       }
+    use 'nvim-lua/plenary.nvim'
     use {
       'lewis6991/gitsigns.nvim',
       requires = {
@@ -93,8 +94,8 @@ return require('packer').startup {
     }
     -- LSP
     -- used to install LSP Servers
-    use 'prabirshrestha/vim-lsp'
-    use 'mattn/vim-lsp-settings'
+    -- use 'prabirshrestha/vim-lsp'
+    -- use 'mattn/vim-lsp-settings'
 
     use 'neovim/nvim-lspconfig'
     -- use 'nvim-lua/completion-nvim'

@@ -6,42 +6,9 @@ local remaps  = require('rb.lsp.remaps')
 
 -- for debugging lsp
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
-vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("error")
 
--- local saga = require 'lspsaga'
-
--- add your config value here
--- default value
--- use_saga_diagnostic_sign = true
--- error_sign = '',
--- warn_sign = '',
--- hint_sign = '',
--- infor_sign = '',
--- error_header = "  Error",
--- warn_header = "  Warn",
--- hint_header = "  Hint",
--- infor_header = "  Infor",
--- max_diag_msg_width = 50,
--- code_action_icon = ' ',
--- finder_definition_icon = '  ',
--- finder_reference_icon = '  ',
--- finder_action_keys = {
---   open = 'o', vsplit = 's',split = 'i',quit = 'q'
--- },
--- definition_preview_icon = '  '
--- 1: thin border | 2: rounded border | 3: thick border
--- border_style = 1
--- rename_prompt_prefix = '➤',
-
--- saga.init_lsp_saga {
---   use_saga_diagnostic_sign = false,
---   finder_definition_icon = ' ',
---   finder_reference_icon = ' ',
---   rename_prompt_prefix = '',
--- }
-
--- saga.init_lsp_saga()
-
+-- LSP Saga config https://github.com/glepnir/lspsaga.nvim
 local saga = require 'lspsaga'
 
 saga.init_lsp_saga {
@@ -54,7 +21,7 @@ saga.init_lsp_saga {
   },
 }
 
--- adds beatiful icon to completion
+-- Adds beautiful icon to completion
 require'lspkind'.init()
 
 require('rb.lsp.status').activate()
@@ -74,12 +41,7 @@ local filetype_attach = setmetatable({
       ]]
     end,
   
-    rust = function()
-      telescope_mapper("<space>wf", "lsp_workspace_symbols", {
-        ignore_filename = true,
-        query = "#",
-      }, true)
-  
+    rust = function()  
       vim.cmd [[
         autocmd BufEnter,BufWritePost <buffer> :lua require('lsp_extensions.inlay_hints').request {aligned = true, prefix = " » "}
       ]]
@@ -133,17 +95,17 @@ local function on_attach(client, bufnr)
     filetype_attach[filetype](client)
 end
 
-local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-    updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, lsp_status.capabilities)
-    updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
-    updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
-    updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        "documentation",
-        "detail",
-        "additionalTextEdits",
-    },
-}
+-- local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+--     updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
+--     updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
+--     updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+--     updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+--     properties = {
+--         "documentation",
+--         "detail",
+--         "additionalTextEdits",
+--     },
+-- }
 
 -- lsp_status.register_progress()
 
@@ -179,13 +141,17 @@ local sumneko_root_path = servers_path.."/sumneko-lua-language-server/extension/
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 local servers = {
+    efm = require('rb.lsp.efm')(),
     diagnosticls = diagnostics.options,
     bashls = true,
     vimls = true,
     dockerls = true,
     yamlls = true,
     rust_analyzer = true,
-    jsonls = true,
+    jsonls = {
+      cmd = { "vscode-json-languageserver", "--stdio" },
+      filetypes = { "json" }
+    },
     html = true,
     cssls = true,
     vuels = true,
@@ -221,23 +187,24 @@ local servers = {
     --     }
     -- },
     -- pyls = {
-    --     -- cmd = {path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh")},
-    --     cmd = { "~/.config/run_pyls_with_venv.sh" },
-    --     enable = true,
-    --     root_dir = project_root_or_cur_dir,
-    --     settings = {
-    --         pyls = {
-    --             plugins ={
-    --                 pyflakes = {enabled = true},
-    --                 pydocstyle = {enabled = true},
-    --                 pylint = {enabled = true},
-    --                 mypy_ls = {
-    --                     enabled = false,
-    --                     live_mode = true
-    --                 }
-    --             }
-    --         }
-    --     },
+        -- cmd = {path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh")},
+        -- cmd = { "~/.config/run_pyls_with_venv.sh" },
+        -- enable = true,
+        -- root_dir = project_root_or_cur_dir,
+        -- settings = {
+        --     pyls = {
+        --         plugins ={
+        --             pyflakes = {enabled = true},
+        --             pydocstyle = {enabled = true},
+        --             pylint = {enabled = true},
+        --             mypy_ls = {
+        --                 enabled = false,
+        --                 live_mode = true
+        --             }
+        --         }
+        --     }
+        -- },
+        -- capabilities = vim.tbl_extend('keep', configs.pyls.capabilities or {}, lsp_status.capabilities)
     -- },
     pyright = {},
     sqlls = {
@@ -284,7 +251,7 @@ local setup_server = function(server, config)
   
     config = vim.tbl_deep_extend("force", {
       on_attach = on_attach,
-      capabilities = updated_capabilities,
+      -- capabilities = updated_capabilities,
       flags = {
         debounce_text_changes = 50,
       },

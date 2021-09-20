@@ -1,3 +1,5 @@
+-- npm i lua-fmt
+
 local luafmt = {
   formatCommand = "luafmt ${-i:tabWidth} --stdin",
   formatStdin = true

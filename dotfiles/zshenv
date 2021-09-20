@@ -31,6 +31,10 @@ export PATH="/usr/local/opt/icu4c/bin/icu-config:$PATH"
 export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 export PATH="/Users/$(whoami)/.local/bin:$PATH"
 
+ENHANCD_FILTER=fzy:fzf:peco
+export ENHANCD_FILTER
+
+
 export GPG_TTY=$(tty)
 
 export PATH="$PATH:/Users/$(whoami)/.local/bin"

@@ -88,6 +88,9 @@ function settings.setup()
     -- vim.g.gruvbox_material_palette = 'mix'
     -- -- vim.g.gruvbox_material_sign_column_background = 'none'
     -- vim.cmd('colorscheme gruvbox-material')
+
+    vim.g.markdown_fenced_languages = { "html", "javascript", "typescript", "css", "scss", "lua", "vim" }
+
 end
 
 return settings
