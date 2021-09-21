@@ -127,10 +127,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp_luasnip"
   },
-  ["comfortable-motion.vim"] = {
-    loaded = true,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/comfortable-motion.vim"
-  },
   delimitMate = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/delimitMate"
@@ -154,6 +150,10 @@ _G.packer_plugins = {
   ["fzf.vim"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/fzf.vim"
+  },
+  ["github-nvim-theme"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/github-nvim-theme"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -213,8 +213,20 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/material.nvim"
   },
+  ["neoscroll.nvim"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/neoscroll.nvim"
+  },
+  ["nvim-autopairs"] = {
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/nvim-autopairs"
+  },
   ["nvim-cmp"] = {
-    after = { "cmp_luasnip", "cmp-buffer", "cmp-path", "cmp-nvim-lua", "cmp-nvim-lsp" },
+    after = { "nvim-autopairs", "cmp-buffer", "cmp-nvim-lsp", "cmp-nvim-lua", "cmp-path", "cmp_luasnip" },
     config = { "\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rb.plugins.nvim-cmp\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -247,6 +259,10 @@ _G.packer_plugins = {
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+  },
+  nvim_context_vt = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/nvim_context_vt"
   },
   ["octo.nvim"] = {
     loaded = true,
@@ -304,6 +320,11 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  ["todo-comments.nvim"] = {
+    config = { "\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18todo-comments\frequire\0" },
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/todo-comments.nvim"
   },
   undotree = {
     loaded = true,
@@ -376,14 +397,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: LuaSnip
-time([[Config for LuaSnip]], true)
-try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rb.plugins.snippets\frequire\0", "config", "LuaSnip")
-time([[Config for LuaSnip]], false)
 -- Config for: telescope-frecency.nvim
 time([[Config for telescope-frecency.nvim]], true)
 try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
 time([[Config for telescope-frecency.nvim]], false)
+-- Config for: LuaSnip
+time([[Config for LuaSnip]], true)
+try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rb.plugins.snippets\frequire\0", "config", "LuaSnip")
+time([[Config for LuaSnip]], false)
+-- Config for: todo-comments.nvim
+time([[Config for todo-comments.nvim]], true)
+try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
+time([[Config for todo-comments.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

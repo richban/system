@@ -58,9 +58,28 @@ return require('packer').startup {
     use 'mbbill/undotree'
     use 'Pocco81/ISuckAtSpelling.nvim'
     use 'wakatime/vim-wakatime'
+    use {
+      'jdhao/better-escape.vim',
+      event = 'InsertEnter',
+      config = function()
+        vim.g.better_escape_shortcut = 'jk'
+      end
+    }
+
+    use {
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup {}
+        -- :TodoQuickFix
+        -- :TodoLocList
+        -- :TodoTelescope
+      end
+    }
     
     -- Motion
-    use 'yuttie/comfortable-motion.vim'
+    use 'karb94/neoscroll.nvim'
+    -- use 'yuttie/comfortable-motion.vim'
     use 'easymotion/vim-easymotion'
     
     -- Text Manipulation
@@ -71,7 +90,11 @@ return require('packer').startup {
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
-
+    use({
+        'windwp/nvim-autopairs',
+        after = 'nvim-cmp',
+    })
+    
     -- Snippets
     use({
         'L3MON4D3/LuaSnip',
@@ -106,6 +129,7 @@ return require('packer').startup {
     -- Themes
     use 'marko-cerovac/material.nvim'
     use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+    use "projekt0n/github-nvim-theme"
     -- use 'pineapplegiant/spaceduck'
     
     -- Icons
@@ -173,6 +197,7 @@ return require('packer').startup {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate'
     }
+    use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
     
     -- firenvim
     use {

@@ -30,17 +30,17 @@ font:
   # I've given in 14 spacing which fits really well with my fonts, you may change it
   # to your convenience but make sure to adjust 'glyph_offset' appropriately post that
   offset:
-   x: 0
-   y: 14
+    x: 0
+    y: 14
 
   # Note: This requires RESTART
   # By default when you change the offset above you'll see an issue, where the texts are bottom
   # aligned with the cursor, this is to make sure they center align.
   # This offset should usually be 1/2 of the above offset-y being set.
   glyph_offset:
-   x: 0
-   # Keeping this as half of offset to vertically align the text in cursor
-   y: 7
+    x: 0
+    # Keeping this as half of offset to vertically align the text in cursor
+    y: 7
 
   # Better font rendering for mac
   use_thin_strokes: true
@@ -65,34 +65,66 @@ key_bindings:
   # ctrl-^ doesn't work in some terminals like alacritty
   - { key: Key6, mods: Control, chars: "\x1e" }
 
-
 # Colors (Gruvbox dark)
+# colors:
+#   # Default colors
+#   primary:
+#     # hard contrast: background = '#1d2021'
+#     background: '#282828'
+#     # soft contrast: background = '#32302f'
+#     foreground: '#ebdbb2'
+
+#   # Normal colors
+#   normal:
+#     black:   '#282828'
+#     red:     '#cc241d'
+#     green:   '#98971a'
+#     yellow:  '#d79921'
+#     blue:    '#458588'
+#     magenta: '#b16286'
+#     cyan:    '#689d6a'
+#     white:   '#a89984'
+
+#   # Bright colors
+#   bright:
+#     black:   '#928374'
+#     red:     '#fb4934'
+#     green:   '#b8bb26'
+#     yellow:  '#fabd2f'
+#     blue:    '#83a598'
+#     magenta: '#d3869b'
+#     cyan:    '#8ec07c'
+#     white:   '#ebdbb2'
+
+# github Alacritty Colors
 colors:
   # Default colors
   primary:
-    # hard contrast: background = '#1d2021'
-    background: '#282828'
-    # soft contrast: background = '#32302f'
-    foreground: '#ebdbb2'
+    background: "0x0d1117"
+    foreground: "0xb3b1ad"
 
   # Normal colors
   normal:
-    black:   '#282828'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#a89984'
+    black: "0x484f58"
+    red: "0xff7b72"
+    green: "0x3fb950"
+    yellow: "0xd29922"
+    blue: "0x58a6ff"
+    magenta: "0xbc8cff"
+    cyan: "0x39c5cf"
+    white: "0xb3b1ad"
 
   # Bright colors
   bright:
-    black:   '#928374'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ebdbb2'
+    black: "0x6e7681"
+    red: "0xffa198"
+    green: "0x56d364"
+    yellow: "0xe3b341"
+    blue: "0x79c0ff"
+    magenta: "0xd2a8ff"
+    cyan: "0x39c5cf"
+    white: "0xb3b1ad"
+
+  indexed_colors:
+    - { index: 16, color: "0xd18616" }
+    - { index: 17, color: "0xffa198" }
