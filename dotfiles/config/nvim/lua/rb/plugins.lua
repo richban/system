@@ -15,6 +15,9 @@ return require('packer').startup {
     use {'nathangrigg/vim-beancount'}
     use 'nvim-lua/plenary.nvim'
 
+    -- Icons
+    use 'kyazdani42/nvim-web-devicons'
+
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim'}
 
@@ -39,12 +42,17 @@ return require('packer').startup {
       }
 
     -- File Manager
-    -- use 'scrooloose/nerdtree'
+    use {
+      'kyazdani42/nvim-tree.lua',
+      requires = 'kyazdani42/nvim-web-devicons'
+    }
+
     -- use {
     --   'ms-jpq/chadtree',
     --   branch = 'chad',
-    --   run = 'python3 -m chadtree deps'
+    --   run = ':CHADdeps'
     -- }
+
     use 'liuchengxu/vista.vim'
 
 
@@ -76,14 +84,26 @@ return require('packer').startup {
         -- :TodoTelescope
       end
     }
+
+    -- dims inactive portions of the code you're editing
+    use {
+      "folke/twilight.nvim",
+      config = function()
+        require("twilight").setup {
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        }
+      end
+    }
+
+    use { 'lukas-reineke/indent-blankline.nvim' }
     
     -- Motion
     use 'karb94/neoscroll.nvim'
-    -- use 'yuttie/comfortable-motion.vim'
     use 'easymotion/vim-easymotion'
     
     -- Text Manipulation
-    use 'Yggdroot/indentLine'
     use 'Raimondi/delimitMate'
     use 'godlygeek/tabular'
     use 'justinmk/vim-sneak'
@@ -126,24 +146,34 @@ return require('packer').startup {
     }
     use 'junegunn/goyo.vim'
 
-    -- Themes
-    use 'marko-cerovac/material.nvim'
-    use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
-    use "projekt0n/github-nvim-theme"
-    -- use 'pineapplegiant/spaceduck'
-    
-    -- Icons
-    use 'ryanoasis/vim-devicons'
-    use 'kyazdani42/nvim-web-devicons'
-    
-    -- Highlight hex, rgb colors
-    use 'norcalli/nvim-colorizer.lua'
-    
     -- Status line
     use {
       'hoob3rt/lualine.nvim',
-      requires = {'kyazdani42/nvim-web-devicons', opt = true}
+      requires = {'kyazdani42/nvim-web-devicons'},
+      config = function() require "rb.plugins.statusline" end
     }
+
+    -- Themes    
+    use {
+      "projekt0n/github-nvim-theme",
+      after = "lualine.nvim",
+      config = function()
+        require("github-theme").setup({
+          theme_style = "dark_default",
+          comment_style = "italic",
+          sidebars = {"qf", "vista_kind", "terminal", "packer"},
+          dark_sidebar = false,
+          -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+          colors = {hint = "orange", error = "#ff0000"}
+        })
+      end
+    }
+    -- use 'marko-cerovac/material.nvim'
+    -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+    -- use 'pineapplegiant/spaceduck'
+    
+    -- Highlight hex, rgb colors
+    use 'norcalli/nvim-colorizer.lua'
 
     -- Javascript & Typescript
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'

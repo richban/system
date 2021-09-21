@@ -2,10 +2,11 @@ local lsp = require('lspconfig')
 local lsp_status  = require('lsp-status')
 local diagnostics  = require('rb.lsp.diagnostics')
 local remaps  = require('rb.lsp.remaps')
+local configs = require('lspconfig/configs')
 
 -- for debugging lsp
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
-vim.lsp.set_log_level("error")
+vim.lsp.set_log_level("debug")
 
 -- LSP Saga config https://github.com/glepnir/lspsaga.nvim
 local saga = require 'lspsaga'
@@ -60,9 +61,7 @@ local custom_init = function(client)
   client.config.flags.allow_incremental_sync = true
 end
 
-local function custom_attach(client, bufnr)
-    print(client.name)
-    
+local function custom_attach(client, bufnr)    
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
     remaps.set(client, bufnr)
@@ -72,8 +71,9 @@ local function custom_attach(client, bufnr)
       -- disable tsserver formatting if you plan on formatting via null-ls
       client.resolved_capabilities.document_formatting = false
     end
-    
+
     lsp_status.on_attach(client, bufnr)
+
 
     -- add signature autocompletion while typing
     require'lsp_signature'.on_attach()
@@ -103,16 +103,16 @@ local function custom_attach(client, bufnr)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-    updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
-    updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
-    -- LSP this is needed for LSP completions in CSS along with the snippets plugin
-    updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
-    updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        "documentation",
-        "detail",
-        "additionalTextEdits",
-    },
+updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
+updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
+-- LSP this is needed for LSP completions in CSS along with the snippets plugin
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
+updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+      "documentation",
+      "detail",
+      "additionalTextEdits",
+  },
 }
 
 -- Servers PATH on MacOS/Linux
@@ -143,8 +143,6 @@ end
 -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspIn
 local sumneko_root_path = servers_path.."/sumneko-lua-language-server/extension/server"
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-
-local configs = require('lspconfig/configs')
 
 local servers = {
     -- efm = require('rb.lsp.efm')(),
@@ -180,49 +178,37 @@ local servers = {
           "typescript.tsx",
         },
     },
-    -- pyls_ms = {
-    --     cmd = { 'dotnet', 'exec', '/Users/rbanyi/Developer/python-language-server/output/bin/Debug/Microsoft.Python.LanguageServer.dll'},
-    --     settings = {
-    --         pyls = {
-    --             plugins = {
-    --                 pyflakes = {enabled = true},
-    --                 pydocstyle = {enabled = true},
-    --                 pylint = {enabled = false},
-    --                 mypy_ls = {
-    --                     enabled = false,
-    --                     live_mode = true
-    --                 }
-    --             }
-    --         }
-    --     }
-    -- },
+    -- FIXME:
     -- pyls = {
     --     cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
-    --     -- root_dir = project_root_or_cur_dir,
-    --     root_dir = function(fname)
-    --       local root_files = {
-    --         'pyproject.toml',
-    --         'setup.py',
-    --         'setup.cfg',
-    --         'requirements.txt',
-    --         'Pipfile',
-    --       }
-    --       return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname) or lsp.util.path.dirname(fname)
-    --     end,
+    --     filetypes = { "python" },
+    --     root_dir = project_root_or_cur_dir,
+    --     log_level = 1,
+    --     -- root_dir = function(fname)
+    --     --   local root_files = {
+    --     --     'pyproject.toml',
+    --     --     'setup.py',
+    --     --     'setup.cfg',
+    --     --     'requirements.txt',
+    --     --     'Pipfile',
+    --     --   }
+    --     --   return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname) or lsp.util.path.dirname(fname)
+    --     -- end,
     --     settings = {
     --         pyls = {
-    --             plugins ={
-    --                 pyflakes = {enabled = true},
-    --                 pydocstyle = {enabled = true},
-    --                 pylint = {enabled = true},
-    --                 -- mypy_ls = {
-    --                 --     enabled = false,
-    --                 --     live_mode = true
-    --                 -- }
-    --             }
+    --           trace = { server = "verbose" },
+    --           plugins ={
+    --               pyflakes = {enabled = true},
+    --               pydocstyle = {enabled = true},
+    --               pylint = {enabled = true},
+    --               mypy_ls = {
+    --                   enabled = false,
+    --                   live_mode = true
+    --               }
+    --           }
     --         }
     --     },
-    --     -- capabilities = vim.tbl_extend('keep', configs.pyls.capabilities or {}, lsp_status.capabilities)
+    --       capabilities = vim.tbl_extend('keep', configs.pyls.capabilities or {}, lsp_status.capabilities)
     -- },
     pyright = {},
     sqlls = {
@@ -271,7 +257,7 @@ local setup_server = function(server, config)
         debounce_text_changes = 50,
       },
     }, config)
-  
+
     lsp[server].setup(config)
   end
   

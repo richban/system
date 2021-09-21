@@ -37,17 +37,6 @@ function mappings.setup()
     -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
     map('n','<leader>ml', '<cmd>Marks<CR>')
     map('n','<leader>V', ':Vista<CR>')
-    ---- VIM-FUGITIVE -------------------------------------------------------------
-    map('n', '<leader>gs', '<cmd>Git<CR>')
-    map('n', '<leader>gvd', '<cmd>Gvdiffsplit<CR>')
-    -- map('n', '<leader>gd', '<cmd>Gvdiff<CR>')
-    map('n', '<leader>gl', '<cmd>diffget //3<CR>')
-    map('n', '<leader>gh', '<cmd>diffget //2<CR>')
-    --- TABULARIZE  ---------------------------------------------------------------
-    map('v', '<leader>=',  '<cmd>Tab /=<CR>')
-    map('n', '<leader>:',  '<cmd>Tab /:\\zs<CR>')
-    map('v', '<leader>:',  '<cmd>Tab /:\\zs<CR>')
-    map('n', '<leader>=', '<cmd>Tab /=<CR>')
     -- " Send cell to IronRepl and move to next cell.
     map('n', ']x', 'ctrih/^# %%<CR><CR>')
 end

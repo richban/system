@@ -1,5 +1,11 @@
 local settings = {}
 
+require('os')
+local path_sep = vim.loop.os_uname().sysname == "Windows" and "\\" or "/"
+local function path_join(...)
+    return table.concat(vim.tbl_flatten {...}, path_sep)
+end
+
 function settings.setup()
     if vim.fn.has('vim_starting') == 1 then
         vim.cmd('syntax enable')
@@ -45,6 +51,9 @@ function settings.setup()
     vim.o.ttyfast = true
     vim.o.clipboard = 'unnamedplus'
 
+    vim.o.undodir = '$HOME/config/.nvim/undodir'
+    vim.o.undofile = true
+
     vim.o.scrolloff = 8
     -- lsp and git column
     vim.o.signcolumn = 'yes:2'
@@ -66,12 +75,12 @@ function settings.setup()
     vim.cmd [[set shortmess+=c]]
     -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
     -- delays and poor user experience.
-    vim.o.updatetime = 1000
+    vim.o.updatetime = 50
     vim.g.mapleader = ' '
     -- providers
-    vim.g.python_host_prog = '$HOME/.pyenv/versions/neovim2/bin/python'
-    vim.g.python3_host_prog = '$HOME/.pyenv/versions/neovim3/bin/python'
-    vim.g.pydocstring_doq_path = '$HOME/.pyenv/versions/neovim3/bin/doq'
+    vim.g.python_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim2/bin/python")
+    vim.g.python3_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/python")
+    vim.g.pydocstring_doq_path = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/doq")
     vim.g.pydocstring_formatter = "google"
     vim.g.lsp_settings_servers_dir = vim.fn.stdpath("cache") .. "/lspconfig"
 
@@ -81,6 +90,13 @@ function settings.setup()
 
     vim.g.markdown_fenced_languages = { "html", "javascript", "typescript", "css", "scss", "lua", "vim" }
     vim.g.cursorhold_updatetime = 100
+
+    -- Give more space for displaying messages.
+    vim.o.cmdheight = 1
+
+    -- using treesitter for folding
+    -- vim.wo.foldmethod = 'expr'
+    -- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
 end
 

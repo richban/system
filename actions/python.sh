@@ -23,15 +23,15 @@ if [[ ! -f $HOME/.pyenv/versions/neovim2/bin/pip ]]; then
 fi
 
 if [[ ! -f $HOME/.pyenv/versions/neovim3/bin/pip ]]; then
-    pyenv install 3.8.5
-    pyenv global 3.8.5
-    pyenv virtualenv 3.8.5 neovim3
+    pyenv install 3.9.4
+    pyenv global 3.9.4
+    pyenv virtualenv 3.9.4 neovim3
     $HOME/.pyenv/versions/neovim3/bin/pip install --upgrade --no-cache neovim pynvim doq qtconsole 'python_language_server[all]' mypy-ls pyls-black flake8 pep8-naming jedi jupyter_qtconsole_colorschemes
 fi
 
 # Install packages globally
-~/.pyenv/versions/3.8.5/bin/pip install --upgrade pip
-~/.pyenv/versions/3.8.5/bin/pip install -r ${CWD}/Pipfile
+~/.pyenv/versions/3.9.4/bin/pip install --upgrade pip
+~/.pyenv/versions/3.9.4/bin/pip install -r ${CWD}/Pipfile
 
 # install poetry
 if ! command -v poetry > /dev/null; then
