@@ -13,6 +13,8 @@ end
 return require('packer').startup {
   function(use)
     use {'nathangrigg/vim-beancount'}
+    use 'nvim-lua/plenary.nvim'
+
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim'}
 
@@ -20,44 +22,48 @@ return require('packer').startup {
     use {'junegunn/fzf', run = './install --all' }
     use {'junegunn/fzf.vim'}
     use 'ojroques/nvim-lspfuzzy'
+
     -- git
     use 'tpope/vim-fugitive'
-    -- use 'airblade/vim-gitgutter'
-    -- Github integration
-    use {
-        'pwntester/octo.nvim',
-        -- cmd = { 'Octo' },
-      }
-    use 'nvim-lua/plenary.nvim'
     use {
       'lewis6991/gitsigns.nvim',
       requires = {
         'nvim-lua/plenary.nvim'
       },
     }
-    -- utils
+
+    -- Github integration
+    use {
+        'pwntester/octo.nvim',
+        -- cmd = { 'Octo' },
+      }
+
+    -- File Manager
     -- use 'scrooloose/nerdtree'
     -- use {
     --   'ms-jpq/chadtree',
     --   branch = 'chad',
     --   run = 'python3 -m chadtree deps'
-
     -- }
+    use 'liuchengxu/vista.vim'
+
+
+    -- Utils
+    use 'tweekmonster/startuptime.vim'
+    use 'mhinz/vim-startify'
     use 'editorconfig/editorconfig-vim'
     use 'christoomey/vim-tmux-navigator'
-    use 'mhinz/vim-startify'
-    use 'tweekmonster/startuptime.vim'
     use 'antoinemadec/FixCursorHold.nvim' -- Fix CursorHold Performance
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
-    use 'liuchengxu/vista.vim'
     use 'Pocco81/ISuckAtSpelling.nvim'
-    -- use 'dstein64/nvim-scrollview'
     use 'wakatime/vim-wakatime'
-    -- motion
+    
+    -- Motion
     use 'yuttie/comfortable-motion.vim'
     use 'easymotion/vim-easymotion'
-    -- text
+    
+    -- Text Manipulation
     use 'Yggdroot/indentLine'
     use 'Raimondi/delimitMate'
     use 'godlygeek/tabular'
@@ -95,60 +101,60 @@ return require('packer').startup {
         run = 'cd app && yarn install',
         cmd = 'MarkdownPreview'
     }
-    use 'heavenshell/vim-jsdoc'
     use 'junegunn/goyo.vim'
-    -- colors and theme
+
+    -- Themes
     use 'marko-cerovac/material.nvim'
     use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
-    -- use 'morhetz/gruvbox'
-    -- use 'sainnhe/gruvbox-material'
     -- use 'pineapplegiant/spaceduck'
+    
+    -- Icons
     use 'ryanoasis/vim-devicons'
     use 'kyazdani42/nvim-web-devicons'
-    -- highlight hex, rgb colors
+    
+    -- Highlight hex, rgb colors
     use 'norcalli/nvim-colorizer.lua'
-    -- status line
-    -- use 'itchyny/lightline.vim'
+    
+    -- Status line
     use {
       'hoob3rt/lualine.nvim',
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
-    use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-    -- LSP
-    -- used to install LSP Servers
-    -- use 'prabirshrestha/vim-lsp'
-    -- use 'mattn/vim-lsp-settings'
 
+    -- Javascript & Typescript
+    use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+    use 'heavenshell/vim-jsdoc'
+    
+    -- LSP
     use 'neovim/nvim-lspconfig'
-    -- use 'nvim-lua/completion-nvim'
     use 'glepnir/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
-
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'
     use 'ray-x/lsp_signature.nvim'
-    -- use {
-    --   'hrsh7th/nvim-compe', branch = 'master'
-    -- }
+
+    -- Python & Jupyter Notebooks
+    use 'bfredl/nvim-ipy'
+    use 'hkupty/iron.nvim'
     use 'Vimjas/vim-python-pep8-indent'
     use {
       'heavenshell/vim-pydocstring',
       run = 'make install'
     }
-    -- jupyter
-    use 'bfredl/nvim-ipy'
-    use 'hkupty/iron.nvim'
     -- use 'untitled-ai/jupyter_ascending.vim'
     -- use 'GCBallesteros/jupytext.vim'
     -- use 'kana/vim-textobj-line'
     -- use 'kana/vim-textobj-user'
     -- use 'GCBallesteros/vim-textobj-hydrogen'
-    -- telescope
+
+
+    -- Telescope
     use 'nvim-lua/popup.nvim'
     use 'nvim-telescope/telescope.nvim'
     use 'nvim-telescope/telescope-fzy-native.nvim'
     use 'nvim-telescope/telescope-fzf-writer.nvim'
     use 'nvim-telescope/telescope-packer.nvim'
+    use 'nvim-telescope/telescope-cheat.nvim'
     -- preview media files
     use 'nvim-telescope/telescope-media-files.nvim'
     -- intelligent prioritization when selecting files
@@ -158,13 +164,16 @@ return require('packer').startup {
         require"telescope".load_extension("frecency")
       end
     }
+
+    -- SQL
     use 'tami5/sql.nvim'
-    use 'nvim-telescope/telescope-cheat.nvim'
-    -- Language packs
+    
+    -- Treesitter
     use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate'
     }
+    
     -- firenvim
     use {
       'glacambre/firenvim',
