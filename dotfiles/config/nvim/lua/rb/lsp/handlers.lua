@@ -24,33 +24,33 @@ end
 
 
 -- Normal configuration to show diagnostic messages
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---   vim.lsp.diagnostic.on_publish_diagnostics, {
---     virtual_text = {
---       spacing = 0,
---       prefix = "■",
---       severity_limit = "Warning",
---     },
-
---     -- see: ":help vim.lsp.diagnostic.set_signs()"
---     signs = true,
-
---     update_in_insert = true,
---   }
--- )
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  require('lsp_extensions.workspace.diagnostic').handler, {
-    -- see: ":help vim.lsp.diagnostic.set_signs()"
-    signs = true,
+  vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = {
       spacing = 0,
       prefix = "■",
       severity_limit = "Warning",
     },
+
+    -- see: ":help vim.lsp.diagnostic.set_signs()"
+    signs = true,
+
     update_in_insert = true,
   }
 )
+
+-- FIXME:
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+--   require('lsp_extensions.workspace.diagnostic').handler, {
+--     signs = {
+--       severity_limit = "Error",
+--     },
+--     underline = {
+--       severity_limit = "Warning",
+--     },
+--     virtual_text = true,
+--   }
+-- )
 
 vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
 

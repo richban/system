@@ -37,12 +37,12 @@ return require('packer').startup {
     }
     -- utils
     -- use 'scrooloose/nerdtree'
-    use {
-      'ms-jpq/chadtree',
-      branch = 'chad',
-      run = 'python3 -m chadtree deps'
+    -- use {
+    --   'ms-jpq/chadtree',
+    --   branch = 'chad',
+    --   run = 'python3 -m chadtree deps'
 
-    }
+    -- }
     use 'editorconfig/editorconfig-vim'
     use 'christoomey/vim-tmux-navigator'
     use 'mhinz/vim-startify'
@@ -65,11 +65,31 @@ return require('packer').startup {
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
-    -- snippets
-    use 'norcalli/snippets.nvim'
-    use 'hrsh7th/vim-vsnip'
-    use 'hrsh7th/vim-vsnip-integ'
-    -- markdown
+
+    -- Snippets
+    use({
+        'L3MON4D3/LuaSnip',
+        requires = {'rafamadriz/friendly-snippets'},
+        config = function() require('rb.plugins.snippets') end
+    })
+    use({'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'})
+
+    -- use 'norcalli/snippets.nvim'
+    -- use 'hrsh7th/vim-vsnip'
+    -- use 'hrsh7th/vim-vsnip-integ'
+
+    -- Completion Engine
+    use {
+        'hrsh7th/nvim-cmp',
+        config = function() require 'rb.plugins.nvim-cmp' end,
+        event = 'InsertEnter'
+    }
+    use({'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp'})
+    use({'hrsh7th/cmp-buffer', after = 'nvim-cmp'})
+    use({'hrsh7th/cmp-path', after = 'nvim-cmp'})
+    use({'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp'})
+
+    -- Markdown Preview in the browser
     use {
         'iamcco/markdown-preview.nvim',
         run = 'cd app && yarn install',
@@ -107,9 +127,9 @@ return require('packer').startup {
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'
     use 'ray-x/lsp_signature.nvim'
-    use {
-      'hrsh7th/nvim-compe', branch = 'master'
-    }
+    -- use {
+    --   'hrsh7th/nvim-compe', branch = 'master'
+    -- }
     use 'Vimjas/vim-python-pep8-indent'
     use {
       'heavenshell/vim-pydocstring',

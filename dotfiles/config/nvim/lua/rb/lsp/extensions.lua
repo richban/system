@@ -8,7 +8,7 @@ M.show_line_hints = function()
   })
 end
 
--- @rockerboo
+-- FIXME:
 M.show_line_hints_on_cursor_events = function()
   vim.cmd [[augroup ShowLineHints]]
   vim.cmd [[  au!]]

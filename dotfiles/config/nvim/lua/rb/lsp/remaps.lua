@@ -79,31 +79,15 @@ function M.set(client, bufnr)
     buf_set_keymap('n','<leader>df', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
-  vim.api.nvim_exec(
-  [[
-  inoremap <silent><expr> <C-p> compe#complete()
-  inoremap <silent><expr> <Tab> compe#complete()
-  inoremap <silent><expr> <CR>  compe#confirm('<CR>')
-  ]],
-  true)
-
-  -- using tab for navigating in completion
-  vim.api.nvim_exec(
-  [[
-  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  ]],
-  true)
-
 end
 
+-- FIXME:
 function M.set_typescript(client, bufnr)
   local function buf_set_keymap(...) bufnoremap(bufnr, ...) end
   local ts_utils = require("nvim-lsp-ts-utils")
 
   -- defaults
-  ts_utils.setup {
-  }
+  ts_utils.setup {}
 
   -- required to fix code action ranges and filter diagnostics
   ts_utils.setup_client(client)
