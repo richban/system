@@ -156,8 +156,12 @@ local servers = {
       cmd = { "vscode-json-languageserver", "--stdio" },
       filetypes = { "json" }
     },
-    html = true,
-    cssls = true,
+    html = {
+      cmd = { "html-languageserver", "--stdio"}
+    },
+    cssls = {
+      cmd = { "css-languageserver", "--stdio"}
+    },
     vuels = true,
     terraformls = {
         cmd = { "terraform-ls", "serve" },

@@ -172,6 +172,9 @@ vim.api.nvim_exec([[
 
 ---- TREESITTER ----------------------------------------------------------------
 
+-- https://github.com/tree-sitter/tree-sitter-haskell#building-on-macos
+require'nvim-treesitter.install'.compilers = { "gcc" }
+
 local treesitter = require'nvim-treesitter.configs'
 
 treesitter.setup {
