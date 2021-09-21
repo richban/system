@@ -78,16 +78,6 @@ function settings.setup()
     -- shows spaces
     vim.o.list = true
     vim.o.listchars= 'eol:¬,tab:>·,trail:~,extends:>,precedes:<'
-    -- theme
-    -- gruvbox
-    -- vim.g.background = 'dark'
-    -- vim.g.gruvbox_material_background = 'hard'
-    -- vim.g.gruvbox_material_enable_italic = 1
-    -- vim.g.gruvbox_material_enable_bold = 1
-    -- vim.g.gruvbox_material_better_performance = 1
-    -- vim.g.gruvbox_material_palette = 'mix'
-    -- -- vim.g.gruvbox_material_sign_column_background = 'none'
-    -- vim.cmd('colorscheme gruvbox-material')
 
     vim.g.markdown_fenced_languages = { "html", "javascript", "typescript", "css", "scss", "lua", "vim" }
     vim.g.cursorhold_updatetime = 100

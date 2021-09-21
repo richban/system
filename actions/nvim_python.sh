@@ -14,7 +14,7 @@ if [[ ! -f $HOME/.pyenv/versions/neovim3/bin/pip ]]; then
     pyenv install 3.9.1
     pyenv global 3.9.1
     pyenv virtualenv 3.9.1 neovim3
-    $HOME/.pyenv/versions/neovim3/bin/pip install --upgrade --no-cache neovim pynvim doq qtconsole 'python_language_server[all]' mypy-ls pyls-black flake8 pep8-naming jedi jupyter_qtconsole_colorschemes
+    $HOME/.pyenv/versions/neovim3/bin/pip install --upgrade --no-cache neovim pynvim doq qtconsole 'python_language_server[all]' pylsp-mypy pyls-black flake8 pep8-naming jedi jupyter_qtconsole_colorschemes
 fi
 
 # Download latest nightly build

@@ -41,7 +41,7 @@ local config = {
       -- Disable sections and component separators
       component_separators = {'', ''},
       section_separators = {'', ''},
-      theme = "gruvbox",
+      theme = "material-nvim",
       icons_enabled = true,
     },
     sections = {

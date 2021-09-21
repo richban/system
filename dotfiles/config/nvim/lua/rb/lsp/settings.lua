@@ -120,7 +120,7 @@ local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 local servers_path = vim.fn.stdpath("cache") .. "/lspconfig"
 
 local function project_root_or_cur_dir(path)
-    return lsp.util.root_pattern('pyproject.toml', 'Pipfile', '.git')(path) or vim.fn.getcwd()
+    return lsp.util.root_pattern('pyproject.toml', 'Pipfile', '.git', 'requirements.txt')(path) or vim.fn.getcwd()
 end
 
 require('os')
@@ -143,6 +143,8 @@ end
 -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspIn
 local sumneko_root_path = servers_path.."/sumneko-lua-language-server/extension/server"
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
+
+local configs = require('lspconfig/configs')
 
 local servers = {
     -- efm = require('rb.lsp.efm')(),
@@ -195,24 +197,32 @@ local servers = {
     --     }
     -- },
     -- pyls = {
-        -- cmd = {path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh")},
-        -- cmd = { "~/.config/run_pyls_with_venv.sh" },
-        -- enable = true,
-        -- root_dir = project_root_or_cur_dir,
-        -- settings = {
-        --     pyls = {
-        --         plugins ={
-        --             pyflakes = {enabled = true},
-        --             pydocstyle = {enabled = true},
-        --             pylint = {enabled = true},
-        --             mypy_ls = {
-        --                 enabled = false,
-        --                 live_mode = true
-        --             }
-        --         }
-        --     }
-        -- },
-        -- capabilities = vim.tbl_extend('keep', configs.pyls.capabilities or {}, lsp_status.capabilities)
+    --     cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
+    --     -- root_dir = project_root_or_cur_dir,
+    --     root_dir = function(fname)
+    --       local root_files = {
+    --         'pyproject.toml',
+    --         'setup.py',
+    --         'setup.cfg',
+    --         'requirements.txt',
+    --         'Pipfile',
+    --       }
+    --       return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname) or lsp.util.path.dirname(fname)
+    --     end,
+    --     settings = {
+    --         pyls = {
+    --             plugins ={
+    --                 pyflakes = {enabled = true},
+    --                 pydocstyle = {enabled = true},
+    --                 pylint = {enabled = true},
+    --                 -- mypy_ls = {
+    --                 --     enabled = false,
+    --                 --     live_mode = true
+    --                 -- }
+    --             }
+    --         }
+    --     },
+    --     -- capabilities = vim.tbl_extend('keep', configs.pyls.capabilities or {}, lsp_status.capabilities)
     -- },
     pyright = {},
     sqlls = {
