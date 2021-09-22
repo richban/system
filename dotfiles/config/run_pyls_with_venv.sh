@@ -8,8 +8,8 @@ fi
 echo $DETECTED_VIRTUAL_ENV
 
 if [ -z "${DETECTED_VIRTUAL_ENV}" ]; then
-   ~/.pyenv/versions/neovim3/bin/python3 -m pyls "$@" 2> ~/.vim/pyls_errors.log
+   ~/.pyenv/versions/neovim3/bin/python3 -m pylsp "$@" 2> ~/.cache/nvim/pylsp_errors.log
 else
    export VIRTUAL_ENV=$DETECTED_VIRTUAL_ENV
-   ~/.pyenv/versions/neovim3/bin/python3 -m pyls "$@" 2> ~/.vim/pyls_errors.log
+   ~/.pyenv/versions/neovim3/bin/python3 -m pylsp "$@" 2> ~/.cache/nvim/pylsp_errors.log
 fi

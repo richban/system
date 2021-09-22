@@ -178,39 +178,19 @@ local servers = {
           "typescript.tsx",
         },
     },
-    -- FIXME:
-    -- pyls = {
-    --     cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
-    --     filetypes = { "python" },
-    --     root_dir = project_root_or_cur_dir,
-    --     log_level = 1,
-    --     -- root_dir = function(fname)
-    --     --   local root_files = {
-    --     --     'pyproject.toml',
-    --     --     'setup.py',
-    --     --     'setup.cfg',
-    --     --     'requirements.txt',
-    --     --     'Pipfile',
-    --     --   }
-    --     --   return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname) or lsp.util.path.dirname(fname)
-    --     -- end,
-    --     settings = {
-    --         pyls = {
-    --           trace = { server = "verbose" },
-    --           plugins ={
-    --               pyflakes = {enabled = true},
-    --               pydocstyle = {enabled = true},
-    --               pylint = {enabled = true},
-    --               mypy_ls = {
-    --                   enabled = false,
-    --                   live_mode = true
-    --               }
-    --           }
-    --         }
-    --     },
-    --       capabilities = vim.tbl_extend('keep', configs.pyls.capabilities or {}, lsp_status.capabilities)
-    -- },
-    pyright = {},
+    pylsp = {
+        -- cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
+        -- root_dir = project_root_or_cur_dir,
+        plugins ={
+            pydocstyle = {enabled = true},
+            pylint = {enabled = true},
+            pylsp_mypy = {
+                enabled = true,
+                live_mode = true
+            }
+        }
+    },
+    -- pyright = {},
     sqlls = {
         cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"}
     },
@@ -262,5 +242,5 @@ local setup_server = function(server, config)
   end
   
 for server, config in pairs(servers) do
-    setup_server(server, config)
+  setup_server(server, config)
 end
