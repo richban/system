@@ -40,8 +40,8 @@ local filetype_attach = setmetatable({
         augroup END
       ]]
     end,
-  
-    rust = function()  
+
+    rust = function()
       vim.cmd [[
         augroup lsp_buf_format
           au! BufWritePre <buffer>
@@ -61,7 +61,7 @@ local custom_init = function(client)
   client.config.flags.allow_incremental_sync = true
 end
 
-local function custom_attach(client, bufnr)    
+local function custom_attach(client, bufnr)
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
     remaps.set(client, bufnr)
@@ -179,7 +179,7 @@ local servers = {
         },
     },
     pylsp = {
-        -- cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
+        cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
         -- root_dir = project_root_or_cur_dir,
         plugins ={
             pydocstyle = {enabled = true},
@@ -224,11 +224,11 @@ local setup_server = function(server, config)
     if not config then
       return
     end
-  
+
     if type(config) ~= "table" then
       config = {}
     end
-  
+
     config = vim.tbl_deep_extend("force", {
       on_init = custom_init,
       on_attach = custom_attach,
@@ -240,7 +240,7 @@ local setup_server = function(server, config)
 
     lsp[server].setup(config)
   end
-  
+
 for server, config in pairs(servers) do
   setup_server(server, config)
 end

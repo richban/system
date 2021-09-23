@@ -98,11 +98,11 @@ return require('packer').startup {
     }
 
     use { 'lukas-reineke/indent-blankline.nvim' }
-    
+
     -- Motion
     use 'karb94/neoscroll.nvim'
     use 'easymotion/vim-easymotion'
-    
+
     -- Text Manipulation
     use 'Raimondi/delimitMate'
     use 'godlygeek/tabular'
@@ -114,7 +114,7 @@ return require('packer').startup {
         'windwp/nvim-autopairs',
         after = 'nvim-cmp',
     })
-    
+
     -- Snippets
     use({
         'L3MON4D3/LuaSnip',
@@ -153,13 +153,13 @@ return require('packer').startup {
       config = function() require "rb.plugins.statusline" end
     }
 
-    -- Themes    
+    -- Themes
     use {
       "projekt0n/github-nvim-theme",
       after = "lualine.nvim",
       config = function()
         require("github-theme").setup({
-          theme_style = "dark_default",
+          theme_style = "dark",
           comment_style = "italic",
           sidebars = {"qf", "vista_kind", "terminal", "packer"},
           dark_sidebar = false,
@@ -171,14 +171,14 @@ return require('packer').startup {
     -- use 'marko-cerovac/material.nvim'
     -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
     -- use 'pineapplegiant/spaceduck'
-    
+
     -- Highlight hex, rgb colors
     use 'norcalli/nvim-colorizer.lua'
 
     -- Javascript & Typescript
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     use 'heavenshell/vim-jsdoc'
-    
+
     -- LSP
     use 'neovim/nvim-lspconfig'
     use 'glepnir/lspsaga.nvim'
@@ -221,14 +221,14 @@ return require('packer').startup {
 
     -- SQL
     use 'tami5/sql.nvim'
-    
+
     -- Treesitter
     use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate'
     }
     use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
-    
+
     -- firenvim
     use {
       'glacambre/firenvim',
