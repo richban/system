@@ -51,7 +51,7 @@ function settings.setup()
     vim.o.ttyfast = true
     vim.o.clipboard = 'unnamedplus'
 
-    vim.o.undodir = path_join(os.getenv("HOME"), "./config/undodir")
+    vim.o.undodir = path_join(os.getenv("HOME"), "/.config/undodir")
     vim.o.undofile = true
 
     vim.o.scrolloff = 8
