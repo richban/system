@@ -209,7 +209,7 @@
   prune = true
 
 [push]
-  default = matching
+	default = current
   followTags = true
 
 [credential]

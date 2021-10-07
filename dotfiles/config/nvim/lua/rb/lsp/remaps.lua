@@ -44,10 +44,10 @@ function M.set(client, bufnr)
   buf_set_keymap('n','<leader>Li', ':LspInfo()<CR>', opts)
 
 
-  buf_set_keymap('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   if client.definitionProvider then
-    buf_set_keymap('n', '<leader>gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
-    buf_set_keymap('n','<leader>gtd', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', 'gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    buf_set_keymap('n','gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   end
 
   if client.implementationProvider then

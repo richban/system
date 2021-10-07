@@ -179,8 +179,8 @@ local servers = {
         },
     },
     pylsp = {
-        cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
-        -- root_dir = project_root_or_cur_dir,
+        -- cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
+        root_dir = project_root_or_cur_dir,
         plugins ={
             pydocstyle = {enabled = true},
             pylint = {enabled = true},
@@ -217,6 +217,13 @@ local servers = {
                 },
             },
         },
+    },
+    beancount = {
+      cmd = { "beancount-langserver", "--stdio" },
+      init_options = {
+          journalFile = "~/Developer/richban.ledger/richban.beancount",
+          pythonPath = "~/.pyenv/shims/python"
+      }
     }
 }
 
