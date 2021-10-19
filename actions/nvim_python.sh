@@ -45,3 +45,4 @@ npm i -g vue-language-server
 npm i -g dockerfile-language-server-nodejs
 npm i -g vls
 npm i -g pyright
+npm i -g beancount-langserver

@@ -53,8 +53,9 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 -- NVIM-TREE
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 
+vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}
+vim.g.nvim_tree_quit_on_open = 0
 vim.g.nvim_tree_git_hl = 0
-vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_follow  = 1
 vim.g.nvim_tree_auto_open = 1
 vim.g.nvim_tree_auto_close = 0
@@ -68,6 +69,7 @@ vim.g.nvim_tree_show_icons = {
    files = 1,
    folder_arrows = 1
 }
+
 
 vim.g.nvim_tree_bindings = {
       { key = "a",                            cb = tree_cb("create") },
