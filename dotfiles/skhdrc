@@ -43,6 +43,14 @@ shift + alt - 4 : yabai -m window --space 4 && yabai -m space --focus 4
 shift + alt - 5 : yabai -m window --space 5 && yabai -m space --focus 5
 shift + alt - 6 : yabai -m window --space 6 && yabai -m space --focus 6
 
+# Move windows but no FOCUS
+hyper - 1 : yabai -m window --space 1
+hyper - 2 : yabai -m window --space 2
+hyper - 3 : yabai -m window --space 3
+hyper - 4 : yabai -m window --space 4
+hyper - 5 : yabai -m window --space 5
+hyper - 6 : yabai -m window --space 6
+
 # Float and center window
 # grid <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 shift + alt - c : yabai -m window --toggle float;\
@@ -107,6 +115,12 @@ hyper - f: yabai -m space --layout float
 # Swap
 hyper - up: yabai -m window --swap west
 hyper - down: yabai -m window --swap east
+
+# move spaces
+# '['
+hyper - 0x21 : yabai -m space --move prev
+# ']'
+hyper - 0x1E : yabai -m space --move next
 
 # Restart Yabai
 shift + lctrl + alt - r :
