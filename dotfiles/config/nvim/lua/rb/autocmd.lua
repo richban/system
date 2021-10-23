@@ -24,6 +24,23 @@ function autocmd.setup()
     }
 
 
+    -- go to last location when opening a buffer
+    vim.cmd [[
+        autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
+    ]]
+
+    -- Highlight on yank
+    vim.api.nvim_exec(
+        [[
+        augroup YankHighlight
+        autocmd!
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+        augroup end
+    ]],
+        false
+    )
+
+
     nvim_create_augroups(definitions)
 end
 

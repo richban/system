@@ -74,9 +74,9 @@ function M.set(client, bufnr)
   end
 
   if client.documentFormattingProvider then
-    buf_set_keymap('n','<leader>df', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   elseif client.documentRangeFormattingProvider then
-    buf_set_keymap('n','<leader>df', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
 end
