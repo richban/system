@@ -1,3 +1,5 @@
+-- NOT USED
+
 require'compe'.setup {
   enabled = true,
   debug = true,

@@ -103,10 +103,16 @@ require("telescope").setup {
       -- buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
     },
     extensions = {
-        fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
+        fzf = {
+          fuzzy = true, -- false will only do exact matching
+          override_generic_sorter = false,
+          override_file_sorter = true,
+          case_mode = "smart_case", -- this is default
         },
+        -- fzy_native = {
+        --     override_generic_sorter = false,
+        --     override_file_sorter = true,
+        -- },
         media_files = {
           -- filetypes whitelist
           -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
@@ -126,8 +132,16 @@ require("telescope").setup {
 }
 
 -- Load the fzy native extension at the start.
-pcall(require('telescope').load_extension, "fzy_native")
+-- pcall(require('telescope').load_extension, "fzy_native")
+require("telescope").load_extension "fzf"
+
+-- github CLI
 pcall(require('telescope').load_extension, "gh")
+if vim.fn.executable "gh" == 1 then
+  pcall(require("telescope").load_extension, "gh")
+  pcall(require("telescope").load_extension, "octo")
+end
+
 pcall(require('telescope').load_extension, "cheat")
 pcall(require('telescope').load_extension, "dap")
 
@@ -139,6 +153,36 @@ if pcall(require('telescope').load_extension, 'frecency') then
 end
 
 local M = {}
+
+-- requires github extension
+function M.gh_issues()
+  local opts = {}
+  opts.prompt_title = " Issues"
+  -- opts.author = '@me'
+  require("telescope").extensions.gh.issues(opts)
+end
+
+function M.git_status()
+  local opts = themes.get_dropdown {
+    winblend = 10,
+    border = true,
+    previewer = false,
+    shorten_path = false,
+  }
+
+  -- Can change the git icons using this.
+  -- opts.git_icons = {
+  --   changed = "M"
+  -- }
+
+  require("telescope.builtin").git_status(opts)
+end
+
+function M.git_commits()
+  require("telescope.builtin").git_commits {
+    winblend = 5,
+  }
+end
 
 function M.edit_neovim()
   require('telescope.builtin').find_files {
@@ -171,6 +215,11 @@ function M.media_files()
   require('telescope').extensions.media_files.media_files()
 end
 
+function M.installed_plugins()
+  require("telescope.builtin").find_files {
+    cwd = vim.fn.stdpath "data" .. "/site/pack/packer/start/",
+  }
+end
 
 function M.lsp_code_actions()
   local opts = themes.get_dropdown {
@@ -184,11 +233,11 @@ function M.lsp_code_actions()
 end
 
 function M.live_grep()
- require('telescope').extensions.fzf_writer.staged_grep {
-   shorten_path = true,
-   previewer = false,
-   fzf_separator = "|>",
- }
+  require("telescope.builtin").live_grep {
+    -- shorten_path = true,
+    previewer = false,
+    fzf_separator = "|>",
+  }
 end
 
 function M.grep_prompt()
@@ -203,22 +252,22 @@ function M.grep_last_search(opts)
 
   -- \<getreg\>\C
   -- -> Subs out the search things
-  local register = vim.fn.getreg('/'):gsub('\\<', ''):gsub('\\>', ''):gsub("\\C", "")
+  local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
 
-  opts.shorten_path = true
-  opts.word_match = '-w'
+  opts.path_display = { "shorten" }
+  opts.word_match = "-w"
   opts.search = register
 
-  require('telescope.builtin').grep_string(opts)
+  require("telescope.builtin").grep_string(opts)
 end
 
-function M.project_search()
-  require('telescope.builtin').find_files {
-    previewer = false,
-    layout_strategy = "vertical",
-    cwd = require('nvim_lsp.util').root_pattern(".git")(vim.fn.expand("%:p")),
-  }
-end
+-- function M.project_search()
+--   require('telescope.builtin').find_files {
+--     previewer = false,
+--     layout_strategy = "vertical",
+--     cwd = require('nvim_lsp.util').root_pattern(".git")(vim.fn.expand("%:p")),
+--   }
+-- end
 
 function M.buffers()
   require('telescope.builtin').buffers {
@@ -249,11 +298,102 @@ function M.search_all_files()
   }
 end
 
-function M.file_browser()
-  require('telescope.builtin').file_browser {
+function M.file_explorer()
+  local opts
+
+  opts = {
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
-    prompt_position = "top",
+    layout_config = {
+      prompt_position = "top",
+    },
+
+    attach_mappings = function(prompt_bufnr, map)
+      local current_picker = action_state.get_current_picker(prompt_bufnr)
+
+      local modify_cwd = function(new_cwd)
+        current_picker.cwd = new_cwd
+        current_picker:refresh(opts.new_finder(new_cwd), { reset_prompt = true })
+      end
+
+      map("i", "-", function()
+        modify_cwd(current_picker.cwd .. "/..")
+      end)
+
+      map("i", "~", function()
+        modify_cwd(vim.fn.expand "~")
+      end)
+
+      local modify_depth = function(mod)
+        return function()
+          opts.depth = opts.depth + mod
+
+          local this_picker = action_state.get_current_picker(prompt_bufnr)
+          this_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
+        end
+      end
+
+      map("i", "<M-=>", modify_depth(1))
+      map("i", "<M-+>", modify_depth(-1))
+
+      map("n", "yy", function()
+        local entry = action_state.get_selected_entry()
+        vim.fn.setreg("+", entry.value)
+      end)
+
+      return true
+    end,
+  }
+
+  require("telescope.builtin").file_browser(opts)
+end
+
+function M.grep_notes()
+  local opts = {}
+  opts.hidden = true
+  -- opts.file_ignore_patterns = { 'thesaurus/'}
+  opts.search_dirs = {
+    "~/Developer/richban.second.brain",
+    "~/Developer/richban.ledger"
+  }
+  opts.prompt_prefix = "   "
+  opts.prompt_title = " Grep Notes"
+  opts.path_display = { "shorten" }
+  require("telescope.builtin").live_grep(opts)
+end
+
+function M.find_notes()
+  require("telescope.builtin").find_files {
+    prompt_title = " Find Notes",
+    path_display = { "shorten" },
+    cwd = "~/Developer/richban.second.brain",
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.65, width = 0.75 },
+  }
+end
+
+function M.browse_notes()
+  require("telescope.builtin").file_browser {
+    prompt_title = " Browse Notes",
+    prompt_prefix = " ﮷ ",
+    cwd = "~/Developer/richban.second.brain",
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.65, width = 0.75 },
+  }
+end
+
+function M.find_configs()
+  require("telescope.builtin").find_files {
+    prompt_title = " NVim & Term Config Find",
+    results_title = "Config Files Results",
+    path_display = { "shorten" },
+    search_dirs = {
+      "~/.dotfiles",
+      "~/.config",
+    },
+    cwd = "~/.config/",
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.65, width = 0.75 },
   }
 end
 

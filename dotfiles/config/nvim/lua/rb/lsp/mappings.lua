@@ -1,17 +1,14 @@
 local M = {}
 
-function M.set(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local telescope_mapper = require "rb.telescope.mappings"
+
+function M.set(client)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
   local opts = { noremap=true, silent=true }
 
   local mapper = function(mode, key, result)
     vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", {noremap = true, silent = true})
   end
-
-  mapper('n', '<space>cr', 'MyLspRename()')
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- install servers
   buf_set_keymap('n', '<leader>lsp', "<cmd>lua require('rb.lsp.install_servers').lsp_install_servers()<CR>", opts)
@@ -68,6 +65,7 @@ function M.set(client, bufnr)
     -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", opts) ]]
   end
 
+  mapper('n', '<space>cr', 'MyLspRename()')
   if client.renameProvider then
     -- buf_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n','<leader>rr', "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
@@ -79,23 +77,18 @@ function M.set(client, bufnr)
     buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
-end
-
--- FIXME:
-function M.set_typescript(client, bufnr)
-  local function buf_set_keymap(...) bufnoremap(bufnr, ...) end
-  local ts_utils = require("nvim-lsp-ts-utils")
-
-  -- defaults
-  ts_utils.setup {}
-
-  -- required to fix code action ranges and filter diagnostics
-  ts_utils.setup_client(client)
-
-  buf_set_keymap("n", "<leader>to", ":TSLspOrganize<CR>", 'lsp', 'lsp_typescript_organize', 'Organize imports')
-  buf_set_keymap("n", "<leader>tc", ":TSLspFixCurrent<CR>", 'lsp', 'lsp_typescript_fix_current', 'Fix current')
+  -- Typescript
+  buf_set_keymap("n", "<leader>to", ":TSLspOrganize<CR>", opts)
+  buf_set_keymap("n", "<leader>tc", ":TSLspFixCurrent<CR>", opts)
   -- buf_set_keymap("n", "gr", ":TSLspRenameFile<CR>", 'lsp', 'lsp_', '')
-  buf_set_keymap("n", "<leader>ti", ":TSLspImportAll<CR>", 'lsp', 'lsp_typescript_import_all', 'Import all')
+  buf_set_keymap("n", "<leader>ti", ":TSLspImportAll<CR>", opts)
+
+  -- Telescope
+  telescope_mapper("gr", "lsp_references", nil, true)
+  telescope_mapper("gI", "lsp_implementations", nil, true)
+  telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
+  -- telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
 end
 
 return M

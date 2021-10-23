@@ -39,19 +39,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
--- FIXME:
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---   require('lsp_extensions.workspace.diagnostic').handler, {
---     signs = {
---       severity_limit = "Error",
---     },
---     underline = {
---       severity_limit = "Warning",
---     },
---     virtual_text = true,
---   }
--- )
-
 vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
 
 -- Override various utility functions.
@@ -84,3 +71,25 @@ function MyLspRename()
 
   vim.cmd [[startinsert]]
 end
+
+-- FIXME:
+-- Send diagnostics to quickfix list
+-- do
+--   local method = "textDocument/publishDiagnostics"
+--   local default_handler = vim.lsp.handlers[method]
+--   vim.lsp.handlers[method] = function(err, method, result, client_id, bufnr, config)
+--     default_handler(err, method, result, client_id, bufnr, config)
+--     local diagnostics = vim.diagnostic.get()
+--     local qflist = {}
+--     for bufnr, diagnostic in pairs(diagnostics) do
+--       for _, d in ipairs(diagnostic) do
+--         d.bufnr = bufnr
+--         d.lnum = d.range.start.line + 1
+--         d.col = d.range.start.character + 1
+--         d.text = d.message
+--         table.insert(qflist, d)
+--       end
+--     end
+--     vim.fn.setqflist(qflist)
+--   end
+-- end

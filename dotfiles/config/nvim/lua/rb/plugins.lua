@@ -131,13 +131,20 @@ return require('packer').startup {
     use {
         'hrsh7th/nvim-cmp',
         config = function() require 'rb.plugins.nvim-cmp' end,
-        event = 'InsertEnter'
+        event = 'InsertEnter',
+        requires = {
+          { "hrsh7th/cmp-buffer" },
+          { "hrsh7th/cmp-nvim-lsp" },
+          { "hrsh7th/cmp-path" },
+          { "hrsh7th/cmp-nvim-lua" },
+          { "ray-x/cmp-treesitter" },
+          { "hrsh7th/nvim-cmp" },
+          { "hrsh7th/cmp-vsnip" },
+          { "hrsh7th/vim-vsnip" },
+          { "Saecki/crates.nvim" },
+          { "f3fora/cmp-spell" },
+        },
     }
-    use({'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp'})
-    use({'hrsh7th/cmp-buffer', after = 'nvim-cmp'})
-    use({'hrsh7th/cmp-path', after = 'nvim-cmp'})
-    use({'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp'})
-
     -- Markdown Preview in the browser
     use {
         'iamcco/markdown-preview.nvim',
@@ -205,7 +212,7 @@ return require('packer').startup {
     -- Telescope
     use 'nvim-lua/popup.nvim'
     use 'nvim-telescope/telescope.nvim'
-    use 'nvim-telescope/telescope-fzy-native.nvim'
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use 'nvim-telescope/telescope-fzf-writer.nvim'
     use 'nvim-telescope/telescope-packer.nvim'
     use 'nvim-telescope/telescope-cheat.nvim'

@@ -89,44 +89,45 @@ _G.packer_plugins = {
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/better-escape.vim"
   },
   ["cmp-buffer"] = {
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp-buffer"
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-buffer"
   },
   ["cmp-nvim-lsp"] = {
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp"
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
   },
   ["cmp-nvim-lua"] = {
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua"
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua"
   },
   ["cmp-path"] = {
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp-path"
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-path"
+  },
+  ["cmp-spell"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-spell"
+  },
+  ["cmp-treesitter"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-treesitter"
+  },
+  ["cmp-vsnip"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/cmp-vsnip"
   },
   cmp_luasnip = {
+    after_files = { "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua" },
     load_after = {
       ["nvim-cmp"] = true
     },
     loaded = false,
     needs_bufread = false,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/cmp_luasnip"
+  },
+  ["crates.nvim"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/crates.nvim"
   },
   delimitMate = {
     loaded = true,
@@ -219,7 +220,7 @@ _G.packer_plugins = {
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/opt/nvim-autopairs"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-nvim-lsp", "cmp-nvim-lua", "cmp-path", "cmp_luasnip", "nvim-autopairs" },
+    after = { "cmp_luasnip", "nvim-autopairs" },
     config = { "\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rb.plugins.nvim-cmp\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -298,13 +299,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim"
   },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim"
+  },
   ["telescope-fzf-writer.nvim"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/telescope-fzf-writer.nvim"
-  },
-  ["telescope-fzy-native.nvim"] = {
-    loaded = true,
-    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
   },
   ["telescope-media-files.nvim"] = {
     loaded = true,
@@ -384,6 +385,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator"
   },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+  },
   ["vim-wakatime"] = {
     loaded = true,
     path = "/Users/rbanyi/.local/share/nvim/site/pack/packer/start/vim-wakatime"
@@ -395,10 +400,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\26rb.plugins.statusline\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
 -- Config for: LuaSnip
 time([[Config for LuaSnip]], true)
 try_loadstring("\27LJ\2\n3\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\24rb.plugins.snippets\frequire\0", "config", "LuaSnip")
 time([[Config for LuaSnip]], false)
+-- Config for: twilight.nvim
+time([[Config for twilight.nvim]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
+time([[Config for twilight.nvim]], false)
 -- Config for: todo-comments.nvim
 time([[Config for todo-comments.nvim]], true)
 try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
@@ -407,14 +420,6 @@ time([[Config for todo-comments.nvim]], false)
 time([[Config for telescope-frecency.nvim]], true)
 try_loadstring("\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\rfrecency\19load_extension\14telescope\frequire\0", "config", "telescope-frecency.nvim")
 time([[Config for telescope-frecency.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\26rb.plugins.statusline\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
--- Config for: twilight.nvim
-time([[Config for twilight.nvim]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
-time([[Config for twilight.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd github-nvim-theme ]]

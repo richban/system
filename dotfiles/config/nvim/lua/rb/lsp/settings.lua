@@ -1,7 +1,7 @@
 local lsp = require('lspconfig')
 local lsp_status  = require('lsp-status')
 local diagnostics  = require('rb.lsp.diagnostics')
-local remaps  = require('rb.lsp.remaps')
+local mappings  = require('rb.lsp.mappings')
 local configs = require('lspconfig/configs')
 
 -- for debugging lsp
@@ -61,22 +61,68 @@ local custom_init = function(client)
   client.config.flags.allow_incremental_sync = true
 end
 
-local function custom_attach(client, bufnr)
+local function custom_attach(client)
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
-    remaps.set(client, bufnr)
+    mappings.set(client)
 
-    if filetype == "ts" then
-      remaps.set_typescript(client, bufnr)
+    if filetype == "typescript" then
+      local ts_utils = require("nvim-lsp-ts-utils")
+      -- defaults
+      ts_utils.setup {
+        debug = false,
+        disable_commands = false,
+        enable_import_on_completion = false,
+        import_all_timeout = 5000, -- ms
+    
+        -- eslint
+        -- using eslint lsp directly now, see below
+        eslint_enable_code_actions = false,
+        eslint_enable_disable_comments = false,
+        eslint_bin = "eslint",
+        eslint_config_fallback = nil,
+        eslint_enable_diagnostics = false,
+    
+        -- TODO: try out update imports on file move
+        update_imports_on_move = true,
+        require_confirmation_on_move = false,
+        watch_dir = nil,
+      }
+    
+      -- required to fix code action ranges and filter diagnostics
+      ts_utils.setup_client(client)
       -- disable tsserver formatting if you plan on formatting via null-ls
       client.resolved_capabilities.document_formatting = false
     end
 
-    lsp_status.on_attach(client, bufnr)
-
+    lsp_status.on_attach(client)
 
     -- add signature autocompletion while typing
-    require'lsp_signature'.on_attach()
+    -- require'lsp_signature'.on_attach()
+    require("lsp_signature").on_attach {
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      -- If you want to hook lspsaga or other signature handler, pls set to false
+      doc_lines = 2, -- will show 2 lines of comment/doc(if there are more than 2 lines in doc, will be truncated)
+      -- set to 0 if you DO NOT want any API comments be shown
+      -- This setting only take effect in insert mode, it does not affect signature help in normal
+      -- mode, 10 by default
+
+      floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+      hint_enable = true, -- virtual hint enable
+      hint_prefix = "🌟 ", -- Panda for parameter
+      hint_scheme = "String",
+      use_lspsaga = false, -- set to true if you want to use lspsaga popup
+      hi_parameter = "Search", -- how your parameter will be highlight
+      max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
+      -- to view the hiding contents
+      max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+      handler_opts = {
+        border = "single", -- double, single, shadow, none
+      },
+      extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+    }
+
+    vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
@@ -114,6 +160,7 @@ updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
       "additionalTextEdits",
   },
 }
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
