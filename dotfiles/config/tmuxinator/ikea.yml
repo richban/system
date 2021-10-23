@@ -1,0 +1,35 @@
+# ~/.tmuxinator/ikea.yml
+
+name: ikea
+root: ~/Developer/sbpaa-rca-platform
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim
+
+  - server:
+      root: ~/Developer/sbpaa-rca-platform/rca-app/rca-app-server
+      pre:
+        - nvmload
+      panes:
+        - pane_with_multiple_commands:
+          - npm i
+          - npm run start_local
+
+  - frontend:
+      root: ~/Developer/sbpaa-rca-platform/rca-app/rca-app-frontend
+      pre:
+        - nvmload
+      panes:
+        - pane_with_multiple_commands:
+          - npm i
+          - npm run serve:dev -- --port 8080
+
+  - dataapi:
+        root: ~/Developer/sbpaa-rca-platform/rca-dataapi
+        panes:
+          - docker-compose up --build
+
+  - console:
