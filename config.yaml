@@ -13,7 +13,8 @@ actions:
     init_ssh: sh actions/ssh_keys.sh
   install_packages: sh actions/install_packages.sh
   vim-plug: vim +PlugInstall +qall
-  simple-bar: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
+  simple-bar: git clone https://github.com/Jean-Tinland/simple-bar $HOME/Library/Application\
+    Support/Übersicht/widgets/simple-bar
   vscode-install-extensions: >-
     xargs -n 1 code --force --install-extension < {0}
   post:
@@ -160,6 +161,9 @@ dotfiles:
   f_alacritty.yml:
     src: config/alacritty/alacritty.yml
     dst: ~/.config/alacritty/alacritty.yml
+  f_ikea.yml:
+    src: config/tmuxinator/ikea.yml
+    dst: ~/.config/tmuxinator/ikea.yml
 profiles:
   casper-03:
     dotfiles:
@@ -255,5 +259,8 @@ profiles:
   vim:
     dotfiles:
     - f_vimrc
+  tmuxinator:
+    dotfiles:
+    - f_ikea.yml
 trans_write:
   vscode-list-extensions: code --list-extensions > {1}

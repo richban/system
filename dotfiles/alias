@@ -74,3 +74,5 @@ alias spoton="sudo mdutil -a -i on"
 alias vi='vi -c "let g:tty='\''$(tty)'\''"'
 alias nvim='~/Developer/nvim-macos/bin/nvim -c "let g:tty='\''$(tty)'\''"'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+alias mux=tmuxinator
