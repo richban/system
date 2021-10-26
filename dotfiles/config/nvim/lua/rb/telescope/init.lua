@@ -85,7 +85,7 @@ require("telescope").setup {
       },
 
       file_sorter =  sorters.get_fzy_sorter,
-      file_ignore_patterns = {".backup",".swap",".langsevers",".session",".undo","*.git","node_modules","vendor",".cache",".vscode-server",".Desktop",".Documents","classes"},
+      file_ignore_patterns = {".backup",".swap",".langsevers",".session",".undo","*.git","node_modules","vendor",".vscode-server",".Desktop",".Documents","classes"},
       generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
       -- path_display = true,
       winblend = 0,
@@ -197,7 +197,7 @@ function M.edit_neovim()
   }
 end
 
-M.git_branches = function()
+function M.git_branches()
     require("telescope.builtin").git_branches({
         attach_mappings = function(_, map)
             map('i', '<c-d>', actions.git_delete_branch)

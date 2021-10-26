@@ -74,7 +74,7 @@ local function custom_attach(client)
         disable_commands = false,
         enable_import_on_completion = false,
         import_all_timeout = 5000, -- ms
-    
+
         -- eslint
         -- using eslint lsp directly now, see below
         eslint_enable_code_actions = false,
@@ -82,13 +82,13 @@ local function custom_attach(client)
         eslint_bin = "eslint",
         eslint_config_fallback = nil,
         eslint_enable_diagnostics = false,
-    
+
         -- TODO: try out update imports on file move
         update_imports_on_move = true,
         require_confirmation_on_move = false,
         watch_dir = nil,
       }
-    
+
       -- required to fix code action ranges and filter diagnostics
       ts_utils.setup_client(client)
       -- disable tsserver formatting if you plan on formatting via null-ls
@@ -160,7 +160,8 @@ updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
       "additionalTextEdits",
   },
 }
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities, require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()))
+-- updated_capabilities = vim.tbl_deep_extend("keep", configs.pylsp.capabilities or {}, update_capabilities)
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
@@ -229,12 +230,22 @@ local servers = {
         -- cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
         root_dir = project_root_or_cur_dir,
         plugins ={
-            pydocstyle = {enabled = true},
-            pylint = {enabled = true},
+            -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
+            configurationSources = {"flake8"},
+            pyflakes = {enabled = false},
+            pydocstyle = { enabled = true },
+            pycodestyle = { enabled = false },
+            pylint = { enabled = false },
+            black = {enabled = true},
             pylsp_mypy = {
                 enabled = true,
                 live_mode = true
-            }
+            },
+            pyls_isort = { enabled = true },
+            flake8 = {
+              enabled = true,
+              executable = "~/.pyenv/versions/neovim3/bin/flake8"
+          }
         }
     },
     -- pyright = {},

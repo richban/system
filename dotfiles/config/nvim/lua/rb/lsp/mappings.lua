@@ -56,25 +56,23 @@ function M.set(client)
     buf_set_keymap('n','<leader>gR', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
   end
 
-  if client.codeActionProvider then
-    -- buf_set_keymap('n','<leader>fa', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", opts)
-    buf_set_keymap('n','<leader>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions({ timeout = 1000 })<CR>", opts)
-    buf_set_keymap('v', '<leader>car', "<cmd>lua require('telescope.builtin').lsp_range_code_actions({ timeout = 1000 })<CR>", opts)
-    -- buf_set_keymap('n', '<leader>fa', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
-    -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", opts) ]]
-  end
+  -- buf_set_keymap('n','<leader>fa', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", opts)
+  buf_set_keymap('n','<leader>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions({ timeout = 1000 })<CR>", opts)
+  buf_set_keymap('v', '<leader>car', "<cmd>lua require('telescope.builtin').lsp_range_code_actions({ timeout = 1000 })<CR>", opts)
+  -- buf_set_keymap('n', '<leader>fa', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
+  -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", opts) ]]
 
   mapper('n', '<space>cr', 'MyLspRename()')
   if client.renameProvider then
     -- buf_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n','<leader>rr', "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
   end
-
-  if client.documentFormattingProvider then
-    buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  elseif client.documentRangeFormattingProvider then
-    buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  
+  buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    
+  if client.documentRangeFormattingProvider then
+    buf_set_keymap('n','<leader>cF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
   -- Typescript

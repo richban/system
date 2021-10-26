@@ -116,11 +116,11 @@ return require('packer').startup {
     })
 
     -- Snippets
-    use({
-        'L3MON4D3/LuaSnip',
-        requires = {'rafamadriz/friendly-snippets'},
-        config = function() require('rb.plugins.snippets') end
-    })
+    -- use({
+    --     'L3MON4D3/LuaSnip',
+    --     requires = {'rafamadriz/friendly-snippets'},
+    --     config = function() require('rb.plugins.snippets') end
+    -- })
     use({'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'})
 
     -- use 'norcalli/snippets.nvim'
@@ -141,6 +141,7 @@ return require('packer').startup {
           { "hrsh7th/nvim-cmp" },
           { "hrsh7th/cmp-vsnip" },
           { "hrsh7th/vim-vsnip" },
+          { "hrsh7th/vim-vsnip-integ" },
           { "Saecki/crates.nvim" },
           { "f3fora/cmp-spell" },
         },
