@@ -53,15 +53,15 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 -- NVIM-TREE
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 
-vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}
+-- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}
 vim.g.nvim_tree_quit_on_open = 0
 vim.g.nvim_tree_git_hl = 0
-vim.g.nvim_tree_follow  = 1
-vim.g.nvim_tree_auto_open = 1
-vim.g.nvim_tree_auto_close = 0
+-- vim.g.nvim_tree_follow  = 1
+-- vim.g.nvim_tree_auto_open = 1
+-- vim.g.nvim_tree_auto_close = 0
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_lsp_diagnostics = 0
+-- vim.g.nvim_tree_lsp_diagnostics = 0
 
 vim.g.nvim_tree_show_icons = {
    git = 1,
@@ -105,7 +105,10 @@ vim.g.nvim_tree_bindings = {
       { key = "g?",                           cb = tree_cb("toggle_help") },
     }
 
+require'nvim-tree'.setup {}
+
 map('n','<leader>n', ':NvimTreeToggle<CR>')
+map('n','<leader>nr', ':NvimTreeRefresh<CR>')
 
 ---- GITGUTTER -------------------------------------------------------------
 
@@ -133,7 +136,7 @@ require('gitsigns').setup {
       ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
       ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-     
+
       ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
       ['n <leader>hS'] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
     },
@@ -154,7 +157,7 @@ require('gitsigns').setup {
     current_line_blame_formatter_opts = {
       relative_time = false
     },
-    
+
     sign_priority = 6,
     update_debounce = 100,
     status_formatter = nil, -- Use default
@@ -410,5 +413,25 @@ autopairs_completion.setup({
   map_char = { -- modifies the function or method delimiter by filetypes
     all = '(',
     tex = '{'
+  }
+})
+
+require('nvim-biscuits').setup({
+  default_config = {
+    max_length = 12,
+    min_distance = 5,
+    prefix_string = " 📎 "
+  },
+  language_config = {
+    html = {
+      prefix_string = " 🌐 "
+    },
+    javascript = {
+      prefix_string = " ✨ ",
+      max_length = 80
+    },
+    python = {
+      disabled = true
+    }
   }
 })

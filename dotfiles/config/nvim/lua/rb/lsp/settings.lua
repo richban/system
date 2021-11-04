@@ -202,7 +202,49 @@ local servers = {
     rust_analyzer = true,
     jsonls = {
       cmd = { "vscode-json-languageserver", "--stdio" },
-      filetypes = { "json" }
+      filetypes = { "json" },
+      schemas = {
+        {
+          fileMatch = {"package.json"},
+          url = "https://json.schemastore.org/package.json"
+        },
+        {
+          fileMatch = {"tsconfig*.json"},
+          url = "https://json.schemastore.org/tsconfig.json"
+        },
+        {
+          fileMatch = {
+            ".prettierrc",
+            ".prettierrc.json",
+            "prettier.config.json"
+          },
+          url = "https://json.schemastore.org/prettierrc.json"
+        },
+        {
+          fileMatch = {".eslintrc", ".eslintrc.json"},
+          url = "https://json.schemastore.org/eslintrc.json"
+        },
+        {
+          fileMatch = {".babelrc", ".babelrc.json", "babel.config.json"},
+          url = "https://json.schemastore.org/babelrc.json"
+        },
+        {
+          fileMatch = {"lerna.json"},
+          url = "https://json.schemastore.org/lerna.json"
+        },
+        {
+          fileMatch = {"now.json", "vercel.json"},
+          url = "https://json.schemastore.org/now.json"
+        },
+        {
+          fileMatch = {
+            ".stylelintrc",
+            ".stylelintrc.json",
+            "stylelint.config.json"
+          },
+          url = "http://json.schemastore.org/stylelintrc.json"
+        }
+      }
     },
     html = {
       cmd = { "html-languageserver", "--stdio"}
@@ -232,16 +274,22 @@ local servers = {
         plugins ={
             -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
             configurationSources = {"flake8"},
+            -- linter to detect various errors
             pyflakes = {enabled = false},
+            -- linter for docstring style checking
             pydocstyle = { enabled = true },
+            -- linter for style checking
             pycodestyle = { enabled = false },
             pylint = { enabled = false },
             black = {enabled = true},
+            -- type checking
             pylsp_mypy = {
                 enabled = true,
                 live_mode = true
             },
+            -- code formatting using isort
             pyls_isort = { enabled = true },
+            -- Error checking
             flake8 = {
               enabled = true,
               executable = "~/.pyenv/versions/neovim3/bin/flake8"

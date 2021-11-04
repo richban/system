@@ -204,6 +204,10 @@
 
 [pull]
   ff = only
+  rebase = True
+
+[branch]
+  autosetuprebase = always
 
 [fetch]
   prune = true

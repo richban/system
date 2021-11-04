@@ -53,6 +53,7 @@ return require('packer').startup {
     --   run = ':CHADdeps'
     -- }
 
+
     use 'liuchengxu/vista.vim'
 
 
@@ -84,6 +85,10 @@ return require('packer').startup {
         -- :TodoTelescope
       end
     }
+
+    -- in-editor annotations
+    -- use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
+    use 'code-biscuits/nvim-biscuits'
 
     -- dims inactive portions of the code you're editing
     use {
@@ -235,7 +240,6 @@ return require('packer').startup {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate'
     }
-    use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
 
     -- firenvim
     use {
