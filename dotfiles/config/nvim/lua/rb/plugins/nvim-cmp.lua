@@ -64,7 +64,7 @@ cmp.setup({
 	},
 	sources = {
 	-- order of the sources sets priority in the completion menu
-	{ name = 'luasnip' },
+	{ name = 'vsnip' },
 	{ name = "treesitter" },
 	{ name = 'nvim_lsp' },
 	{ name = 'nvim_lua' },

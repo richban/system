@@ -9,6 +9,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
 -- vim.cmd [[packadd packer.nvim]]
 end
 
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]])
 
 return require('packer').startup {
   function(use)
@@ -126,17 +132,19 @@ return require('packer').startup {
     --     requires = {'rafamadriz/friendly-snippets'},
     --     config = function() require('rb.plugins.snippets') end
     -- })
-    use({'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'})
+    -- use({'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp'})
 
     -- use 'norcalli/snippets.nvim'
     -- use 'hrsh7th/vim-vsnip'
     -- use 'hrsh7th/vim-vsnip-integ'
+
 
     -- Completion Engine
     use {
         'hrsh7th/nvim-cmp',
         config = function() require 'rb.plugins.nvim-cmp' end,
         event = 'InsertEnter',
+        opt = false,
         requires = {
           { "hrsh7th/cmp-buffer" },
           { "hrsh7th/cmp-nvim-lsp" },
@@ -151,6 +159,7 @@ return require('packer').startup {
           { "f3fora/cmp-spell" },
         },
     }
+
     -- Markdown Preview in the browser
     use {
         'iamcco/markdown-preview.nvim',
@@ -171,16 +180,21 @@ return require('packer').startup {
       "projekt0n/github-nvim-theme",
       after = "lualine.nvim",
       config = function()
-        require("github-theme").setup({
-          theme_style = "dark",
-          comment_style = "italic",
-          sidebars = {"qf", "vista_kind", "terminal", "packer"},
-          dark_sidebar = false,
-          -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-          colors = {hint = "orange", error = "#ff0000"}
-        })
+        -- require("github-theme").setup({
+        --   theme_style = "dark",
+        --   comment_style = "italic",
+        --   sidebars = {"qf", "vista_kind", "terminal", "packer"},
+        --   dark_sidebar = false,
+        --   -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+        --   colors = {hint = "orange", error = "#ff0000"}
+        -- })
       end
     }
+
+
+    use 'dracula/vim'
+    use 'Mofiqul/dracula.nvim'
+
     -- use 'marko-cerovac/material.nvim'
     -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
     -- use 'pineapplegiant/spaceduck'
@@ -248,5 +262,14 @@ return require('packer').startup {
         vim.fn['firenvim#install'](1)
       end
     }
-  end
+  end,
+  config = {
+    profile = {
+      enable = true,
+      threshold = 1 -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    },
+    display = {
+      open_fn = require("packer.util").float,
+    },
+  }
 }

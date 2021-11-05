@@ -53,15 +53,10 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 -- NVIM-TREE
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 
--- vim.g.nvim_tree_ignore = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}
 vim.g.nvim_tree_quit_on_open = 0
 vim.g.nvim_tree_git_hl = 0
--- vim.g.nvim_tree_follow  = 1
--- vim.g.nvim_tree_auto_open = 1
--- vim.g.nvim_tree_auto_close = 0
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_group_empty = 1
--- vim.g.nvim_tree_lsp_diagnostics = 0
 
 vim.g.nvim_tree_show_icons = {
    git = 1,
@@ -71,7 +66,7 @@ vim.g.nvim_tree_show_icons = {
 }
 
 
-vim.g.nvim_tree_bindings = {
+local nvim_tree_bindings = {
       { key = "a",                            cb = tree_cb("create") },
       { key = "d",                            cb = tree_cb("remove") },
       { key = "x",                            cb = tree_cb("cut") },
@@ -105,7 +100,27 @@ vim.g.nvim_tree_bindings = {
       { key = "g?",                           cb = tree_cb("toggle_help") },
     }
 
-require'nvim-tree'.setup {}
+require'nvim-tree'.setup {
+  diagnostics = {
+    enable = true,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    }
+  },
+  view = {
+    mappings = {
+      custom_only = false,
+      list = nvim_tree_bindings
+    }
+  },
+  filters = {
+    dotfiles = false,
+    custom = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}
+  }
+}
 
 map('n','<leader>n', ':NvimTreeToggle<CR>')
 map('n','<leader>nr', ':NvimTreeRefresh<CR>')
@@ -385,7 +400,7 @@ require("nvim-treesitter.configs").setup {
   },
 }
 
----- FUNCTIONS ------------------------------------------------------------------
+---- FUNCTIONS -----------------------------------------------------------------
 
 local result = vim.api.nvim_exec([[
   fun! TrimWhitespace()
@@ -395,26 +410,21 @@ local result = vim.api.nvim_exec([[
   endfun
 ]], true)
 
----- AUTOPAIRS ------------------------------------------------------------------
+---- AUTOPAIRS -----------------------------------------------------------------
 
-local present1, autopairs = pcall(require, 'nvim-autopairs')
-local present2, autopairs_completion = pcall(require, 'nvim-autopairs.completion.cmp')
+require('nvim-autopairs').setup{}
 
-if not (present1 or present2) then
-	return
-end
+-- If you want insert `(` after select function or method item
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
-autopairs.setup()
-autopairs_completion.setup({
-  map_cr = true, --  map <CR> on insert mode
-  map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-  auto_select = true, -- automatically select the first item
-  insert = false, -- use insert confirm behavior instead of replace
-  map_char = { -- modifies the function or method delimiter by filetypes
-    all = '(',
-    tex = '{'
-  }
-})
+-- add a lisp filetype (wrap my-function), FYI: Hardcoded = { "clojure", "clojurescript", "fennel", "janet" }
+cmp_autopairs.lisp[#cmp_autopairs.lisp+1] = "racket"
+
+
+
+---- ANNOTATIONS ---------------------------------------------------------------
 
 require('nvim-biscuits').setup({
   default_config = {

@@ -41,7 +41,7 @@ local config = {
       -- Disable sections and component separators
       component_separators = {'', ''},
       section_separators = {'', ''},
-      theme = "github",
+      theme = "dracula-nvim",
       icons_enabled = true,
     },
     sections = {
@@ -58,7 +58,7 @@ local config = {
 local function ins_left(component)
     table.insert(config.sections.lualine_c, component)
 end
-  
+
 -- Inserts a component in lualine_x ot right section
 local function ins_right(component)
     table.insert(config.sections.lualine_x, component)
@@ -138,7 +138,7 @@ ins_right {
     condition = conditions.hide_in_width,
     -- color = {fg = colors.green, gui = 'bold'}
 }
-  
+
 ins_right {
     'fileformat',
     upper = true,
