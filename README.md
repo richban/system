@@ -1,7 +1,5 @@
-# .dotfiles
-.dotfiles &amp; Automated Configuration
+<h1 align="center">
+    <code>.dotfiles</code>
+</h1>
 
-# TODO
-
-- [] Fix `security.sh` copying keys to remote host
-- [] don't ask for sudo privileges when running `actions`
+![terminal](static/img/terminal.png)
