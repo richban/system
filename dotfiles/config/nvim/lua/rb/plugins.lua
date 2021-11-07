@@ -92,6 +92,8 @@ return require('packer').startup {
       end
     }
 
+    use 'kristijanhusak/vim-carbon-now-sh'
+
     -- in-editor annotations
     -- use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
     use 'code-biscuits/nvim-biscuits'

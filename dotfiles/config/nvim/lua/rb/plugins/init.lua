@@ -102,7 +102,7 @@ local nvim_tree_bindings = {
 
 require'nvim-tree'.setup {
   diagnostics = {
-    enable = true,
+    enable = false,
     icons = {
       hint = "",
       info = "",
@@ -110,12 +110,12 @@ require'nvim-tree'.setup {
       error = "",
     }
   },
-  view = {
-    mappings = {
-      custom_only = false,
-      list = nvim_tree_bindings
-    }
-  },
+  -- view = {
+  --   mappings = {
+  --     custom_only = false,
+  --     list = nvim_tree_bindings
+  --   }
+  -- },
   filters = {
     dotfiles = false,
     custom = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}

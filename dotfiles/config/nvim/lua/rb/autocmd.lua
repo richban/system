@@ -6,7 +6,7 @@ function autocmd.setup()
             {'BufNewFile,BufRead', '*.jsx', 'set filetype=javascript.jsx'},
             {'BufNewFile,BufRead', ' *.tsx', 'set filetype=typescript.tsx'},
             {'BufNew,BufEnter', '*.md,*.markdown,*.wiki', 'set conceallevel=0'},
-            {'BufNew,BufEnter', '*.html,*.css', 'execute "IndentLinesToggle"'},
+            -- {'BufNew,BufEnter', '*.html,*.css', 'execute "IndentLinesToggle"'},
             {'TextYankPost', '*', 'lua vim.highlight.on_yank()'},
             -- {'User LspDiagnosticsChanged', '', 'call lightline#update()'},
             -- {'User LspMessageUpdate', '', 'call lightline#update()'},
