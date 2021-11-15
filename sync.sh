@@ -5,6 +5,7 @@ gstatus=`git status --porcelain`
 if [ ${#gstatus} -ne 0 ]; then
 	git pull
 	git add --all
-	git commit -q -m "Last Sync: $gstatus\n"
+	git commit -q -m "Last Sync:
+  $gstatus"
 	git push
 fi
