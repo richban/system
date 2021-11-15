@@ -4,6 +4,7 @@ tap "homebrew/cask"
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "hashicorp/tap"
+tap "universal-ctags/universal-ctags"
 cask_args appdir: "/Applications"
 
 # ------------------------------ DATABASE -------------------------------------
@@ -66,6 +67,7 @@ brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
 brew "git-delta"
 brew "starship"
+brew "--HEAD universal-ctags/universal-ctags/universal-ctags"
 
 # ------------------------------ FONTS ----------------------------------------
 

@@ -41,7 +41,9 @@ function M.set(client)
   buf_set_keymap('n','<leader>Li', ':LspInfo()<CR>', opts)
 
 
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
+  mapper('n', 'gd', 'vim.lsp.buf.definition()')
+  
   if client.definitionProvider then
     buf_set_keymap('n', 'gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
     buf_set_keymap('n','gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
@@ -53,7 +55,7 @@ function M.set(client)
 
   if client.referencesProvider then
     -- buf_set_keymap('n','<leader>tr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n','<leader>gR', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
+    buf_set_keymap('n','<leader>gr', "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
   end
 
   -- buf_set_keymap('n','<leader>fa', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)

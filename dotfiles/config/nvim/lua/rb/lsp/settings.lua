@@ -4,9 +4,9 @@ local diagnostics  = require('rb.lsp.diagnostics')
 local mappings  = require('rb.lsp.mappings')
 local configs = require('lspconfig/configs')
 
--- for debugging lsp
+-- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
-vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("error")
 
 -- LSP Saga config https://github.com/glepnir/lspsaga.nvim
 local saga = require 'lspsaga'
