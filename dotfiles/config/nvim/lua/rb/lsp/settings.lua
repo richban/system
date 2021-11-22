@@ -6,7 +6,7 @@ local configs = require('lspconfig/configs')
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
-vim.lsp.set_log_level("error")
+vim.lsp.set_log_level("debug")
 
 -- LSP Saga config https://github.com/glepnir/lspsaga.nvim
 local saga = require 'lspsaga'

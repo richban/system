@@ -6,6 +6,7 @@ function M.set(client)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
   local opts = { noremap=true, silent=true }
 
+
   local mapper = function(mode, key, result)
     vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua " .. result .. "<CR>", {noremap = true, silent = true})
   end
@@ -43,7 +44,7 @@ function M.set(client)
 
   buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
   mapper('n', 'gd', 'vim.lsp.buf.definition()')
-  
+
   if client.definitionProvider then
     buf_set_keymap('n', 'gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
     buf_set_keymap('n','gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
@@ -70,11 +71,11 @@ function M.set(client)
     -- buf_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n','<leader>rr', "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
   end
-  
-  buf_set_keymap('n','<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    
+
+  buf_set_keymap('n','<leader>bf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
   if client.documentRangeFormattingProvider then
-    buf_set_keymap('n','<leader>cF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n','<leader>bF', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   end
 
   -- Typescript

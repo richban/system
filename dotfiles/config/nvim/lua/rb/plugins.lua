@@ -96,7 +96,7 @@ return require('packer').startup {
 
     -- in-editor annotations
     -- use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
-    use 'code-biscuits/nvim-biscuits'
+    -- use { 'code-biscuits/nvim-biscuits', disable = true }
 
     -- dims inactive portions of the code you're editing
     use {
@@ -126,6 +126,7 @@ return require('packer').startup {
     use({
         'windwp/nvim-autopairs',
         after = 'nvim-cmp',
+        disable = true
     })
 
     -- Snippets
