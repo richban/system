@@ -43,7 +43,6 @@ function M.set(client)
 
 
   buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
-  mapper('n', 'gd', 'vim.lsp.buf.definition()')
 
   if client.definitionProvider then
     buf_set_keymap('n', 'gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)

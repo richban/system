@@ -269,7 +269,8 @@ local servers = {
         },
     },
     pylsp = {
-        -- cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
+        cmd = { path_join(os.getenv("HOME"), ".config/run_pyls_with_venv.sh") },
+        -- cmd = { path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/pylsp") },
         root_dir = project_root_or_cur_dir,
         plugins ={
             -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
