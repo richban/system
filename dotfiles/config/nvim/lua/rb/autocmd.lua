@@ -24,7 +24,7 @@ function autocmd.setup()
     }
 
 
-    -- go to last location when opening a buffer
+    -- go to last location when openingna buffer
     vim.cmd [[
         autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
     ]]
@@ -39,6 +39,10 @@ function autocmd.setup()
     ]],
         false
     )
+
+
+    -- vimdows to close with 'q'
+    vim.cmd [[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer><silent> q :close<CR>]]
 
 
     nvim_create_augroups(definitions)

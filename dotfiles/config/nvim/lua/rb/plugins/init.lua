@@ -118,7 +118,11 @@ require'nvim-tree'.setup {
   -- },
   filters = {
     dotfiles = false,
-    custom = {'.git', 'node_modules', '.cache', '.DS_Store', '.vscode'}
+    custom = {
+      '.git', 'node_modules', '.cache', '.DS_Store', '.vscode', '__pycache__',
+      '__pypackages__', '*.pyc', '*~', '.ropeproject', '.hg', '.svn', '_svn',
+      '.tox', '.pytest_cache', '.benchmarks', '.venv', 'venv'
+    }
   }
 }
 
@@ -265,11 +269,17 @@ vim.opt.list = true
 vim.opt.listchars = {
     space = "⋅",
     eol = "↴",
+    trail = ""
 }
 
 require("indent_blankline").setup {
     space_char_blankline = " ",
+    show_end_of_line = true,
     show_current_context = true,
+    show_current_context_start = true,
+    use_treesitter = true,
+    enabled = true,
+    buftype_exclude = { "terminal", "help", "telescope", "NvimTree", "Startify" },
 }
 
 ---- PYTHON ------------------------------------------------------------------
@@ -430,7 +440,8 @@ require('nvim-biscuits').setup({
   default_config = {
     max_length = 12,
     min_distance = 5,
-    prefix_string = " 🌜 "
+    -- prefix_string = " 🌜 "
+    prefix_string = ""
   },
   language_config = {
     html = {

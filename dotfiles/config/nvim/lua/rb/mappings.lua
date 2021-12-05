@@ -39,6 +39,14 @@ function mappings.setup()
     map('n','<leader>V', ':Vista<CR>')
     -- " Send cell to IronRepl and move to next cell.
     map('n', ']x', 'ctrih/^# %%<CR><CR>')
+    -- write all and quit
+    vim.api.nvim_set_keymap("n", "<Leader>W", ":wqall<CR>", { noremap = true, silent = true })
+
+    vim.api.nvim_set_keymap("n", "<space>t", ":TSHighlightCapturesUnderCursor<CR>", { noremap = true, silent = true })
+    -- open quickfix / close
+    vim.api.nvim_set_keymap("n", "<leader>co", ":cope<cr>", { noremap = false, silent = true })
+    vim.api.nvim_set_keymap("n", "<leader>cl", ":cclose<cr>", { noremap = false, silent = true })
+
 end
 
 return mappings
