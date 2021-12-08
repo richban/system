@@ -1,12 +1,12 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
--- Only required if you have packer configured as `opt`
--- vim.cmd [[packadd packer.nvim]]
+  execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  -- Only required if you have packer configured as `opt`
+  -- vim.cmd [[packadd packer.nvim]]
 end
 
 vim.cmd([[
@@ -28,44 +28,46 @@ return require('packer').startup {
     use {'wbthomason/packer.nvim'}
 
     -- fzf
-    use {'junegunn/fzf', run = './install --all' }
+    use {'junegunn/fzf', run = './install --all'}
     use {'junegunn/fzf.vim'}
     use 'ojroques/nvim-lspfuzzy'
 
     -- git
     use 'tpope/vim-fugitive'
-    use {
-      'lewis6991/gitsigns.nvim',
-      requires = {
-        'nvim-lua/plenary.nvim'
-      },
-    }
+    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
 
     -- Github integration
     use {
-        'pwntester/octo.nvim',
-        -- cmd = { 'Octo' },
-      }
+      'pwntester/octo.nvim'
+      -- cmd = { 'Octo' },
+    }
 
     -- File Manager
-    use {
-      'kyazdani42/nvim-tree.lua',
-      requires = 'kyazdani42/nvim-web-devicons'
-    }
+    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
+
+    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
 
     -- use {
     --   'ms-jpq/chadtree',
     --   branch = 'chad',
     --   run = ':CHADdeps'
     -- }
+    --
 
+    use {
+      "terrortylor/nvim-comment",
+      config = function()
+        require('nvim_comment').setup()
+      end
+    }
 
     use 'liuchengxu/vista.vim'
-
+    use 'lukas-reineke/format.nvim'
 
     -- Utils
     use 'tweekmonster/startuptime.vim'
-    use 'mhinz/vim-startify'
+    -- use 'mhinz/vim-startify'
+    use 'glepnir/dashboard-nvim'
     use 'editorconfig/editorconfig-vim'
     use 'christoomey/vim-tmux-navigator'
     use 'antoinemadec/FixCursorHold.nvim' -- Fix CursorHold Performance
@@ -96,7 +98,7 @@ return require('packer').startup {
 
     -- in-editor annotations
     -- use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
-    -- use { 'code-biscuits/nvim-biscuits', disable = true }
+    use {'code-biscuits/nvim-biscuits', disable = false}
 
     -- dims inactive portions of the code you're editing
     use {
@@ -110,7 +112,7 @@ return require('packer').startup {
       end
     }
 
-    use { 'lukas-reineke/indent-blankline.nvim' }
+    use {'lukas-reineke/indent-blankline.nvim'}
 
     -- Motion
     use 'karb94/neoscroll.nvim'
@@ -120,14 +122,10 @@ return require('packer').startup {
     use 'Raimondi/delimitMate'
     use 'godlygeek/tabular'
     use 'justinmk/vim-sneak'
-    use 'tpope/vim-commentary'
+    -- use 'tpope/vim-commentary'
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
-    use({
-        'windwp/nvim-autopairs',
-        after = 'nvim-cmp',
-        disable = true
-    })
+    use({'windwp/nvim-autopairs', disable = false})
 
     -- Snippets
     -- use({
@@ -141,41 +139,31 @@ return require('packer').startup {
     -- use 'hrsh7th/vim-vsnip'
     -- use 'hrsh7th/vim-vsnip-integ'
 
-
     -- Completion Engine
     use {
-        'hrsh7th/nvim-cmp',
-        config = function() require 'rb.plugins.nvim-cmp' end,
-        event = 'InsertEnter',
-        opt = false,
-        requires = {
-          { "hrsh7th/cmp-buffer" },
-          { "hrsh7th/cmp-nvim-lsp" },
-          { "hrsh7th/cmp-path" },
-          { "hrsh7th/cmp-nvim-lua" },
-          { "ray-x/cmp-treesitter" },
-          { "hrsh7th/nvim-cmp" },
-          { "hrsh7th/cmp-vsnip" },
-          { "hrsh7th/vim-vsnip" },
-          { "hrsh7th/vim-vsnip-integ" },
-          { "Saecki/crates.nvim" },
-          { "f3fora/cmp-spell" },
-        },
+      'hrsh7th/nvim-cmp',
+      config = function()
+        require 'rb.plugins.nvim-cmp'
+      end,
+      -- event = 'InsertEnter',
+      opt = false,
+      requires = {
+        {"hrsh7th/cmp-buffer"}, {"hrsh7th/cmp-nvim-lsp"}, {"hrsh7th/cmp-path"}, {"hrsh7th/cmp-nvim-lua"}, {"ray-x/cmp-treesitter"},
+        {"hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-vsnip"}, {"hrsh7th/vim-vsnip"}, {"hrsh7th/vim-vsnip-integ"}, {"Saecki/crates.nvim"}, {"f3fora/cmp-spell"}
+      }
     }
 
     -- Markdown Preview in the browser
-    use {
-        'iamcco/markdown-preview.nvim',
-        run = 'cd app && yarn install',
-        cmd = 'MarkdownPreview'
-    }
+    use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
     use 'junegunn/goyo.vim'
 
     -- Status line
     use {
       'hoob3rt/lualine.nvim',
       requires = {'kyazdani42/nvim-web-devicons'},
-      config = function() require "rb.plugins.statusline" end
+      config = function()
+        require "rb.plugins.statusline"
+      end
     }
 
     -- Themes
@@ -193,7 +181,6 @@ return require('packer').startup {
         -- })
       end
     }
-
 
     use 'dracula/vim'
     use 'Mofiqul/dracula.nvim'
@@ -221,21 +208,17 @@ return require('packer').startup {
     use 'bfredl/nvim-ipy'
     use 'hkupty/iron.nvim'
     use 'Vimjas/vim-python-pep8-indent'
-    use {
-      'heavenshell/vim-pydocstring',
-      run = 'make install'
-    }
+    use {'heavenshell/vim-pydocstring', run = 'make install'}
     -- use 'untitled-ai/jupyter_ascending.vim'
     -- use 'GCBallesteros/jupytext.vim'
     -- use 'kana/vim-textobj-line'
     -- use 'kana/vim-textobj-user'
     -- use 'GCBallesteros/vim-textobj-hydrogen'
 
-
     -- Telescope
     use 'nvim-lua/popup.nvim'
     use 'nvim-telescope/telescope.nvim'
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
     use 'nvim-telescope/telescope-fzf-writer.nvim'
     use 'nvim-telescope/telescope-packer.nvim'
     use 'nvim-telescope/telescope-cheat.nvim'
@@ -249,14 +232,14 @@ return require('packer').startup {
       end
     }
 
+    -- jump around the repositories in your filesystem
+    use 'cljoly/telescope-repo.nvim'
+
     -- SQL
     use 'tami5/sql.nvim'
 
     -- Treesitter
-    use {
-      'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate'
-    }
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
     -- firenvim
     use {
@@ -271,8 +254,6 @@ return require('packer').startup {
       enable = true,
       threshold = 1 -- the amount in ms that a plugins load time must be over for it to be included in the profile
     },
-    display = {
-      open_fn = require("packer.util").float,
-    },
+    display = {open_fn = require("packer.util").float}
   }
 }

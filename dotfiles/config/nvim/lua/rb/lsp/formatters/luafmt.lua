@@ -1,8 +1,7 @@
--- npm i lua-fmt
-
-local luafmt = {
-  formatCommand = "luafmt ${-i:tabWidth} --stdin",
+-- paru -S lua-format-git
+local luaformat = {
+  formatCommand = 'lua-format -i --indent-width=2 --tab-width=2',
   formatStdin = true
 }
 
-return luafmt
+return luaformat

@@ -68,6 +68,9 @@ brew "hashicorp/tap/terraform-ls"
 brew "git-delta"
 brew "starship"
 brew "--HEAD universal-ctags/universal-ctags/universal-ctags"
+brew "glow"
+brew "zoxide"
+brew "fd"
 
 # ------------------------------ FONTS ----------------------------------------
 

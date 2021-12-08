@@ -49,14 +49,14 @@ require("telescope").setup {
       initial_mode = "insert",
       selection_strategy = "reset",
       sorting_strategy = "descending",
-      
+
       layout_strategy = "horizontal",
       layout_config = {
         width = 0.95,
         height = 0.85,
         -- preview_cutoff = 120,
         prompt_position = "bottom",
-  
+
         horizontal = {
           -- width_padding = 0.1,
           -- height_padding = 0.1,
@@ -68,7 +68,7 @@ require("telescope").setup {
             end
           end,
         },
-  
+
         vertical = {
           -- width_padding = 0.05,
           -- height_padding = 1,
@@ -76,7 +76,7 @@ require("telescope").setup {
           height = 0.95,
           preview_height = 0.5,
         },
-  
+
         flex = {
           horizontal = {
             preview_width = 0.9,
@@ -94,7 +94,7 @@ require("telescope").setup {
       color_devicons = true,
       use_less = true,
       set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-      
+
       file_previewer = require('telescope.previewers').vim_buffer_cat.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_cat.new`
       grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_vimgrep.new`
       qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
@@ -182,6 +182,10 @@ function M.git_commits()
   require("telescope.builtin").git_commits {
     winblend = 5,
   }
+end
+
+function M.git_repos()
+  require'telescope'.extensions.repo.list{}
 end
 
 function M.edit_neovim()

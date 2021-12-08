@@ -9,4 +9,4 @@ local eslint = {
     formatStdin = true
   }
   
-  return eslint
+return eslint

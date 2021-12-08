@@ -51,20 +51,21 @@ map_tele('<leader>f/', 'grep_last_search', {
 
 -- Files
 map_tele('<C-p>', 'git_files')
-map_tele('<leader>fg', 'live_grep')
-map_tele('<leader>fd', 'fd')
-map_tele('<leader>fa', 'search_all_files')
-map_tele('<leader>fe', 'file_explorer')
-map_tele('<leader>fm', 'media_files')
+map_tele('<leader>bg', 'live_grep')
+map_tele('<leader>ed', 'fd')
+map_tele('<leader>ea', 'search_all_files')
+map_tele('<leader>e', 'file_explorer')
+map_tele('<leader>em', 'media_files')
 
 -- Nvim
-map_tele('<leader>fb', 'buffers')
-map_tele('<leader>ip', 'installed_plugins')
-map_tele('<leader>ff', 'curbuf')
-map_tele('<leader>fh', 'help_tags')
+map_tele('<leader>eb', 'buffers')
+map_tele('<leader>ep', 'installed_plugins')
+map_tele('<leader>bf', 'curbuf')
+map_tele('<leader>th', 'help_tags')
 
 -- Git
 -- map_tele("<space>gs", "git_status")
+map_tele("<space>er", "git_repos")
 map_tele("<space>gc", "git_commits")
 map_tele("<space>gb", "git_branches")
 

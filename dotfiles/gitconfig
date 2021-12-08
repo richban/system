@@ -1,7 +1,6 @@
 [user]
-  name = richban
+	name = richban
 	email = rbanyi@me.com
-	signingkey = 93D5B2A60893E8E9
 
 [github]
   user = richban
@@ -246,3 +245,5 @@
   insteadOf = https://github.com/
 [commit]
 	gpgsign = true
+[gpg]
+	program = gpg
