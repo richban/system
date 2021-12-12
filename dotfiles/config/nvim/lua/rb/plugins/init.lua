@@ -79,8 +79,8 @@ require'nvim-tree'.setup {
   filters = {
     dotfiles = false,
     custom = {
-      '.git', 'node_modules', '.cache', '.DS_Store', '.vscode', '__pycache__', '__pypackages__', '*.pyc', '*~', '.ropeproject', '.hg', '.svn', '_svn',
-      '.tox', '.pytest_cache', '.benchmarks', '.venv', 'venv'
+      '.git', 'node_modules', '.cache', '.DS_Store', '.vscode', '__pycache__', '*.pyc', '*~', '.ropeproject', '.hg', '.svn', '_svn', '.tox',
+      '.pytest_cache', '.benchmarks', '.venv', 'venv'
     }
   }
 }
@@ -342,10 +342,10 @@ local result = vim.api.nvim_exec([[
 
 ---- AUTOPAIRS -----------------------------------------------------------------
 
-require('nvim-autopairs').setup({check_ts = true})
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp = require('cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({map_char = {tex = ''}}))
+-- require('nvim-autopairs').setup({check_ts = true})
+-- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+-- local cmp = require('cmp')
+-- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({map_char = {tex = ''}}))
 
 ---- ANNOTATIONS ---------------------------------------------------------------
 
@@ -389,7 +389,11 @@ vim.g.dashboard_custom_section = {
 }
 vim.g.dashboard_custom_footer = {'Do one thing, do it well - Unix Philosophy'}
 
+---- FORMATTER -----------------------------------------------------------------
+
 require('rb.plugins.formatter')
+
+---- BUFFERLINE ----------------------------------------------------------------
 
 require("bufferline").setup {}
 vim.cmd [[
