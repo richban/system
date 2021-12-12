@@ -1,12 +1,11 @@
 ---- JUPYTEXT -----------------------------------------------------------------
-
 vim.g.jupytext_fmt = 'py'
 vim.g.jupytext_style = 'hydrogen'
 
 ---- JUPYTER ASCENDING --------------------------------------------------------
 
-vim.cmd[[ nnoremap <silent><c-x> <Plug>JupyterExecute ]]
-vim.cmd[[ nnoremap <silent><c-X> <Plug>JupyterExecuteAll ]]
+vim.cmd [[ nnoremap <silent><c-x> <Plug>JupyterExecute ]]
+vim.cmd [[ nnoremap <silent><c-X> <Plug>JupyterExecuteAll ]]
 
 ---- NVIM-IPY -----------------------------------------------------------------
 
@@ -20,19 +19,9 @@ vim.cmd [[map <leader>rc <Plug>(IPy-RunCell)]]
 
 local iron = require('iron')
 
-iron.core.add_repl_definitions {
-  python = {
-    venv_python = {
-      command =  "pipenv run ipython"
-    }
-  }
-}
+iron.core.add_repl_definitions {python = {venv_python = {command = "pipenv run ipython"}}}
 
-iron.core.set_config {
-  preferred = {
-    python = "venv_python",
-  }
-}
+iron.core.set_config {preferred = {python = "venv_python"}}
 
 -- vim.cmd [[nnoremap <silent><c-v> <Plug>(iron-visual-send)]]
 -- vim.cmd [[nnoremap <C-l> <Plug>(iron-send-line)]]

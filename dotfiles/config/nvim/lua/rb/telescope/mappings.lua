@@ -1,6 +1,4 @@
-if not pcall(require, 'telescope') then
-  return
-end
+if not pcall(require, 'telescope') then return end
 
 local sorters = require('telescope.sorters')
 
@@ -12,16 +10,9 @@ local map_tele = function(key, f, options, buffer)
   TelescopeMapArgs[map_key] = options or {}
 
   local mode = "n"
-  local rhs = string.format(
-    "<cmd>lua R('rb.telescope')['%s'](TelescopeMapArgs['%s'])<CR>",
-    f,
-    map_key
-  )
+  local rhs = string.format("<cmd>lua R('rb.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
-  local map_options = {
-    noremap = true,
-    silent = true,
-  }
+  local map_options = {noremap = true, silent = true}
 
   if not buffer then
     vim.api.nvim_set_keymap(mode, key, rhs, map_options)
@@ -30,24 +21,16 @@ local map_tele = function(key, f, options, buffer)
   end
 end
 
-vim.api.nvim_set_keymap('c', '<c-r><c-r>', '<Plug>(TelescopeFuzzyCommandSearch)', { noremap = false, nowait = true })
+vim.api.nvim_set_keymap('c', '<c-r><c-r>', '<Plug>(TelescopeFuzzyCommandSearch)', {noremap = false, nowait = true})
 
 -- Dotfiles
 map_tele('<leader>en', 'edit_neovim')
 map_tele('<leader>ec', 'find_configs')
 
-
 -- Search
-map_tele('<leader>gw', 'grep_string', {
-  short_path = true,
-  word_match = '-w',
-  only_sort_text = true,
-  layout_strategy = 'vertical',
-  sorter = sorters.get_fzy_sorter(),
-})
-map_tele('<leader>f/', 'grep_last_search', {
-  layout_strategy = 'vertical',
-})
+map_tele('<leader>gw', 'grep_string',
+         {short_path = true, word_match = '-w', only_sort_text = true, layout_strategy = 'vertical', sorter = sorters.get_fzy_sorter()})
+map_tele('<leader>f/', 'grep_last_search', {layout_strategy = 'vertical'})
 
 -- Files
 map_tele('<C-p>', 'git_files')
@@ -84,6 +67,5 @@ map_tele('<leader>fB', 'builtin')
 map_tele('<leader>gn', 'grep_notes')
 map_tele('<leader>nf', 'find_notes')
 map_tele('<leader>ne', 'browse_notes')
-
 
 return map_tele
