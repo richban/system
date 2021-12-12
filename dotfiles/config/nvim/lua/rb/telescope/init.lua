@@ -1,5 +1,3 @@
-if not pcall(require, 'telescope') then return end
-
 local should_reload = true
 local reloader = function()
   if should_reload then
@@ -14,7 +12,6 @@ reloader()
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local action_mt = require "telescope.actions.mt"
-local sorters = require "telescope.sorters"
 local themes = require "telescope.themes"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
@@ -29,10 +26,8 @@ require("telescope").setup {
     timeoutlen = 2000,
     mappings = {i = {["<esc>"] = actions.close}},
     vimgrep_arguments = {'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'},
-
-    prompt_prefix = '❯ ',
-    selection_caret = '❯ ',
-
+    prompt_prefix = " ",
+    selection_caret = " ",
     initial_mode = "insert",
     selection_strategy = "reset",
     sorting_strategy = "descending",
@@ -41,9 +36,8 @@ require("telescope").setup {
     layout_config = {
       width = 0.95,
       height = 0.85,
-      -- preview_cutoff = 120,
-      prompt_position = "bottom",
-
+      preview_cutoff = 120,
+      prompt_position = "top",
       horizontal = {
         -- width_padding = 0.1,
         -- height_padding = 0.1,
@@ -67,7 +61,7 @@ require("telescope").setup {
       flex = {horizontal = {preview_width = 0.9}}
     },
 
-    file_sorter = sorters.get_fzy_sorter,
+    file_sorter = require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {
       ".backup", ".swap", ".langsevers", ".session", ".undo", "*.git", "node_modules", "vendor", ".vscode-server", ".Desktop", ".Documents", "classes"
     },
@@ -101,7 +95,7 @@ require("telescope").setup {
     media_files = {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = {"png", "webp", "jpg", "jpeg"},
+      filetypes = {"png", "webp", "jpg", "jpeg", "mp4", "pdf"},
       find_cmd = "rg" -- find command (defaults to `fd`)
     },
     fzf_writer = {use_highlighter = false, minimum_grep_characters = 6},
