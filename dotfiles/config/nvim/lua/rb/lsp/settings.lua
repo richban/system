@@ -6,18 +6,7 @@ local configs = require('lspconfig/configs')
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
-vim.lsp.set_log_level("debug")
-
--- LSP Saga config https://github.com/glepnir/lspsaga.nvim
-local saga = require 'lspsaga'
-
-saga.init_lsp_saga {
-  use_saga_diagnostic_sign = false,
-  finder_definition_icon = ' ',
-  finder_reference_icon = ' ',
-  rename_prompt_prefix = '',
-  code_action_prompt = {enable = false}
-}
+vim.lsp.set_log_level("error")
 
 -- Adds beautiful icon to completion
 require'lspkind'.init()
@@ -187,7 +176,7 @@ local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-lang
 
 local servers = {
   -- efm = require('rb.lsp.efm')(),
-  -- diagnosticls = diagnostics.options,
+  diagnosticls = diagnostics.options,
   bashls = true,
   vimls = true,
   dockerls = true,
