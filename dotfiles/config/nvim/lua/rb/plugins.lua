@@ -198,7 +198,7 @@ return require('packer').startup {
 
     -- LSP
     use 'neovim/nvim-lspconfig'
-    use 'tamir5/lspsaga.nvim'
+    use 'tami5/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'

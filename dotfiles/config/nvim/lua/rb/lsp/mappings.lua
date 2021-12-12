@@ -15,23 +15,23 @@ function M.set(client)
   -- install servers
   buf_set_keymap('n', '<leader>lsp', "<cmd>lua require('rb.lsp.install_servers').lsp_install_servers()<CR>", opts)
   -- gives definition & references
-  buf_set_keymap('n', '<leader>gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
+  buf_set_keymap('n', '<leader>gr', "<cmd>Lspsaga lsp_finder<CR>", opts)
 
   -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   -- buf_set_keymap('n','<leader>th', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<leader>H', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
-  buf_set_keymap('n', '<leader>gs', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
+  buf_set_keymap('n', '<leader>H', "<cmd>Lspsaga hover_doc<CR>", opts)
+  buf_set_keymap('n', '<leader>gs', "<cmd>Lspsaga signature_help<CR>", opts)
 
   -- Diagnostic
   -- buf_set_keymap('n','<leader>fe', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   -- buf_set_keymap('n','<leader>fe', '<cmd>:LspDiagnostics 0<CR>', opts)
   buf_set_keymap('n', '<leader>dd', "<cmd>lua require('rb.lsp.functions').show_diagnostics()<CR>", opts)
   -- buf_set_keymap('n','<leader>fE', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '<leader>d', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
+  buf_set_keymap('n', '<leader>d', "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
   -- buf_set_keymap('n','[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   -- buf_set_keymap('n',']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '[d', "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>", opts)
-  buf_set_keymap('n', ']d', "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>", opts);
+  buf_set_keymap('n', '[d', "<cmd><Lspsaga diagnostic_jump_prev<CR>", opts)
+  buf_set_keymap('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", opts);
 
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -45,7 +45,7 @@ function M.set(client)
   buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 
   if client.definitionProvider then
-    buf_set_keymap('n', 'gD', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    buf_set_keymap('n', 'gD', "<cmd>Lspsaga preview_definition<CR>", opts)
     buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   end
 
@@ -60,13 +60,13 @@ function M.set(client)
   -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>", opts)
   buf_set_keymap('n', '<leader>ca', "<cmd>lua require('telescope.builtin').lsp_code_actions({ timeout = 1000 })<CR>", opts)
   buf_set_keymap('v', '<leader>car', "<cmd>lua require('telescope.builtin').lsp_range_code_actions({ timeout = 1000 })<CR>", opts)
-  -- buf_set_keymap('n', '<leader>fa', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
+  buf_set_keymap('n', 'gx', "<cmd>Lspsaga code_action<CR>", opts)
   -- buf_set_keymap('v', '<leader>fa', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", opts) ]]
 
   mapper('n', '<space>cr', 'MyLspRename()')
   if client.renameProvider then
     -- buf_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<leader>rr', "<cmd>lua require('lspsaga.rename').rename()<CR>", opts)
+    buf_set_keymap('n', '<leader>rr', "<cmd>Lspsaga rename<CR>", opts)
   end
 
   buf_set_keymap('n', '<leader>bf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)

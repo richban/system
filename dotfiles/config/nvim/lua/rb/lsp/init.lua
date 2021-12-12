@@ -1,5 +1,4 @@
--- require 'rb.lsp.completion'
-require 'rb.lsp.cosmetics'
+require 'rb.lsp.lspsaga'
 require 'rb.lsp.settings'
 require 'rb.lsp.extensions'
 require 'rb.lsp.install_servers'
