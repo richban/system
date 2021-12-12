@@ -49,7 +49,8 @@ local config = {
     lualine_c = {},
     lualine_x = {}
   },
-  inactive_sections = {}
+  inactive_sections = {},
+  extensions = {'nvim-tree'}
 }
 
 -- Inserts a component in lualine_c ot left section
