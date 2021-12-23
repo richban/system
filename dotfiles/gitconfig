@@ -247,3 +247,5 @@
 	gpgsign = true
 [gpg]
 	program = gpg
+[init]
+	templateDir = /Users/rbanyi/.git-template

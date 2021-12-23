@@ -164,6 +164,9 @@ dotfiles:
   f_ikea.yml:
     src: config/tmuxinator/ikea.yml
     dst: ~/.config/tmuxinator/ikea.yml
+  f_vimium-dracula-theme.css:
+    src: config/firefox/vimium-dracula-theme.css
+    dst: ~/.config/firefox/vimium-dracula-theme.css
 profiles:
   casper-03:
     dotfiles:
@@ -262,5 +265,8 @@ profiles:
   tmuxinator:
     dotfiles:
     - f_ikea.yml
+  balthasar-02:
+    dotfiles:
+    - f_vimium-dracula-theme.css
 trans_write:
   vscode-list-extensions: code --list-extensions > {1}

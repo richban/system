@@ -76,3 +76,8 @@ alias nvim='~/Developer/nvim-macos/bin/nvim -c "let g:tty='\''$(tty)'\''"'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 alias mux=tmuxinator
+
+alias gcc='gcc-11'
+alias cc='gcc-11'
+alias g++='g++-11'
+alias c++='c++-11'

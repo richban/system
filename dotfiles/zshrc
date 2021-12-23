@@ -1,10 +1,12 @@
 # -------------------------- KEYMAP -------------------------------------------
+
 bindkey '^F' forward-word
 bindkey '^B' backward-word
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 
 # -------------------------- OPTIONS ------------------------------------------
+
 setopt no_beep
 setopt globdots
 setopt mark_dirs
@@ -13,6 +15,7 @@ setopt no_flow_control
 setopt auto_param_keys
 
 # -------------------------- COMPLETION ---------------------------------------
+
 setopt auto_list
 setopt auto_menu
 setopt share_history
@@ -38,11 +41,13 @@ if [[ -d ~/.asdf ]]; then
 fi
 
 if type "pyenv" > /dev/null; then
+  eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
 # -------------------------- FZF ----------------------------------------------
+
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_DEFAULT_OPTS="
@@ -111,5 +116,3 @@ fi
 eval "$(starship init zsh)"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
-
-export PATH="$HOME/.poetry/bin:$PATH"
