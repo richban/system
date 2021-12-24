@@ -34,7 +34,7 @@ return require('packer').startup {
 
     -- git
     use 'tpope/vim-fugitive'
-    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
+    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}, config = "require('rb.gitsigns')"}
 
     -- Github integration
     use {
@@ -43,7 +43,7 @@ return require('packer').startup {
     }
 
     -- File Manager
-    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
+    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons',  config = "require('rb.nvim-tree-config')"}
 
     use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
 
@@ -62,12 +62,13 @@ return require('packer').startup {
     }
 
     use 'liuchengxu/vista.vim'
-    use 'lukas-reineke/format.nvim'
+    use {'lukas-reineke/format.nvim', config = "require('rb.code-formatter')", cmd = "Format"}
+
 
     -- Utils
     use 'tweekmonster/startuptime.vim'
-    -- use 'mhinz/vim-startify'
-    use 'glepnir/dashboard-nvim'
+    -- use 'mhinz/vim-startify
+    use {'glepnir/dashboard-nvim', config = "require('rb.dashboard')"}
     use 'editorconfig/editorconfig-vim'
     use 'christoomey/vim-tmux-navigator'
     use 'antoinemadec/FixCursorHold.nvim' -- Fix CursorHold Performance
@@ -98,7 +99,7 @@ return require('packer').startup {
 
     -- in-editor annotations
     -- use 'haringsrob/nvim_context_vt' -- shows treesitter context in end of parenthesis
-    use {'code-biscuits/nvim-biscuits', disable = false}
+    use {'code-biscuits/nvim-biscuits', disable = true}
 
     -- dims inactive portions of the code you're editing
     use {
@@ -109,10 +110,12 @@ return require('packer').startup {
           -- or leave it empty to use the default settings
           -- refer to the configuration section below
         }
-      end
+      end,
+      disable = true
     }
 
-    use {'lukas-reineke/indent-blankline.nvim'}
+    use {"lukas-reineke/indent-blankline.nvim", config = "require('rb.indent-blankline')", event = "BufRead"}
+
 
     -- Motion
     use 'karb94/neoscroll.nvim'
@@ -125,7 +128,7 @@ return require('packer').startup {
     -- use 'tpope/vim-commentary'
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
-    -- use({'windwp/nvim-autopairs', disable = true})
+    use {'windwp/nvim-autopairs', config = "require('rb.autopairs')", after = "nvim-cmp"}
 
     -- Snippets
     -- use({
@@ -162,7 +165,7 @@ return require('packer').startup {
       'hoob3rt/lualine.nvim',
       requires = {'kyazdani42/nvim-web-devicons'},
       config = function()
-        require "rb.plugins.statusline"
+        require "rb.statusline"
       end
     }
 
@@ -197,7 +200,7 @@ return require('packer').startup {
     use 'heavenshell/vim-jsdoc'
 
     -- LSP
-    use 'neovim/nvim-lspconfig'
+    use {'neovim/nvim-lspconfig', config = "require('rb.lsp')"}
     use 'tami5/lspsaga.nvim'
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
@@ -239,7 +242,7 @@ return require('packer').startup {
     use 'tami5/sql.nvim'
 
     -- Treesitter
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', event = "BufWinEnter", config = "require('rb.nvim-treesitter-config')"}
 
     -- firenvim
     use {

@@ -143,7 +143,6 @@ updated_capabilities.textDocument.completion.completionItem.snippetSupport = tru
 updated_capabilities.textDocument.completion.completionItem.resolveSupport = {properties = {"documentation", "detail", "additionalTextEdits"}}
 updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities,
                                            require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()))
--- updated_capabilities = vim.tbl_deep_extend("keep", configs.pylsp.capabilities or {}, updated_capabilities)
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"

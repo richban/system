@@ -3,7 +3,7 @@ require'colorizer'.setup()
 
 -- FIRENVIM -----------------------------------------------------------------
 
-require('rb.plugins.firenvim')
+-- require('rb.plugins.firenvim')
 
 -- TMUX-NAVIGATOR ------------------------------------------------------------
 
@@ -19,132 +19,7 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 
 ---- File Tree -----------------------------------------------------------------
 
--- NERDTREE
--- vim.g.NERDTreeMinimalMenu = 1
--- vim.g.NERDTreeMinimalUI = 1
--- vim.g.NERDTreeShowHidden = 1
--- vim.g.NERDTreeWinSize = 35
--- vim.g.NERDTreeDirArrowExpandable = ''
--- vim.g.NERDTreeDirArrowCollapsible = ''
--- vim.g.NERDTreeWinPos = "left"
--- vim.g.NERDTreeNaturalSort = 1
--- vim.g.NERDTreeIgnore = { ".git$", ".idea$", "node_modules", ".DS_Store", "__pycache__" }
--- vim.g.DevIconsEnableFoldersOpenClose = 1
--- -- Indicate every single untracked file under an untracked dir
--- vim.g.NERDTreeGitStatusUntrackedFilesMode = 'all'
--- -- To hide the boring brackets ([ ])
--- vim.g.NERDTreeGitStatusConcealBrackets = 0
-
--- CHADTREE
--- local chadtree_settings = {
---   ["theme.text_colour_set"] =  "env",
---   ["ignore.name_exact"] = {"node_modules", "dist", ".DS_Store", ".directory", "thumbs.db", ".git", "__pycache__"},
---   ["ignore.name_glob"] = {"*.js.map"}
--- }
--- vim.api.nvim_set_var("chadtree_settings", chadtree_settings)
--- map('n','<leader>n', ':CHADopen<CR>')
-
--- NVIM-TREE
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-
-vim.g.nvim_tree_quit_on_open = 0
-vim.g.nvim_tree_git_hl = 0
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_group_empty = 1
-
-vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
-
-local nvim_tree_bindings = {
-  {key = "a", cb = tree_cb("create")}, {key = "d", cb = tree_cb("remove")}, {key = "x", cb = tree_cb("cut")}, {key = "c", cb = tree_cb("copy")},
-  {key = "p", cb = tree_cb("paste")}, {key = "q", cb = tree_cb("close")}, {key = "-", cb = tree_cb("close")},
-  {key = {"<CR>", "o", "<2-LeftMouse>"}, cb = tree_cb("edit")}, {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
-  {key = "<C-v>", cb = tree_cb("vsplit")}, {key = "<C-x>", cb = tree_cb("split")}, {key = "<C-t>", cb = tree_cb("tabnew")},
-  {key = "<", cb = tree_cb("prev_sibling")}, {key = ">", cb = tree_cb("next_sibling")}, {key = "P", cb = tree_cb("parent_node")},
-  {key = "<BS>", cb = tree_cb("close_node")}, {key = "<S-CR>", cb = tree_cb("close_node")}, {key = "<Tab>", cb = tree_cb("preview")},
-  {key = "K", cb = tree_cb("first_sibling")}, {key = "J", cb = tree_cb("last_sibling")}, {key = "I", cb = tree_cb("toggle_ignored")},
-  {key = "H", cb = tree_cb("toggle_dotfiles")}, {key = "R", cb = tree_cb("refresh")}, {key = "r", cb = tree_cb("rename")},
-  {key = "<C-r>", cb = tree_cb("full_rename")}, {key = "y", cb = tree_cb("copy_name")}, {key = "Y", cb = tree_cb("copy_path")},
-  {key = "gy", cb = tree_cb("copy_absolute_path")}, {key = "[c", cb = tree_cb("prev_git_item")}, {key = "]c", cb = tree_cb("next_git_item")},
-  {key = "g?", cb = tree_cb("toggle_help")}
-}
-
-require'nvim-tree'.setup {
-  diagnostics = {enable = false, icons = {hint = "", info = "", warning = "", error = ""}},
-  -- view = {
-  --   mappings = {
-  --     custom_only = false,
-  --     list = nvim_tree_bindings
-  --   }
-  -- },
-  filters = {
-    dotfiles = false,
-    custom = {
-      '.git', 'node_modules', '.cache', '.DS_Store', '.vscode', '__pycache__', '*.pyc', '*~', '.ropeproject', '.hg', '.svn', '_svn', '.tox',
-      '.pytest_cache', '.benchmarks', '.venv', 'venv'
-    }
-  }
-}
-
-map('n', '<leader>n', ':NvimTreeToggle<CR>')
-map('n', '<leader>nr', ':NvimTreeRefresh<CR>')
-
 ---- GITGUTTER -------------------------------------------------------------
-
-require('gitsigns').setup {
-  signs = {
-    add = {hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn'},
-    change = {hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn'},
-    delete = {hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn'},
-    topdelete = {hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn'}
-  },
-  signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-  numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
-    buffer = true,
-
-    ['n ]h'] = {expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-    ['n [h'] = {expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
-
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-    ['n <leader>hS'] = '<cmd>lua require"gitsigns".stage_buffer()<CR>'
-  },
-
-  watch_index = {interval = 1000, follow_files = true},
-
-  attach_to_untracked = true,
-  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-  current_line_blame_opts = {
-    virt_text = true,
-    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-    delay = 1000
-  },
-
-  current_line_blame_formatter_opts = {relative_time = false},
-
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-  max_file_length = 40000,
-  preview_config = {
-    -- Options passed to nvim_open_win
-    border = 'single',
-    style = 'minimal',
-    relative = 'cursor',
-    row = 0,
-    col = 1
-  },
-  yadm = {enable = false}
-}
 
 ---- VIM-FUGITIVE -------------------------------------------------------------
 
@@ -161,11 +36,6 @@ map('n', '<leader>gk', '<cmd>diffget //3<CR>')
 -- require('rb.plugins.statusline')
 
 ---- LSP ----------------------------------------------------------------------
-
-local ok, msg = pcall(function()
-  require('rb.lsp')
-end)
-if not ok then print(msg) end
 
 ---- Snippets ----------------------------------------------------------------------
 
@@ -193,47 +63,10 @@ map('n', '<leader>=', '<cmd>Tab /=<CR>')
 
 ---- INDENT-LINE --------------------------------------------------------------
 
--- vim.g.indentLine_char = '▏'
--- vim.g.indentLine_color_gui = '#474747'
--- vim.g.indentLine_enabled = 1
--- vim.g.indentLine_setConceal = 0
-
--- vim.g.vim_json_syntax_conceal = 0
--- vim.g.vim_markdown_conceal = 0
--- vim.g.vim_markdown_conceal_code_blocks = 0
-
--- Simple
--- vim.opt.list = true
--- vim.opt.listchars = {
---     eol = "↴",
--- }
-
--- require("indent_blankline").setup {
---     show_end_of_line = true,
--- }
-
--- With context indent highlighted by treesitter
-vim.opt.list = true
-vim.opt.listchars = {space = "⋅", eol = "↴", trail = ""}
-
-require("indent_blankline").setup {
-  space_char_blankline = " ",
-  show_end_of_line = true,
-  show_current_context = true,
-  show_current_context_start = true,
-  use_treesitter = true,
-  enabled = true,
-  buftype_exclude = {"terminal", "help", "telescope", "NvimTree", "Startify", "dashboard"},
-  filetype_exclude = {"NvimTree", "Startify", "dashboard"},
-  context_patterns = {
-    "class", "return", "function", "method", "^if", "^while", "jsx_element", "^for", "^object", "^table", "block", "arguments", "if_statement",
-    "else_clause", "jsx_element", "jsx_self_closing_element", "try_statement", "catch_clause", "import_statement", "operation_type"
-  }
-}
 
 ---- PYTHON ------------------------------------------------------------------
 
-require('rb.plugins.python')
+-- require('rb.plugins.python')
 
 ---- VISTA-VIM ----------------------------------------------------------------
 
@@ -249,87 +82,6 @@ vim.api.nvim_exec([[
   let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" }
 ]], '')
 
----- TREESITTER ----------------------------------------------------------------
-
--- https://github.com/tree-sitter/tree-sitter-haskell#building-on-macos
-require'nvim-treesitter.install'.compilers = {"gcc"}
-
--- local treesitter = require'nvim-treesitter.configs'
-
--- treesitter.setup {
---   ensure_installed = "all",
---   highlight = {
---     enable = true,
---   },
--- }
-
-require("nvim-treesitter.configs").setup {
-  highlight = {enable = true, additional_vim_regex_highlighting = true},
-  incremental_selection = {
-    enable = true,
-    keymaps = {init_selection = "gnn", node_incremental = "grn", scope_incremental = "grc", node_decremental = "grm"}
-  },
-  indent = {enable = true},
-  matchup = {enable = true},
-  autopairs = {enable = true},
-  playground = {
-    enable = true,
-    disable = {},
-    updatetime = 25,
-    persist_queries = false,
-    keybindings = {
-      toggle_query_editor = "o",
-      toggle_hl_groups = "i",
-      toggle_injected_languages = "t",
-      toggle_anonymous_nodes = "a",
-      toggle_language_display = "I",
-      focus_language = "f",
-      unfocus_language = "F",
-      update = "R",
-      goto_node = "<cr>",
-      show_help = "?"
-    }
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true, -- Highlight also non-parentheses delimiters
-    max_file_lines = 1000
-  },
-  refactor = {
-    smart_rename = {enable = true, keymaps = {smart_rename = "grr"}},
-    highlight_definitions = {enable = true},
-    navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition_lsp_fallback = "gnd",
-        -- list_definitions = "gnD",
-        -- list_definitions_toc = "gO",
-        -- @TODOUA: figure out if I need the 2 below
-        goto_next_usage = "<a-*>", -- is this redundant?
-        goto_previous_usage = "<a-#>" -- also this one?
-      }
-    }
-    -- highlight_current_scope = {enable = true}
-  },
-  textobjects = {
-    lsp_interop = {enable = true, border = "none", peek_definition_code = {["df"] = "@function.outer", ["dF"] = "@class.outer"}},
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {["]m"] = "@function.outer", ["]]"] = "@class.outer"},
-      goto_next_end = {["]M"] = "@function.outer", ["]["] = "@class.outer"},
-      goto_previous_start = {["[m"] = "@function.outer", ["[["] = "@class.outer"},
-      goto_previous_end = {["[M"] = "@function.outer", ["[]"] = "@class.outer"}
-    },
-    -- @TODOUA: these selectors may or may not helpful workflow
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {["af"] = "@function.outer", ["if"] = "@function.inner", ["ac"] = "@class.outer", ["ic"] = "@class.inner"}
-    }
-  }
-}
-
 ---- FUNCTIONS -----------------------------------------------------------------
 
 local result = vim.api.nvim_exec([[
@@ -342,56 +94,23 @@ local result = vim.api.nvim_exec([[
 
 ---- AUTOPAIRS -----------------------------------------------------------------
 
--- require('nvim-autopairs').setup({check_ts = true})
--- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
--- local cmp = require('cmp')
--- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({map_char = {tex = ''}}))
-
 ---- ANNOTATIONS ---------------------------------------------------------------
 
-require('nvim-biscuits').setup({
-  default_config = {
-    max_length = 12,
-    min_distance = 5,
-    -- prefix_string = " 🌜 "
-    prefix_string = ""
-  },
-  language_config = {html = {prefix_string = " 🌐 "}, javascript = {prefix_string = " ✨ ", max_length = 80}, python = {disabled = true}}
-})
+-- require('nvim-biscuits').setup({
+--   default_config = {
+--     max_length = 12,
+--     min_distance = 5,
+--     -- prefix_string = " 🌜 "
+--     prefix_string = ""
+--   },
+--   language_config = {html = {prefix_string = " 🌐 "}, javascript = {prefix_string = " ✨ ", max_length = 80}, python = {disabled = true}}
+-- })
 
 ---- DASHBOARD -----------------------------------------------------------------
 
-vim.g.dashboard_default_executive = 'telescope'
-vim.g.dashboard_custom_header = {
-  [[              ▄▄▄▄▄▄▄▄▄            ]], [[           ▄█████████████▄          ]],
-  [[   █████  █████████████████  █████  ]],
-  [[   ▐████▌ ▀███▄       ▄███▀ ▐████▌  ]],
-  [[    █████▄  ▀███▄   ▄███▀  ▄█████    ]],
-  [[    ▐██▀███▄  ▀███▄███▀  ▄███▀██▌    ]],
-  [[     ███▄▀███▄  ▀███▀  ▄███▀▄███    ]],
-  [[     ▐█▄▀█▄▀███ ▄ ▀ ▄ ███▀▄█▀▄█▌    ]],
-  [[      ███▄▀█▄██ ██▄██ ██▄█▀▄███      ]],
-  [[       ▀███▄▀██ █████ ██▀▄███▀      ]],
-  [[      █▄ ▀█████ █████ █████▀ ▄█      ]], [[      ███        ███        ███      ]],
-  [[      ███▄    ▄█ ███ █▄    ▄███      ]],
-  [[      █████ ▄███ ███ ███▄ █████      ]],
-  [[      █████ ████ ███ ████ █████      ]],
-  [[      █████ ████▄▄▄▄▄████ █████      ]],
-  [[       ▀███ █████████████ ███▀      ]],
-  [[         ▀█ ███ ▄▄▄▄▄ ███ █▀        ]], [[            ▀█▌▐█████▌▐█▀            ]],
-  [[               ███████              ]]
-}
-vim.g.dashboard_custom_section = {
-  f = {description = {'  Find File          '}, command = 'Telescope find_files'},
-  g = {description = {'  Search Text        '}, command = 'Telescope live_grep'},
-  r = {description = {'  Recent Files       '}, command = 'Telescope oldfiles'},
-  c = {description = {'  Config             '}, command = 'edit ~/.config/nvim/init.lua'}
-}
-vim.g.dashboard_custom_footer = {'Do one thing, do it well - Unix Philosophy'}
-
 ---- FORMATTER -----------------------------------------------------------------
 
-require('rb.plugins.formatter')
+-- require('rb.plugins.formatter')
 
 ---- BUFFERLINE ----------------------------------------------------------------
 
