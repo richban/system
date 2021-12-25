@@ -195,7 +195,12 @@ return require('packer').startup {
     -- use 'pineapplegiant/spaceduck'
 
     -- Highlight hex, rgb colors
-    use 'norcalli/nvim-colorizer.lua'
+    use {'norcalli/nvim-colorizer.lua', 
+      config = function()
+        require'colorizer'.setup()
+      end, 
+      event = "BufRead"
+    }
 
     -- Javascript & Typescript
     use {'p00f/nvim-ts-rainbow', after = "nvim-treesitter"}

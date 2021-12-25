@@ -19,7 +19,7 @@ function M.set(client)
 
   -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   -- buf_set_keymap('n','<leader>th', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<leader>H', "<cmd>Lspsaga hover_doc<CR>", opts)
+  buf_set_keymap('n', '<leader>h', "<cmd>Lspsaga hover_doc<CR>", opts)
   buf_set_keymap('n', '<leader>gs', "<cmd>Lspsaga signature_help<CR>", opts)
 
   -- Diagnostic
@@ -37,10 +37,10 @@ function M.set(client)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
-  buf_set_keymap('n', '<leader>Lc', ':lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>', opts)
-  buf_set_keymap('n', '<leader>Ll', ":lua print(vim.lsp.get_log_path())<CR>", opts)
+  buf_set_keymap('n', '<leader>lc', ':lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>', opts)
+  buf_set_keymap('n', '<leader>lp', ":lua print(vim.lsp.get_log_path())<CR>", opts)
   -- buf_set_keymap('n','<leader>fcl', ":lua vim.cmd('e'..vim.lsp.get_log_path())<CR>", opts)
-  buf_set_keymap('n', '<leader>Li', ':LspInfo()<CR>', opts)
+  buf_set_keymap('n', '<leader>li', ':LspInfo()<CR>', opts)
 
   buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
 

@@ -37,8 +37,7 @@ function mappings.setup()
   -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
   map('n', '<leader>ml', '<cmd>Marks<CR>')
   map('n', '<leader>V', ':Vista<CR>')
-  -- " Send cell to IronRepl and move to next cell.
-  map('n', ']x', 'ctrih/^# %%<CR><CR>')
+
   -- write all and quit
   vim.api.nvim_set_keymap("n", "<Leader>W", ":wqall<CR>", {noremap = true, silent = true})
 
