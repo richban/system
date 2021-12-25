@@ -167,6 +167,9 @@ dotfiles:
   f_vimium-dracula-theme.css:
     src: config/firefox/vimium-dracula-theme.css
     dst: ~/.config/firefox/vimium-dracula-theme.css
+  d_after:
+    src: config/nvim/after
+    dst: ~/.config/nvim/after
 profiles:
   casper-03:
     dotfiles:
@@ -239,6 +242,7 @@ profiles:
   neovim:
     dotfiles:
     - d_nvim
+    - d_after
     actions:
     - install_neovim
   python:
@@ -268,5 +272,6 @@ profiles:
   balthasar-02:
     dotfiles:
     - f_vimium-dracula-theme.css
+    - d_after
 trans_write:
   vscode-list-extensions: code --list-extensions > {1}
