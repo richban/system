@@ -54,13 +54,13 @@ cmp.setup({
     format = function(entry, vim_item)
       vim_item.kind = string.format("%s %s", lspkind.presets.default[vim_item.kind], vim_item.kind)
       vim_item.menu = ({
+        vsnip = "",
         nvim_lsp = "ﲳ",
         nvim_lua = "",
         treesitter = "",
         path = "ﱮ",
         buffer = "﬘",
         zsh = "",
-        vsnip = "",
         spell = "暈"
       })[entry.source.name]
 

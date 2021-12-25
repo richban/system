@@ -185,8 +185,10 @@ return require('packer').startup {
       end
     }
 
-    use 'dracula/vim'
+    -- use 'dracula/vim'
     use 'Mofiqul/dracula.nvim'
+    use {'rose-pine/neovim', config = "vim.cmd('colorscheme rose-pine')", disable = false}
+
 
     -- use 'marko-cerovac/material.nvim'
     -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
@@ -196,6 +198,7 @@ return require('packer').startup {
     use 'norcalli/nvim-colorizer.lua'
 
     -- Javascript & Typescript
+    use {'p00f/nvim-ts-rainbow', after = "nvim-treesitter"}
     use 'jose-elias-alvarez/nvim-lsp-ts-utils'
     use 'heavenshell/vim-jsdoc'
 
