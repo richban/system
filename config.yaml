@@ -242,7 +242,6 @@ profiles:
   neovim:
     dotfiles:
     - d_nvim
-    - d_after
     actions:
     - install_neovim
   python:

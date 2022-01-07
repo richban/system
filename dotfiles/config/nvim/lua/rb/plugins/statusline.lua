@@ -39,7 +39,7 @@ local config = {
     -- Disable sections and component separators
     component_separators = {'', ''},
     section_separators = {'', ''},
-    theme = "dracula",
+    theme = "dracula-nvim",
     icons_enabled = true
   },
   sections = {

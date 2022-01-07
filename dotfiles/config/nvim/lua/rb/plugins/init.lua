@@ -1,11 +1,7 @@
 -- COLORIZER -----------------------------------------------------------------
-
 -- FIRENVIM -----------------------------------------------------------------
-
 -- require('rb.plugins.firenvim')
-
 -- TMUX-NAVIGATOR ------------------------------------------------------------
-
 -- Disable tmux navigator when zooming the Vim pane
 vim.g.tmux_navigator_disable_when_zoomed = 1
 
@@ -59,7 +55,6 @@ map('n', '<leader>=', '<cmd>Tab /=<CR>')
 
 ---- INDENT-LINE --------------------------------------------------------------
 
-
 ---- PYTHON ------------------------------------------------------------------
 
 ---- VISTA-VIM ----------------------------------------------------------------
@@ -111,3 +106,36 @@ vim.cmd [[
   nnoremap <silent><TAB> :BufferLineCycleNext<CR>
   nnoremap <silent><S-TAB> :BufferLineCyclePrev<CR>
 ]]
+
+---- JUPYTEXT -----------------------------------------------------------------
+vim.g.jupytext_fmt = 'py'
+vim.g.jupytext_style = 'hydrogen'
+
+---- JUPYTER ASCENDING --------------------------------------------------------
+
+vim.cmd [[ nnoremap <silent><c-x> <Plug>JupyterExecute ]]
+vim.cmd [[ nnoremap <silent><c-X> <Plug>JupyterExecuteAll ]]
+
+---- NVIM-IPY -----------------------------------------------------------------
+
+vim.g.nvim_ipy_perform_mappings = 0
+vim.g.ipy_celldef = '# %%'
+
+vim.cmd [[map <silent><c-s> <Plug>(IPy-Run)]]
+vim.cmd [[map <leader>rc <Plug>(IPy-RunCell)]]
+
+---- IRON-REPL ----------------------------------------------------------------
+
+local iron = require('iron')
+
+iron.core.add_repl_definitions {python = {venv_python = {command = "pipenv run ipython"}}}
+
+iron.core.set_config {preferred = {python = "venv_python"}}
+
+-- vim.cmd [[nnoremap <silent><c-v> <Plug>(iron-visual-send)]]
+-- vim.cmd [[nnoremap <C-l> <Plug>(iron-send-line)]]
+
+-- " Send cell to IronRepl and move to next cell.
+vim.cmd [[nmap ]x ctrih/^# %%<CR><CR>]]
+vim.cmd [[nmap [x ctrah/^# %%<CR><CR>]]
+

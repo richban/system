@@ -43,7 +43,7 @@ return require('packer').startup {
     }
 
     -- File Manager
-    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons',  config = "require('rb.nvim-tree-config')"}
+    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons', config = "require('rb.nvim-tree-config')"}
 
     use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
 
@@ -64,7 +64,6 @@ return require('packer').startup {
     use 'liuchengxu/vista.vim'
     use {'lukas-reineke/format.nvim', config = "require('rb.code-formatter')", cmd = "Format"}
 
-
     -- Utils
     use 'tweekmonster/startuptime.vim'
     -- use 'mhinz/vim-startify
@@ -75,7 +74,7 @@ return require('packer').startup {
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
     use 'Pocco81/ISuckAtSpelling.nvim'
-    use 'wakatime/vim-wakatime'
+    use {'wakatime/vim-wakatime', disable = true}
     use {
       'jdhao/better-escape.vim',
       event = 'InsertEnter',
@@ -115,7 +114,6 @@ return require('packer').startup {
     }
 
     use {"lukas-reineke/indent-blankline.nvim", config = "require('rb.indent-blankline')", event = "BufRead"}
-
 
     -- Motion
     use 'karb94/neoscroll.nvim'
@@ -187,18 +185,18 @@ return require('packer').startup {
 
     -- use 'dracula/vim'
     use 'Mofiqul/dracula.nvim'
-    use {'rose-pine/neovim', config = "vim.cmd('colorscheme rose-pine')", disable = false}
-
+    use {'rose-pine/neovim', config = "vim.cmd('colorscheme rose-pine')", disable = true}
 
     -- use 'marko-cerovac/material.nvim'
     -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
     -- use 'pineapplegiant/spaceduck'
 
     -- Highlight hex, rgb colors
-    use {'norcalli/nvim-colorizer.lua', 
+    use {
+      'norcalli/nvim-colorizer.lua',
       config = function()
         require'colorizer'.setup()
-      end, 
+      end,
       event = "BufRead"
     }
 
@@ -220,11 +218,11 @@ return require('packer').startup {
     use 'hkupty/iron.nvim'
     use 'Vimjas/vim-python-pep8-indent'
     use {'heavenshell/vim-pydocstring', run = 'make install'}
-    -- use 'untitled-ai/jupyter_ascending.vim'
-    -- use 'GCBallesteros/jupytext.vim'
-    -- use 'kana/vim-textobj-line'
-    -- use 'kana/vim-textobj-user'
-    -- use 'GCBallesteros/vim-textobj-hydrogen'
+    use 'untitled-ai/jupyter_ascending.vim'
+    use 'GCBallesteros/jupytext.vim'
+    use 'kana/vim-textobj-line'
+    use 'kana/vim-textobj-user'
+    use 'GCBallesteros/vim-textobj-hydrogen'
 
     -- Telescope
     use 'nvim-lua/popup.nvim'

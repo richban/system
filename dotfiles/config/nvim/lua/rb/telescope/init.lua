@@ -30,7 +30,7 @@ require("telescope").setup {
     selection_caret = " ",
     initial_mode = "insert",
     selection_strategy = "reset",
-    sorting_strategy = "descending",
+    sorting_strategy = "ascending",
 
     layout_strategy = "horizontal",
     layout_config = {

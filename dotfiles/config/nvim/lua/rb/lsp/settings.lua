@@ -220,7 +220,12 @@ local servers = {
     }
   },
   -- pyright = {},
-  sqlls = {cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"}},
+  sqlls = {
+    cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"},
+    filetypes = { "sql", "mysql" },
+    root_dir = project_root_or_cur_dir,
+    settings = {}
+  },
   sumneko_lua = {
     cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
     settings = {

@@ -47,8 +47,8 @@ else
   export PYTHONPATH="/Users/$(whoami)/.local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582"
 fi
 
-export CXX=/usr/local/bin/g++
-export CC=/usr/local/bin/gcc
+export CXX=/usr/local/bin/g++-11
+export CC=/usr/local/bin/gcc-11
 export CPP=/usr/local/bin/cpp
 
 # -------------------------- EDITOR -------------------------------------------

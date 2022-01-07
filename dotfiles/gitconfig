@@ -241,8 +241,6 @@
 [url "https://bitbucket.org/"]
   insteadOf = bb:
 
-[url "ssh://git@github.com/"]
-  insteadOf = https://github.com/
 [commit]
 	gpgsign = true
 [gpg]
