@@ -170,6 +170,9 @@ dotfiles:
   d_after:
     src: config/nvim/after
     dst: ~/.config/nvim/after
+  d_ipython:
+    src: ipython
+    dst: ~/.ipython
 profiles:
   casper-03:
     dotfiles:
@@ -272,5 +275,6 @@ profiles:
     dotfiles:
     - f_vimium-dracula-theme.css
     - d_after
+    - d_ipython
 trans_write:
   vscode-list-extensions: code --list-extensions > {1}

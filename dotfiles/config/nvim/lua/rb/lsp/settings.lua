@@ -222,7 +222,7 @@ local servers = {
   -- pyright = {},
   sqlls = {
     cmd = {"/usr/local/bin/sql-language-server", "up", "--method", "stdio"},
-    filetypes = { "sql", "mysql" },
+    filetypes = {"sql", "mysql"},
     root_dir = project_root_or_cur_dir,
     settings = {}
   },
@@ -249,7 +249,7 @@ local servers = {
   },
   beancount = {
     cmd = {"beancount-langserver", "--stdio"},
-    init_options = {journalFile = "~/Developer/richban.ledger/richban.beancount", pythonPath = "~/.pyenv/shims/python"}
+    init_options = {journalFile = "~/Developer/richban.ledger/main.beancount", pythonPath = "~/.pyenv/shims/python"}
   }
 }
 
@@ -258,10 +258,7 @@ local setup_server = function(server, config)
 
   if type(config) ~= "table" then config = {} end
 
-  config = vim.tbl_deep_extend("force", {
-    on_attach = custom_attach,
-    capabilities = updated_capabilities,
-  }, config)
+  config = vim.tbl_deep_extend("force", {on_attach = custom_attach, capabilities = updated_capabilities}, config)
 
   lsp[server].setup(config)
 end
