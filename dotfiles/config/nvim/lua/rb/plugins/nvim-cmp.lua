@@ -1,6 +1,31 @@
 local present, cmp = pcall(require, "cmp")
 
 local lspkind = require "lspkind"
+lspkind.init {
+  with_text = true,
+  symbol_map = {
+    Text = "",
+    Method = "ƒ",
+    Function = "ﬦ",
+    Constructor = "",
+    Variable = "",
+    Class = "",
+    Interface = "ﰮ",
+    Module = "",
+    Property = "",
+    Unit = "",
+    Value = "",
+    Enum = "了",
+    Keyword = "",
+    Snippet = "﬌",
+    Color = "",
+    File = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = ""
+  }
+}
 
 if not present then return end
 
@@ -75,3 +100,7 @@ cmp.setup({
   documentation = {border = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}}
 
 })
+
+-- require('nvim-autopairs').setup({check_ts = true})
+-- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+-- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({map_char = {tex = ''}}))

@@ -31,6 +31,8 @@ require'nvim-tree'.setup {
   --     list = nvim_tree_bindings
   --   }
   -- },
+  --   update_cwd          = false,
+  update_to_buf_dir = {enable = true, auto_open = true},
   filters = {
     dotfiles = false,
     custom = {

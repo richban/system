@@ -55,7 +55,7 @@ function settings.setup()
   vim.o.scrolloff = 8
   -- lsp and git column
   vim.o.signcolumn = 'yes:2'
-  vim.o.colorcolumn = '80'
+  vim.o.colorcolumn = '88'
 
   vim.o.scl = 'yes'
   vim.o.inccommand = 'split'

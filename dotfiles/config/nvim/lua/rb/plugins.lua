@@ -126,7 +126,8 @@ return require('packer').startup {
     -- use 'tpope/vim-commentary'
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
-    use {'windwp/nvim-autopairs', config = "require('rb.autopairs')", after = "nvim-cmp"}
+    -- use {'windwp/nvim-autopairs', config = "require('rb.autopairs')", after = "nvim-cmp"}
+    use {'windwp/nvim-autopairs', after = "nvim-cmp"}
 
     -- Snippets
     -- use({

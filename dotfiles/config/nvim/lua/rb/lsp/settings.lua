@@ -91,7 +91,7 @@ local function custom_attach(client)
     hint_enable = true, -- virtual hint enable
     hint_prefix = "🌟 ", -- Panda for parameter
     hint_scheme = "String",
-    use_lspsaga = false, -- set to true if you want to use lspsaga popup
+    use_lspsaga = true, -- set to true if you want to use lspsaga popup
     hi_parameter = "Search", -- how your parameter will be highlight
     max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
     -- to view the hiding contents
@@ -135,7 +135,7 @@ updated_capabilities.textDocument.codeLens = {dynamicRegistration = false}
 -- LSP this is needed for LSP completions in CSS along with the snippets plugin
 updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 updated_capabilities.textDocument.completion.completionItem.resolveSupport = {properties = {"documentation", "detail", "additionalTextEdits"}}
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
