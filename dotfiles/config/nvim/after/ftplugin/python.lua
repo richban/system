@@ -1,5 +1,33 @@
 vim.opt.colorcolumn = "88"
 
+vim.api.nvim_buf_set_keymap(0, "n", "ga", [[<cmd>lua vim.lsp.buf.code_action()<CR>]], {noremap = true, silent = true})
+
+vim.api.nvim_buf_set_keymap(0, "n", "<c-k>", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]], {noremap = true, silent = true})
+
+vim.api.nvim_buf_set_keymap(0, "n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]], {noremap = true, silent = true})
+
+vim.api.nvim_exec([[
+      function! s:PyPreSave()
+        execute "silent !black " . bufname("%")
+        execute "e"
+      endfunction
+
+      function! s:PyPostSave()
+          execute "silent !tidy-imports --black --quiet --replace-star-imports --action REPLACE " . bufname("%")
+          execute "silent !isort " . bufname("%")
+          execute "e"
+      endfunction
+
+      :command! PyPreSave :call s:PyPreSave()
+      :command! PyPostSave :call s:PyPostSave()
+
+      augroup richban
+          autocmd!
+          autocmd bufwritepre *.py execute 'PyPreSave'
+          autocmd bufwritepost *.py execute 'PyPostSave'
+      augroup end
+  ]], false)
+
 ---- JUPYTER NOTEBOOK ---------------------------------------------------------
 
 vim.api.nvim_exec([[

@@ -87,7 +87,7 @@ function settings.setup()
   vim.o.listchars = 'eol:¬,tab:>·,trail:~,extends:>,precedes:<'
 
   vim.g.markdown_fenced_languages = {"html", "javascript", "typescript", "css", "scss", "lua", "vim"}
-  vim.g.cursorhold_updatetime = 100
+  -- vim.g.cursorhold_updatetime = 100
 
   -- Give more space for displaying messages.
   vim.o.cmdheight = 1
