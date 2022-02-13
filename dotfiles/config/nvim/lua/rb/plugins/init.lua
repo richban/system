@@ -32,7 +32,6 @@ map('n', '<leader>gk', '<cmd>diffget //3<CR>')
 ---- Snippets ----------------------------------------------------------------------
 
 vim.g.vsnip_snippet_dir = '~/.config/nvim/snippets'
-
 vim.g.vsnip_filetypes = {javascriptreact = {'typescript', 'html', 'react'}, typescriptreact = {'typescript', 'html', 'react'}}
 
 ---- MOTION --------------------------------------------------------------

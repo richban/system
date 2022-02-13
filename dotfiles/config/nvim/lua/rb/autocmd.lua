@@ -29,12 +29,12 @@ function autocmd.setup()
         augroup end
     ]], false)
 
-  vim.api.nvim_exec([[
-      augroup Format
-        autocmd!
-        autocmd BufWritePost * Format
-      augroup END
-    ]], false)
+  -- vim.api.nvim_exec([[
+  --     augroup Format
+  --       autocmd!
+  --       autocmd BufWritePost * Format
+  --     augroup END
+  --   ]], false)
 
   -- vimdows to close with 'q'
   vim.cmd [[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer><silent> q :close<CR>]]

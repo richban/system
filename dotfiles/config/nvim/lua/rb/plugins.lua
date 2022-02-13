@@ -126,8 +126,7 @@ return require('packer').startup {
     -- use 'tpope/vim-commentary'
     use 'tpope/vim-surround' -- Change surrounding arks
     use 'tpope/vim-repeat' -- extends . repeat, for example for make it work with vim-sneak
-    use {'windwp/nvim-autopairs', config = "require('rb.autopairs')", after = "nvim-cmp", disable = true}
-    -- use {'windwp/nvim-autopairs', after = "nvim-cmp"}
+    use {'windwp/nvim-autopairs', config = "require('rb.autopairs')", after = "nvim-cmp", disable = false}
 
     -- Snippets
     -- use({
@@ -208,7 +207,7 @@ return require('packer').startup {
 
     -- LSP
     use {'neovim/nvim-lspconfig', config = "require('rb.lsp')"}
-    use {'tami5/lspsaga.nvim', disable = true}
+    use {'tami5/lspsaga.nvim', disable = false}
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
     use 'tjdevries/lsp_extensions.nvim'

@@ -105,25 +105,25 @@ local function custom_attach(client)
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    nvim_exec [[
-        augroup lsp_document_highlight
-            autocmd! * <buffer>
-            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-    ]]
-  end
+  -- if client.resolved_capabilities.document_highlight then
+  --   nvim_exec [[
+  --       augroup lsp_document_highlight
+  --           autocmd! * <buffer>
+  --           autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+  --           autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+  --       augroup END
+  --   ]]
+  -- end
 
-  if client.resolved_capabilities.code_lens then
-    vim.cmd [[
-      augroup lsp_document_codelens
-        au! * <buffer>
-        autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-        autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-      augroup END
-    ]]
-  end
+  -- if client.resolved_capabilities.code_lens then
+  --   vim.cmd [[
+  --     augroup lsp_document_codelens
+  --       au! * <buffer>
+  --       autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
+  --       autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
+  --     augroup END
+  --   ]]
+  -- end
 
   -- Attach any filetype specific options to the client
   filetype_attach[filetype](client)
