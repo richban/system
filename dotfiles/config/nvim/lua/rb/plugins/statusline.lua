@@ -37,8 +37,10 @@ local conditions = {
 local config = {
   options = {
     -- Disable sections and component separators
-    component_separators = {'', ''},
-    section_separators = {'', ''},
+    -- component_separators = {'', ''},
+    -- section_separators = {'', ''},
+    component_separators = '|',
+    section_separators = { left = '', right = '' },
     theme = "dracula-nvim",
     icons_enabled = true
   },
@@ -123,8 +125,8 @@ ins_right {
     end
     return msg
   end,
-  -- icon = ' LSP:',
-  icon = ' ',
+  icon = ' LSP:',
+  -- icon = ' ',
   color = {fg = colors.aqua, gui = 'bold'}
 }
 
@@ -148,7 +150,7 @@ ins_right {
   -- Is it me or the symbol for modified us really weird
   symbols = {added = ' ', modified = '柳 ', removed = ' '},
   color_added = colors.green,
-  color_modified = colors.orange,
+  color_modified = colors.yellow,
   color_removed = colors.red,
   condition = conditions.hide_in_width
 }
