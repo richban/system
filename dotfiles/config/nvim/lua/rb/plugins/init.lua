@@ -1,6 +1,32 @@
+local key_map = vim.api.nvim_set_keymap
+
 -- COLORIZER -----------------------------------------------------------------
 -- FIRENVIM -----------------------------------------------------------------
--- require('rb.plugins.firenvim')
+
+if vim.g.started_by_firenvim then
+  vim.g.laststatus = 0
+
+  key_map('n', '<Esc><Esc>', '=call firenvim#focus_page()<CR>', {noremap = true, silent = true})
+  key_map('n', '<C-z>', '=write<CR>=call firenvim#hide_frame()<CR>', {noremap = true, silent = true})
+
+  vim.g.firenvim_config = {
+    globalSettings = {alt = 'all'},
+    localSettings = {
+      [".*"] = {cmdline = 'neovim', priority = 0, selector = 'textarea', takeover = 'always'}
+      -- ['https://youtube.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://instagram.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https://.*gmail.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https://.*google.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://.*twitch.tv*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://notion.so*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://reddit.com*'] = { 'takeover': 'never', 'priority': 1 },
+    }
+  }
+
+  vim.cmd('au BufEnter github.com_*.txt set filetype=markdown')
+end
+
 -- TMUX-NAVIGATOR ------------------------------------------------------------
 -- Disable tmux navigator when zooming the Vim pane
 vim.g.tmux_navigator_disable_when_zoomed = 1
@@ -18,12 +44,12 @@ vim.env.FZF_DEFAULT_OPTS = '--reverse'
 
 ---- VIM-FUGITIVE -------------------------------------------------------------
 
-map('n', '<leader>gs', '<cmd>Git<CR>')
-map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>')
-map('n', '<leader>gb', '<cmd>Git blame<CR>')
-map('n', '<leader>gh', '<cmd>0Gclog!<CR>')
-map('n', '<leader>gj', '<cmd>diffget //2<CR>')
-map('n', '<leader>gk', '<cmd>diffget //3<CR>')
+key_map('n', '<leader>gs', '<cmd>Git<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>gd', '<cmd>Gvdiffsplit<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>gb', '<cmd>Git blame<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>gh', '<cmd>0Gclog!<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>gj', '<cmd>diffget //2<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>gk', '<cmd>diffget //3<CR>', {noremap = true, silent = true})
 
 --- STATUSLINE  ----------------------------------------------------------------
 
@@ -47,10 +73,10 @@ require('rb.telescope.mappings')
 
 --- TABULARIZE  ---------------------------------------------------------------
 
-map('v', '<leader>=', '<cmd>Tab /=<CR>')
-map('n', '<leader>:', '<cmd>Tab /:\\zs<CR>')
-map('v', '<leader>:', '<cmd>Tab /:\\zs<CR>')
-map('n', '<leader>=', '<cmd>Tab /=<CR>')
+key_map('v', '<leader>=', '<cmd>Tab /=<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>:', '<cmd>Tab /:\\zs<CR>', {noremap = true, silent = true})
+key_map('v', '<leader>:', '<cmd>Tab /:\\zs<CR>', {noremap = true, silent = true})
+key_map('n', '<leader>=', '<cmd>Tab /=<CR>', {noremap = true, silent = true})
 
 ---- INDENT-LINE --------------------------------------------------------------
 
@@ -69,16 +95,6 @@ vim.api.nvim_exec([[
   " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
   let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" }
 ]], '')
-
----- FUNCTIONS -----------------------------------------------------------------
-
-local result = vim.api.nvim_exec([[
-  fun! TrimWhitespace()
-      let l:save = winsaveview()
-      keeppatterns %s/\s\+$//e
-      call winrestview(l:save)
-  endfun
-]], true)
 
 ---- AUTOPAIRS -----------------------------------------------------------------
 

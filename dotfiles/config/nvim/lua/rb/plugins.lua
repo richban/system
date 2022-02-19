@@ -62,6 +62,8 @@ return require('packer').startup {
     }
 
     use 'liuchengxu/vista.vim'
+
+    -- Code Formatter
     use {'lukas-reineke/format.nvim', config = "require('rb.code-formatter')", cmd = "Format"}
 
     -- Utils
@@ -73,7 +75,6 @@ return require('packer').startup {
     use 'antoinemadec/FixCursorHold.nvim' -- Fix CursorHold Performance
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
-    use 'Pocco81/ISuckAtSpelling.nvim'
     use {'wakatime/vim-wakatime', disable = true}
     use {
       'jdhao/better-escape.vim',
@@ -105,6 +106,12 @@ return require('packer').startup {
       "folke/twilight.nvim",
       config = function()
         require("twilight").setup {
+          {
+            dimming = {alpha = 0.25, color = {"Normal", "#ffffff"}, inactive = true},
+            context = 10,
+            treesitter = true,
+            expand = {"function", "method", "table", "if_statement"}
+          }
           -- your configuration comes here
           -- or leave it empty to use the default settings
           -- refer to the configuration section below
@@ -206,7 +213,7 @@ return require('packer').startup {
     use 'heavenshell/vim-jsdoc'
 
     -- LSP
-    use {'neovim/nvim-lspconfig', config = "require('rb.lsp')"}
+    use {'neovim/nvim-lspconfig', config = "require('rb.lsp')", disable = true}
     use {'tami5/lspsaga.nvim', disable = false}
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
