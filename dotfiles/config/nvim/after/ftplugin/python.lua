@@ -1,5 +1,7 @@
 vim.opt.colorcolumn = "88"
 
+vim.b.vsnip_snippet_dir = vim.fn.expand "~/.config/nvim/snippets/python/"
+
 vim.api.nvim_buf_set_keymap(0, "n", "ga", [[<cmd>lua vim.lsp.buf.code_action()<CR>]], {noremap = true, silent = true})
 
 vim.api.nvim_buf_set_keymap(0, "n", "<c-k>", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]], {noremap = true, silent = true})

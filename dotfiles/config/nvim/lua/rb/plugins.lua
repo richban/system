@@ -52,7 +52,7 @@ return require('packer').startup {
     --   branch = 'chad',
     --   run = ':CHADdeps'
     -- }
-    --
+    use "mogelbrod/vim-jsonpath"
 
     use {
       "terrortylor/nvim-comment",
