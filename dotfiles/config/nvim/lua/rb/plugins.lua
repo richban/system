@@ -213,7 +213,7 @@ return require('packer').startup {
     use 'heavenshell/vim-jsdoc'
 
     -- LSP
-    use {'neovim/nvim-lspconfig', config = "require('rb.lsp')", disable = true}
+    use {'neovim/nvim-lspconfig', config = "require('rb.lsp')", disable = false}
     use {'tami5/lspsaga.nvim', disable = false}
     use 'onsails/lspkind-nvim'
     use 'nvim-lua/lsp-status.nvim'
