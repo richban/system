@@ -64,8 +64,8 @@ return require('packer').startup {
     use 'liuchengxu/vista.vim'
 
     -- Code Formatter
-    use {'lukas-reineke/format.nvim', config = "require('rb.code-formatter')", cmd = "Format"}
-
+    use {'lukas-reineke/format.nvim', config = "require('rb.code-formatter')", cmd = "Format", disable = true}
+    use {'jose-elias-alvarez/null-ls.nvim', config = "require('rb.code-formatter')"}
     -- Utils
     use 'tweekmonster/startuptime.vim'
     -- use 'mhinz/vim-startify
@@ -73,6 +73,7 @@ return require('packer').startup {
     use 'editorconfig/editorconfig-vim'
     use 'christoomey/vim-tmux-navigator'
     use 'antoinemadec/FixCursorHold.nvim' -- Fix CursorHold Performance
+
     use 'vim-utils/vim-man'
     use 'mbbill/undotree'
     use {'wakatime/vim-wakatime', disable = true}
