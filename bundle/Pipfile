@@ -29,3 +29,5 @@ neovim
 pynvim
 
 requests
+code_spell
+gitlint
