@@ -1,6 +1,6 @@
 --- When not connected to Home Wifi, mute the computer to avoid awkward moment
 wifiWatcher = nil
-homeSSID = "EnricosGrandPalace"
+homeSSID = "Sibyl System"
 lastSSID = hs.wifi.currentNetwork()
 
 function ssidChangedCallback()

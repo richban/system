@@ -1,8 +1,3 @@
---------------------------------------------------------------------------------
--- Unsupported Spaces extension. Uses private APIs but works okay.
--- (http://github.com/asmagill/hammerspoon_asm.undocumented)
-spaces = require("hs._asm.undocumented.spaces")
-
 require('utils')
 require('shortcuts')
 
@@ -22,24 +17,12 @@ hs.hotkey.bind(hyper, "c", open("Google Chrome"))
 hs.hotkey.bind(hyper, "t", open("Alacritty"))
 hs.hotkey.bind(hyper, "v", open("Visual Studio Code"))
 
---- Conect to Adam
-hs.hotkey.bind(hyper, "a", function()
-    local _, output = hs.osascript.applescriptFromFile("adam.applescript")
-    hs.notify.new({title="Hammerspoon", informativeText=output}):send()
-end)
-
---- Connect to Eva
-hs.hotkey.bind(hyper, "e", function()
-    local _, output = hs.osascript.applescriptFromFile("eva.applescript")
-    hs.notify.new({title="Hammerspoon", informativeText=output}):send()
-end)
-
 hs.hotkey.bind(hyper, "p", function()
     hs.network.ping.ping("8.8.8.8", 1, 0.01, 1.0, "any", pingResult)
 end)
 
 --- draw mouse
-hs.hotkey.bind(hyper, "M", mouseHighlight)
+hs.hotkey.bind(hyper, "l", mouseHighlight)
 
 hs.notify.new({title="Hammerspoon", informativeText="Config loaded"}):send()
 
