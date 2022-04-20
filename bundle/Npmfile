@@ -19,3 +19,5 @@ vue-language-server
 dockerfile-language-server-nodejs
 vls
 write-good
+pyright
+beancount-langserver

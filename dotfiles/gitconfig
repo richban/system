@@ -1,6 +1,7 @@
 [user]
 	name = richban
 	email = rbanyi@me.com
+	signingkey = EBF3A7C8A62F1F11
 
 [github]
   user = richban
@@ -244,6 +245,6 @@
 [commit]
 	gpgsign = true
 [gpg]
-	program = gpg
+	program = /usr/local/bin/gpg
 [init]
 	templateDir = /Users/rbanyi/.git-template
