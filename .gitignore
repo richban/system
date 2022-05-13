@@ -2,3 +2,9 @@
 .cfg
 packer_compiled.vim
 dotfiles/config/nvim/plugin/
+.vscode/
+result
+.direnv/
+venv/
+env/
+__pycache__/

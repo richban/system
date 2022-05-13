@@ -32,7 +32,7 @@
   let
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
-      inherit (home-manager.lib) homeManagerConfig;
+      inherit (home-manager.lib) homeManagerConfiguration;
       inherit (flake-utils.lib) eachDefaultSystem eachSystem;
       inherit (builtins) listToAttrs map;
 
@@ -73,7 +73,7 @@
         ],
         extraModules ? []
       }:
-      homeManagerConfig rec {
+      homeManagerConfiguration rec {
         inherit system username;
         homeDirectory = "${homePrefix system}/${username}";
         extraSpecialArgs = { inherit inputs nixpkgs stable; };
@@ -118,14 +118,14 @@
         overlays = [ inputs.devshell.overlay ];
       };
       pyEnv = (pkgs.python3.withPackages
-        (ps: with ps; [ black pylint typer colorama shellingham ]));
+        (ps: with ps; [ black pylint typer colorama shellingham]));
       sysdo = pkgs.writeShellScriptBin "sysdo" ''
         cd $PRJ_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
       '';
     in
     {
       devShell = pkgs.devshell.mkShell {
-        packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt ];
+        packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt nodePackages.prettier];
         commands = [{
           name = "sysdo";
           package = sysdo;
