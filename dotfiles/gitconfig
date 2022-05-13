@@ -245,6 +245,6 @@
 [commit]
 	gpgsign = true
 [gpg]
-	program = /usr/local/bin/gpg
+	program = gpg
 [init]
 	templateDir = /Users/rbanyi/.git-template

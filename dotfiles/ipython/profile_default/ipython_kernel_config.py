@@ -1,12 +1,12 @@
 # Configuration file for ipython-kernel.
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # ConnectionFileMixin(LoggingConfigurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## Mixin for configurable classes that work with connection files
 
 ## JSON file in which to store connection info [default: kernel-<pid>.json]
-#  
+#
 #      This file will contain the IP, ports, and authentication key needed to connect
 #      clients to this kernel. By default, this file will be created in the security dir
 #      of the current profile, but can be specified by absolute path.
@@ -44,17 +44,17 @@
 #  Default: 'tcp'
 # c.ConnectionFileMixin.transport = 'tcp'
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## A Mixin for applications that start InteractiveShell instances.
-#  
+#
 #      Provides configurables for loading extensions and executing files
 #      as part of configuring a Shell environment.
-#  
+#
 #      The following methods should be called by the :meth:`initialize` method
 #      of the subclass:
-#  
+#
 #        - :meth:`init_path`
 #        - :meth:`init_shell` (to be implemented by the subclass)
 #        - :meth:`init_gui_pylab`
@@ -83,18 +83,18 @@
 # c.InteractiveShellApp.extensions = []
 
 ## DEPRECATED. Dotted module name of a single extra IPython extension to load.
-#  
+#
 #  Only one extension can be added this way.
-#  
+#
 #  Only used with traitlets < 5.0, plural extra_extensions list is used in
 #  traitlets 5.
 #  Default: ''
 # c.InteractiveShellApp.extra_extension = ''
 
 ## Dotted module name(s) of one or more IPython extensions to load.
-#  
+#
 #  For specifying extra extensions to load on the command-line.
-#  
+#
 #  .. versionadded:: 7.10
 #  Default: []
 # c.InteractiveShellApp.extra_extensions = []
@@ -139,7 +139,7 @@
 
 ## If true, IPython will populate the user namespace with numpy, pylab, etc.
 #          and an ``import *`` is done from numpy and pylab, when using pylab mode.
-#  
+#
 #          When False, pylab mode should not import any names into the user
 #  namespace.
 #  Default: True
@@ -149,9 +149,9 @@
 #  Default: False
 # c.InteractiveShellApp.reraise_ipython_extension_failures = False
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## This is an application.
 
 ## The date format used by logging formatters for %(asctime)s
@@ -175,9 +175,9 @@
 #  Default: False
 # c.Application.show_config_json = False
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # BaseIPythonApplication(Application) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## IPython: an enhanced interactive Python shell.
 
 ## Whether to create profile dir if it doesn't exist
@@ -192,7 +192,7 @@
 # c.BaseIPythonApplication.copy_config_files = False
 
 ## Path to an extra config file to load.
-#  
+#
 #      If specified, load this config file in addition to any other IPython
 #  config.
 #  Default: ''
@@ -239,9 +239,9 @@
 #  Default: False
 # c.BaseIPythonApplication.verbose_crash = False
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # IPKernelApp(BaseIPythonApplication, InteractiveShellApp, ConnectionFileMixin) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## IPython: an enhanced interactive Python shell.
 
 ## Whether to create profile dir if it doesn't exist
@@ -293,11 +293,11 @@
 #  See also: BaseIPythonApplication.extra_config_file
 # c.IPKernelApp.extra_config_file = ''
 
-## 
+##
 #  See also: InteractiveShellApp.extra_extension
 # c.IPKernelApp.extra_extension = ''
 
-## 
+##
 #  See also: InteractiveShellApp.extra_extensions
 # c.IPKernelApp.extra_extensions = []
 
@@ -336,12 +336,12 @@
 #  See also: ConnectionFileMixin.ip
 # c.IPKernelApp.ip = ''
 
-## 
+##
 #  See also: BaseIPythonApplication.ipython_dir
 # c.IPKernelApp.ipython_dir = ''
 
 ## The Kernel subclass to be used.
-#  
+#
 #      This should allow easy re-use of the IPKernelApp entry point
 #      to configure and launch kernels other than IPython's own.
 #  Default: 'ipykernel.ipkernel.IPythonKernel'
@@ -435,11 +435,11 @@
 #  See also: BaseIPythonApplication.verbose_crash
 # c.IPKernelApp.verbose_crash = False
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Kernel(SingletonConfigurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## Whether to use appnope for compatibility with OS X App Nap.
-#  
+#
 #          Only affects OS X >= 10.9.
 #  Default: True
 # c.Kernel._darwin_app_nap = True
@@ -452,10 +452,10 @@
 
 ## time (in seconds) to wait for messages to arrive
 #          when aborting queued requests after an error.
-#  
+#
 #          Requests that arrive within this window after an error
 #          will be cancelled.
-#  
+#
 #          Increase in the event of unusually slow network
 #          causing significant delays,
 #          which can manifest as e.g. "Run all" in a notebook
@@ -463,9 +463,9 @@
 #  Default: 0.0
 # c.Kernel.stop_on_error_timeout = 0.0
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # IPythonKernel(Kernel) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## Whether to use appnope for compatibility with OS X App Nap.
 #  See also: Kernel._darwin_app_nap
 # c.IPythonKernel._darwin_app_nap = True
@@ -488,9 +488,9 @@
 #  Default: True
 # c.IPythonKernel.use_experimental_completions = True
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # InteractiveShell(SingletonConfigurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## An enhanced, interactive shell for Python.
 
 ## 'all', 'last', 'last_expr' or 'none', 'last_expr_or_assign' specifying which
@@ -658,28 +658,28 @@
 #  Default: 'Context'
 # c.InteractiveShell.xmode = 'Context'
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # ZMQInteractiveShell(InteractiveShell) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## A subclass of InteractiveShell for ZMQ.
 
-## 
+##
 #  See also: InteractiveShell.ast_node_interactivity
 # c.ZMQInteractiveShell.ast_node_interactivity = 'last_expr'
 
-## 
+##
 #  See also: InteractiveShell.ast_transformers
 # c.ZMQInteractiveShell.ast_transformers = []
 
-## 
+##
 #  See also: InteractiveShell.autoawait
 # c.ZMQInteractiveShell.autoawait = True
 
-## 
+##
 #  See also: InteractiveShell.autocall
 # c.ZMQInteractiveShell.autocall = 0
 
-## 
+##
 #  See also: InteractiveShell.automagic
 # c.ZMQInteractiveShell.automagic = True
 
@@ -691,11 +691,11 @@
 #  See also: InteractiveShell.banner2
 # c.ZMQInteractiveShell.banner2 = ''
 
-## 
+##
 #  See also: InteractiveShell.cache_size
 # c.ZMQInteractiveShell.cache_size = 1000
 
-## 
+##
 #  See also: InteractiveShell.color_info
 # c.ZMQInteractiveShell.color_info = True
 
@@ -714,7 +714,7 @@
 #  See also: InteractiveShell.display_page
 # c.ZMQInteractiveShell.display_page = False
 
-## 
+##
 #  See also: InteractiveShell.enable_html_pager
 # c.ZMQInteractiveShell.enable_html_pager = False
 
@@ -722,22 +722,22 @@
 #  See also: InteractiveShell.history_length
 # c.ZMQInteractiveShell.history_length = 10000
 
-## 
+##
 #  See also: InteractiveShell.history_load_length
 # c.ZMQInteractiveShell.history_load_length = 1000
 
 #  See also: InteractiveShell.ipython_dir
 # c.ZMQInteractiveShell.ipython_dir = ''
 
-## 
+##
 #  See also: InteractiveShell.logappend
 # c.ZMQInteractiveShell.logappend = ''
 
-## 
+##
 #  See also: InteractiveShell.logfile
 # c.ZMQInteractiveShell.logfile = ''
 
-## 
+##
 #  See also: InteractiveShell.logstart
 # c.ZMQInteractiveShell.logstart = False
 
@@ -749,7 +749,7 @@
 #  See also: InteractiveShell.object_info_string_level
 # c.ZMQInteractiveShell.object_info_string_level = 0
 
-## 
+##
 #  See also: InteractiveShell.pdb
 # c.ZMQInteractiveShell.pdb = False
 
@@ -789,7 +789,7 @@
 #  See also: InteractiveShell.show_rewritten_input
 # c.ZMQInteractiveShell.show_rewritten_input = True
 
-## 
+##
 #  See also: InteractiveShell.sphinxify_docstring
 # c.ZMQInteractiveShell.sphinxify_docstring = False
 
@@ -800,14 +800,14 @@
 #  See also: InteractiveShell.xmode
 # c.ZMQInteractiveShell.xmode = 'Context'
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # ProfileDir(LoggingConfigurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## An object to manage the profile directory and its resources.
-#  
+#
 #      The profile directory is used by all IPython applications, to manage
 #      configuration, logging and security.
-#  
+#
 #      This object knows how to find, create and manage these directories. This
 #      should be used by any code that wants to handle profiles.
 
@@ -816,33 +816,33 @@
 #  Default: ''
 # c.ProfileDir.location = ''
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Session(Configurable) configuration
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 ## Object for handling serialization and sending of messages.
-#  
+#
 #      The Session object handles building messages and sending them
 #      with ZMQ sockets or ZMQStream objects.  Objects can communicate with each
 #      other over the network via Session objects, and only need to work with the
 #      dict-based IPython message spec. The Session will handle
 #      serialization/deserialization, security, and metadata.
-#  
+#
 #      Sessions support configurable serialization via packer/unpacker traits,
 #      and signing with HMAC digests via the key/keyfile traits.
-#  
+#
 #      Parameters
 #      ----------
-#  
+#
 #      debug : bool
 #          whether to trigger extra debugging statements
 #      packer/unpacker : str : 'json', 'pickle' or import_string
 #          importstrings for methods to serialize message parts.  If just
 #          'json' or 'pickle', predefined JSON and pickle packers will be used.
 #          Otherwise, the entire importstring must be used.
-#  
+#
 #          The functions must accept at least valid JSON input, and output
 #  *bytes*.
-#  
+#
 #          For example, to use msgpack:
 #          packer = 'msgpack.packb', unpacker='msgpack.unpackb'
 #      pack/unpack : callables
@@ -864,7 +864,7 @@
 # c.Session.buffer_threshold = 1024
 
 ## Whether to check PID to protect against calls after fork.
-#  
+#
 #          This check can be disabled if fork-safety is handled elsewhere.
 #  Default: True
 # c.Session.check_pid = True
@@ -878,7 +878,7 @@
 # c.Session.debug = False
 
 ## The maximum number of digests to remember.
-#  
+#
 #          The digest history will be culled when it exceeds this value.
 #  Default: 65536
 # c.Session.digest_history_size = 65536

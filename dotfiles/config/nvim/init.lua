@@ -1,7 +1,7 @@
-require 'rb.plugins'
-require 'rb.utils'
-require 'rb.settings'
-require 'rb.mappings'
-require 'rb.autocmd'
-require 'rb.colors'
-require 'rb.plugins.init'
+require("rb.plugins")
+require("rb.utils")
+require("rb.settings")
+require("rb.mappings")
+require("rb.autocmd")
+require("rb.colors")
+require("rb.plugins.init")
