@@ -25,7 +25,7 @@
     comma = { url = github:Shopify/comma; flake = false; };
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
+  outputs = inputs@ { self, nixpkgs, darwin, home-manager, ... }:
   let
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
@@ -44,7 +44,7 @@
         system ? "x86_64-darwin",
         nixpkgs ? inputs.nixpkgs,
         stable ? inputs.nixos-stable,
-        baseModules ? [home-manager.darwinModules.home-manager ./darwin],
+        baseModules ? [home-manager.darwinModules.home-manager ./system/darwin],
         extraModules ? []
       }: 
       darwinSystem {
@@ -59,7 +59,7 @@
         nixpkgs ? inputs.nixpkgs,
         stable ? inputs.nixos-stable,
         baseModules ? [
-            ./home-manager
+            ./system/home-manager
             {
               home.sessionVariables = {
                 NIX_PATH =
@@ -86,17 +86,19 @@
     #       name = system;
     #       value = {
     #         darwin =
-    #           self.darwinConfigs.casper-03.config.system.build.toplevel;
+    #           self.darwinConfigurations.casper-03.config.system.build.toplevel;
     #       };
     #     })
     #     nixpkgs.lib.platforms.darwin)
     # );
 
-    darwinConfigs = {
-      casper-03 = mkDarwinConfig {};
+    darwinConfigurations = {
+      casper-03 = mkDarwinConfig {
+        system = "x86_64-darwin";
+      };
     };
 
-    homeManagerConfigs = {
+    homeConfigurations = {
       casper-03 = mkHomeManagerConfig {
         username = "richban";
         system = "x86_64-darwin";
