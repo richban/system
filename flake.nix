@@ -23,13 +23,17 @@
     # Other packages
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     comma = { url = github:Shopify/comma; flake = false; };
+
+    devshell.url = "github:numtide/devshell";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = inputs@ { self, nixpkgs, darwin, home-manager, ... }:
+  outputs = inputs@ { self, nixpkgs, darwin, home-manager, flake-utils, ... }:
   let
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfig;
+      inherit (flake-utils.lib) eachDefaultSystem eachSystem;
       inherit (builtins) listToAttrs map;
 
       isDarwin = system: (builtins.elem system nixpkgs.lib.platforms.darwin);
@@ -74,23 +78,24 @@
         homeDirectory = "${homePrefix system}/${username}";
         extraSpecialArgs = { inherit inputs nixpkgs stable; };
         configuration = {
-          imports = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];
+          imports = baseModules ++ extraModules ++ [ ./system/overlays.nix];
         };
       };
   in {
 
-    # checks = listToAttrs (
-    #   # darwin checks
-    #   (map
-    #     (system: {
-    #       name = system;
-    #       value = {
-    #         darwin =
-    #           self.darwinConfigurations.casper-03.config.system.build.toplevel;
-    #       };
-    #     })
-    #     nixpkgs.lib.platforms.darwin)
-    # );
+    # TODO: what are these checks?
+    checks = listToAttrs (
+      # darwin checks
+      (map
+        (system: {
+          name = system;
+          value = {
+            darwin =
+              self.darwinConfigurations.casper-03.config.system.build.toplevel;
+          };
+        })
+        nixpkgs.lib.platforms.darwin)
+    );
 
     darwinConfigurations = {
       casper-03 = mkDarwinConfig {
@@ -104,5 +109,29 @@
         system = "x86_64-darwin";
       };
     };
-  };
+  } //
+  # add a devShell to this flake
+  eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ inputs.devshell.overlay ];
+      };
+      pyEnv = (pkgs.python3.withPackages
+        (ps: with ps; [ black pylint typer colorama shellingham ]));
+      sysdo = pkgs.writeShellScriptBin "sysdo" ''
+        cd $PRJ_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
+      '';
+    in
+    {
+      devShell = pkgs.devshell.mkShell {
+        packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt ];
+        commands = [{
+          name = "sysdo";
+          package = sysdo;
+          category = "utilities";
+          help = "perform actions on this repository";
+        }];
+      };
+    });
 }
