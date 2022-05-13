@@ -53,7 +53,7 @@
         specialArgs = { inherit inputs nixpkgs stable; };
       };
 
-      mkHomeManagerConfig = {
+      mkHomeConfig = {
         username,
         system ? "x86_64-darwin",
         nixpkgs ? inputs.nixpkgs,
@@ -99,7 +99,7 @@
     };
 
     homeConfigurations = {
-      casper-03 = mkHomeManagerConfig {
+      casper-03 = mkHomeConfig {
         username = "richban";
         system = "x86_64-darwin";
       };
