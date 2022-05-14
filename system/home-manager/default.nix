@@ -1,7 +1,7 @@
 { inputs, config, pkgs, ... }:
 
 {
-  imports = [];
+  imports = [ ./zsh.nix ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
