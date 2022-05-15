@@ -33,7 +33,7 @@
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
-      inherit (flake-utils.lib) eachDefaultSystem eachSystem;
+      inherit (flake-utils.lib) eachSystemMap defaultSystems;
       inherit (builtins) listToAttrs map;
 
       isDarwin = system: (builtins.elem system nixpkgs.lib.platforms.darwin);
@@ -109,9 +109,10 @@
         system = "x86_64-darwin";
       };
     };
-  } //
+  };
+
   # add a devShell to this flake
-  eachDefaultSystem (system:
+  devShells = eachSystemMap defaultSystems (system:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -133,5 +134,6 @@
           help = "perform actions on this repository";
         }];
       };
-    });
+    }
+  );
 }
