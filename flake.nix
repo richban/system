@@ -109,31 +109,31 @@
         system = "x86_64-darwin";
       };
     };
-  };
 
-  # add a devShell to this flake
-  devShells = eachSystemMap defaultSystems (system:
-    let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ inputs.devshell.overlay ];
-      };
-      pyEnv = (pkgs.python3.withPackages
-        (ps: with ps; [ black pylint typer colorama shellingham]));
-      sysdo = pkgs.writeShellScriptBin "sysdo" ''
-        cd $PRJ_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
-      '';
-    in
-    {
-      devShell = pkgs.devshell.mkShell {
-        packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt nodePackages.prettier];
-        commands = [{
-          name = "sysdo";
-          package = sysdo;
-          category = "utilities";
-          help = "perform actions on this repository";
-        }];
-      };
-    }
-  );
+    # add a devShell to this flake
+    devShells = eachSystemMap defaultSystems (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ inputs.devshell.overlay ];
+        };
+        pyEnv = (pkgs.python3.withPackages
+          (ps: with ps; [ black pylint typer colorama shellingham]));
+        sysdo = pkgs.writeShellScriptBin "sysdo" ''
+          cd $PRJ_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
+        '';
+      in
+      {
+        default = pkgs.devshell.mkShell {
+          packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt nodePackages.prettier];
+          commands = [{
+            name = "sysdo";
+            package = sysdo;
+            category = "utilities";
+            help = "perform actions on this repository";
+          }];
+        };
+      }
+    );
+  };
 }
