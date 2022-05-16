@@ -1,7 +1,7 @@
 { inputs, config, pkgs, ... }:
 
 {
-  imports = [ ./zsh.nix ];
+  imports = [./zsh.nix ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -26,7 +26,6 @@
       gitAndTools.gh
       ripgrep
       shellcheck
-      httpie
       graphviz
       gnupg
       git

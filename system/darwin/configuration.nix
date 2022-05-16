@@ -9,7 +9,7 @@
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  # environment.darwinConfig = "$HOME/.dotfiles/system/darwin/configuration.nix";
+  environment.darwinConfig = "$HOME/.dotfiles/system/darwin";
 
   environment.loginShell = pkgs.zsh;
 
@@ -17,7 +17,7 @@
 
   nix.nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
   nix.extraOptions = ''
-    extra-platforms = x86_64-darwin aarch64-darwin
+    extra-platforms = x86_64-darwin
   '';
 
   # Auto upgrade nix package and the daemon service.
