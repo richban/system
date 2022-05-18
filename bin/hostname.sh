@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 printf 'Enter hostname: '
 read HOSTNAME
 sudo scutil --set HostName ${HOSTNAME}

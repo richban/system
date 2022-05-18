@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 if ! brew ls --versions pyenv > /dev/null; then
     brew install pyenv
     brew install pyenv-virtualenv
