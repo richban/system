@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, lib, ... }:
 
 {
   imports = [./zsh.nix ];
@@ -7,6 +7,18 @@
   programs.home-manager.enable = true;
 
   programs.bat.enable = true;
+  programs.fzf = {
+    enable = true;
+    fileWidgetOptions = [
+      # Preview the contents of the selected file - CTRL+T
+      "--preview 'bat --color=always --plain {}'"
+    ];
+
+    changeDirWidgetOptions = [
+      # Preview the contents of the selected directory - ALT-C
+      "--preview 'exa -l --tree --level=2 --color=always {}'"
+    ];
+  };
 
   home = {
     # Home Manager needs a bit of information about you and the
@@ -22,7 +34,6 @@
       jq
       readline
       tldr
-      git
       gitAndTools.gh
       ripgrep
       shellcheck
@@ -47,5 +58,18 @@
       docker
       google-cloud-sdk
     ];
+
+    file = {
+      hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+        source = ../../dotfiles/hammerspoon;
+        target = ".hammerspoon";
+        recursive = true;
+      };
+      functions = {
+        source = ../../dotfiles/functions;
+        target = ".functions";
+        recursive = true;
+      };
+    };
   };
 }
