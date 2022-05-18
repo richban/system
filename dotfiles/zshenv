@@ -20,13 +20,9 @@ export ENHANCD_FILTER=fzy:fzf:peco
 
 export GPG_TTY=$(tty)
 
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
-
-export PYTHONPATH='/Users/$(whoami).local/pipx/venvs/pdm/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
-
-export CXX=/usr/local/bin/g++-11
-export CC=/usr/local/bin/gcc-11
-export CPP=/usr/local/bin/cpp
+# export CXX=/usr/local/bin/g++-11
+# export CC=/usr/local/bin/gcc-11
+# export CPP=/usr/local/bin/cpp
 
 export BEAN_ROOT=~/Developer/richban.ledger
 
