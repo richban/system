@@ -131,6 +131,11 @@ in {
         target = ".ctags";
         recursive = true;
       };
+      tmuxinator = {
+        source = ../../dotfiles/config/tmuxinator;
+        target = ".config/tmuxinator";
+        recursive = true;
+      };
     };
   };
 }
