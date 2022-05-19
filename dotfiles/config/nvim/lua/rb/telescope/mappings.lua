@@ -30,17 +30,13 @@ map_tele("<leader>en", "edit_neovim")
 map_tele("<leader>ec", "find_configs")
 
 -- Search
-map_tele(
-	"<leader>gw",
-	"grep_string",
-	{
-		short_path = true,
-		word_match = "-w",
-		only_sort_text = true,
-		layout_strategy = "vertical",
-		sorter = sorters.get_fzy_sorter(),
-	}
-)
+map_tele("<leader>gw", "grep_string", {
+	short_path = true,
+	word_match = "-w",
+	only_sort_text = true,
+	layout_strategy = "vertical",
+	sorter = sorters.get_fzy_sorter(),
+})
 map_tele("<leader>f/", "grep_last_search", { layout_strategy = "vertical" })
 
 -- Files

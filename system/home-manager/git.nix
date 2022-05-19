@@ -5,6 +5,11 @@
     git-crypt
     gitAndTools.delta
   ];
+
+    home.file.gitignore = {
+        source = ../../dotfiles/gitignore;
+        target = ".gitignore";
+      };
   programs.git = {
     enable = true;
     userName = "richban";

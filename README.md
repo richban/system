@@ -19,18 +19,16 @@
   - Snippets
   - Gitsigns
 
-
 #### Window Manager
 
 - [yabai](https://github.com/koekeishiya/yabai) tiling window manager
 - [skhd](https://github.com/koekeishiya/skhd) hotkey deamon to control `yabai`
 - [simple-bar](https://www.simple-bar.com/) an `Übersicht` status bar widget for `yabai`
 
-
 #### Dotfile Manager
 
 - [Dotdrop](https://dotdrop.readthedocs.io/en/latest/) dotfiles manager that installs dotfiles and profiles:
-    - `zsh` configure `zsh`, aliases, functions, theme etc.
-    - `win_manager` configure `yabai` window manager
-    - `neovim` installs neovim, LSPs, packer plugin neovim manager
-    - `python` install python development environment: `poetry`, `pyenv`, `pipenv` and other python specific tools like `pylsp`, `black`, `isort` etc.
+  - `zsh` configure `zsh`, aliases, functions, theme etc.
+  - `win_manager` configure `yabai` window manager
+  - `neovim` installs neovim, LSPs, packer plugin neovim manager
+  - `python` install python development environment: `poetry`, `pyenv`, `pipenv` and other python specific tools like `pylsp`, `black`, `isort` etc.
