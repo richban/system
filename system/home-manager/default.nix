@@ -94,6 +94,7 @@ in {
       shellcheck
       graphviz
       gnupg
+      zenith
       htop
       bottom
       tree
