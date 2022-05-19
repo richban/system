@@ -71,7 +71,7 @@ in {
       padding_right              = 20;
       spacing_left               = 25;
       spacing_right              = 15;
-      text_font                  = ''"Hack Nerd Font Mono:Regular:12.0"'';
+      text_font                  = ''"FiraMono Nerd Font Mono:Regular:12.0"'';
       icon_font                  = ''"Font Awesome 5 Free:Solid:12.0"'';
       background_color           = "0xff202020";
       foreground_color           = "0xffa8a8a8";

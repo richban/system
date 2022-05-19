@@ -11,15 +11,15 @@ window:
 
 font:
   normal:
-    family: Hack Nerd Font Mono
+    family: FiraMono Nerd Font Mono
     style: Medium
 
   bold:
-    family: Hack Nerd Font Mono
+    family: FiraMono Nerd Font Mono
     style: Bold
 
   italic:
-    family: Hack Nerd Font Mono
+    family: FiraMono Nerd Font Mono
     style: Italic
 
   # Font size

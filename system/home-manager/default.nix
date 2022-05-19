@@ -52,6 +52,7 @@ in {
     };
   };
 
+  # TODO: fix config does not seem to work
   programs.tmux = {
     enable = true;
     tmuxinator.enable  = true;
@@ -106,6 +107,12 @@ in {
       starship
       pre-commit
       exa
+
+      bat
+      bat-extras.batgrep
+      bat-extras.batman
+      bat-extras.batwatch
+      bat-extras.prettybat
 
       terraform
       docker

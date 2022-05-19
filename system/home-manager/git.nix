@@ -10,6 +10,7 @@
         source = ../../dotfiles/gitignore;
         target = ".gitignore";
       };
+
     programs.git = {
         enable = true;
         userName = "richban";

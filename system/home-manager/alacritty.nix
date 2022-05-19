@@ -37,7 +37,6 @@ let
         # by DPI and the specified value is always added at both opposing sides.
         padding = { x = 5; y = 5; };
         dynamic_padding = false;
-        startup_mode = "Fullscreen";
 
         # Window decorations
         #
@@ -52,15 +51,15 @@ let
       };
 
       font = {
-        size = 14;
+        size = 16;
 
-        normal.family = "Hack Nerd Font Mono";
+        normal.family = "FiraMono Nerd Font Mono";
         normal.style = "Regular";
-        bold.family = "Hack Nerd Font Mono";
+        bold.family = "FiraMono Nerd Font Mono";
         bold.style = "Bold";
-        italic.family = "Hack Nerd Font Mono";
+        italic.family = "FiraMono Nerd Font Mono";
         italic.style = "Italic";
-        bold_italic.family = "Hack Nerd Font Mono";
+        bold_italic.family = "FiraMono Nerd Font Mono";
         bold_italic.style = "Bold Italic";
       };
 
