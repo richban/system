@@ -43,6 +43,7 @@
       wget
       git
       jq
+      gnupg
 
       # helpful shell stuff
       bat
@@ -62,6 +63,7 @@
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     recursive
+        # Selection of fonts from the package, you can overwrite the font selection
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 }

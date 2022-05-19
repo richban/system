@@ -6,7 +6,9 @@
         enableSyntaxHighlighting = true;
         enableAutosuggestions = true;
         shellAliases = import ./aliases.nix {pkgs = pkgs;};
-        sessionVariables = {};
+        sessionVariables = {
+            ZSH_HIGHLIGHT_HIGHLIGHTERS = "brackets";
+        };
         history = {
             size = 10000;
             path = "${config.xdg.dataHome}/zsh/history";
@@ -30,6 +32,15 @@
                 repo = "enhancd";
                 rev = "v2.2.1";
                 sha256 = "0iqa9j09fwm6nj5rpip87x3hnvbbz9w9ajgm6wkrd5fls8fn8i5g";
+            };
+        }
+        {
+            name = "zsh-autopair";
+            src = pkgs.fetchFromGitHub {
+                owner = "hlissner";
+                repo = "zsh-autopair";
+                rev = "9d003fc02dbaa6db06e6b12e8c271398478e0b5d";
+                sha256 = "hwZDbVo50kObLQxCa/wOZImjlH4ZaUI5W5eWs/2RnWg=";
             };
         }
         ];
@@ -56,6 +67,8 @@
             bindkey "^B" backward-word
             bindkey "^A" beginning-of-line
             bindkey "^E" end-of-line
+
+            autopair-init
         '';
         envExtra = ''
             export PATH="$PATH:/usr/local/bin"

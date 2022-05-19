@@ -1,10 +1,14 @@
 { inputs, config, pkgs, ... }:
-
-{
+let 
+  callPackage = pkgs.callPackage;
+  hammerspoon = callPackage ../hammerspoon.nix { };
+in {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages =
-    [ pkgs.alacritty
+  environment.systemPackages = with pkgs;
+    [ 
+      alacritty
+      hammerspoon
     ];
 
   # Use a custom configuration.nix location.

@@ -1,7 +1,17 @@
 { inputs, config, pkgs, lib, ... }:
-
-{
+let
+  relativeXDGConfigPath = ".config";
+  relativeXDGDataPath = ".local/share";
+  relativeXDGCachePath = ".cache";
+in {
   imports = [./zsh.nix ];
+
+  xdg = {
+    enable = true;
+    configHome = "/Users/richban/${relativeXDGConfigPath}";
+    dataHome = "/Users/richban/${relativeXDGDataPath}";
+    cacheHome = "/Users/richban/${relativeXDGCachePath}";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -19,6 +29,43 @@
       "--preview 'exa -l --tree --level=2 --color=always {}'"
     ];
   };
+
+  programs.starship = {
+    enable = true;
+    # Configuration written to ~/.config/starship.toml
+    settings = {
+      "$schema" = "https://starship.rs/config-schema.json";
+
+      add_newline = true;
+
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+        vicmd_symbol = "[V](bold green) ";
+      };
+
+      # package.disabled = true;
+    };
+  };
+
+  programs.tmux = {
+    enable = true;
+    tmuxinator.enable  = true;
+
+    plugins = with pkgs; [
+      tmuxPlugins.yank
+      tmuxPlugins.copycat
+      tmuxPlugins.dracula
+      tmuxPlugins.fpp
+      tmuxPlugins.better-mouse-mode
+      tmuxPlugins.vim-tmux-navigator
+    ];
+
+    extraConfig = ''
+      ${builtins.readFile ../../dotfiles/new.tmux.conf}
+    '';
+  };
+
 
   home = {
     # Home Manager needs a bit of information about you and the
@@ -68,6 +115,11 @@
       functions = {
         source = ../../dotfiles/functions;
         target = ".functions";
+        recursive = true;
+      };
+      ctags = {
+        source = ../../dotfiles/ctags;
+        target = ".ctags";
         recursive = true;
       };
     };
