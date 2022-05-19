@@ -57,6 +57,7 @@
     shells = with pkgs; [ bash zsh ];
   };
 
+  # TODO: fix glyphs and powerline fonts
   # Fonts
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
