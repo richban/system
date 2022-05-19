@@ -4,7 +4,7 @@ let
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [./zsh.nix ./alacritty.nix ];
+  imports = [./zsh.nix ./alacritty.nix ./git.nix ];
 
   xdg = {
     enable = true;
@@ -89,12 +89,10 @@ in {
       jq
       readline
       tldr
-      gitAndTools.gh
       ripgrep
       shellcheck
       graphviz
       gnupg
-      git
       htop
       bottom
       tree

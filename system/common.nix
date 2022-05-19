@@ -40,8 +40,7 @@
     systemPackages = with pkgs; [
       # standard toolset
       curl
-      wget
-      git
+      wgets
       jq
       gnupg
 
