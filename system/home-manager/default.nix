@@ -28,6 +28,10 @@ in {
       # Preview the contents of the selected directory - ALT-C
       "--preview 'exa -l --tree --level=2 --color=always {}'"
     ];
+
+    historyWidgetOptions = [
+      "--preview-window=:hidden"
+    ];
   };
 
   programs.starship = {
@@ -51,16 +55,21 @@ in {
   programs.tmux = {
     enable = true;
     tmuxinator.enable  = true;
+    prefix = "C-a";
+    baseIndex = 1;
 
     plugins = with pkgs; [
+      tmuxPlugins.sensible
       tmuxPlugins.yank
       tmuxPlugins.copycat
-      tmuxPlugins.dracula
       tmuxPlugins.fpp
+      tmuxPlugins.resurrect
+      tmuxPlugins.continuum
       tmuxPlugins.better-mouse-mode
-      tmuxPlugins.vim-tmux-navigator
+      tmuxPlugins.pain-control
+      # tmuxPlugins.vim-tmux-navigator
+      # tmuxPlugins.dracula
     ];
-
     extraConfig = ''
       ${builtins.readFile ../../dotfiles/new.tmux.conf}
     '';
