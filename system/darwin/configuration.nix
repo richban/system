@@ -43,10 +43,18 @@ in {
   #       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   # ];
 
-  services.yabai.enable = false;
-  services.yabai.package = pkgs.yabai;
-  services.skhd.enable = false;
+  # TODO: waiting for latest version
+  services.yabai = {
+    enable = false;
+    package = pkgs.yabai;
+    enableScriptingAddition = true;
+    extraConfig = builtins.readFile ../../dotfiles/yabairc;
+  };
 
+  services.skhd.enable = false;
+  services.skhd.skhdConfig = builtins.readFile ../../dotfiles/skhdrc;
+
+  # Home Manager
   # users.users.richban = {
   #   description = "Richard Banyi";
   #   name = "richban";

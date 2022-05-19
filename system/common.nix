@@ -23,24 +23,23 @@
   };
 
   # bootstrap home manager using system config
-  home-manager.users.richban = { ... }: {
-    imports = [ ./home-manager ];
-  };
+  # home-manager.users.richban = { ... }: {
+  #   imports = [ ./home-manager ];
+  # };
 
-  # let nix manage home-manager profiles and use global nixpkgs
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "backup";
-  };
+  # # let nix manage home-manager profiles and use global nixpkgs
+  # home-manager = {
+  #   extraSpecialArgs = { inherit inputs; };
+  #   useGlobalPkgs = true;
+  #   useUserPackages = true;
+  #   backupFileExtension = "backup";
+  # };
 
   # environment setup
   environment = {
     systemPackages = with pkgs; [
       # standard toolset
       curl
-      wgets
       jq
       gnupg
 

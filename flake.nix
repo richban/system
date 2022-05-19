@@ -24,6 +24,8 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     comma = { url = github:Shopify/comma; flake = false; };
 
+    spacebar.url = "github:cmacrae/spacebar/v1.4.0";
+
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -42,6 +44,7 @@
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
         inputs.neovim-nightly-overlay.overlay
+        inputs.spacebar.overlay
       ];
 
       mkDarwinConfig = {
