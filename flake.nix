@@ -79,6 +79,10 @@
         extraSpecialArgs = { inherit inputs nixpkgs stable; };
         configuration = {
           imports = baseModules ++ extraModules ++ [ ./system/overlays.nix];
+          # NOTE: Here we are injecting colorscheme so that it is passed down all the imports
+          _module.args = {
+            colorscheme = (import ./system/colorschemes/dracula.nix);
+          };
         };
       };
   in {

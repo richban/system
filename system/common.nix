@@ -64,6 +64,6 @@
   fonts.fonts = with pkgs; [
     recursive
         # Selection of fonts from the package, you can overwrite the font selection
-        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+        (nerdfonts.override { fonts = [ "Hack"]; })
   ];
 }

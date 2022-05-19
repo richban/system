@@ -6,7 +6,20 @@ let
         "TERM" = "xterm-256color";
       };
 
-      background_opacity = 1.0;
+      opacity = 1.0;
+      use_thin_strokes = false;
+
+      glyph_offset = {
+          x = 0;
+          y = 7;
+      };
+
+      selection = {
+        semantic_escape_chars = ",│`|:\"' ()[]{}<>\t";
+
+         # When set to `true`, selected text will be copied to the primary clipboard.
+        save_to_clipboard = true;
+      };
 
       window = {
         # Window dimensions (changes require restart)
@@ -24,6 +37,7 @@ let
         # by DPI and the specified value is always added at both opposing sides.
         padding = { x = 5; y = 5; };
         dynamic_padding = false;
+        startup_mode = "Fullscreen";
 
         # Window decorations
         #
@@ -38,7 +52,7 @@ let
       };
 
       font = {
-        size = 10;
+        size = 14;
 
         normal.family = "Hack Nerd Font Mono";
         normal.style = "Regular";
@@ -142,6 +156,15 @@ let
         { key = "H"; mods = "Command"; action = "Hide"; }
         { key = "Q"; mods = "Command"; action = "Quit"; }
         { key = "W"; mods = "Command"; action = "Quit"; }
+        { key = "LBracket"; mods = "Command"; chars = "\x5c\x70"; }
+        # Use command + ] - to go to previous tmux window
+        { key = "RBracket"; mods = "Command"; chars = "\x5c\x6e"; }
+        # ctrl-^ doesn't work in some terminals like alacritty
+        { key = "Key6"; mods = "Control"; chars = "\x1e"; }
+        { key = "Plus"; mods = "Command"; action = "IncreaseFontSize"; }
+        { key = "Minus"; mods = "Command"; action = "DecreaseFontSize"; }
+        { key = "Key0"; mods = "Command"; action =  "ResetFontSize"; }
+        { key = "F"; mods = "Command|Control"; action = "ToggleFullscreen"; }
       ];
     };
 in

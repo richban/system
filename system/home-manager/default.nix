@@ -4,7 +4,7 @@ let
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [./zsh.nix ];
+  imports = [./zsh.nix ./alacritty.nix ];
 
   xdg = {
     enable = true;
@@ -75,7 +75,6 @@ in {
     '';
   };
 
-
   home = {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
@@ -103,7 +102,7 @@ in {
       curl
       wget
       glow
-      ctags
+      universal-ctags
       unzip
       gnused
       starship
@@ -112,6 +111,7 @@ in {
 
       terraform
       docker
+      docker-compose
       google-cloud-sdk
     ];
 
