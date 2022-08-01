@@ -1,5 +1,5 @@
 { inputs, config, lib, pkgs, ... }: {
-  imports = [ ./nixpkgs.nix];
+  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix];
 
   programs.zsh = {
     enable = true;
@@ -7,39 +7,35 @@
     enableBashCompletion = true;
   };
 
-#   user = {
-#     description = "Richard Banyi";
-#     home = "${
-#         if pkgs.stdenvNoCC.isDarwin then "/Users" else "/home"
-#       }/${config.user.name}";
-#     shell = pkgs.zsh;
-#   };
-
-  users.users.richban = {
+  # bootsrap primary user
+  user = {
     description = "Richard Banyi";
-    name = "richban";
-    home = "/Users/richban";
+    name = "${config.user.name}";
+    home = "${
+        if pkgs.stdenvNoCC.isDarwin then "/Users" else "/home"
+      }/${config.user.name}";
     shell = pkgs.zsh;
   };
 
-  # bootstrap home manager using system config
-  # home-manager.users.richban = { ... }: {
-  #   imports = [ ./home-manager ];
-  # };
+  # bootstrap home-manager
+  hm = import ./home-manager;
 
-  # # let nix manage home-manager profiles and use global nixpkgs
-  # home-manager = {
-  #   extraSpecialArgs = { inherit inputs; };
-  #   useGlobalPkgs = true;
-  #   useUserPackages = true;
-  #   backupFileExtension = "backup";
-  # };
+  # Enable home-manager
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "backup";
+  };
 
   # environment setup
   environment = {
     systemPackages = with pkgs; [
       # standard toolset
       curl
+      coreutils-full
+      wget
+      git
       jq
       gnupg
 
@@ -58,12 +54,9 @@
     shells = with pkgs; [ bash zsh ];
   };
 
-  # TODO: fix glyphs and powerline fonts
-  # Fonts
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
-    recursive
         # Selection of fonts from the package, you can overwrite the font selection
-        (nerdfonts.override { fonts = [ "Hack" "FiraMono" "FiraCode" ]; })
+        (nerdfonts.override { fonts = [ "Hack" "FiraMono" ]; })
   ];
 }
