@@ -8,13 +8,20 @@ in {
 
   xdg = {
     enable = true;
-    configHome = "/Users/richban/${relativeXDGConfigPath}";
-    dataHome = "/Users/richban/${relativeXDGDataPath}";
-    cacheHome = "/Users/richban/${relativeXDGCachePath}";
+    configHome = "${config.home.homeDirectory}/${relativeXDGConfigPath}";
+    dataHome = "${config.home.homeDirectory}/${relativeXDGDataPath}";
+    cacheHome = "${config.home.homeDirectory}/${relativeXDGCachePath}";
+  };
+
+  nixpkgs.config = {
+    allowUnfree = true;
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs.home-manager = {
+    enable = true;
+    path = "${config.home.homeDirectory}/Developer/dotfiles/system/home-manager";
+  };
 
   programs.bat.enable = true;
   programs.fzf = {
@@ -76,11 +83,25 @@ in {
     '';
   };
 
-  home = {
+  home = 
+    let NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
+  in {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
-    username = "richban";
-    homeDirectory = "/Users/richban";
+    # username = "richban";
+    # homeDirectory = "/Users/richban";
+    sessionVariables = {
+      GPG_TTY = "/dev/ttys000";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      JAVA_HOME = "${pkgs.openjdk11.home}";
+      NODE_PATH = "${NODE_GLOBAL}/lib";
+      # HOMEBREW_NO_AUTO_UPDATE = 1;
+    };
+    sessionPath = [
+      "${NODE_GLOBAL}/bin"
+      "${config.home.homeDirectory}/.rd/bin"
+    ];
 
     packages = with pkgs; [
       coreutils
