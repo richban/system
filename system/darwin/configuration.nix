@@ -2,7 +2,12 @@
 let 
   callPackage = pkgs.callPackage;
   hammerspoon = callPackage ../hammerspoon.nix { };
+  
+  inherit (pkgs.stdenvNoCC) isAarch64 isAarch32;
 in {
+
+  homebrew.brewPrefix = if isAarch64 || isAarch32 then "/opt/homebrew/bin" else "/usr/local/bin";
+  
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs;
@@ -14,7 +19,7 @@ in {
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  environment.darwinConfig = "$HOME/.dotfiles/system/darwin";
+  environment.darwinConfig = "$HOME/Developer/dotfiles/system/darwin";
 
   environment.loginShell = pkgs.zsh;
 
@@ -22,7 +27,7 @@ in {
 
   nix.nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
   nix.extraOptions = ''
-    extra-platforms = x86_64-darwin
+    extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
   # Auto upgrade nix package and the daemon service.
@@ -36,13 +41,6 @@ in {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog¡
   system.stateVersion = 4;
-
-  # Fonts
-  # fonts.fontDir.enable = true;
-  # fonts.fonts = with pkgs; [
-  #   recursive
-  #       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-  # ];
 
   # TODO: waiting for latest version
   services.yabai = {
@@ -72,13 +70,11 @@ in {
       spacing_left               = 25;
       spacing_right              = 15;
       text_font                  = ''"FiraMono Nerd Font Mono:Regular:12.0"'';
-      icon_font                  = ''"Font Awesome 5 Free:Solid:12.0"'';
+      icon_font                  = ''"FontMono Nerd Font Mono:Solid:12.0"'';
       background_color           = "0xff202020";
       foreground_color           = "0xffa8a8a8";
       power_icon_color           = "0xffcd950c";
-      battery_icon_color         = "0xffd75f5f";
       dnd_icon_color             = "0xffa8a8a8";
-      clock_icon_color           = "0xffa8a8a8";
       power_icon_strip           = " ";
       space_icon                 = "•";
       space_icon_strip           = "1 2 3 4 5 6 7 8 9 10";
@@ -96,26 +92,6 @@ in {
       right_shell_command        = "whoami";
     };
   };
-
-  # Home Manager
-  # users.users.richban = {
-  #   description = "Richard Banyi";
-  #   name = "richban";
-  #   home = "/Users/richban";
-  #   shell = pkgs.zsh;
-  # };
-
-  # let nix manage home-manager profiles and use global nixpkgs
-  # home-manager = {
-  #   useGlobalPkgs = true;
-  #   useUserPackages = true;
-  #   backupFileExtension = "backup";
-  # };
-
-  # home-manager.users.richban = { ... }: {
-  #   imports = [ ../home-manager ];
-  # };
-
 
   # Keyboard
   # system.keyboard.enableKeyMapping = true;
