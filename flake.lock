@@ -23,16 +23,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1650472527,
-        "narHash": "sha256-70hI6j0moI5n4wsVCDd27qcGePDfBcjlK4mtGLYB+lk=",
+        "lastModified": 1653017669,
+        "narHash": "sha256-NSZV1T+KE+suXlxOiOhoLjxya13AvA1hEaKK8qkgEGY=",
         "owner": "kclejeune",
         "repo": "nix-darwin",
-        "rev": "fff582f3244f31e7455d0c5d93f2e3aa7554da90",
+        "rev": "c9c32574428a3182dcb2bd24ef6c73c974c368ae",
         "type": "github"
       },
       "original": {
         "owner": "kclejeune",
-        "ref": "backup-etc",
         "repo": "nix-darwin",
         "type": "github"
       }
@@ -197,6 +196,22 @@
         "type": "github"
       }
     },
+    "nixos-unstable": {
+      "locked": {
+        "lastModified": 1658985157,
+        "narHash": "sha256-f8JN0mQGSaEfw6HjMST0yViBTln/kzfTxe+qHutzvEI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "bba87fc2a33618d86233fbdddc6b84971e6b5558",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1643381941,
@@ -254,6 +269,7 @@
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixos-stable": "nixos-stable",
+        "nixos-unstable": "nixos-unstable",
         "nixpkgs": "nixpkgs_3"
       }
     }

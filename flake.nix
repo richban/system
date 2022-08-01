@@ -7,10 +7,11 @@
     
     # TODO: configure NixOS
     nixos-stable.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Darwin system management
     darwin = {
-      url = "github:kclejeune/nix-darwin/backup-etc";
+      url = "github:kclejeune/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -47,6 +48,7 @@
         # inputs.spacebar
       ];
 
+      # generate a darwin config
       mkDarwinConfig = {
         system ? "x86_64-darwin",
         nixpkgs ? inputs.nixpkgs,
@@ -60,6 +62,7 @@
         specialArgs = { inherit inputs nixpkgs stable; };
       };
 
+      # generate a home-manager config for any unix system
       mkHomeConfig = {
         username,
         system ? "x86_64-darwin",
@@ -68,24 +71,25 @@
         baseModules ? [
             ./system/home-manager
             {
-              home.sessionVariables = {
-                NIX_PATH =
-                  "nixpkgs=${nixpkgs}:stable=${stable}\${NIX_PATH:+:}$NIX_PATH";
+              home = {
+                inherit username;
+                homeDirectory = "${homePrefix system}/${username}";
+                sessionVariables = {
+                  NIX_PATH =
+                    "nixpkgs=${nixpkgs}:stable=${stable}\${NIX_PATH:+:}$NIX_PATH";
+                };
               };
             }
         ],
         extraModules ? []
       }:
       homeManagerConfiguration rec {
-        inherit system username;
-        homeDirectory = "${homePrefix system}/${username}";
+        pkgs = import nixpkgs {
+          inherit system;
+        };
         extraSpecialArgs = { inherit inputs nixpkgs stable; };
-        configuration = {
+        modules = {
           imports = baseModules ++ extraModules ++ [ ./system/overlays.nix];
-          # NOTE: Here we are injecting colorscheme so that it is passed down all the imports
-          _module.args = {
-            colorscheme = (import ./system/colorschemes/dracula.nix);
-          };
         };
       };
   in {
@@ -98,29 +102,39 @@
           name = system;
           value = {
             darwin =
-              self.darwinConfigurations.casper-03.config.system.build.toplevel;
+              self.darwinConfigurations.darwinCasperIntel.config.system.build.toplevel;
           };
         })
         nixpkgs.lib.platforms.darwin)
     );
 
     darwinConfigurations = {
-      casper-03 = mkDarwinConfig {
+      darwinCasperIntel = mkDarwinConfig {
         system = "x86_64-darwin";
+        extraModules = [ ./system/hosts/personal.nix ];
+      };
+      darwinWorkM1 = mkDarwinConfig {
+        system = "aarch64-darwin";
+        extraModules = [ ./system/hosts/work.nix ];
       };
     };
 
     homeConfigurations = {
-      casper-03 = mkHomeConfig {
+      richbanIntel = mkHomeConfig {
         username = "richban";
         system = "x86_64-darwin";
+      };
+      richbanWorkM1 = mkHomeConfig {
+        username = "richard_banyi";
+        system = "aarch64-darwin";
+        extraModules = [ ./system/hosts/work.nix ];
       };
     };
 
     # add a devShell to this flake
     devShells = eachSystemMap defaultSystems (system:
       let
-        pkgs = import nixpkgs {
+        pkgs = import inputs.nixos-stable {
           inherit system;
           overlays = [ inputs.devshell.overlay ];
         };
