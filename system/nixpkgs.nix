@@ -11,7 +11,7 @@
       experimental-features = nix-command flakes
     '';
     # Add administrators to trusted users
-    trustedUsers = [ "richban" "root" "@admin" "@wheel" ];
+    trustedUsers = [ "${config.user.name}" "root" "@admin" "@wheel" ];
     
     # Garbage collection
     gc = {
