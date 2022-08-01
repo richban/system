@@ -17,7 +17,7 @@
         userEmail = "rbanyi@me.com";
 
         signing = {
-            key = "EBF3A7C8A62F1F11";
+            key = "2E32ED161EBD663C";
             signByDefault = true;
         };
 

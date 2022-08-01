@@ -1,5 +1,6 @@
-{ config, pkgs, lib, colorscheme, ... }:
+{ config, pkgs, lib, ... }:
 let
+  colorscheme = (import ../colorschemes/dracula.nix);
   config = { colors }:
     {
       env = {
