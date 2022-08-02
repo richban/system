@@ -4,7 +4,7 @@ let
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [./zsh.nix ./alacritty.nix ./git.nix ];
+  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim ];
 
   xdg = {
     enable = true;
