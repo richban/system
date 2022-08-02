@@ -63,7 +63,8 @@ in {
   programs.tmux = {
     enable = true;
     tmuxinator.enable  = true;
-    prefix = "C-a";
+    # prefix = "C-a";
+    shortcut = "a";
     baseIndex = 1;
 
     plugins = with pkgs; [
@@ -88,8 +89,6 @@ in {
   in {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
-    # username = "richban";
-    # homeDirectory = "/Users/richban";
     sessionVariables = {
       GPG_TTY = "/dev/ttys000";
       EDITOR = "nvim";
@@ -100,7 +99,6 @@ in {
     };
     sessionPath = [
       "${NODE_GLOBAL}/bin"
-      "${config.home.homeDirectory}/.rd/bin"
     ];
 
     packages = with pkgs; [
