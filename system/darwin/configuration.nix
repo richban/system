@@ -13,6 +13,7 @@ in {
   environment.systemPackages = with pkgs;
     [ 
       alacritty
+      _1password
       hammerspoon
       spacebar
     ];

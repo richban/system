@@ -84,6 +84,21 @@ in {
     '';
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    stdlib = ''
+        # https://github.com/direnv/direnv/wiki/Customizing-cache-location
+        declare -A direnv_layout_dirs
+        direnv_layout_dir() {
+            echo "''${direnv_layout_dirs[$PWD]:=$(
+                echo -n "${config.xdg.cacheHome}"/direnv/layouts/
+                echo -n "$PWD" | shasum | cut -d ' ' -f 1
+            )}"
+        }
+    '';
+  };
+
   home = 
     let NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
   in {
@@ -125,8 +140,10 @@ in {
       unzip
       gnused
       starship
-      pre-commit
       exa
+
+      treefmt
+      pre-commit
 
       bat
       bat-extras.batgrep
