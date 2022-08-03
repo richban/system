@@ -1,4 +1,5 @@
 require("os")
+
 local path_sep = vim.loop.os_uname().sysname == "Windows" and "\\" or "/"
 local function path_join(...)
 	return table.concat(vim.tbl_flatten({ ... }), path_sep)
@@ -9,6 +10,8 @@ vim.cmd("filetype plugin indent on")
 if vim.fn.has("vim_starting") == 1 then
 	vim.cmd("syntax enable")
 end
+
+vim.o.shell = "zsh"
 
 vim.o.nu = true
 vim.o.mouse = "a"
@@ -77,9 +80,9 @@ vim.cmd([[set shortmess+=c]])
 vim.o.updatetime = 2000
 vim.g.mapleader = " "
 -- providers
-vim.g.python_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim2/bin/python")
-vim.g.python3_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/python")
-vim.g.pydocstring_doq_path = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/doq")
+-- vim.g.python_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim2/bin/python")
+-- vim.g.python3_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/python")
+-- vim.g.pydocstring_doq_path = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/doq")
 vim.g.pydocstring_formatter = "google"
 vim.g.lsp_settings_servers_dir = vim.fn.stdpath("cache") .. "/lspconfig"
 

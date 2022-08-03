@@ -1,4 +1,4 @@
-local key_map = vim.api.nvim_set_keymap
+local key_map = vim.keymap.set
 
 vim.cmd([[tnoremap <Esc> <C-\><C-n> ]])
 key_map("i", "<C-c>", "<ESC>", { noremap = true, silent = true })
