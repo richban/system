@@ -1,5 +1,11 @@
 { config, pkgs, libs, ... }:
 {
+    home.file.functions = {
+        source = ../../dotfiles/functions;
+        target = ".functions";
+        recursive = true;
+    };
+    
     programs.zsh = {
         enable = true;
         enableCompletion = true;
@@ -69,6 +75,8 @@
             bindkey "^E" end-of-line
 
             autopair-init
+
+            . ~/.functions
         '';
         envExtra = ''
             export PATH="$PATH:/usr/local/bin"

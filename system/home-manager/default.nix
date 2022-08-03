@@ -163,11 +163,6 @@ in {
         target = ".hammerspoon";
         recursive = true;
       };
-      functions = {
-        source = ../../dotfiles/functions;
-        target = ".functions";
-        recursive = true;
-      };
       ctags = {
         source = ../../dotfiles/ctags;
         target = ".ctags";
