@@ -84,7 +84,7 @@ vim.g.mapleader = " "
 -- vim.g.python3_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/python")
 -- vim.g.pydocstring_doq_path = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/doq")
 vim.g.pydocstring_formatter = "google"
-vim.g.lsp_settings_servers_dir = vim.fn.stdpath("cache") .. "/lspconfig"
+-- vim.g.lsp_settings_servers_dir = vim.fn.stdpath("cache") .. "/lspconfig"
 
 -- shows spaces
 vim.o.list = true
@@ -99,14 +99,3 @@ vim.o.cmdheight = 1
 -- using treesitter for folding
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-
-vim.api.nvim_exec(
-	[[
-  fun! TrimWhiteSpace()
-      let l:save = winsaveview()
-      keeppatterns %s/\s\+$//e
-      call winrestview(l:save)
-  endfun
-]],
-	true
-)

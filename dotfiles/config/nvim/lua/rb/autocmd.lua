@@ -22,16 +22,6 @@ vim.api.nvim_exec(
 
 vim.api.nvim_exec(
 	[[
-  augroup TrimWhiteSpace
-    autocmd!
-    autocmd BufWritePre * call TrimWhiteSpace()
-  augroup END
-]],
-	false
-)
-
-vim.api.nvim_exec(
-	[[
   augroup Format
     autocmd!
     autocmd BufWritePre *.ts TSLspOrganize
@@ -56,3 +46,12 @@ vim.cmd([[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer
 
 -- vimdows to close with 'q'
 vim.cmd([[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer><silent> q :close<CR>]])
+
+function vim.fn.TrimWhiteSpace()
+  local l = vim.fn.line(".")
+  local c = vim.fn.col(".")
+  vim.cmd("%s/\\s\\+$//e")
+  vim.fn.cursor(l, c)
+end
+
+vim.cmd("autocmd BufWritePre * :lua vim.fn.TrimWhiteSpace()")
