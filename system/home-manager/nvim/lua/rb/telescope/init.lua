@@ -126,7 +126,8 @@ require("telescope").setup({
 
 -- Load the fzy native extension at the start.
 -- pcall(require('telescope').load_extension, "fzy_native")
-require("telescope").load_extension("fzf")
+-- require("telescope").load_extension("fzf")
+pcall(require('telescope').load_extension, "fzf")
 
 -- github CLI
 pcall(require("telescope").load_extension, "gh")
@@ -137,8 +138,6 @@ end
 
 pcall(require("telescope").load_extension, "cheat")
 pcall(require("telescope").load_extension, "dap")
-
-pcall(require("telescope").load_extension("octo"))
 
 if pcall(require("telescope").load_extension, "frecency") then
 	-- frecency

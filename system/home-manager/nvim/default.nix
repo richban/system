@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: 
+{ config, pkgs, lib, ... }:
 let
     # FIXME: failing to build derivation
     # github-nvim-theme = pkgs.vimUtils.buildVimPlugin {
@@ -15,55 +15,55 @@ in {
     home.file = {
         settings = {
             source = ../../../dotfiles/config/nvim/lua/rb/settings.lua;
-            target = ".config/nvim/lua/settings.lua";
+            target = ".config/nvim/lua/rb/settings.lua";
         };
         mappings = {
             source = ../../../dotfiles/config/nvim/lua/rb/mappings.lua;
-            target = ".config/nvim/lua/mappings.lua";
+            target = ".config/nvim/lua/rb/mappings.lua";
         };
         globals = {
             source = ../../../dotfiles/config/nvim/lua/rb/globals.lua;
-            target = ".config/nvim/lua/globals.lua";
+            target = ".config/nvim/lua/rb/globals.lua";
         };
         autocommands = {
             source = ../../../dotfiles/config/nvim/lua/rb/autocmd.lua;
-            target = ".config/nvim/lua/autocmd.lua";
+            target = ".config/nvim/lua/rb/autocmd.lua";
         };
         autopairs = {
             source = ../../../dotfiles/config/nvim/lua/rb/autopairs;
-            target = ".config/nvim/lua/autopairs";
+            target = ".config/nvim/lua/rb/autopairs";
         };
         nvim-cmp = {
-            source = ./lua/nvim-cmp.lua;
-            target = ".config/nvim/lua/nvim-cmp.lua";
+            source = ./lua/rb/nvim-cmp.lua;
+            target = ".config/nvim/lua/rb/nvim-cmp.lua";
         };
         indent-blankline = {
-            source = ./lua/indent-blankline.lua;
-            target = ".config/nvim/lua/indent-blankline.lua";
+            source = ./lua/rb/indent-blankline.lua;
+            target = ".config/nvim/lua/rb/indent-blankline.lua";
         };
         statusline = {
-            source = ./lua/statusline.lua;
-            target = ".config/nvim/lua/statusline.lua";
+            source = ./lua/rb/statusline.lua;
+            target = ".config/nvim/lua/rb/statusline.lua";
         };
         gitsigns = {
-            source = ./lua/gitsigns.lua;
-            target = ".config/nvim/lua/gitsigns.lua";
+            source = ./lua/rb/gitsigns.lua;
+            target = ".config/nvim/lua/rb/gitsigns.lua";
         };
         code-formatting = {
-            source = ./lua/code-formatting.lua;
-            target = ".config/nvim/lua/code-formatting.lua";
+            source = ./lua/rb/code-formatting.lua;
+            target = ".config/nvim/lua/rb/code-formatting.lua";
         };
         nvim-tree = {
-            source = ./lua/nvim-tree.lua;
-            target = ".config/nvim/lua/nvim-tree.lua";
+            source = ./lua/rb/nvim-tree.lua;
+            target = ".config/nvim/lua/rb/nvim-tree.lua";
         };
         nvim-treesitter = {
-            source = ./lua/nvim-treesitter.lua;
-            target = ".config/nvim/lua/nvim-treesitter.lua";
+            source = ./lua/rb/nvim-treesitter.lua;
+            target = ".config/nvim/lua/rb/nvim-treesitter.lua";
         };
         telescope = {
-            source = ./lua/telescope;
-            target = ".config/nvim/lua/telescope";
+            source = ./lua/rb/telescope;
+            target = ".config/nvim/lua/rb/telescope";
         };
 
         after = {
@@ -155,9 +155,13 @@ in {
 
             # lsp
             nvim-lspconfig
+            lspsaga-nvim
+            lsp-status-nvim
+            lsp_signature-nvim
 
             # telescope
             telescope-nvim
+            telescope-file-browser-nvim
             telescope-fzy-native-nvim
             telescope-fzf-writer-nvim
             telescope-frecency-nvim
@@ -166,21 +170,42 @@ in {
 
 
         ];
-        extraConfig = ''
-            luafile ~/.config/nvim/lua/settings.lua
-            luafile ~/.config/nvim/lua/mappings.lua
-            luafile ~/.config/nvim/lua/globals.lua
-            luafile ~/.config/nvim/lua/autocmd.lua
-            luafile ~/.config/nvim/lua/nvim-cmp.lua
-            luafile ~/.config/nvim/lua/indent-blankline.lua
-            luafile ~/.config/nvim/lua/statusline.lua
-            luafile ~/.config/nvim/lua/gitsigns.lua
-            luafile ~/.config/nvim/lua/nvim-tree.lua
-            luafile ~/.config/nvim/lua/nvim-treesitter.lua
 
-            lua require("autopairs")
-            lua require("telescope")
-            lua require("telescope.mappings")
+        extraPackages = with pkgs; [
+            neovim-remote
+            rnix-lsp
+            nixfmt
+            sumneko-lua-language-server
+            stylua
+            ccls
+            proselint
+            terraform-ls
+            nodePackages.beancount-langserver
+            nodePackages.typescript-language-server
+            nodePackages.bash-language-server
+            nodePackages.vscode-json-languageserver
+            nodePackages.yaml-language-server
+            nodePackages.vscode-html-languageserver-bin
+            nodePackages.vscode-css-languageserver-bin
+            nodePackages.vim-language-server
+            nodePackages.dockerfile-language-server-nodejs
+        ];
+
+        extraConfig = ''
+            luafile ~/.config/nvim/lua/rb/settings.lua
+            luafile ~/.config/nvim/lua/rb/mappings.lua
+            luafile ~/.config/nvim/lua/rb/globals.lua
+            luafile ~/.config/nvim/lua/rb/autocmd.lua
+            luafile ~/.config/nvim/lua/rb/nvim-cmp.lua
+            luafile ~/.config/nvim/lua/rb/indent-blankline.lua
+            luafile ~/.config/nvim/lua/rb/statusline.lua
+            luafile ~/.config/nvim/lua/rb/gitsigns.lua
+            luafile ~/.config/nvim/lua/rb/nvim-tree.lua
+            luafile ~/.config/nvim/lua/rb/nvim-treesitter.lua
+
+            lua require("rb.autopairs")
+            lua require("rb.telescope")
+            lua require("rb.telescope.mappings")
 
         '';
     };
