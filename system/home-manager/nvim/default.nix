@@ -61,6 +61,10 @@ in {
             source = ./lua/nvim-treesitter.lua;
             target = ".config/nvim/lua/nvim-treesitter.lua";
         };
+        telescope = {
+            source = ./lua/telescope;
+            target = ".config/nvim/lua/telescope";
+        };
 
         after = {
             source = ../../../dotfiles/config/nvim/after/ftplugin;
@@ -149,6 +153,17 @@ in {
             null-ls-nvim
             nvim-treesitter
 
+            # lsp
+            nvim-lspconfig
+
+            # telescope
+            telescope-nvim
+            telescope-fzy-native-nvim
+            telescope-fzf-writer-nvim
+            telescope-frecency-nvim
+            telescope-dap-nvim
+            sqlite-lua
+
 
         ];
         extraConfig = ''
@@ -164,6 +179,9 @@ in {
             luafile ~/.config/nvim/lua/nvim-treesitter.lua
 
             lua require("autopairs")
+            lua require("telescope")
+            lua require("telescope.mappings")
+
         '';
     };
 }
