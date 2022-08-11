@@ -4,7 +4,7 @@
   inputs = {
     # We use the unstable nixpkgs repo for some packages.
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    
+
     # TODO: configure NixOS
     nixos-stable.url = "github:nixos/nixpkgs/nixos-21.11";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -55,7 +55,7 @@
         stable ? inputs.nixos-stable,
         baseModules ? [home-manager.darwinModules.home-manager ./system/darwin],
         extraModules ? []
-      }: 
+      }:
       darwinSystem {
         inherit system;
         modules = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];

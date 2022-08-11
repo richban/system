@@ -37,6 +37,10 @@ in {
             source = ./lua/nvim-cmp.lua;
             target = ".config/nvim/lua/nvim-cmp.lua";
         };
+        indent-blankline = {
+            source = ./lua/indent-blankline.lua;
+            target = ".config/nvim/lua/indent-blankline.lua";
+        };
     };
 
     programs.neovim = {
@@ -69,6 +73,26 @@ in {
             cmp-nvim-lua
             cmp-spell
 
+            # UI
+            {
+                plugin = nvim-web-devicons;
+                config = ''lua require'nvim-web-devicons'.setup()'';
+            }
+            {
+                plugin = bufferline-nvim;
+                type = "lua";
+                config = ''
+                    vim.opt.termguicolors = true
+                    require("bufferline").setup{}
+                    vim.cmd([[
+                        nnoremap <silent><TAB> :BufferLineCycleNext<CR>
+                        nnoremap <silent><S-TAB> :BufferLineCyclePrev<CR>
+                    ]])
+                '';
+            }
+            indent-blankline-nvim
+
+
         ];
         extraConfig = ''
             luafile ~/.config/nvim/lua/settings.lua
@@ -76,6 +100,7 @@ in {
             luafile ~/.config/nvim/lua/globals.lua
             luafile ~/.config/nvim/lua/autocmd.lua
             luafile ~/.config/nvim/lua/nvim-cmp.lua
+            luafile ~/.config/nvim/lua/indent-blankline.lua
             lua require("autopairs")
         '';
     };
