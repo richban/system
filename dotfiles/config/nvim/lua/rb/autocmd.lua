@@ -48,10 +48,10 @@ vim.cmd([[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer
 vim.cmd([[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer><silent> q :close<CR>]])
 
 function vim.fn.TrimWhiteSpace()
-  local l = vim.fn.line(".")
-  local c = vim.fn.col(".")
-  vim.cmd("%s/\\s\\+$//e")
-  vim.fn.cursor(l, c)
+	local l = vim.fn.line(".")
+	local c = vim.fn.col(".")
+	vim.cmd("%s/\\s\\+$//e")
+	vim.fn.cursor(l, c)
 end
 
 vim.cmd("autocmd BufWritePre * :lua vim.fn.TrimWhiteSpace()")

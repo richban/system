@@ -3,7 +3,7 @@ local present, cmp = pcall(require, "cmp")
 local lspkind = require("lspkind")
 lspkind.init({
 	-- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
-	mode = 'symbol_text',
+	mode = "symbol_text",
 	symbol_map = {
 		Text = "",
 		Method = "ƒ",

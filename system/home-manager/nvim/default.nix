@@ -46,13 +46,25 @@ in {
             target = ".config/nvim/lua/statusline.lua";
         };
         gitsigns = {
-            ource = ./lua/gitsigns.lua;
+            source = ./lua/gitsigns.lua;
             target = ".config/nvim/lua/gitsigns.lua";
+        };
+        code-formatting = {
+            source = ./lua/code-formatting.lua;
+            target = ".config/nvim/lua/code-formatting.lua";
+        };
+        nvim-tree = {
+            source = ./lua/nvim-tree.lua;
+            target = ".config/nvim/lua/nvim-tree.lua";
+        };
+        nvim-treesitter = {
+            source = ./lua/nvim-treesitter.lua;
+            target = ".config/nvim/lua/nvim-treesitter.lua";
         };
 
         after = {
-            source = ../../../dotfiles/config/nvim/after;
-            target = ".config/nvim/after";
+            source = ../../../dotfiles/config/nvim/after/ftplugin;
+            target = ".config/nvim/after/ftplugin";
         };
 
     };
@@ -124,6 +136,18 @@ in {
                     vim.api.nvim_set_keymap("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = true })
                 '';
             }
+            {
+                plugin = neoscroll-nvim;
+                config = ''lua require('neoscroll').setup()'';
+            }
+            {
+                plugin = todo-comments-nvim;
+                config = ''lua require("todo-comments").setup()'';
+            }
+            nvim-tree-lua
+            vim-nix
+            null-ls-nvim
+            nvim-treesitter
 
 
         ];
@@ -136,6 +160,8 @@ in {
             luafile ~/.config/nvim/lua/indent-blankline.lua
             luafile ~/.config/nvim/lua/statusline.lua
             luafile ~/.config/nvim/lua/gitsigns.lua
+            luafile ~/.config/nvim/lua/nvim-tree.lua
+            luafile ~/.config/nvim/lua/nvim-treesitter.lua
 
             lua require("autopairs")
         '';
