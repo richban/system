@@ -45,6 +45,10 @@ in {
             source = ./lua/statusline.lua;
             target = ".config/nvim/lua/statusline.lua";
         };
+        gitsigns = {
+            ource = ./lua/gitsigns.lua;
+            target = ".config/nvim/lua/gitsigns.lua";
+        };
 
         after = {
             source = ../../../dotfiles/config/nvim/after;
@@ -106,6 +110,20 @@ in {
                 plugin = nvim-colorizer-lua;
                 config = ''lua require'colorizer'.setup()'';
             }
+            gitsigns-nvim
+
+            {
+                plugin = vim-fugitive;
+                type = "lua";
+                config = ''
+                    vim.api.nvim_set_keymap("n", "<leader>gs", "<cmd>Git<CR>", { noremap = true, silent = true })
+                    vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>Gvdiffsplit<CR>", { noremap = true, silent = true })
+                    vim.api.nvim_set_keymap("n", "<leader>gb", "<cmd>Git blame<CR>", { noremap = true, silent = true })
+                    vim.api.nvim_set_keymap("n", "<leader>gh", "<cmd>0Gclog!<CR>", { noremap = true, silent = true })
+                    vim.api.nvim_set_keymap("n", "<leader>gj", "<cmd>diffget //2<CR>", { noremap = true, silent = true })
+                    vim.api.nvim_set_keymap("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = true })
+                '';
+            }
 
 
         ];
@@ -117,6 +135,7 @@ in {
             luafile ~/.config/nvim/lua/nvim-cmp.lua
             luafile ~/.config/nvim/lua/indent-blankline.lua
             luafile ~/.config/nvim/lua/statusline.lua
+            luafile ~/.config/nvim/lua/gitsigns.lua
 
             lua require("autopairs")
         '';
