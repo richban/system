@@ -65,7 +65,7 @@
       # generate a home-manager config for any unix system
       mkHomeConfig = {
         username,
-        system ? "x86_64-darwin",
+        system ? "aarch64-darwinn",
         nixpkgs ? inputs.nixpkgs,
         stable ? inputs.nixos-stable,
         baseModules ? [

@@ -1,6 +1,6 @@
 local lsp = require("lspconfig")
 local lsp_status = require("lsp-status")
-local mappings = require("lsp.mappings")
+local mappings = require("rb.lsp.mappings")
 local configs = require("lspconfig/configs")
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
@@ -73,7 +73,7 @@ local function custom_attach(client)
 		-- required to fix code action ranges and filter diagnostics
 		ts_utils.setup_client(client)
 		-- disable tsserver formatting if you plan on formatting via null-ls
-		client.resolved_capabilities.document_formatting = false
+		client.server_capabilities.document_formatting = false
 	end
 
 	-- add signature autocompletion while typing
@@ -204,7 +204,7 @@ local servers = {
 			},
 		  },
 		},
-	}
+	},
 	jsonls = {
 		filetypes = { "json" },
 		schemas = {

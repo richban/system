@@ -1,2 +1,2 @@
-require("lsp.lspsaga")
-require("lsp.settings")
+require("rb.lsp.lspsaga")
+require("rb.lsp.settings")

@@ -5,6 +5,10 @@ local diagnostics = null_ls.builtins.diagnostics
 
 null_ls.setup({
 	sources = {
+		-- Nix
+		diagnostics.deadnix,
+		diagnostics.statix,
+		code_actions.statix,
 		formatting.prettier,
 		formatting.black,
 		formatting.gofmt,
@@ -19,8 +23,8 @@ null_ls.setup({
 		formatting.trim_whitespace,
 		diagnostics.editorconfig_checker,
 		diagnostics.gitlint,
-		diagnostics.markdownlint,
-		diagnostics.misspell,
+		-- Shell scripts
+		code_actions.shellcheck,
 		diagnostics.shellcheck,
 		diagnostics.write_good,
 		formatting.lua_format.with({
@@ -34,6 +38,11 @@ null_ls.setup({
 		}),
 		formatting.isort,
 		formatting.codespell.with({ filetypes = { "markdown" } }),
+		-- Markdown
+		code_actions.proselint,
+		diagnostics.proselint,
+		diagnostics.markdownlint,
+		diagnostics.misspell,
 	},
 	on_attach = function(client)
 		if client.resolved_capabilities.document_formatting then

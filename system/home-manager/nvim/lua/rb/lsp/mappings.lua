@@ -1,6 +1,6 @@
 local M = {}
 
-local telescope_mapper = require("telescope.mappings")
+local telescope_mapper = require("rb.telescope.mappings")
 
 function M.set(client)
 	local opts = { noremap = true, silent = true }

@@ -65,6 +65,10 @@ in {
             source = ./lua/rb/telescope;
             target = ".config/nvim/lua/rb/telescope";
         };
+        lsp = {
+            source = ./lua/rb/lsp;
+            target = ".config/nvim/lua/rb/lsp";
+        };
 
         after = {
             source = ../../../dotfiles/config/nvim/after/ftplugin;
@@ -152,6 +156,10 @@ in {
             vim-nix
             null-ls-nvim
             nvim-treesitter
+            # {
+            #     plugin = nvim-lastplace;
+            #     config = ''lue require'nvim-lastplace'.setup{}'';
+            # }
 
             # lsp
             nvim-lspconfig
@@ -178,6 +186,10 @@ in {
             sumneko-lua-language-server
             stylua
             ccls
+            # sqls
+            # sqlfluff
+            # deadnix
+            # statix
             proselint
             terraform-ls
             nodePackages.beancount-langserver
@@ -203,6 +215,7 @@ in {
             luafile ~/.config/nvim/lua/rb/nvim-tree.lua
             luafile ~/.config/nvim/lua/rb/nvim-treesitter.lua
 
+            lua require("rb.lsp")
             lua require("rb.autopairs")
             lua require("rb.telescope")
             lua require("rb.telescope.mappings")
