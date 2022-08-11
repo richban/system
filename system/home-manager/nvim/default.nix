@@ -41,6 +41,16 @@ in {
             source = ./lua/indent-blankline.lua;
             target = ".config/nvim/lua/indent-blankline.lua";
         };
+        statusline = {
+            source = ./lua/statusline.lua;
+            target = ".config/nvim/lua/statusline.lua";
+        };
+
+        after = {
+            source = ../../../dotfiles/config/nvim/after;
+            target = ".config/nvim/after";
+        };
+
     };
 
     programs.neovim = {
@@ -91,6 +101,11 @@ in {
                 '';
             }
             indent-blankline-nvim
+            lualine-nvim
+            {
+                plugin = nvim-colorizer-lua;
+                config = ''lua require'colorizer'.setup()'';
+            }
 
 
         ];
@@ -101,6 +116,8 @@ in {
             luafile ~/.config/nvim/lua/autocmd.lua
             luafile ~/.config/nvim/lua/nvim-cmp.lua
             luafile ~/.config/nvim/lua/indent-blankline.lua
+            luafile ~/.config/nvim/lua/statusline.lua
+
             lua require("autopairs")
         '';
     };
