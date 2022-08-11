@@ -29,6 +29,14 @@ in {
             source = ../../../dotfiles/config/nvim/lua/rb/autocmd.lua;
             target = ".config/nvim/lua/autocmd.lua";
         };
+        autopairs = {
+            source = ../../../dotfiles/config/nvim/lua/rb/autopairs;
+            target = ".config/nvim/lua/autopairs";
+        };
+        nvim-cmp = {
+            source = ./lua/nvim-cmp.lua;
+            target = ".config/nvim/lua/nvim-cmp.lua";
+        };
     };
 
     programs.neovim = {
@@ -44,16 +52,31 @@ in {
 
         plugins = with pkgs.vimPlugins; [
             plenary-nvim
+            # theme
             {
                 plugin = rose-pine;
                 config = ''lua vim.cmd('colorscheme rose-pine')'';
             }
+            nvim-autopairs
+            # adds vscode-like pictogram
+            lspkind-nvim
+            # completion engine
+            nvim-cmp
+            # completion sources
+            cmp-nvim-lsp
+            cmp-nvim-lsp-document-symbol
+            cmp-path
+            cmp-nvim-lua
+            cmp-spell
+
         ];
         extraConfig = ''
             luafile ~/.config/nvim/lua/settings.lua
             luafile ~/.config/nvim/lua/mappings.lua
             luafile ~/.config/nvim/lua/globals.lua
             luafile ~/.config/nvim/lua/autocmd.lua
+            luafile ~/.config/nvim/lua/nvim-cmp.lua
+            lua require("autopairs")
         '';
     };
 }
