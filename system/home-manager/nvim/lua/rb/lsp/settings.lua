@@ -73,7 +73,7 @@ local function custom_attach(client)
 		-- required to fix code action ranges and filter diagnostics
 		ts_utils.setup_client(client)
 		-- disable tsserver formatting if you plan on formatting via null-ls
-		client.server_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end
 
 	-- add signature autocompletion while typing
@@ -100,7 +100,18 @@ local function custom_attach(client)
 		extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
 	})
 
-	vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+	if client.server_capabilities.documentFormattingProvider then
+		vim.cmd(
+			[[
+				augroup LspFormatting
+				autocmd! * <buffer>
+				autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+				augroup END
+			]]
+		)
+	end
+
+	-- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
 	-- Set autocommands conditional on server_capabilities
 	-- if client.resolved_capabilities.document_highlight then
@@ -135,7 +146,7 @@ updated_capabilities.textDocument.completion.completionItem.snippetSupport = tru
 updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
 	properties = { "documentation", "detail", "additionalTextEdits" },
 }
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
