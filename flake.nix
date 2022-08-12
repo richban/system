@@ -32,7 +32,7 @@
   };
 
   outputs = inputs@ { self, nixpkgs, darwin, home-manager, flake-utils, ... }:
-  let
+    let
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
@@ -49,26 +49,26 @@
       ];
 
       # generate a darwin config
-      mkDarwinConfig = {
-        system ? "x86_64-darwin",
-        nixpkgs ? inputs.nixpkgs,
-        stable ? inputs.nixos-stable,
-        baseModules ? [home-manager.darwinModules.home-manager ./system/darwin],
-        extraModules ? []
-      }:
-      darwinSystem {
-        inherit system;
-        modules = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];
-        specialArgs = { inherit inputs nixpkgs stable; };
-      };
+      mkDarwinConfig =
+        { system ? "x86_64-darwin"
+        , nixpkgs ? inputs.nixpkgs
+        , stable ? inputs.nixos-stable
+        , baseModules ? [ home-manager.darwinModules.home-manager ./system/darwin ]
+        , extraModules ? [ ]
+        }:
+        darwinSystem {
+          inherit system;
+          modules = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];
+          specialArgs = { inherit inputs nixpkgs stable; };
+        };
 
       # generate a home-manager config for any unix system
-      mkHomeConfig = {
-        username,
-        system ? "aarch64-darwinn",
-        nixpkgs ? inputs.nixpkgs,
-        stable ? inputs.nixos-stable,
-        baseModules ? [
+      mkHomeConfig =
+        { username
+        , system ? "aarch64-darwinn"
+        , nixpkgs ? inputs.nixpkgs
+        , stable ? inputs.nixos-stable
+        , baseModules ? [
             ./system/home-manager
             {
               home = {
@@ -80,81 +80,82 @@
                 };
               };
             }
-        ],
-        extraModules ? []
-      }:
-      homeManagerConfiguration rec {
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-        extraSpecialArgs = { inherit inputs nixpkgs stable; };
-        modules = {
-          imports = baseModules ++ extraModules ++ [ ./system/overlays.nix];
-        };
-      };
-  in {
-
-    # TODO: what are these checks?
-    checks = listToAttrs (
-      # darwin checks
-      (map
-        (system: {
-          name = system;
-          value = {
-            darwin =
-              self.darwinConfigurations.darwinCasperIntel.config.system.build.toplevel;
+          ]
+        , extraModules ? [ ]
+        }:
+        homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
           };
-        })
-        nixpkgs.lib.platforms.darwin)
-    );
-
-    darwinConfigurations = {
-      darwinCasperIntel = mkDarwinConfig {
-        system = "x86_64-darwin";
-        extraModules = [ ./system/hosts/personal.nix ];
-      };
-      darwinWorkM1 = mkDarwinConfig {
-        system = "aarch64-darwin";
-        extraModules = [ ./system/hosts/work.nix ];
-      };
-    };
-
-    homeConfigurations = {
-      richbanIntel = mkHomeConfig {
-        username = "richban";
-        system = "x86_64-darwin";
-      };
-      richbanWorkM1 = mkHomeConfig {
-        username = "richard_banyi";
-        system = "aarch64-darwin";
-        extraModules = [ ./system/hosts/work.nix ];
-      };
-    };
-
-    # add a devShell to this flake
-    devShells = eachSystemMap defaultSystems (system:
-      let
-        pkgs = import inputs.nixos-stable {
-          inherit system;
-          overlays = [ inputs.devshell.overlay ];
+          extraSpecialArgs = { inherit inputs nixpkgs stable; };
+          modules = {
+            imports = baseModules ++ extraModules ++ [ ./system/overlays.nix ];
+          };
         };
-        pyEnv = (pkgs.python3.withPackages
-          (ps: with ps; [ black pylint typer colorama shellingham]));
-        sysdo = pkgs.writeShellScriptBin "sysdo" ''
-          cd $PRJ_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
-        '';
-      in
-      {
-        default = pkgs.devshell.mkShell {
-          packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt nodePackages.prettier];
-          commands = [{
-            name = "sysdo";
-            package = sysdo;
-            category = "utilities";
-            help = "perform actions on this repository";
-          }];
+    in
+    {
+
+      # TODO: what are these checks?
+      checks = listToAttrs (
+        # darwin checks
+        (map
+          (system: {
+            name = system;
+            value = {
+              darwin =
+                self.darwinConfigurations.darwinCasperIntel.config.system.build.toplevel;
+            };
+          })
+          nixpkgs.lib.platforms.darwin)
+      );
+
+      darwinConfigurations = {
+        darwinCasperIntel = mkDarwinConfig {
+          system = "x86_64-darwin";
+          extraModules = [ ./system/hosts/personal.nix ];
         };
-      }
-    );
-  };
+        darwinWorkM1 = mkDarwinConfig {
+          system = "aarch64-darwin";
+          extraModules = [ ./system/hosts/work.nix ];
+        };
+      };
+
+      homeConfigurations = {
+        richbanIntel = mkHomeConfig {
+          username = "richban";
+          system = "x86_64-darwin";
+        };
+        richbanWorkM1 = mkHomeConfig {
+          username = "richard_banyi";
+          system = "aarch64-darwin";
+          extraModules = [ ./system/hosts/work.nix ];
+        };
+      };
+
+      # add a devShell to this flake
+      devShells = eachSystemMap defaultSystems (system:
+        let
+          pkgs = import inputs.nixos-stable {
+            inherit system;
+            overlays = [ inputs.devshell.overlay ];
+          };
+          pyEnv = (pkgs.python3.withPackages
+            (ps: with ps; [ black pylint typer colorama shellingham ]));
+          sysdo = pkgs.writeShellScriptBin "sysdo" ''
+            cd $PRJ_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
+          '';
+        in
+        {
+          default = pkgs.devshell.mkShell {
+            packages = with pkgs; [ nixfmt pyEnv rnix-lsp stylua treefmt nodePackages.prettier ];
+            commands = [{
+              name = "sysdo";
+              package = sysdo;
+              category = "utilities";
+              help = "perform actions on this repository";
+            }];
+          };
+        }
+      );
+    };
 }
