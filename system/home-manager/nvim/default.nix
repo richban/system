@@ -82,8 +82,8 @@ in {
         };
 
         after = {
-            source = ../../../dotfiles/config/nvim/after/ftplugin;
-            target = ".config/nvim/after/ftplugin";
+            source = ../../../dotfiles/config/nvim/after;
+            target = ".config/nvim/after";
         };
 
     };
@@ -166,12 +166,25 @@ in {
             vim-nix
             null-ls-nvim
             nvim-treesitter
-            nvim-comment
+            # markdown-preview-nvim
+            # goyo-vim
+            {
+                plugin = nvim-comment;
+                config = ''lua require("nvim_comment").setup()'';
+            }
             {
                 plugin = nvim-lastplace;
                 config = ''lua require'nvim-lastplace'.setup{}'';
             }
-
+            {
+                plugin = trouble-nvim;
+                config = ''lua require("trouble").setup()'';
+            }
+            {
+                plugin = better-escape-nvim;
+                config = ''lua require("better_escape").setup()'';
+            }
+            editorconfig-vim
             # lsp
             nvim-lspconfig
             lspsaga-nvim
@@ -187,7 +200,7 @@ in {
             telescope-dap-nvim
             sqlite-lua
 
-
+            vim-surround
         ];
 
         extraPackages = with pkgs; [

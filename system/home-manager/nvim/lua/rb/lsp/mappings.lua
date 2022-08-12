@@ -83,10 +83,10 @@ function M.set(client)
     vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>Lspsaga rename<CR>", opts)
   end
 
-  vim.api.nvim_set_keymap("n", "<leader>bf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<leader>bf", "<cmd>lua vim.buf.formatting()<CR>", opts)
 
   if client.documentRangeFormattingProvider then
-    vim.api.nvim_set_keymap("n", "<leader>bF", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>bF", "<cmd>lua vim.buf.formatting()<CR>", opts)
   end
 
   -- Typescript
