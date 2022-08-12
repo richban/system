@@ -10,6 +10,17 @@ let
     #         sha256 = "sha256-wLX81wgl4E50mRig9erbLyrxyGbZllFbHFAQ9+v60W4=";
     #     };
     # };
+    nvim-lastplace = pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "nvim-lastplace";
+        version = "2022-07-05";
+        src = pkgs.fetchFromGitHub {
+        owner = "ethanholz";
+        repo = "nvim-lastplace";
+        rev = "ecced899435c6bcdd81becb5efc6d5751d0dc4c8";
+        sha256 = "030gc8q7xrkmqcsrx4h1issm4zjxxvypwawzq56kzm8x3d9bvbm0";
+        };
+        meta.homepage = "https://github.com/ethanholz/nvim-lastplace/";
+    };
 in {
 
     home.file = {
@@ -131,7 +142,6 @@ in {
                 config = ''lua require'colorizer'.setup()'';
             }
             gitsigns-nvim
-
             {
                 plugin = vim-fugitive;
                 type = "lua";
@@ -156,10 +166,11 @@ in {
             vim-nix
             null-ls-nvim
             nvim-treesitter
-            # {
-            #     plugin = nvim-lastplace;
-            #     config = ''lue require'nvim-lastplace'.setup{}'';
-            # }
+            nvim-comment
+            {
+                plugin = nvim-lastplace;
+                config = ''lua require'nvim-lastplace'.setup{}'';
+            }
 
             # lsp
             nvim-lspconfig
@@ -186,10 +197,10 @@ in {
             sumneko-lua-language-server
             stylua
             ccls
-            # sqls
+            sqls
             # sqlfluff
-            # deadnix
-            # statix
+            deadnix
+            statix
             proselint
             terraform-ls
             nodePackages.beancount-langserver
