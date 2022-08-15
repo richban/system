@@ -78,7 +78,7 @@ in
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.pain-control
       # tmuxPlugins.vim-tmux-navigator
-      # tmuxPlugins.dracula
+      tmuxPlugins.dracula
     ];
     extraConfig = ''
       ${builtins.readFile ../../dotfiles/new.tmux.conf}
