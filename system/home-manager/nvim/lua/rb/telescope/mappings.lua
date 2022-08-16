@@ -1,5 +1,5 @@
 if not pcall(require, "telescope") then
-	return
+  return
 end
 
 local sorters = require("telescope.sorters")
@@ -7,20 +7,20 @@ local sorters = require("telescope.sorters")
 TelescopeMapArgs = TelescopeMapArgs or {}
 
 local map_tele = function(key, f, options, buffer)
-	local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
+  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
 
-	TelescopeMapArgs[map_key] = options or {}
+  TelescopeMapArgs[map_key] = options or {}
 
-	local mode = "n"
-	local rhs = string.format("<cmd>lua R('rb.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+  local mode = "n"
+  local rhs = string.format("<cmd>lua R('rb.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
-	local map_options = { noremap = true, silent = true }
+  local map_options = { noremap = true, silent = true }
 
-	if not buffer then
-		vim.keymap.set(mode, key, rhs, map_options)
-	else
-		vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
-	end
+  if not buffer then
+    vim.keymap.set(mode, key, rhs, map_options)
+  else
+    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
+  end
 end
 
 vim.keymap.set("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = false, nowait = true })
@@ -31,11 +31,11 @@ map_tele("<leader>ec", "find_configs")
 
 -- Search
 map_tele("<leader>gw", "grep_string", {
-	short_path = true,
-	word_match = "-w",
-	only_sort_text = true,
-	layout_strategy = "vertical",
-	sorter = sorters.get_fzy_sorter(),
+  short_path = true,
+  word_match = "-w",
+  only_sort_text = true,
+  layout_strategy = "vertical",
+  sorter = sorters.get_fzy_sorter(),
 })
 map_tele("<leader>f/", "grep_last_search", { layout_strategy = "vertical" })
 
@@ -47,6 +47,7 @@ map_tele("<leader>ea", "search_all_files")
 map_tele("<leader>e", "file_explorer")
 map_tele("<leader>em", "media_files")
 
+map_tele("<leader>fb", "file_browser")
 -- Nvim
 map_tele("<leader>eb", "buffers")
 map_tele("<leader>ep", "installed_plugins")
