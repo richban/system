@@ -65,13 +65,14 @@ options = [
     "-euc",
     """
 # First lint all the scripts
-shellcheck "$@"
+# shellcheck "$@"
 # Then format them
 shfmt -i 2 -s -w "$@"
     """,
     "--", # bash swallows the second argument when using -c
 ]
 includes = ["*.sh"]
+excludes = ["archive/*.sh"]
 
 [formatter.terraform]
 # Terraform fmt only takes one file at the time so we create a wrapper.
