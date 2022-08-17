@@ -46,39 +46,39 @@ in
       target = ".config/nvim/lua/rb/autopairs.lua";
     };
     nvim-cmp = {
-      source = ./lua/rb/nvim-cmp.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/nvim-cmp.lua;
       target = ".config/nvim/lua/rb/nvim-cmp.lua";
     };
     indent-blankline = {
-      source = ./lua/rb/indent-blankline.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/indent-blankline.lua;
       target = ".config/nvim/lua/rb/indent-blankline.lua";
     };
     statusline = {
-      source = ./lua/rb/statusline.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/statusline.lua;
       target = ".config/nvim/lua/rb/statusline.lua";
     };
     gitsigns = {
-      source = ./lua/rb/gitsigns.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/gitsigns.lua;
       target = ".config/nvim/lua/rb/gitsigns.lua";
     };
     code-formatting = {
-      source = ./lua/rb/code-formatting.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/code-formatting.lua;
       target = ".config/nvim/lua/rb/code-formatting.lua";
     };
     nvim-tree = {
-      source = ./lua/rb/nvim-tree.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/nvim-tree.lua;
       target = ".config/nvim/lua/rb/nvim-tree.lua";
     };
     nvim-treesitter = {
-      source = ./lua/rb/nvim-treesitter.lua;
+      source = ../../../dotfiles/config/nvim/lua/rb/nvim-treesitter.lua;
       target = ".config/nvim/lua/rb/nvim-treesitter.lua";
     };
     telescope = {
-      source = ./lua/rb/telescope;
+      source = ../../../dotfiles/config/nvim/lua/rb/telescope;
       target = ".config/nvim/lua/rb/telescope";
     };
     lsp = {
-      source = ./lua/rb/lsp;
+      source = ../../../dotfiles/config/nvim/lua/rb/lsp;
       target = ".config/nvim/lua/rb/lsp";
     };
 
@@ -233,18 +233,17 @@ in
     ];
 
     extraConfig = ''
-      luafile ~/.config/nvim/lua/rb/settings.lua
-      luafile ~/.config/nvim/lua/rb/mappings.lua
-      luafile ~/.config/nvim/lua/rb/globals.lua
-      luafile ~/.config/nvim/lua/rb/autocmd.lua
-      luafile ~/.config/nvim/lua/rb/nvim-cmp.lua
-      luafile ~/.config/nvim/lua/rb/indent-blankline.lua
-      luafile ~/.config/nvim/lua/rb/statusline.lua
-      luafile ~/.config/nvim/lua/rb/gitsigns.lua
-      luafile ~/.config/nvim/lua/rb/nvim-tree.lua
-      luafile ~/.config/nvim/lua/rb/nvim-treesitter.lua
-      luafile ~/.config/nvim/lua/rb/autopairs.lua
-
+      lua require("rb.settings")
+      lua require("rb.mappings")
+      lua require("rb.globals")
+      lua require("rb.autocmd")
+      lua require("rb.nvim-cmp")
+      lua require("rb.indent-blankline")
+      lua require("rb.statusline")
+      lua require("rb.gitsigns")
+      lua require("rb.nvim-tree")
+      lua require("rb.nvim-treesitter")
+      lua require("rb.autopairs")
       lua require("rb.lsp")
       lua require("rb.telescope")
       lua require("rb.telescope.mappings")
