@@ -12,8 +12,8 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = inputs@ {self, nixpkgs, mach-nix, flake-utils, ... }:
-    let      
+  outputs = inputs@ { self, nixpkgs, mach-nix, flake-utils, ... }:
+    let
       python = "python39";
       pypiDataRev = "master";
       pypiDataSha256 = "1jvs51gsy3dy0ajgkk0yw7h06rrifji3wgc9sk2pamzlpmv03lgk";
@@ -24,12 +24,13 @@
         mach = import mach-nix { inherit pkgs python pypiDataRev pypiDataSha256; };
 
         pyDevEnv = (pkgs.${python}.withPackages
-          (ps: with ps; [ pip black pylint pyflakes isort]));
+          (ps: with ps; [ pip black pylint pyflakes isort ]));
 
         pyEnv = mach.mkPython {
           requirements = builtins.readFile ./requirements.txt;
         };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShellNoCC {
           packages = with pkgs; [
             pyEnv
@@ -40,3 +41,4 @@
       }
     );
 }
+
