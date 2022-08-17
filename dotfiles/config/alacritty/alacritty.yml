@@ -2,7 +2,7 @@
 
 # Setup term for programs to be able to use it
 env:
-  TERM: alacritty
+  TERM: xterm-256color
 
 window:
   # Spread additional padding evenly around the terminal content.
@@ -23,7 +23,7 @@ font:
     style: Italic
 
   # Font size
-  size: 14.0
+  size: 20.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing
@@ -64,7 +64,10 @@ key_bindings:
   - { key: RBracket, mods: Command, chars: "\x5c\x6e" }
   # ctrl-^ doesn't work in some terminals like alacritty
   - { key: Key6, mods: Control, chars: "\x1e" }
-
+  - { key: Plus, mods: Command, action: IncreaseFontSize }
+  - { key: Minus, mods: Command, action: DecreaseFontSize }
+  - { key: Key0, mods: Command, action: ResetFontSize }
+  - { key: F, mods: Command|Control, action: ToggleFullscreen }
 # Colors (Gruvbox dark)
 # colors:
 #   # Default colors

@@ -2,8 +2,8 @@
 
 bindkey '^F' forward-word
 bindkey '^B' backward-word
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
 
 # -------------------------- OPTIONS ------------------------------------------
 
@@ -24,8 +24,11 @@ setopt magic_equal_subst
 export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTFILE=${HOME}/.zsh_history
-export FPATH="${HOME}/.zinit/completions:${FPATH}"
+
+
 autoload -Uz compinit && compinit -i && compinit
+
+# handles style control for the completion system
 zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*:default' list-colors ${LS_COLORS}
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
@@ -34,11 +37,6 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 [[ -f ~/.alias ]] && source ~/.alias
 [[ -f ~/.functions ]] && source ~/.functions
-
-if [[ -d ~/.asdf ]]; then
-    . $HOME/.asdf/asdf.sh
-    . $HOME/.asdf/completions/asdf.bash
-fi
 
 if type "pyenv" > /dev/null; then
   eval "$(pyenv init --path)"
@@ -51,68 +49,27 @@ fi
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_DEFAULT_OPTS="
---reverse --color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
---height=80%
---multi
---color info:150,prompt:110,spinner:150,pointer:167,marker:174
---preview-window=:hidden
---preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
---prompt='∼ ' --pointer='▶' --marker='✓'
---bind '?:toggle-preview'
---bind 'ctrl-a:select-all'
---bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'
---bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
---bind 'ctrl-v:execute(code {+})'
+  --reverse
+  --color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
+  --height=80%
+  --multi
+  --color info:150,prompt:110,spinner:150,pointer:167,marker:174
+  --preview-window=:hidden
+  --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
+  --prompt='∼ ' --pointer='▶' --marker='✓'
+  --bind '?:toggle-preview'
+  --bind 'ctrl-a:select-all'
+  --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'
+  --bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
+  --bind 'ctrl-v:execute(code {+})'
 "
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# -------------------------- ZINIT --------------------------------------------
+# -----------------------------------------------------------------------------
 
-if [[ -f $HOME/.zinit/bin/zinit.zsh ]]; then
-  source "$HOME/.zinit/bin/zinit.zsh"
-  autoload -Uz _zinit
-  (( ${+_comps} )) && _comps[zinit]=_zinit
-
-  # Load a few important annexes, without Turbo
-  # (this is currently required for annexes)
-  zinit light-mode for \
-      zinit-zsh/z-a-rust \
-      zinit-zsh/z-a-as-monitor \
-      zinit-zsh/z-a-patch-dl \
-      zinit-zsh/z-a-bin-gem-node
-  ### End of Zinit's installer chunk
-
-  # completions
-  zinit ice as"completion"
-  zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-
-  zinit wait lucid for \
-  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-      zdharma/fast-syntax-highlighting \
-      OMZP::colored-man-pages \
-  blockf \
-      zsh-users/zsh-completions \
-  atload"!_zsh_autosuggest_start" \
-      zsh-users/zsh-autosuggestions
-
-  # diff-so-fancy
-  zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
-  zinit light zdharma/zsh-diff-so-fancy
-
-  # zsh-autopair
-  zinit ice wait lucid
-  zinit light hlissner/zsh-autopair
-
-  # a next-generation cd
-  zinit ice wait lucid
-  zinit light b4b4r07/enhancd
-
-  # Gitignore plugin – commands gii and gi
-  zinit ice wait"2" lucid
-  zinit light voronkovich/gitignore.plugin.zsh
-fi
+# plugins installed with antibody plugin manager
+[[ -f ~/.zsh_plugins.sh ]] && source ~/.zsh_plugins.sh
 
 # -------------------------- PROMPT -------------------------------------------
 eval "$(starship init zsh)"
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform

@@ -9,24 +9,23 @@ vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt_local.foldnestmax = 3
 vim.opt_local.foldlevel = 1
 
-vim.b.vsnip_snippet_dir = vim.fn.expand "~/.config/nvim/snippets/javascript/"
+vim.b.vsnip_snippet_dir = vim.fn.expand("~/.config/nvim/snippets/javascript/")
 
 -- Setup cmp source buffer configuration
-local cmp = require "cmp"
-cmp.setup.buffer {
-  sources = {
-    { name = "nvim_lsp" },
-    { name = "treesitter" },
-    { name = "vsnip" },
-    {
-      name = "buffer",
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    },
-    { name = "path" },
-  },
-}
-
+local cmp = require("cmp")
+cmp.setup.buffer({
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "treesitter" },
+		{ name = "vsnip" },
+		{
+			name = "buffer",
+			option = {
+				get_bufnrs = function()
+					return vim.api.nvim_list_bufs()
+				end,
+			},
+		},
+		{ name = "path" },
+	},
+})
