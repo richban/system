@@ -42,8 +42,8 @@ in
       target = ".config/nvim/lua/rb/autocmd.lua";
     };
     autopairs = {
-      source = ../../../dotfiles/config/nvim/lua/rb/autopairs;
-      target = ".config/nvim/lua/rb/autopairs";
+      source = ../../../dotfiles/config/nvim/lua/rb/autopairs.lua;
+      target = ".config/nvim/lua/rb/autopairs.lua";
     };
     nvim-cmp = {
       source = ./lua/rb/nvim-cmp.lua;
@@ -243,9 +243,9 @@ in
       luafile ~/.config/nvim/lua/rb/gitsigns.lua
       luafile ~/.config/nvim/lua/rb/nvim-tree.lua
       luafile ~/.config/nvim/lua/rb/nvim-treesitter.lua
+      luafile ~/.config/nvim/lua/rb/autopairs.lua
 
       lua require("rb.lsp")
-      lua require("rb.autopairs")
       lua require("rb.telescope")
       lua require("rb.telescope.mappings")
 

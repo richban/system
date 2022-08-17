@@ -4,27 +4,27 @@ local key_map = vim.api.nvim_set_keymap
 -- FIRENVIM -----------------------------------------------------------------
 
 if vim.g.started_by_firenvim then
-	vim.g.laststatus = 0
+  vim.g.laststatus = 0
 
-	key_map("n", "<Esc><Esc>", "=call firenvim#focus_page()<CR>", { noremap = true, silent = true })
-	key_map("n", "<C-z>", "=write<CR>=call firenvim#hide_frame()<CR>", { noremap = true, silent = true })
+  key_map("n", "<Esc><Esc>", "=call firenvim#focus_page()<CR>", { noremap = true, silent = true })
+  key_map("n", "<C-z>", "=write<CR>=call firenvim#hide_frame()<CR>", { noremap = true, silent = true })
 
-	vim.g.firenvim_config = {
-		globalSettings = { alt = "all" },
-		localSettings = {
-			[".*"] = { cmdline = "neovim", priority = 0, selector = "textarea", takeover = "always" },
-			-- ['https://youtube.com*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https?://instagram.com*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https://.*gmail.com*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https://.*google.com*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https?://.*twitch.tv*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https?://notion.so*'] = { 'takeover': 'never', 'priority': 1 },
-			-- ['https?://reddit.com*'] = { 'takeover': 'never', 'priority': 1 },
-		},
-	}
+  vim.g.firenvim_config = {
+    globalSettings = { alt = "all" },
+    localSettings = {
+      [".*"] = { cmdline = "neovim", priority = 0, selector = "textarea", takeover = "always" },
+      -- ['https://youtube.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://instagram.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://twitter.com.*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https://.*gmail.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https://.*google.com*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://.*twitch.tv*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://notion.so*'] = { 'takeover': 'never', 'priority': 1 },
+      -- ['https?://reddit.com*'] = { 'takeover': 'never', 'priority': 1 },
+    },
+  }
 
-	vim.cmd("au BufEnter github.com_*.txt set filetype=markdown")
+  vim.cmd("au BufEnter github.com_*.txt set filetype=markdown")
 end
 
 -- TMUX-NAVIGATOR ------------------------------------------------------------
@@ -59,8 +59,8 @@ key_map("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = tr
 
 vim.g.vsnip_snippet_dir = "~/.config/nvim/snippets"
 vim.g.vsnip_filetypes = {
-	javascriptreact = { "typescript", "html", "react" },
-	typescriptreact = { "typescript", "html", "react" },
+  javascriptreact = { "typescript", "html", "react" },
+  typescriptreact = { "typescript", "html", "react" },
 }
 
 ---- MOTION --------------------------------------------------------------
@@ -88,7 +88,7 @@ key_map("n", "<leader>=", "<cmd>Tab /=<CR>", { noremap = true, silent = true })
 ---- VISTA-VIM ----------------------------------------------------------------
 
 vim.api.nvim_exec(
-	[[
+  [[
   function! NearestMethodOrFunction() abort
     return get(b:, 'vista_nearest_method_or_function', '')
   endfunction
@@ -98,8 +98,8 @@ vim.api.nvim_exec(
 
   " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
   let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" }
-]],
-	""
+]] ,
+  ""
 )
 
 ---- AUTOPAIRS -----------------------------------------------------------------

@@ -12,7 +12,6 @@ key_map(
 -- Move selected lines
 key_map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 key_map("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
-key_map("n", "<leader><CR>", ":lua reload()<CR>", { noremap = true, silent = true })
 -- Toggle Paste mode
 key_map("n", "<leader>p", ":set paste!<CR>", { noremap = true, silent = true })
 -- Window navigation
