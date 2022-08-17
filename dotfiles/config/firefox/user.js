@@ -10,7 +10,10 @@ user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
 user_pref("browser.crashReports.unsubmittedCheck.enabled", false);
 user_pref("browser.disableResetPrompt", true);
 user_pref("browser.newtab.preload", false);
-user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
+user_pref(
+  "browser.newtabpage.activity-stream.section.highlights.includePocket",
+  false
+);
 user_pref("browser.newtabpage.enabled", false);
 user_pref("browser.newtabpage.enhanced", false);
 user_pref("browser.newtabpage.introShown", true);
@@ -84,7 +87,10 @@ user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
 user_pref("privacy.trackingprotection.pbmode.enabled", true);
 user_pref("privacy.usercontext.about_newtab_segregation.enabled", true);
 user_pref("security.ssl.disable_session_identifiers", true);
-user_pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsoredTopSite", false);
+user_pref(
+  "services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsoredTopSite",
+  false
+);
 user_pref("signon.autofillForms", false);
 user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.bhrPing.enabled", false);

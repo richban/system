@@ -3,7 +3,7 @@
     "prefix": "uq",
     "body": ["const { data, loading } = use${1:query}Query()"],
     "description": "useQuery"
-  },  
+  },
   "useQuery for component": {
     "prefix": "uqc",
     "body": ["const { data, loading } = use${TM_FILENAME_BASE}Query()"],
