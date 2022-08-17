@@ -81,7 +81,7 @@ in
       tmuxPlugins.dracula
     ];
     extraConfig = ''
-      ${builtins.readFile ../../dotfiles/new.tmux.conf}
+      ${builtins.readFile ../../dotfiles/config/tmux/tmux.conf}
     '';
   };
 
