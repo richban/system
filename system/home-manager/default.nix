@@ -108,6 +108,8 @@ in
         (ps: with ps; [
           black
           ec2instanceconnectcli
+          pandas
+          requests
         ]));
     in
     {

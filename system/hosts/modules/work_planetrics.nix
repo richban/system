@@ -6,7 +6,7 @@
     # kubernetes-helm
   ];
   home.sessionVariables = {
-    AWS_PROFILE = "PlanetViewSupport-richban";
+    AWS_PROFILE = "planetview-dev";
   };
 }
 

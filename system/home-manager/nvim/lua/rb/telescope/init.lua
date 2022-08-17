@@ -120,7 +120,18 @@ require("telescope").setup({
       find_cmd = "rg", -- find command (defaults to `fd`)
     },
     fzf_writer = { use_highlighter = false, minimum_grep_characters = 6 },
-    frecency = { workspaces = { ["conf"] = "~/.config/nvim/" } },
+    frecency = { workspaces = { ["conf"] = "~/Developer/dotfiles/" } },
+    project = {
+      base_dirs = {
+        '~/Developer/mckinsey/planetrics/overdrive',
+        '~/Developer/mckinsey/planetrics/planetview-data-import',
+        '~/Developer/mckinsey/planetrics/extract-factset-database',
+        '~/Developer/mckinsey/planetrics/planetrics-django-backend',
+        '~/Developer/mckinsey/planetrics/planetview-infrastructure',
+      },
+      hidden_files = true, -- default: false
+      theme = "dropdown"
+    }
   },
 })
 
@@ -139,6 +150,7 @@ end
 pcall(require("telescope").load_extension, "cheat")
 pcall(require("telescope").load_extension, "dap")
 pcall(require("telescope").load_extension, "file_browser")
+pcall(require("telescope").load_extension, "project")
 
 if pcall(require("telescope").load_extension, "frecency") then
   -- frecency

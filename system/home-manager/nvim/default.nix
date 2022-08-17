@@ -202,6 +202,7 @@ in
       telescope-fzf-writer-nvim
       telescope-frecency-nvim
       telescope-dap-nvim
+      telescope-project-nvim
       sqlite-lua
 
       vim-surround
