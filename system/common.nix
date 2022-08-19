@@ -1,5 +1,5 @@
 { inputs, config, lib, pkgs, ... }: {
-  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix];
+  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ];
 
   programs.zsh = {
     enable = true;
@@ -56,7 +56,8 @@
 
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
-        # Selection of fonts from the package, you can overwrite the font selection
-        (nerdfonts.override { fonts = [ "Hack" "FiraMono" ]; })
+    # Selection of fonts from the package, you can overwrite the font selection
+    (nerdfonts.override { fonts = [ "Hack" "FiraMono" ]; })
   ];
 }
+

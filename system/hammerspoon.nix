@@ -1,5 +1,6 @@
 { stdenv ? (import <nixpkgs> { }).stdenv
-, fetchzip ? (import <nixpkgs> { }).fetchzip }:
+, fetchzip ? (import <nixpkgs> { }).fetchzip
+}:
 
 stdenv.mkDerivation {
   pname = "hammerspoon";
@@ -24,3 +25,4 @@ stdenv.mkDerivation {
     # platforms = stdenv.lib.platforms.darwin;
   };
 }
+

@@ -25,3 +25,4 @@ in
     users.users.${config.user.name} = mkAliasDefinitions options.user;
   };
 }
+

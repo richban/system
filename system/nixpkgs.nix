@@ -12,7 +12,7 @@
     '';
     # Add administrators to trusted users
     trustedUsers = [ "${config.user.name}" "root" "@admin" "@wheel" ];
-    
+
     # Garbage collection
     gc = {
       automatic = true;
@@ -48,3 +48,4 @@
     };
   };
 }
+

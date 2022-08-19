@@ -17,7 +17,8 @@ let
     let
       file = "/etc/pam.d/sudo";
       option = "security.pam.enableSudoTouchIdAuth";
-    in ''
+    in
+    ''
       ${if isEnabled then ''
         # Enable sudo Touch ID authentication, if not already enabled
         if ! grep 'pam_tid.so' ${file} > /dev/null; then
@@ -33,7 +34,8 @@ let
       ''}
     '';
 
-in {
+in
+{
   options = {
     security.pam.enableSudoTouchIdAuth = mkEnableOption ''
       Enable sudo authentication with Touch ID
