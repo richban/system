@@ -87,6 +87,11 @@ in
       target = ".config/nvim/after";
     };
 
+    snippets = {
+      source = ../../../dotfiles/config/nvim/snippets;
+      target = ".config/nvim/snippets";
+    };
+
   };
 
   programs.neovim = {

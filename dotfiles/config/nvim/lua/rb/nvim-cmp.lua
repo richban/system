@@ -1,4 +1,6 @@
 local present, cmp = pcall(require, "cmp")
+local types = require "cmp.types"
+local str = require "cmp.utils.str"
 
 local lspkind = require("lspkind")
 lspkind.init({
@@ -32,15 +34,6 @@ if not present then
   return
 end
 
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -57,43 +50,48 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
-      end
-    end, { "i", "s" }), -- end,
+    ["<CR>"] = cmp.mapping {
+      i = cmp.mapping.confirm { select = true },
+    },
+    ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
   },
   formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = string.format("%s %s", lspkind.presets.default[vim_item.kind], vim_item.kind)
-      vim_item.menu = ({
-        vsnip = "",
-        nvim_lsp = "ﲳ",
-        nvim_lua = "",
-        treesitter = "",
-        path = "ﱮ",
-        buffer = "﬘",
-        zsh = "",
-        spell = "暈",
-      })[entry.source.name]
+    fields = {
+      cmp.ItemField.Abbr,
+      cmp.ItemField.Kind,
+      cmp.ItemField.Menu,
+    },
+    format = lspkind.cmp_format {
+      mode = "symbol_text",
+      maxwidth = 60,
+      before = function(entry, vim_item)
+        vim_item.menu = ({
+          nvim_lsp = "ﲳ",
+          nvim_lua = "",
+          treesitter = "",
+          path = "ﱮ",
+          buffer = "﬘",
+          zsh = "",
+          vsnip = "",
+          spell = "暈",
+        })[entry.source.name]
+        -- Get the full snippet (and only keep first line)
+        local word = entry:get_insert_text()
+        if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+          word = vim.lsp.util.parse_snippet(word)
+        end
+        word = str.oneline(word)
+        if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+            and string.sub(vim_item.abbr, -1, -1) == "~"
+        then
+          word = word .. "~"
+        end
+        vim_item.abbr = word
 
-      return vim_item
-    end,
+        return vim_item
+      end,
+    },
   },
   sources = {
     -- order of the sources sets priority in the completion menu
@@ -105,7 +103,10 @@ cmp.setup({
     { name = "spell" },
   },
   experimental = { ghost_text = true },
-  bordered = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" } },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
 })
 
 -- require('nvim-autopairs').setup({check_ts = true})
