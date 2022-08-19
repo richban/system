@@ -230,6 +230,8 @@ in
       nodePackages.vscode-css-languageserver-bin
       nodePackages.vim-language-server
       nodePackages.dockerfile-language-server-nodejs
+
+      python39Packages.python-lsp-server
     ];
 
     extraConfig = ''
