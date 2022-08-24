@@ -193,6 +193,10 @@ in
         plugin = better-escape-nvim;
         config = ''lua require("better_escape").setup()'';
       }
+      {
+        plugin = hop-nvim;
+        config = ''lua require'hop'.setup()'';
+      }
       editorconfig-vim
       # lsp
       nvim-lspconfig
