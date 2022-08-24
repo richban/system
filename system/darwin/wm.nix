@@ -6,6 +6,7 @@
 
   services.yabai = {
     enable = true;
+    package = pkgs.yabai;
     enableScriptingAddition = true;
     extraConfig = builtins.readFile ../../dotfiles/yabairc;
   };

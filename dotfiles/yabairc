@@ -13,7 +13,7 @@ yabai -m config window_topmost               off
 yabai -m config window_opacity               on
 yabai -m config window_opacity_duration      1.0
 yabai -m config window_shadow                on
-yabai -m config window_border                on
+yabai -m config window_border                off
 yabai -m config window_border_width          6
 yabai -m config window_border_radius         -1.0
 yabai -m config active_window_border_color   0xffcc241d # 0xffb6d12c
@@ -28,7 +28,7 @@ yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
 # general space settings
-yabai -m config layout                       bsp
+yabai -m config layout                       float
 yabai -m config top_padding                  10
 yabai -m config bottom_padding               10
 yabai -m config left_padding                 10
@@ -56,61 +56,35 @@ yabai -m space 7 --label other
 # example how to send apps to specific windows
 # for wid in $(yabai -m query --windows | jq '.[] | select(.app | IN("Notion", "TickTick")) | .id'); do yabai -m window $wid --space 5; done
 
+# NOTE: come up with different rules when on working machine
 # Rules
-yabai -m rule --add app="^iTerm2$"     display=$(yabai -m query --displays | jq -r '.[-1].index')
-yabai -m rule --add app="^System Preferences$" manage=off
-
-yabai -m rule --add app=1Password\ 7 manage=off
-yabai -m rule --add app="^Finder$" manage=off
-
-yabai -m rule --add app="^Alacritty" space=main
-yabai -m rule --add app="^Google" space=main
-
-yabai -m rule --add app="^Code" space=code
-yabai -m rule --add app="^Github Desktop" space=code
-
-yabai -m rule --add app="^Firefox" space=browsing
-yabai -m rule --add app="^Safari" space=browsing
-
-yabai -m rule --add app="^TickTick$" space=productivity
-yabai -m rule --add app="^Notion$" space=productivity
-yabai -m rule --add app="^Obsidian$" space=productivity
-
-yabai -m rule --add app="^Microsoft Outlook" space=work-comm
-yabai -m rule --add app="^Microsoft Teams" space=work-comm
-
-yabai -m rule --add app="^WeChat$" grid=1:1:0:0:1:1 manage=off space=comm
-yabai -m rule --add app="^WhatsApp" space=comm
-yabai -m rule --add app="^Mail" space=comm
-yabai -m rule --add app="^Messages" space=comm
-yabai -m rule --add app="^Slack" space=comm
-yabai -m rule --add app="^Discord" space=comm
-
-# Refresh spaces widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh spaces widget on display focus change
-yabai -m signal --add event=display_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh spaces widget on window resize
-yabai -m signal --add event=window_resized action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-# Refresh process widget on space change
-yabai -m signal --add event=space_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=window_focused action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# Refresh process widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when focused application changes
-yabai -m signal --add event=application_front_switched action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# Refresh process widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
-# Refresh spaces widget on when an application window is closed
-yabai -m signal --add event=window_destroyed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-spaces-jsx\"'"
-
-# Refresh process widget when current window title changes
-yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
+# yabai -m rule --add app="^iTerm2$" display=$(yabai -m query --displays | jq -r '.[-1].index')
+# yabai -m rule --add app="^System Preferences$" manage=off
+#
+# yabai -m rule --add app=1Password\ 7 manage=off
+# yabai -m rule --add app="^Finder$" manage=off
+#
+# yabai -m rule --add app="^Alacritty" space=main
+# yabai -m rule --add app="^Google" space=main
+#
+# yabai -m rule --add app="^Code" space=code
+# yabai -m rule --add app="^Github Desktop" space=code
+#
+# yabai -m rule --add app="^Firefox" space=browsing
+# yabai -m rule --add app="^Safari" space=browsing
+#
+# yabai -m rule --add app="^TickTick$" space=productivity
+# yabai -m rule --add app="^Notion$" space=productivity
+# yabai -m rule --add app="^Obsidian$" space=productivity
+#
+# yabai -m rule --add app="^Microsoft Outlook" space=work-comm
+# yabai -m rule --add app="^Microsoft Teams" space=work-comm
+#
+# yabai -m rule --add app="^WeChat$" grid=1:1:0:0:1:1 manage=off space=comm
+# yabai -m rule --add app="^WhatsApp" space=comm
+# yabai -m rule --add app="^Mail" space=comm
+# yabai -m rule --add app="^Messages" space=comm
+# yabai -m rule --add app="^Slack" space=comm
+# yabai -m rule --add app="^Discord" space=comm
 
 echo "yabai configuration loaded.."

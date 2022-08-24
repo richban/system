@@ -2,7 +2,7 @@
   imports = [
     ../common.nix
     ./pam.nix
-    ./brew.nix
+    ./wm.nix
     ./configuration.nix
   ];
 }
