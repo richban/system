@@ -38,7 +38,6 @@
       git
       jq
       gnupg
-
       nix-prefetch-github
       # helpful shell stuff
       bat
