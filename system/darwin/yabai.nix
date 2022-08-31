@@ -73,8 +73,12 @@ stdenv.mkDerivation rec {
     # aarch64 code is compiled on all targets, which causes Apple SDK headers to error out.
     # Since multilib doesnt work on darwin i dont know of a better way of handling this.
     substituteInPlace makefile \
-      --replace "-arch arm64e" "" \
-      --replace "-arch arm64" ""
+    ${if stdenv.isx86_64 then ''
+       --replace "-arch arm64e" "" \
+       --replace "-arch arm64" ""
+    '' else if stdenv.isAarch64 then ''
+      --replace "-arch x86_64" ""
+    '' else throw "unsupported platform"}
 
     # `NSScreen::safeAreaInsets` is only available on macOS 12.0 and above, which frameworks arent packaged.
     # When a lower OS version is detected upstream just returns 0, so we can hardcode that at compiletime.
@@ -117,7 +121,7 @@ stdenv.mkDerivation rec {
     license = licenses.mit;
     platforms = platforms.darwin;
     # Fails to find `<Foundation/Foundation.h>` when cross compiling from x86_64-darwin, even with `CoreFoundation` added in `buildInputs`.
-    broken = hostPlatform.isAarch64;
+    # broken = hostPlatform.isAarch64;
     maintainers = with maintainers; [
       cmacrae
       shardy
