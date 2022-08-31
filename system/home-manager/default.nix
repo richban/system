@@ -60,7 +60,6 @@ in
     };
   };
 
-  # TODO: fix config does not seem to work
   programs.tmux = {
     enable = true;
     tmuxinator.enable = true;
@@ -115,7 +114,7 @@ in
     {
       # Home Manager needs a bit of information about you and the
       # paths it should manage.
-      # stateVersion = "21.11";
+      stateVersion = "21.11";
       sessionVariables = {
         GPG_TTY = "/dev/ttys000";
         EDITOR = "nvim";
@@ -140,7 +139,7 @@ in
         shellcheck
         graphviz
         gnupg
-        zenith
+        # zenith
         htop
         bottom
         tree

@@ -230,7 +230,7 @@ in
       statix
       proselint
       terraform-ls
-      nodePackages.beancount-langserver
+      # nodePackages.beancount-langserver
       nodePackages.typescript-language-server
       nodePackages.bash-language-server
       nodePackages.vscode-json-languageserver
