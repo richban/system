@@ -21,6 +21,15 @@ let
     };
     meta.homepage = "https://github.com/ethanholz/nvim-lastplace/";
   };
+  lspsaga= pkgs.vimUtils.buildVimPluginFrom2Nix {
+    name = "lspsaga.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "glepnir";
+      repo = "lspsaga.nvim";
+      rev = "66ba565b835bb8b34dbad64c173afe89f39ea059";
+      sha256 = "XYjzI9ogKRrHtojYRtZtTRLPw4Y6zxvrsmwg6c1r8N0=";
+    };
+  };
 in
 {
 
@@ -200,7 +209,7 @@ in
       editorconfig-vim
       # lsp
       nvim-lspconfig
-      lspsaga-nvim
+      lspsaga
       lsp-status-nvim
       lsp_signature-nvim
 

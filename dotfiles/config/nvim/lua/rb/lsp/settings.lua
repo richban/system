@@ -1,7 +1,6 @@
 local lsp = require("lspconfig")
 local lsp_status = require("lsp-status")
 local mappings = require("rb.lsp.mappings")
-local configs = require("lspconfig/configs")
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
@@ -11,11 +10,7 @@ vim.lsp.set_log_level("error")
 require("lspkind").init()
 
 require("rb.lsp.status").activate()
-require("rb.lsp.handlers")
-
-local nvim_exec = function(txt)
-  vim.api.nvim_exec(txt, false)
-end
+-- require("rb.lsp.handlers")
 
 local filetype_attach = setmetatable({
   go = function(client)
