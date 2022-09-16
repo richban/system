@@ -21,7 +21,7 @@ let
     };
     meta.homepage = "https://github.com/ethanholz/nvim-lastplace/";
   };
-  lspsaga= pkgs.vimUtils.buildVimPluginFrom2Nix {
+  lspsaga = pkgs.vimUtils.buildVimPluginFrom2Nix {
     name = "lspsaga.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "glepnir";

@@ -266,10 +266,10 @@ local servers = {
     },
   },
   -- pyright = {},
-  sqlls = {
+  sqls = {
     -- cmd = { "/usr/local/bin/sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql", "mysql" },
-    root_dir = project_root_or_cur_dir,
+    -- root_dir = project_root_or_cur_dir,
     settings = {},
   },
   sumneko_lua = {
