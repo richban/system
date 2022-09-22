@@ -28,18 +28,17 @@
         });
       };
     })
-    # NOTE: Apple SDK >10.3 is needed
-    # (final: prev:
-    #   let
-    #     pkgs = final;
-    #   in
-    #   with pkgs; {
-    #     yabai = callPackage ./darwin/yabai.nix {
-    #       inherit (darwin.apple_sdk.frameworks) Cocoa Carbon ScriptingBridge;
-    #       inherit (darwin.apple_sdk_11_0.frameworks) SkyLight;
-    #     };
-    #   }
-    # )
+    (final: prev:
+      let
+        pkgs = final;
+      in
+      with pkgs; {
+        yabai = callPackage ./darwin/yabai.nix {
+          inherit (darwin.apple_sdk.frameworks) Cocoa Carbon ScriptingBridge;
+          inherit (darwin.apple_sdk_11_0.frameworks) SkyLight;
+        };
+      }
+    )
   ];
 }
 
