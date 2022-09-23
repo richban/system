@@ -157,6 +157,8 @@ in
         # formats shell programs
         shfmt
         pre-commit
+        git-sizer
+        git-lfs
 
         bat
         bat-extras.batgrep
