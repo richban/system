@@ -44,8 +44,4 @@ in
   # $ darwin-rebuild changelog¡
   system.stateVersion = 4;
 
-  # Keyboard
-  # system.keyboard.enableKeyMapping = true;
-  # system.keyboard.remapCapsLockToEscape = true;
-
 }
