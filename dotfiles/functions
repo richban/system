@@ -1,17 +1,17 @@
 #!/bin/sh
 
-function fixperms(){
+fixperms(){
   find . \( -name "*.sh" -or -type d \) -exec chmod 755 {} \; && find . -type f ! -name "*.sh" -exec chmod 644 {} \;
 }
 
-function showdf() {
+showdf() {
   defaults write com.apple.Finder AppleShowAllFiles YES
   osascript -e 'tell application "Finder" to quit'
   sleep 0.25
   osascript -e 'tell application "Finder" to activate'
 }
 
-function hidedf() {
+hidedf() {
   defaults write com.apple.Finder AppleShowAllFiles NO
   osascript -e 'tell application "Finder" to quit'
   sleep 0.25
@@ -23,10 +23,10 @@ init_ipykernel () {
   echo "Installing ipython kernel"
   pipenv install --dev ipykernel
   # get name of environment and remove checksum for pretty name
-  venv_name=$(basename -- $(pipenv --venv))
-  venv_prettyname=$(echo $venv_name | cut -d '-' -f 1)
+  venv_name=$(basename -- "$(pipenv --venv)")
+  venv_prettyname=$(echo "$venv_name" | cut -d '-' -f 1)
   echo "Adding ipython kernel to list of jupyter kernels"
-  $(pipenv --py) -m ipykernel install --name $venv_name \
+  $(pipenv --py) -m ipykernel install --name "$venv_name" \
   --display-name "Python3 ($venv_prettyname)"
 }
 
@@ -38,12 +38,12 @@ nixify() {
   fi
   if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
     cat > default.nix <<'EOF'
-with import <nixpkgs> {};
-mkShell {
-  nativeBuildInputs = [
-    bashInteractive
-  ];
-}
+      with import <nixpkgs> {};
+      mkShell {
+        nativeBuildInputs = [
+          bashInteractive
+        ];
+      }
 EOF
     ${EDITOR:-vim} default.nix
   fi
@@ -56,5 +56,14 @@ flakify() {
     echo "use flake" > .envrc
     direnv allow
   fi
-  ${EDITOR:-vim} flake.nix
+  ${EDITOR:-nvim} flake.nix
+}
+
+git_get_all_blob() {
+  git rev-list --objects --all |
+  git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' |
+  sed -n 's/^blob //p' |
+  sort --numeric-sort --key=2 |
+  cut -c 1-12,41- |
+  $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
 }
