@@ -153,6 +153,8 @@ in
         starship
         exa
 
+        (pkgs.ruby.withPackages (ps: with ps; [ jekyll ]))
+
         treefmt
         # formats shell programs
         shfmt
@@ -172,6 +174,9 @@ in
         google-cloud-sdk
 
         pyEnv
+
+        nodejs-slim-14_x
+        nodePackages.npm
       ];
 
       file = {
