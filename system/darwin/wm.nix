@@ -1,15 +1,29 @@
 { config, pkgs, ... }: {
 
-  homebrew.extraConfig = ''
-    brew "yabai", restart_service: "changed"
-  '';
-
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
     enableScriptingAddition = true;
     extraConfig = builtins.readFile ../../dotfiles/yabairc;
   };
+
+  # NOTE:
+  # The scripting addition needs root access to load, which we want to do automatically when logging in.
+  # This disables the password requirement for it, so that a user-agent can launch it.
+  # environment.etc."sudoers.d/yabai-load-sa".text = ''
+  #   ${config.user.name} ALL = (root) NOPASSWD: sha256:${builtins.hashFile "sha256" pkgs.yabai.loadScriptingAddition} ${pkgs.yabai.loadScriptingAddition}
+  # '';
+  #
+  # launchd.user.agents.yabai-load-sa = {
+  #   path = [ pkgs.yabai config.environment.systemPath ];
+  #   command = "/usr/bin/sudo ${pkgs.yabai.loadScriptingAddition}";
+  #   serviceConfig = {
+  #     RunAtLoad = true;
+  #     KeepAlive.SuccessfulExit = true;
+  #   };
+  # };
+
+  environment.systemPackages = [ pkgs.yabai-zsh-completions ];
 
   services.skhd.enable = true;
   services.skhd.skhdConfig = builtins.readFile ../../dotfiles/skhdrc;
