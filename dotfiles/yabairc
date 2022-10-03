@@ -58,11 +58,15 @@ yabai -m space 7 --label other
 
 # NOTE: come up with different rules when on working machine
 # Rules
-# yabai -m rule --add app="^iTerm2$" display=$(yabai -m query --displays | jq -r '.[-1].index')
-# yabai -m rule --add app="^System Preferences$" manage=off
-#
-# yabai -m rule --add app=1Password\ 7 manage=off
-# yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^1Password$" manage=off
+yabai -m rule --add app="^Spotify$" manage=off
+yabai -m rule --add app="^Karabiner-Elements$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Karabiner-EventViewer$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
+yabai -m rule --add app="^AirBuddy$" sticky=on layer=above manage=off
+yabai -m rule --add app="^iStat$" sticky=on layer=above manage=off
+yabai -m rule --add app="^CleanShot X$" sticky=off layer=above manage=off
 #
 # yabai -m rule --add app="^Alacritty" space=main
 # yabai -m rule --add app="^Google" space=main
