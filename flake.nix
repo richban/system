@@ -1,6 +1,20 @@
 {
   description = "NixOS systems and tools by richban";
 
+  nixConfig = {
+    substituters = [
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+      "https://richban.cachix.org"
+    ];
+
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "richban.cachix.org-1:b22iBPRwWfvVe1ldyn3ca1JRw0OEzzf3jrurGJQN3LA="
+    ];
+  };
+
   inputs = {
     # We use the unstable nixpkgs repo for some packages.
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
