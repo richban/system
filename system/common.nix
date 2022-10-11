@@ -39,6 +39,7 @@
       jq
       gnupg
       nix-prefetch-github
+      cachix
       # helpful shell stuff
       bat
       fzf

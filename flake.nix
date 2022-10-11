@@ -94,20 +94,6 @@
     in
     {
 
-      # TODO: what are these checks?
-      checks = listToAttrs (
-        # darwin checks
-        (map
-          (system: {
-            name = system;
-            value = {
-              darwin =
-                self.darwinConfigurations.darwinCasperIntel.config.system.build.toplevel;
-            };
-          })
-          nixpkgs.lib.platforms.darwin)
-      );
-
       darwinConfigurations = {
         darwinCasperIntel = mkDarwinConfig {
           system = "x86_64-darwin";
