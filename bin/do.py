@@ -22,8 +22,7 @@ class Colors(Enum):
     ERROR = typer.colors.RED
 
 
-check_git = subprocess.run(
-    ["git", "rev-parse", "--show-toplevel"], capture_output=True)
+check_git = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True)
 LOCAL_FLAKE = os.path.realpath(check_git.stdout.decode().strip())
 REMOTE_FLAKE = "github:richban/dotfiles"
 is_local = check_git.returncode == 0 and os.path.isfile(
@@ -92,8 +91,7 @@ def select(nixos: bool, darwin: bool, home_manager: bool):
     hidden=PLATFORM == FlakeOutputs.NIXOS,
 )
 def bootstrap(
-    host: str = typer.Argument(
-        None, help="the hostname of the configuration to build"),
+    host: str = typer.Argument(None, help="the hostname of the configuration to build"),
     remote: bool = typer.Option(
         default=False,
         hidden=not is_local,
@@ -123,8 +121,7 @@ def bootstrap(
         flake = f"{bootstrap_flake}#{cfg.value}.{host}.config.system.build.toplevel"
         run_cmd(["nix", "build", flake] + flags)
         run_cmd(
-            f"./result/sw/bin/darwin-rebuild switch --flake {FLAKE_PATH}#{host}".split(
-            )
+            f"./result/sw/bin/darwin-rebuild switch --flake {FLAKE_PATH}#{host}".split()
         )
     elif cfg == FlakeOutputs.HOME_MANAGER:
         flake = f"{bootstrap_flake}#{host}"
@@ -152,8 +149,7 @@ def bootstrap(
     no_args_is_help=True,
 )
 def build(
-    host: str = typer.Argument(
-        None, help="the hostname of the configuration to build"),
+    host: str = typer.Argument(None, help="the hostname of the configuration to build"),
     remote: bool = typer.Option(
         default=False,
         hidden=not is_local,
@@ -194,8 +190,7 @@ def clean(
         "result", help="the filename to be cleaned, or '*' for all files"
     ),
 ):
-    run_cmd(
-        f"find . -type l -maxdepth 1 -name {filename} -exec rm {{}} +".split())
+    run_cmd(f"find . -type l -maxdepth 1 -name {filename} -exec rm {{}} +".split())
 
 
 @app.command(
@@ -210,8 +205,7 @@ def gc(
         metavar="[AGE]",
         help="specify minimum age for deleting store paths",
     ),
-    dry_run: bool = typer.Option(
-        False, help="test the result of garbage collection"),
+    dry_run: bool = typer.Option(False, help="test the result of garbage collection"),
 ):
     cmd = f"nix-collect-garbage --delete-older-than {delete_older_than} {'--dry-run' if dry_run else ''}"
     run_cmd(cmd.split())
@@ -269,8 +263,7 @@ def switch(
     home_manager: bool = False,
 ):
     if not host:
-        typer.secho("Error: host configuration not specified.",
-                    fg=Colors.ERROR.value)
+        typer.secho("Error: host configuration not specified.", fg=Colors.ERROR.value)
         raise typer.Abort()
 
     cfg = select(nixos=nixos, darwin=darwin, home_manager=home_manager)
