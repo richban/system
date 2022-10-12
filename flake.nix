@@ -2,19 +2,19 @@
   description = "NixOS systems and tools by richban";
 
   # FIX: when used it's very slow
-  # nixConfig = {
-  #   substituters = [
-  #     "https://cache.nixos.org"
-  #     "https://nix-community.cachix.org"
-  #     "https://richban.cachix.org"
-  #   ];
-  #
-  #   trusted-public-keys = [
-  #     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-  #     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-  #     "richban.cachix.org-1:b22iBPRwWfvVe1ldyn3ca1JRw0OEzzf3jrurGJQN3LA="
-  #   ];
-  # };
+  nixConfig = {
+    substituters = [
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+      "https://richban.cachix.org"
+    ];
+
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "richban.cachix.org-1:b22iBPRwWfvVe1ldyn3ca1JRw0OEzzf3jrurGJQN3LA="
+    ];
+  };
 
   inputs = {
     # We use the unstable nixpkgs repo for some packages.
@@ -40,8 +40,12 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     # comma = { url = github:Shopify/comma; flake = false; };
     # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
-    devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@ { self, nixpkgs, darwin, home-manager, flake-utils, ... }:
@@ -72,7 +76,7 @@
         darwinSystem {
           inherit system;
           modules = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];
-          specialArgs = { inherit inputs nixpkgs stable; };
+          specialArgs = { inherit self inputs nixpkgs stable; };
         };
 
       # generate a home-manager config for any unix system
@@ -101,7 +105,7 @@
           pkgs = import nixpkgs {
             inherit system;
           };
-          extraSpecialArgs = { inherit inputs nixpkgs stable; };
+          extraSpecialArgs = { inherit self inputs nixpkgs stable; };
           modules = {
             imports = baseModules ++ extraModules ++ [ ./system/overlays.nix ];
           };
