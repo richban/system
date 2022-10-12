@@ -41,5 +41,5 @@ local list = {
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 require("nvim-tree").setup()
 
-key_map("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
-key_map("n", "<leader>nr", ":NvimTreeRefresh<CR>", { noremap = true, silent = false })
+key_map("n", "<leader>b", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+key_map("n", "<leader>br", ":NvimTreeRefresh<CR>", { noremap = true, silent = false })
