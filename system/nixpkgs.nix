@@ -10,15 +10,27 @@
       keep-derivations = true
       experimental-features = nix-command flakes
     '';
-    # Add administrators to trusted users
-    trustedUsers = [ "${config.user.name}" "root" "@admin" "@wheel" ];
 
     # Garbage collection
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
     };
-    maxJobs = 8;
+
+    settings = {
+      max-jobs = 8;
+      trusted-users = [ "${config.user.name}" "root" "@admin" "@wheel" ];
+      trusted-substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+        "https://richban.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "richban.cachix.org-1:b22iBPRwWfvVe1ldyn3ca1JRw0OEzzf3jrurGJQN3LA="
+      ];
+    };
     readOnlyStore = true;
 
     # Add inputs to registry & nix path
