@@ -30,6 +30,15 @@ let
       sha256 = "XYjzI9ogKRrHtojYRtZtTRLPw4Y6zxvrsmwg6c1r8N0=";
     };
   };
+  annotation-toolkit = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    name = "neogen";
+    src = pkgs.fetchFromGitHub {
+      owner = "danymat";
+      repo = "neogen";
+      rev = "967b280d7d7ade52d97d06e868ec4d9a0bc59282";
+      sha256 = "5wplf09XOljcQKYcnJTIQHJygNBVJw+tUcvWasLQbkc=";
+    };
+  };
 in
 {
 
@@ -224,6 +233,25 @@ in
       sqlite-lua
 
       vim-surround
+      {
+        plugin = annotation-toolkit;
+        type = "lua";
+        config = ''
+          require('neogen').setup({
+            enabled = true,
+            languages = {
+              lua = {
+                template = {
+                  annotation_convention = "emmylua"
+                }
+              },
+            }
+          })
+          local opts = { noremap = true, silent = true }
+          vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
+          vim.api.nvim_set_keymap("n", "<Leader>nf", ":lua require('neogen').generate()<CR>", opts)
+        '';
+      }
     ];
 
     extraPackages = with pkgs; [
@@ -250,6 +278,7 @@ in
       nodePackages.dockerfile-language-server-nodejs
 
       python39Packages.python-lsp-server
+      tree-sitter
     ];
 
     extraConfig = ''
