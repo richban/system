@@ -39,6 +39,15 @@ let
       sha256 = "5wplf09XOljcQKYcnJTIQHJygNBVJw+tUcvWasLQbkc=";
     };
   };
+  telescope-tabs = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    name = "telescope-tabs";
+    src = pkgs.fetchFromGitHub {
+      owner = "LukasPietzschmann";
+      repo = "telescope-tabs";
+      rev = "7f2e038913f8bc39bb3d35f1bc94cb7d28fcfb7f";
+      sha256 = "GQCaCWw2L0UFHTABrAk/g/d3MsGOj/XMxMbW2FgCI6c=";
+    };
+  };
 in
 {
 
@@ -250,6 +259,13 @@ in
           local opts = { noremap = true, silent = true }
           vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
           vim.api.nvim_set_keymap("n", "<Leader>nf", ":lua require('neogen').generate()<CR>", opts)
+        '';
+      }
+      {
+        plugin = telescope-tabs;
+        type = "lua";
+        config = ''
+          require'telescope-tabs'.setup{}
         '';
       }
     ];
