@@ -27,14 +27,20 @@ in
 
   environment.etc = { darwin.source = "${inputs.darwin}"; };
 
-  nix.nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
-  nix.extraOptions = ''
-    extra-platforms = x86_64-darwin aarch64-darwin
-  '';
+  # auto manage nixbld users with nix darwin
+  nix = {
+    configureBuildUsers = true;
+    nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
+    extraOptions = ''
+      extra-platforms = x86_64-darwin aarch64-darwin
+    '';
+  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
+
+  security.pam.enableSudoTouchIdAuth = true;
 
   # # Create /etc/bashrc that loads the nix-darwin environment.
   # programs.zsh.enable = true;  # default shell on catalina

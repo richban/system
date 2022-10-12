@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ... }: {
+{ self, inputs, config, lib, pkgs, ... }: {
   imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ];
 
   programs.zsh = {
@@ -22,7 +22,7 @@
 
   # Enable home-manager
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit self inputs; };
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
@@ -47,7 +47,7 @@
     ];
     etc = {
       home-manager.source = "${inputs.home-manager}";
-      nixpkgs.source = "${pkgs.path}";
+      nixpkgs.source = "${inputs.nixpkgs}";
       stable.source = "${inputs.nixos-stable}";
     };
     # list of acceptable shells in /etc/shells
