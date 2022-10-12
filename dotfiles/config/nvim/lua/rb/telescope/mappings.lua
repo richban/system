@@ -73,7 +73,7 @@ map_tele("<leader>fB", "builtin")
 
 -- Notes
 map_tele("<leader>gn", "grep_notes")
-map_tele("<leader>nf", "find_notes")
-map_tele("<leader>ne", "browse_notes")
+-- map_tele("<leader>nf", "find_notes")
+-- map_tele("<leader>ne", "browse_notes")
 
 return map_tele
