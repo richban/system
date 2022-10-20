@@ -179,6 +179,7 @@ in
 
         nodejs-slim-14_x
         nodePackages.npm
+        yarn
       ];
 
       file = {
