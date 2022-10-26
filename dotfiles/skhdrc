@@ -127,5 +127,7 @@ hyper - 0x1E : yabai -m space --move next
 shift + lctrl + alt - r :
     /usr/bin/env osascript <<< \
         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+    launchctl kickstart -k "gui/${UID}/org.nixos.yabai"
+    # launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
 
