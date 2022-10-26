@@ -49,7 +49,7 @@ map_tele("<leader>em", "media_files")
 
 map_tele("<leader>fb", "file_browser")
 -- Nvim
-map_tele("<leader>eb", "buffers")
+map_tele("<C-b>", "buffers")
 map_tele("<leader>ep", "installed_plugins")
 map_tele("<leader>bf", "curbuf")
 map_tele("<leader>th", "help_tags")
