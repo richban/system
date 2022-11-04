@@ -44,18 +44,22 @@ map_tele("<C-p>", "git_files")
 map_tele("<leader>bg", "live_grep")
 map_tele("<leader>ed", "fd")
 map_tele("<leader>ea", "search_all_files")
+-- FIXME:
 map_tele("<leader>e", "file_explorer")
+-- FIXME:
 map_tele("<leader>em", "media_files")
 
 map_tele("<leader>fb", "file_browser")
 -- Nvim
 map_tele("<C-b>", "buffers")
 map_tele("<leader>ep", "installed_plugins")
+-- FIXME:
 map_tele("<leader>bf", "curbuf")
 map_tele("<leader>th", "help_tags")
 
 -- Git
 -- map_tele("<space>gs", "git_status")
+-- FIXME:
 map_tele("<space>er", "git_repos")
 map_tele("<space>gc", "git_commits")
 map_tele("<space>gb", "git_branches")
