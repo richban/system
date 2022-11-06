@@ -23,6 +23,8 @@ local set_prompt_to_entry_value = function(prompt_bufnr)
   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 end
 
+pcall(require("telescope").load_extension, "workspaces")
+
 require("telescope").setup({
   defaults = {
     timeoutlen = 2000,
@@ -131,6 +133,10 @@ require("telescope").setup({
       },
       hidden_files = true, -- default: false
       theme = "dropdown"
+    },
+    workspaces = {
+      -- keep insert mode after selection in the picker, default is false
+      keep_insert = true,
     }
   },
 })
@@ -332,6 +338,10 @@ end
 
 function M.file_browser()
   require "telescope".extensions.file_browser.file_browser({ noremap = true })
+end
+
+function M.list_workspaces()
+  require("telescope").extensions.workspaces.list()
 end
 
 function M.grep_notes()

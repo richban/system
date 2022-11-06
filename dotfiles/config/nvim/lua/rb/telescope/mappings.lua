@@ -57,6 +57,9 @@ map_tele("<leader>ep", "installed_plugins")
 map_tele("<leader>bf", "curbuf")
 map_tele("<leader>th", "help_tags")
 
+-- Workspaces
+map_tele("<C-w>", "list_workspaces")
+
 -- Git
 -- map_tele("<space>gs", "git_status")
 -- FIXME:
