@@ -53,8 +53,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "natecraddock";
       repo = "workspaces.nvim";
-      rev = "88a477c8bc751dcb8fb2767b24484c5b244424eb";
-      sha256 = "1040bfyi2a5isx7hqdvqn9x3lwlklf2hlsyp6qglc0nk4kymc1ic";
+      rev = "86fa201ecaf932358fb713c21b2078cdeb323dd1";
+      sha256 = "VjfGtzSnxXdqYELAs/GnyWW83eu+L9rWPfWltClyLXY=";
     };
   };
   nvim-sessions = pkgs.vimUtils.buildVimPlugin {
@@ -293,7 +293,7 @@ in
         config = ''
           require("workspaces").setup({
             hooks = {
-                open = { "Telescope find_files" },
+                open = { "NvimTreeRefresh", "Telescope find_files" },
             }
           })
         '';
@@ -334,6 +334,13 @@ in
       nodePackages.dockerfile-language-server-nodejs
 
       python39Packages.python-lsp-server
+      python39Packages.pylsp-mypy
+      python39Packages.pyflakes
+      python39Packages.mccabe
+      python39Packages.pycodestyle
+      python39Packages.python-lsp-black
+      python39Packages.pyls-isort
+
       tree-sitter
     ];
 
