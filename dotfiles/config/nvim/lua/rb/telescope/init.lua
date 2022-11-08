@@ -11,19 +11,20 @@ reloader()
 
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
-local action_mt = require("telescope.actions.mt")
+-- local action_mt = require("telescope.actions.mt")
 local themes = require("telescope.themes")
 
-local set_prompt_to_entry_value = function(prompt_bufnr)
-  local entry = action_state.get_selected_entry()
-  if not entry or not type(entry) == "table" then
-    return
-  end
+local M = {}
 
-  action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
-end
 
-pcall(require("telescope").load_extension, "workspaces")
+-- local set_prompt_to_entry_value = function(prompt_bufnr)
+--   local entry = action_state.get_selected_entry()
+--   if not entry or not type(entry) == "table" then
+--     return
+--   end
+--
+--   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
+-- end
 
 require("telescope").setup({
   defaults = {
@@ -141,6 +142,8 @@ require("telescope").setup({
   },
 })
 
+pcall(require("telescope").load_extension, "workspaces")
+
 -- Load the fzy native extension at the start.
 -- pcall(require('telescope').load_extension, "fzy_native")
 -- require("telescope").load_extension("fzf")
@@ -163,14 +166,17 @@ if pcall(require("telescope").load_extension, "frecency") then
   vim.cmd([[highlight TelescopeBufferLoaded guifg=yellow]])
 end
 
-local M = {}
-
 -- requires github extension
 function M.gh_issues()
   local opts = {}
   opts.prompt_title = " Issues"
   -- opts.author = '@me'
   require("telescope").extensions.gh.issues(opts)
+end
+
+function M.list_workspaces()
+  vim.cmd([[Telescope workspaces]])
+  require("telescope").extensions.workspaces.list()
 end
 
 function M.git_status()
@@ -338,10 +344,6 @@ end
 
 function M.file_browser()
   require "telescope".extensions.file_browser.file_browser({ noremap = true })
-end
-
-function M.list_workspaces()
-  require("telescope").extensions.workspaces.list()
 end
 
 function M.grep_notes()

@@ -58,7 +58,7 @@ map_tele("<leader>bf", "curbuf")
 map_tele("<leader>th", "help_tags")
 
 -- Workspaces
-map_tele("<C-w>", "list_workspaces")
+map_tele("<C-;>", "list_workspaces")
 
 -- Git
 -- map_tele("<space>gs", "git_status")
