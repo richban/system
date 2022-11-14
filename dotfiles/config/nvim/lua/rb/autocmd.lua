@@ -41,10 +41,10 @@ vim.api.nvim_exec(
   false
 )
 
--- vimdows to close with 'q'
+-- windows to close with 'q'
 vim.cmd([[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer><silent> q :close<CR>]])
 
--- vimdows to close with 'q'
+-- windows to close with 'q'
 vim.cmd([[autocmd FileType help,qf,fugitive,fugitiveblame,netrw nnoremap <buffer><silent> q :close<CR>]])
 
 function vim.fn.TrimWhiteSpace()
