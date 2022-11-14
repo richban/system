@@ -2,6 +2,25 @@ local lsp = require("lspconfig")
 local lsp_status = require("lsp-status")
 local mappings = require("rb.lsp.mappings")
 
+-- new  autocmd API
+local autocmd = require("rb.auto").autocmd
+local autocmd_clear = vim.api.nvim_clear_autocmds
+
+local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
+local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
+
+-- auto command for formatting files
+local autocmd_format = function(async, filter)
+  vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    buffer = 0,
+    callback = function()
+      vim.lsp.buf.format { async = async, filter = filter }
+    end,
+  })
+end
+
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
 vim.lsp.set_log_level("error")
@@ -13,22 +32,22 @@ require("rb.lsp.status").activate()
 -- require("rb.lsp.handlers")
 
 local filetype_attach = setmetatable({
-  go = function(client)
-    vim.cmd([[
-        augroup lsp_buf_format
-          au! BufWritePre <buffer>
-          autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
-        augroup END
-      ]])
+  go = function()
+    autocmd_format(false)
   end,
 
-  rust = function()
-    vim.cmd([[
-        augroup lsp_buf_format
-          au! BufWritePre <buffer>
-          autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting(nil, 5000)
-        augroup END
-      ]])
+  scss = function()
+    autocmd_format(false)
+  end,
+
+  css = function()
+    autocmd_format(false)
+  end,
+
+  typescript = function()
+    autocmd_format(false, function(client)
+      return client.name ~= "tsserver"
+    end)
   end,
 }, {
   __index = function()
@@ -36,7 +55,7 @@ local filetype_attach = setmetatable({
   end,
 })
 
-local function custom_attach(client)
+local function custom_attach(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
   mappings.set(client)
@@ -96,56 +115,46 @@ local function custom_attach(client)
   })
 
   if client.server_capabilities.documentFormattingProvider then
-    vim.cmd(
-      [[
-        augroup LspFormatting
-        autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-        augroup END
-      ]]
-    )
+    autocmd_format(false)
   end
 
-  -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   -- Set autocommands conditional on server_capabilities
-  -- if client.resolved_capabilities.document_highlight then
-  --   nvim_exec [[
-  --       augroup lsp_document_highlight
-  --           autocmd! * <buffer>
-  --           autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-  --           autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-  --       augroup END
-  --   ]]
-  -- end
+  if client.server_capabilities.documentHighlightProvider then
+    autocmd_clear { group = augroup_highlight, buffer = bufnr }
+    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr }
+    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr }
+  end
 
-  -- if client.resolved_capabilities.code_lens then
-  --   vim.cmd [[
-  --     augroup lsp_document_codelens
-  --       au! * <buffer>
-  --       autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-  --       autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-  --     augroup END
-  --   ]]
-  -- end
+  if false and client.server_capabilities.codeLensProvider then
+    if filetype ~= "elm" then
+      autocmd_clear { group = augroup_codelens, buffer = bufnr }
+      autocmd { "BufEnter", augroup_codelens, vim.lsp.codelens.refresh, bufnr, once = true }
+      autocmd { { "BufWritePost", "CursorHold" }, augroup_codelens, vim.lsp.codelens.refresh, bufnr }
+    end
+  end
 
   -- Attach any filetype specific options to the client
-  filetype_attach[filetype](client)
+  filetype_attach[filetype]()
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
+-- updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
+
+-- Completion configuration
+require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
+
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 -- LSP this is needed for LSP completions in CSS along with the snippets plugin
 updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
 }
-updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
-local servers_path = vim.fn.stdpath("cache") .. "/lspconfig"
+-- local servers_path = vim.fn.stdpath("cache") .. "/lspconfig"
 
 local function project_root_or_cur_dir(path)
   return lsp.util.root_pattern("pyproject.toml", "Pipfile", ".git", "requirements.txt")(path) or vim.fn.getcwd()
