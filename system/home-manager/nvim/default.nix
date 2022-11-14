@@ -87,6 +87,10 @@ in
       source = ../../../dotfiles/config/nvim/lua/rb/autocmd.lua;
       target = ".config/nvim/lua/rb/autocmd.lua";
     };
+    auto = {
+      source = ../../../dotfiles/config/nvim/lua/rb/auto.lua;
+      target = ".config/nvim/lua/rb/auto.lua";
+    };
     autopairs = {
       source = ../../../dotfiles/config/nvim/lua/rb/autopairs.lua;
       target = ".config/nvim/lua/rb/autopairs.lua";
