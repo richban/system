@@ -14,8 +14,9 @@ local action_state = require("telescope.actions.state")
 -- local action_mt = require("telescope.actions.mt")
 local themes = require("telescope.themes")
 
-local M = {}
+require("telescope").load_extension("workspaces")
 
+local M = {}
 
 -- local set_prompt_to_entry_value = function(prompt_bufnr)
 --   local entry = action_state.get_selected_entry()
@@ -142,7 +143,6 @@ require("telescope").setup({
   },
 })
 
-pcall(require("telescope").load_extension, "workspaces")
 
 -- Load the fzy native extension at the start.
 -- pcall(require('telescope').load_extension, "fzy_native")
