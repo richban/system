@@ -14,30 +14,31 @@ vim.api.nvim_buf_set_keymap(
 
 vim.api.nvim_buf_set_keymap(0, "n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_exec(
-  [[
-      function! s:PyPreSave()
-        execute "silent !black " . bufname("%")
-        execute "e"
-      endfunction
-
-      function! s:PyPostSave()
-          execute "silent !tidy-imports --black --quiet --replace-star-imports --action REPLACE " . bufname("%")
-          execute "silent !isort " . bufname("%")
-          execute "e"
-      endfunction
-
-      :command! PyPreSave :call s:PyPreSave()
-      :command! PyPostSave :call s:PyPostSave()
-
-      augroup richban
-          autocmd!
-          autocmd bufwritepre *.py execute 'PyPreSave'
-          autocmd bufwritepost *.py execute 'PyPostSave'
-      augroup end
-  ]],
-  false
-)
+-- NOTE: we  have plugins  for this  now but can be done just by executing commmands
+-- vim.api.nvim_exec(
+--   false,
+--   [[
+--       function! s:PyPreSave()
+--         execute "silent !black " . bufname("%")
+--         execute "e"
+--       endfunction
+--
+--       function! s:PyPostSave()
+--           execute "silent !tidy-imports --black --quiet --replace-star-imports --action REPLACE " . bufname("%")
+--           execute "silent !isort " . bufname("%")
+--           execute "e"
+--       endfunction
+--
+--       :command! PyPreSave :call s:PyPreSave()
+--       :command! PyPostSave :call s:PyPostSave()
+--
+--       augroup richban
+--           autocmd!
+--           autocmd bufwritepre *.py execute 'PyPreSave'
+--           autocmd bufwritepost *.py execute 'PyPostSave'
+--       augroup end
+--   ]]
+-- )
 
 ---- JUPYTER NOTEBOOK ---------------------------------------------------------
 
@@ -114,4 +115,3 @@ vim.api.nvim_exec(
 ]] ,
   false
 )
-
