@@ -220,7 +220,7 @@ in
       nvim-tree-lua
       vim-nix
       null-ls-nvim
-      nvim-treesitter
+      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       # markdown-preview-nvim
       # goyo-vim
       {
@@ -344,7 +344,7 @@ in
       python39Packages.pyls-isort
       python39Packages.rope
 
-      tree-sitter
+      # tree-sitter
       codespell
     ];
 
