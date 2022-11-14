@@ -98,11 +98,11 @@ local function custom_attach(client)
   if client.server_capabilities.documentFormattingProvider then
     vim.cmd(
       [[
-				augroup LspFormatting
-				autocmd! * <buffer>
-				autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-				augroup END
-			]]
+        augroup LspFormatting
+        autocmd! * <buffer>
+        autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+        augroup END
+      ]]
     )
   end
 
@@ -141,7 +141,7 @@ updated_capabilities.textDocument.completion.completionItem.snippetSupport = tru
 updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
 }
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
@@ -344,4 +344,3 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
-
