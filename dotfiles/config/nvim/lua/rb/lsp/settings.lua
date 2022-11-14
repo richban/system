@@ -152,25 +152,25 @@ local function project_root_or_cur_dir(path)
 end
 
 require("os")
-local path_sep = vim.loop.os_uname().sysname == "Windows" and "\\" or "/"
-local function path_join(...)
-  return table.concat(vim.tbl_flatten({ ... }), path_sep)
-end
+-- local path_sep = vim.loop.os_uname().sysname == "Windows" and "\\" or "/"
+-- local function path_join(...)
+--   return table.concat(vim.tbl_flatten({ ... }), path_sep)
+-- end
 
-local system_name
-if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
-elseif vim.fn.has("win32") == 1 then
-  system_name = "Windows"
-else
-  print("Unsupported system for sumneko")
-end
+-- local system_name
+-- if vim.fn.has("mac") == 1 then
+--   system_name = "macOS"
+-- elseif vim.fn.has("unix") == 1 then
+--   system_name = "Linux"
+-- elseif vim.fn.has("win32") == 1 then
+--   system_name = "Windows"
+-- else
+--   print("Unsupported system for sumneko")
+-- end
 
 -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspIn
-local sumneko_root_path = servers_path .. "/sumneko-lua-language-server/extension/server"
-local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
+-- local sumneko_root_path = servers_path .. "/sumneko-lua-language-server/extension/server"
+-- local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
 
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
@@ -248,28 +248,54 @@ local servers = {
     },
   },
   pylsp = {
-    plugins = {
-      -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
-      configurationSources = { "flake8" },
-      -- linter to detect various errors
-      pyflakes = { enabled = false },
-      -- linter for docstring style checking
-      pydocstyle = { enabled = true },
-      -- linter for style checking
-      pycodestyle = { enabled = false },
-      pylint = { enabled = false },
-      black = { enabled = true },
-      -- type checking
-      pylsp_mypy = { enabled = true, live_mode = true },
-      -- code formatting using isort
-      pyls_isort = { enabled = true },
+    formatCommand = { "black" },
+    root_dir = function(fname)
+      local root_files = {
+        'pyproject.toml',
+        'setup.py',
+        'setup.cfg',
+        'requirements.txt',
+        'Pipfile',
+      }
+      return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname)
+    end,
+    settings = {
+      pylsp = {
+        plugins = {
+          jedi_completion = { enabled = true },
+          jedi_hover = { enabled = true },
+          jedi_references = { enabled = true },
+          jedi_signature_help = { enabled = true },
+          jedi_symbols = { enabled = true, all_scopes = true },
+          -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
+          configurationSources = { "flake8" },
+          -- linter to detect various errors
+          pyflakes = { enabled = false },
+          -- linter for docstring style checking
+          pydocstyle = { enabled = true },
+          -- linter for style checking
+          pycodestyle = { enabled = false, maxLineLength = 120 },
+
+          pylint = { enabled = true },
+
+          black = { enabled = true },
+          -- type checking
+          pylsp_mypy = { enabled = true, live_mode = true },
+          -- code formatting using isort
+          pyls_isort = { enabled = true },
+
+          pyls_flake8 = { enabled = true, executable = 'flake8' },
+
+          rope_autoimport = { enabled = true }
+        },
+      },
     },
   },
   -- pyright = {},
   sqls = {
     -- cmd = { "/usr/local/bin/sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql", "mysql" },
-    -- root_dir = project_root_or_cur_dir,
+    root_dir = project_root_or_cur_dir,
     settings = {},
   },
   sumneko_lua = {
@@ -318,3 +344,4 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
+
