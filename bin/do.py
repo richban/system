@@ -1,11 +1,11 @@
 #! /usr/bin/env python3
+import typer
+import platform
 import os
 import subprocess
 from enum import Enum
 from typing import List
 
-import platform
-import typer
 
 app = typer.Typer()
 
