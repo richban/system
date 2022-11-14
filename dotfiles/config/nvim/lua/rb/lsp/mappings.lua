@@ -15,8 +15,10 @@ function M.set(client)
   vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
 
   -- Diagnostic
-  vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
-  vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+  vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>",
+    { silent = true })
+  vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>",
+    { silent = true })
 
   vim.api.nvim_set_keymap('n', '[d', "<cmd><Lspsaga diagnostic_jump_prev<CR>", opts)
   vim.api.nvim_set_keymap('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", opts);
@@ -32,15 +34,15 @@ function M.set(client)
 
   -- Workspaces
   vim.api.nvim_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  vim.api.nvim_set_keymap(
-    "n",
-    "<space>wl",
+  vim.api.nvim_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+    opts)
+  vim.api.nvim_set_keymap("n", "<space>wl",
     "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-    opts
-  )
+    opts)
+  vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>Telescope workspaces<CR>", opts)
 
-  vim.api.nvim_set_keymap("n", "<leader>lc", ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", opts)
+  vim.api.nvim_set_keymap("n", "<leader>lc",
+    ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>lp", ":lua print(vim.lsp.get_log_path())<CR>", opts)
 
   if client.definitionProvider then
@@ -54,24 +56,18 @@ function M.set(client)
 
   if client.referencesProvider then
     -- vim.api.nvim_set_keymap('n','<leader>tr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>gr",
+      "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
   end
 
-  vim.api.nvim_set_keymap(
-    "n",
-    "<leader>ca",
+  vim.api.nvim_set_keymap("n", "<leader>ca",
     "<cmd>lua require('telescope.builtin').lsp_code_actions({ timeout = 1000 })<CR>",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "v",
-    "<leader>car",
+    opts)
+  vim.api.nvim_set_keymap("v", "<leader>car",
     "<cmd>lua require('telescope.builtin').lsp_range_code_actions({ timeout = 1000 })<CR>",
-    opts
-  )
+    opts)
   vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
   vim.api.nvim_set_keymap("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
-
 
   if client.renameProvider then
     -- vim.api.nvim_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)

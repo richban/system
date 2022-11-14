@@ -174,11 +174,6 @@ function M.gh_issues()
   require("telescope").extensions.gh.issues(opts)
 end
 
-function M.list_workspaces()
-  vim.cmd([[Telescope workspaces]])
-  require("telescope").extensions.workspaces.list()
-end
-
 function M.git_status()
   local opts = themes.get_dropdown({ winblend = 10, border = true, previewer = false, shorten_path = false })
 
