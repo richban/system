@@ -369,6 +369,7 @@ in
       statix
       proselint
       terraform-ls
+
       # nodePackages.beancount-langserver
       nodePackages.typescript-language-server
       nodePackages.bash-language-server
@@ -379,22 +380,28 @@ in
       nodePackages.vim-language-server
       nodePackages.dockerfile-language-server-nodejs
 
-      python39Packages.python-lsp-server
-      python39Packages.jedi
-      python39Packages.pylsp-mypy
-      python39Packages.pyflakes
-      python39Packages.pyls-flake8
-      python39Packages.mccabe
-      python39Packages.pycodestyle
-      python39Packages.python-lsp-black
-      python39Packages.pyls-isort
-      python39Packages.rope
-      # python39Packages.editorconfig
+      (python3.withPackages (ps: with ps; [
+        python-lsp-server
+        jedi
+        pylsp-mypy
+        pyflakes
+        pyls-flake8
+        mccabe
+        pycodestyle
+        python-lsp-black
+        pyls-isort
+        rope
+        # editorconfig
+      ]))
 
       tree-sitter
       codespell
       # editorconfig-checker
     ];
+
+    extraPython3Packages = (ps: with ps; [
+      jedi
+    ]);
 
     extraConfig = ''
       lua require("rb.settings")
