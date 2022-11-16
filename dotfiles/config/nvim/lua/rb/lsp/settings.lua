@@ -7,17 +7,16 @@ local autocmd = require("rb.auto").autocmd
 local autocmd_clear = vim.api.nvim_clear_autocmds
 
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
-local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
 
--- auto command for formatting files
+-- auto command for formatting files on save
 local autocmd_format = function(async, filter)
   vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
   vim.api.nvim_create_autocmd("BufWritePre", {
     buffer = 0,
     callback = function()
       vim.lsp.buf.format { async = async, filter = filter }
-    end,
+    end
   })
 end
 
@@ -48,11 +47,12 @@ local filetype_attach = setmetatable({
     autocmd_format(false, function(client)
       return client.name ~= "tsserver"
     end)
-  end,
+  end
 }, {
   __index = function()
-    return function() end
-  end,
+    return function()
+    end
+  end
 })
 
 local function custom_attach(client, bufnr)
@@ -81,7 +81,7 @@ local function custom_attach(client, bufnr)
       -- TODO: try out update imports on file move
       update_imports_on_move = true,
       require_confirmation_on_move = false,
-      watch_dir = nil,
+      watch_dir = nil
     })
 
     -- required to fix code action ranges and filter diagnostics
@@ -109,30 +109,21 @@ local function custom_attach(client, bufnr)
     -- to view the hiding contents
     max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
     handler_opts = {
-      border = "single", -- double, single, shadow, none
+      border = "single" -- double, single, shadow, none
     },
-    extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
+    extra_trigger_chars = {} -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
   })
 
-  if client.server_capabilities.documentFormattingProvider then
-    autocmd_format(false)
-  end
+  --  format on doument save
+  if client.server_capabilities.documentFormattingProvider then autocmd_format(false) end
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-  -- Set autocommands conditional on server_capabilities
+  -- highlights LSP references on CursorHold and CursorMoved events
   if client.server_capabilities.documentHighlightProvider then
     autocmd_clear { group = augroup_highlight, buffer = bufnr }
     autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr }
     autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr }
-  end
-
-  if false and client.server_capabilities.codeLensProvider then
-    if filetype ~= "elm" then
-      autocmd_clear { group = augroup_codelens, buffer = bufnr }
-      autocmd { "BufEnter", augroup_codelens, vim.lsp.codelens.refresh, bufnr, once = true }
-      autocmd { { "BufWritePost", "CursorHold" }, augroup_codelens, vim.lsp.codelens.refresh, bufnr }
-    end
   end
 
   -- Attach any filetype specific options to the client
@@ -143,13 +134,13 @@ local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
 -- updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
 
 -- Completion configuration
-require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
+updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
 
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 -- LSP this is needed for LSP completions in CSS along with the snippets plugin
 updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = { "documentation", "detail", "additionalTextEdits" },
+  properties = { "documentation", "detail", "additionalTextEdits" }
 }
 
 -- Servers PATH on MacOS/Linux
@@ -157,7 +148,8 @@ updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- local servers_path = vim.fn.stdpath("cache") .. "/lspconfig"
 
 local function project_root_or_cur_dir(path)
-  return lsp.util.root_pattern("pyproject.toml", "Pipfile", ".git", "requirements.txt")(path) or vim.fn.getcwd()
+  return lsp.util.root_pattern("pyproject.toml", "Pipfile", ".git", "requirements.txt")(path)
+      or lsp.util.find_git_ancestor(path)
 end
 
 require("os")
@@ -194,53 +186,38 @@ local servers = {
       iskeyword = '@,48-57,_,192-255,-#',
       vimruntime = vim.env.VIMRUNTIME,
       runtimepath = vim.o.runtimepath,
-      diagnostic = {
-        enable = true,
-      },
+      diagnostic = { enable = true },
       indexes = {
         runtimepath = true,
         gap = 100,
         count = 8,
-        projectRootPatterns = { "runtime", "nvim", ".git", "autoload", "plugin" },
+        projectRootPatterns = { "runtime", "nvim", ".git", "autoload", "plugin" }
       },
-      suggest = {
-        fromRuntimepath = true,
-        fromVimruntime = true
-      },
+      suggest = { fromRuntimepath = true, fromVimruntime = true }
     }
   },
   dockerls = true,
-  yamlls = {
-    settings = {
-      yaml = {
-        format = {
-          printWidth = 100,
-          singleQuote = true,
-        },
-      },
-    },
-  },
+  yamlls = { settings = { yaml = { format = { printWidth = 100, singleQuote = true } } } },
   jsonls = {
     filetypes = { "json" },
     schemas = {
       { fileMatch = { "package.json" }, url = "https://json.schemastore.org/package.json" },
-      { fileMatch = { "tsconfig*.json" }, url = "https://json.schemastore.org/tsconfig.json" },
-      {
+      { fileMatch = { "tsconfig*.json" }, url = "https://json.schemastore.org/tsconfig.json" }, {
         fileMatch = { ".prettierrc", ".prettierrc.json", "prettier.config.json" },
-        url = "https://json.schemastore.org/prettierrc.json",
+        url = "https://json.schemastore.org/prettierrc.json"
       },
-      { fileMatch = { ".eslintrc", ".eslintrc.json" }, url = "https://json.schemastore.org/eslintrc.json" },
       {
+        fileMatch = { ".eslintrc", ".eslintrc.json" },
+        url = "https://json.schemastore.org/eslintrc.json"
+      }, {
         fileMatch = { ".babelrc", ".babelrc.json", "babel.config.json" },
-        url = "https://json.schemastore.org/babelrc.json",
-      },
-      { fileMatch = { "lerna.json" }, url = "https://json.schemastore.org/lerna.json" },
-      { fileMatch = { "now.json", "vercel.json" }, url = "https://json.schemastore.org/now.json" },
-      {
+        url = "https://json.schemastore.org/babelrc.json"
+      }, { fileMatch = { "lerna.json" }, url = "https://json.schemastore.org/lerna.json" },
+      { fileMatch = { "now.json", "vercel.json" }, url = "https://json.schemastore.org/now.json" }, {
         fileMatch = { ".stylelintrc", ".stylelintrc.json", "stylelint.config.json" },
-        url = "http://json.schemastore.org/stylelintrc.json",
-      },
-    },
+        url = "http://json.schemastore.org/stylelintrc.json"
+      }
+    }
   },
   html = true,
   cssls = true,
@@ -248,24 +225,14 @@ local servers = {
   terraformls = { filetypes = { "terraform", "hcl" } },
   tsserver = {
     filetypes = {
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
+      "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
+      "typescript.tsx"
+    }
   },
   pylsp = {
     formatCommand = { "black" },
     root_dir = function(fname)
-      local root_files = {
-        'pyproject.toml',
-        'setup.py',
-        'setup.cfg',
-        'requirements.txt',
-        'Pipfile',
-      }
+      local root_files = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile' }
       return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname)
     end,
     settings = {
@@ -296,16 +263,16 @@ local servers = {
           pyls_flake8 = { enabled = true, executable = 'flake8' },
 
           rope_autoimport = { enabled = true }
-        },
-      },
-    },
+        }
+      }
+    }
   },
   -- pyright = {},
   sqls = {
     -- cmd = { "/usr/local/bin/sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql", "mysql" },
     root_dir = project_root_or_cur_dir,
-    settings = {},
+    settings = {}
   },
   sumneko_lua = {
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
@@ -315,41 +282,35 @@ local servers = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
           -- Setup your lua path
-          path = runtime_path,
+          path = runtime_path
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
+          globals = { "vim" }
         },
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file("", true),
           maxPreload = 5000,
-          preloadFileSize = 1000,
+          preloadFileSize = 1000
         },
-        telemetry = {
-          enable = false,
-        },
-      },
-    },
+        telemetry = { enable = false }
+      }
+    }
   },
-  beancount = {},
+  beancount = {}
 }
 
 local setup_server = function(server, config)
-  if not config then
-    return
-  end
+  if not config then return end
 
-  if type(config) ~= "table" then
-    config = {}
-  end
+  if type(config) ~= "table" then config = {} end
 
-  config = vim.tbl_deep_extend("force", { on_attach = custom_attach, capabilities = updated_capabilities }, config)
+  config = vim.tbl_deep_extend("force",
+    { on_attach = custom_attach, capabilities = updated_capabilities },
+    config)
 
   lsp[server].setup(config)
 end
 
-for server, config in pairs(servers) do
-  setup_server(server, config)
-end
+for server, config in pairs(servers) do setup_server(server, config) end
