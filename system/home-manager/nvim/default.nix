@@ -1,15 +1,14 @@
 { config, pkgs, lib, ... }:
 let
-  # FIXME: failing to build derivation
-  # github-nvim-theme = pkgs.vimUtils.buildVimPlugin {
-  #     name = "github-nvim-theme";
-  #     src = pkgs.fetchFromGitHub {
-  #         owner = "projekt0n";
-  #         repo = "github-nvim-theme";
-  #         rev = "main";
-  #         sha256 = "sha256-wLX81wgl4E50mRig9erbLyrxyGbZllFbHFAQ9+v60W4=";
-  #     };
-  # };
+  github-nvim-theme = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    name = "github-nvim-theme";
+    src = pkgs.fetchFromGitHub {
+      owner = "projekt0n";
+      repo = "github-nvim-theme";
+      rev = "a0632f9fa9b696896d4b427de0c84c1e9f192204";
+      sha256 = "sha256-cd9a8s2WIijsi4nvP1iu7/Dz7Mq8fxwFT0qOPuvyy00=";
+    };
+  };
   nvim-lastplace = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-lastplace";
     version = "2022-07-05";
@@ -160,7 +159,49 @@ in
       # theme
       {
         plugin = rose-pine;
-        config = ''lua vim.cmd('colorscheme rose-pine')'';
+        type = "lua";
+        config = ''
+          require('rose-pine').setup({
+            dark_variant = 'main',
+            bold_vert_split = false,
+            dim_nc_background = false,
+            disable_background = false,
+            disable_float_background = false,
+            disable_italics = false,
+
+            groups = {
+              background = 'base',
+              panel = 'surface',
+              border = 'highlight_med',
+              comment = 'muted',
+              link = 'iris',
+              punctuation = 'subtle',
+
+              error = 'love',
+              hint = 'iris',
+              info = 'foam',
+              warn = 'gold',
+
+              headings = {
+                h1 = 'iris',
+                h2 = 'foam',
+                h3 = 'rose',
+                h4 = 'gold',
+                h5 = 'pine',
+                h6 = 'foam',
+              }
+            -- or set all headings at once
+            -- headings = 'subtle'
+            },
+
+            -- Change specific vim highlight groups
+            highlight_groups = {
+              ColorColumn = { bg = 'rose' }
+            }
+          })
+
+          vim.cmd('colorscheme rose-pine')
+        '';
       }
       nvim-autopairs
       # adds vscode-like pictogram
@@ -320,6 +361,7 @@ in
       nixfmt
       sumneko-lua-language-server
       stylua
+      luaformatter
       ccls
       sqls
       # sqlfluff
@@ -347,9 +389,11 @@ in
       python39Packages.python-lsp-black
       python39Packages.pyls-isort
       python39Packages.rope
+      # python39Packages.editorconfig
 
-      # tree-sitter
+      tree-sitter
       codespell
+      # editorconfig-checker
     ];
 
     extraConfig = ''
@@ -367,7 +411,6 @@ in
       lua require("rb.lsp")
       lua require("rb.telescope")
       lua require("rb.telescope.mappings")
-
     '';
   };
 }
