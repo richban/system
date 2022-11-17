@@ -1,6 +1,13 @@
 -- https://github.com/tree-sitter/tree-sitter-haskell#building-on-macos
 require("nvim-treesitter.install").compilers = { "gcc" }
 
+-- https://github.com/NixOS/nixpkgs/issues/189838
+-- Defines a read-write directory for treesitters in nvim's cache dir
+local parser_install_dir = vim.fn.stdpath("cache") .. "/treesitters"
+vim.fn.mkdir(parser_install_dir, "p")
+-- Prevents reinstall of treesitter plugins every boot
+-- vim.opt.runtimepath:append(parser_install_dir)
+
 -- local treesitter = require'nvim-treesitter.configs'
 
 -- treesitter.setup {
@@ -11,7 +18,18 @@ require("nvim-treesitter.install").compilers = { "gcc" }
 -- }
 
 require("nvim-treesitter.configs").setup({
-  highlight = { enable = true, additional_vim_regex_highlighting = true },
+  -- ensure_installed = "all",
+  -- parser_install_dir = parser_install_dir,
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (for "all")
+  -- ignore_install        = { "javascript" },
+  -- highlight             = { enable = true, additional_vim_regex_highlighting = true },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -21,10 +39,10 @@ require("nvim-treesitter.configs").setup({
       node_decremental = "grm",
     },
   },
-  indent = { enable = true },
-  matchup = { enable = true },
-  autopairs = { enable = true },
-  playground = {
+  indent                = { enable = true },
+  matchup               = { enable = true },
+  autopairs             = { enable = true },
+  playground            = {
     enable = true,
     disable = {},
     updatetime = 25,
@@ -42,12 +60,12 @@ require("nvim-treesitter.configs").setup({
       show_help = "?",
     },
   },
-  rainbow = {
+  rainbow               = {
     enable = true,
     extended_mode = true, -- Highlight also non-parentheses delimiters
     max_file_lines = 1000,
   },
-  refactor = {
+  refactor              = {
     smart_rename = { enable = true, keymaps = { smart_rename = "grr" } },
     highlight_definitions = { enable = true },
     navigation = {
@@ -63,7 +81,7 @@ require("nvim-treesitter.configs").setup({
     },
     -- highlight_current_scope = {enable = true}
   },
-  textobjects = {
+  textobjects           = {
     lsp_interop = {
       enable = true,
       border = "none",

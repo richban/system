@@ -265,6 +265,7 @@ in
       nvim-tree-lua
       vim-nix
       null-ls-nvim
+      # https://nixos.wiki/wiki/Tree_sitters
       (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       # markdown-preview-nvim
       # goyo-vim
