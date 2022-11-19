@@ -4,21 +4,10 @@ local mappings = require("rb.lsp.mappings")
 
 -- new  autocmd API
 local autocmd = require("rb.auto").autocmd
+local autocmd_format = require("rb.auto").autocmd_format
 local autocmd_clear = vim.api.nvim_clear_autocmds
 
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
-local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
-
--- auto command for formatting files on save
-local autocmd_format = function(async, filter)
-  vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    buffer = 0,
-    callback = function()
-      vim.lsp.buf.format { async = async, filter = filter }
-    end
-  })
-end
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
