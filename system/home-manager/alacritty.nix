@@ -1,24 +1,24 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 let
-  colorscheme = (import ../colorschemes/dracula.nix);
+  colorscheme = import ../colorschemes/dracula.nix;
   config = { colors }:
     {
       env = {
-        "TERM" = "xterm-256color";
+        "TERM" = "alacritty";
       };
 
       opacity = 1.0;
       use_thin_strokes = false;
 
       glyph_offset = {
-          x = 0;
-          y = 7;
+        x = 0;
+        y = 7;
       };
 
       selection = {
         semantic_escape_chars = ",│`|:\"' ()[]{}<>\t";
 
-         # When set to `true`, selected text will be copied to the primary clipboard.
+        # When set to `true`, selected text will be copied to the primary clipboard.
         save_to_clipboard = true;
       };
 
@@ -79,9 +79,9 @@ let
       #
       # You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
       # Entries in `shell.args` are passed unmodified as arguments to the shell.
-    #   shell = {
-    #     program = "/home/sherub/.nix-profile/bin/nu";
-    #   };
+      #   shell = {
+      #     program = "/home/sherub/.nix-profile/bin/nu";
+      #   };
 
       # Colors (One Dark)
       colors = {
@@ -104,7 +104,7 @@ let
         #
         # Colors which should be used to draw the terminal cursor. If these are unset,
         # the cursor color will be the inverse of the cell color.
-        #cursor 
+        #cursor
         #  text  = "0x000000";
         #  cursor  = "0xffffff";
 
@@ -163,7 +163,7 @@ let
         { key = "Key6"; mods = "Control"; chars = "\x1e"; }
         { key = "Plus"; mods = "Command"; action = "IncreaseFontSize"; }
         { key = "Minus"; mods = "Command"; action = "DecreaseFontSize"; }
-        { key = "Key0"; mods = "Command"; action =  "ResetFontSize"; }
+        { key = "Key0"; mods = "Command"; action = "ResetFontSize"; }
         { key = "F"; mods = "Command|Control"; action = "ToggleFullscreen"; }
       ];
     };
@@ -174,3 +174,4 @@ in
     settings = config { colors = colorscheme; };
   };
 }
+
