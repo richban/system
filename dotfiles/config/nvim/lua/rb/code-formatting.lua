@@ -4,6 +4,12 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
 
+local autocmd = require("rb.auto").autocmd
+local autocmd_format = require("rb.auto").autocmd_format
+
+local autocmd_clear = vim.api.nvim_clear_autocmds
+local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+
 null_ls.setup({
   sources = {
     -- Nix
@@ -23,20 +29,15 @@ null_ls.setup({
     formatting.codespell.with({ filetypes = { "markdown" } }), -- Markdown
     code_actions.proselint, diagnostics.proselint, diagnostics.markdownlint
     -- diagnostics.misspell,
-  }
-  -- on_attach = function(client)
-  --   if client.server_capabilities.document_formatting then
-  --     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-  --   end
-  --
-  --   if client.server_capabilities.document_highlight then
-  --     vim.cmd([[
-  --       augroup document_highlight
-  --         autocmd! * <buffer>
-  --         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-  --         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-  --       augroup END
-  --     ]])
-  --   end
-  -- end,
+  },
+  on_attach = function(client, bufnr)
+    if client.server_capabilities.document_formatting then autocmd_format(false) end
+
+    if client.server_capabilities.documentHighlightProvider then
+      autocmd_clear { group = augroup_highlight, buffer = bufnr }
+      autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr }
+      autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr }
+    end
+
+  end
 })
