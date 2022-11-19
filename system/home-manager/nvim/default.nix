@@ -370,6 +370,7 @@ in
       statix
       proselint
       terraform-ls
+      gitlint
 
       # nodePackages.beancount-langserver
       nodePackages.typescript-language-server
@@ -380,6 +381,10 @@ in
       nodePackages.vscode-css-languageserver-bin
       nodePackages.vim-language-server
       nodePackages.dockerfile-language-server-nodejs
+      nodePackages.fixjson
+      nodePackages.prettier
+      nodePackages.markdownlint-cli
+      nodePackages.write-good
 
       (python3.withPackages (ps: with ps; [
         python-lsp-server
@@ -400,9 +405,7 @@ in
       # editorconfig-checker
     ];
 
-    extraPython3Packages = (ps: with ps; [
-      jedi
-    ]);
+    extraPython3Packages = ps: with ps; [ jedi ];
 
     extraConfig = ''
       lua require("rb.settings")
@@ -416,6 +419,7 @@ in
       lua require("rb.nvim-tree")
       lua require("rb.nvim-treesitter")
       lua require("rb.autopairs")
+      lua require("rb.code-formatting")
       lua require("rb.lsp")
       lua require("rb.telescope")
       lua require("rb.telescope.mappings")
