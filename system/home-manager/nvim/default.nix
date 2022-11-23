@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 let
   github-nvim-theme = pkgs.vimUtils.buildVimPluginFrom2Nix {
     name = "github-nvim-theme";
@@ -228,7 +228,27 @@ in
         type = "lua";
         config = ''
           vim.opt.termguicolors = true
-          require("bufferline").setup{}
+          require("bufferline").setup {
+            options = {
+              numbers = function(opts)
+                return string.format('%s', opts.lower(opts.ordinal))
+              end,
+              diagnostics = "nvim_lsp",
+              show_tab_indicators = true,
+              offsets = {
+                {
+                    filetype = "NvimTree",
+                    text = "File Explorer",
+                    highlight = "Directory",
+                    separator = true
+                }
+              },
+              separator_style = "slant",
+              indicator = {
+                style = "underline"
+              },
+            },
+          }
           vim.cmd([[
               nnoremap <silent><TAB> :BufferLineCycleNext<CR>
               nnoremap <silent><S-TAB> :BufferLineCyclePrev<CR>
