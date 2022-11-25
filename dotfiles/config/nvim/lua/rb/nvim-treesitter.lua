@@ -36,13 +36,13 @@ require("nvim-treesitter.configs").setup({
       init_selection = "gnn",
       node_incremental = "grn",
       scope_incremental = "grc",
-      node_decremental = "grm",
-    },
+      node_decremental = "grm"
+    }
   },
-  indent                = { enable = true },
-  matchup               = { enable = true },
-  autopairs             = { enable = true },
-  playground            = {
+  indent = { enable = true },
+  matchup = { enable = true },
+  autopairs = { enable = true },
+  playground = {
     enable = true,
     disable = {},
     updatetime = 25,
@@ -57,15 +57,15 @@ require("nvim-treesitter.configs").setup({
       unfocus_language = "F",
       update = "R",
       goto_node = "<cr>",
-      show_help = "?",
-    },
+      show_help = "?"
+    }
   },
-  rainbow               = {
+  rainbow = {
     enable = true,
     extended_mode = true, -- Highlight also non-parentheses delimiters
-    max_file_lines = 1000,
+    max_file_lines = 1000
   },
-  refactor              = {
+  refactor = {
     smart_rename = { enable = true, keymaps = { smart_rename = "grr" } },
     highlight_definitions = { enable = true },
     navigation = {
@@ -76,16 +76,16 @@ require("nvim-treesitter.configs").setup({
         -- list_definitions_toc = "gO",
         -- @TODOUA: figure out if I need the 2 below
         goto_next_usage = "<a-*>", -- is this redundant?
-        goto_previous_usage = "<a-#>", -- also this one?
-      },
-    },
+        goto_previous_usage = "<a-#>" -- also this one?
+      }
+    }
     -- highlight_current_scope = {enable = true}
   },
-  textobjects           = {
+  textobjects = {
     lsp_interop = {
       enable = true,
       border = "none",
-      peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" },
+      peek_definition_code = { ["df"] = "@function.outer", ["dF"] = "@class.outer" }
     },
     move = {
       enable = true,
@@ -93,7 +93,7 @@ require("nvim-treesitter.configs").setup({
       goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
       goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
       goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
-      goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+      goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" }
     },
     -- @TODOUA: these selectors may or may not helpful workflow
     select = {
@@ -103,8 +103,9 @@ require("nvim-treesitter.configs").setup({
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
+        ["ic"] = "@class.inner"
+      }
+    }
   },
+  query_linter = { enable = true, use_virtual_text = true, lint_events = { "BufWrite", "CursorHold" } }
 })
