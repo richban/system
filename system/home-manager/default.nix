@@ -111,6 +111,7 @@ in
           ec2instanceconnectcli
           pandas
           requests
+          bandit
         ]));
     in
     {
