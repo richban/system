@@ -101,6 +101,17 @@ in
     '';
   };
 
+  programs.tealdeer = {
+    enable = true;
+    settings = {
+      display = {
+        compact = false;
+        use_pager = true;
+      };
+      updates = { auto_update = true; };
+    };
+  };
+
   home =
     let
       NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
@@ -137,7 +148,7 @@ in
         fd
         jq
         readline
-        tldr
+        # tldr
         ripgrep
         shellcheck
         graphviz
