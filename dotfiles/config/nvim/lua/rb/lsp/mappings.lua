@@ -32,13 +32,6 @@ function M.set(client)
   end, opts)
   --
 
-  -- Workspaces
-  vim.api.nvim_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
-    opts)
-  vim.api.nvim_set_keymap("n", "<space>wl",
-    "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-    opts)
   vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>Telescope workspaces<CR>", opts)
 
   vim.api.nvim_set_keymap("n", "<leader>lc",
