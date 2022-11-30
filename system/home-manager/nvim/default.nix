@@ -196,7 +196,7 @@ in
 
             -- Change specific vim highlight groups
             highlight_groups = {
-              ColorColumn = { bg = 'rose' }
+              ColorColumn = { bg = 'highlight_low' }
             }
           })
 
@@ -439,7 +439,6 @@ in
       lua require("rb.nvim-tree")
       lua require("rb.nvim-treesitter")
       lua require("rb.autopairs")
-      lua require("rb.code-formatting")
       lua require("rb.lsp")
       lua require("rb.telescope")
       lua require("rb.telescope.mappings")
