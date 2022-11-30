@@ -1,7 +1,6 @@
 {
   description = "NixOS systems and tools by richban";
 
-  # FIX: when used it's very slow
   nixConfig = {
     substituters = [
       "https://cache.nixos.org"

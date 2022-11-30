@@ -39,6 +39,7 @@
       jq
       gnupg
       nix-prefetch-github
+      nix-template
       cachix
       # helpful shell stuff
       bat
