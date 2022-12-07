@@ -65,6 +65,15 @@ let
       sha256 = "1qkqvcccz0gb30kw7layarx5dl9p35skfw5m3828kk0wxr8x7mim";
     };
   };
+  projections = pkgs.vimUtils.buildVimPlugin {
+    name = "projections.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "gnikdroy";
+      repo = "projections.nvim";
+      rev = "485f8f5192c4825c23b2aabc30a9c4a8dee81a93";
+      sha256 = "7Aj+esjEg/FyBrZNknprb0A635sb0LWREkKtdYQRWkw=";
+    };
+  };
 
 in
 {
@@ -129,6 +138,11 @@ in
     lsp = {
       source = ../../../dotfiles/config/nvim/lua/rb/lsp;
       target = ".config/nvim/lua/rb/lsp";
+    };
+    
+    projections = {
+      source = ../../../dotfiles/config/nvim/lua/rb/projections.lua;
+      target = ".config/nvim/lua/rb/projections.lua";
     };
 
     after = {
@@ -374,6 +388,9 @@ in
           })
         '';
       }
+      {
+        plugin = projections;
+      }
     ];
 
     extraPackages = with pkgs; [
@@ -442,6 +459,7 @@ in
       lua require("rb.lsp")
       lua require("rb.telescope")
       lua require("rb.telescope.mappings")
+      lua require("rb.projections")
     '';
   };
 }
