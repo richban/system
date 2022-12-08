@@ -47,24 +47,6 @@ let
       sha256 = "GQCaCWw2L0UFHTABrAk/g/d3MsGOj/XMxMbW2FgCI6c=";
     };
   };
-  nvim-workspaces = pkgs.vimUtils.buildVimPlugin {
-    name = "workspaces.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "natecraddock";
-      repo = "workspaces.nvim";
-      rev = "86fa201ecaf932358fb713c21b2078cdeb323dd1";
-      sha256 = "VjfGtzSnxXdqYELAs/GnyWW83eu+L9rWPfWltClyLXY=";
-    };
-  };
-  nvim-sessions = pkgs.vimUtils.buildVimPlugin {
-    name = "sessions.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "natecraddock";
-      repo = "sessions.nvim";
-      rev = "7dbc83289ddb6527f761e3fa1de13fbc83e513d6";
-      sha256 = "1qkqvcccz0gb30kw7layarx5dl9p35skfw5m3828kk0wxr8x7mim";
-    };
-  };
   projections = pkgs.vimUtils.buildVimPlugin {
     name = "projections.nvim";
     src = pkgs.fetchFromGitHub {
@@ -139,7 +121,7 @@ in
       source = ../../../dotfiles/config/nvim/lua/rb/lsp;
       target = ".config/nvim/lua/rb/lsp";
     };
-    
+
     projections = {
       source = ../../../dotfiles/config/nvim/lua/rb/projections.lua;
       target = ".config/nvim/lua/rb/projections.lua";
@@ -365,27 +347,6 @@ in
         type = "lua";
         config = ''
           require'telescope-tabs'.setup{}
-        '';
-      }
-      {
-        plugin = nvim-workspaces;
-        type = "lua";
-        config = ''
-          require("workspaces").setup({
-            hooks = {
-                open = { "NvimTreeRefresh", "Telescope find_files" },
-            }
-          })
-        '';
-      }
-      {
-        plugin = nvim-sessions;
-        type = "lua";
-        config = ''
-          require("sessions").setup({
-            events = { "WinEnter" },
-            session_filepath = ".nvim/session",
-          })
         '';
       }
       {

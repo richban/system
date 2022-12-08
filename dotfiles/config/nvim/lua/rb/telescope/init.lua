@@ -14,8 +14,6 @@ local action_state = require("telescope.actions.state")
 -- local action_mt = require("telescope.actions.mt")
 local themes = require("telescope.themes")
 
-require("telescope").load_extension("workspaces")
-
 local M = {}
 
 -- local set_prompt_to_entry_value = function(prompt_bufnr)
@@ -125,17 +123,6 @@ require("telescope").setup({
     },
     fzf_writer = { use_highlighter = false, minimum_grep_characters = 6 },
     frecency = { workspaces = { ["conf"] = "~/Developer/dotfiles/" } },
-    project = {
-      base_dirs = {
-        '~/Developer/mckinsey/planetrics/overdrive',
-        '~/Developer/mckinsey/planetrics/planetview-data-import',
-        '~/Developer/mckinsey/planetrics/extract-factset-database',
-        '~/Developer/mckinsey/planetrics/planetrics-django-backend',
-        '~/Developer/mckinsey/planetrics/planetview-infrastructure',
-      },
-      hidden_files = true, -- default: false
-      theme = "dropdown"
-    },
     workspaces = {
       -- keep insert mode after selection in the picker, default is false
       keep_insert = true,
