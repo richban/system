@@ -1,5 +1,6 @@
 require("projections").setup({
   workspaces = {
+    { "~/Developer/mckinsey/planetrics", { ".git" } },
     { "~/Developer", { ".git" } },
   },
   patterns = { ".git", ".svn", ".hg" },
@@ -8,6 +9,9 @@ require("projections").setup({
 })
 
 local Session = require("projections.session")
+
+-- Syntax highlighting
+vim.opt.ssop:append({ 'localoptions' })
 
 -- Bind <leader>fp to Telescope projections
 require('telescope').load_extension('projections')

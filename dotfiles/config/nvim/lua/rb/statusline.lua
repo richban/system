@@ -3,6 +3,26 @@
 -- Credit: glepnir
 local lualine = require("lualine")
 
+-- Returns the path of the session file as well as project information
+-- Returns nil if path is not a valid project path
+-- @args spath The path to project root
+-- @returns nil | path of session file and project information
+-- function Session.info(spath) ... end
+
+local project_name_display = function()
+  local projections_available, Session = pcall(require, 'projections.session')
+  if projections_available then
+    local info = Session.info(vim.loop.cwd())
+    if info ~= nil then
+      -- local session_file_path = tostring(info.path)
+      -- local project_workspace_patterns = info.project.workspace.patterns
+      -- local project_workspace_path = tostring(info.project.workspace)
+      local project_name = info.project.name
+      return '☺ ' .. project_name
+    end
+  end
+  return vim.fs.basename(vim.loop.cwd())
+end
 -- Color table for highlights
 local colors = {
   bg = "#202328",
@@ -46,7 +66,7 @@ local config = {
     -- These will be filled later
     lualine_a = { { "mode", upper = true } },
     lualine_b = { { "branch", icon = "" } },
-    lualine_c = {},
+    lualine_c = { { project_name_display } },
     lualine_x = {},
   },
   inactive_sections = {},
