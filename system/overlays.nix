@@ -34,8 +34,7 @@
       in
       with pkgs; {
         yabai = final.callPackage ./pkgs/yabai {
-          inherit (darwin.apple_sdk.frameworks) Cocoa Carbon ScriptingBridge;
-          inherit (darwin.apple_sdk_11_0.frameworks) SkyLight;
+          inherit (darwin.apple_sdk_11_0.frameworks) SkyLight Cocoa Carbon ScriptingBridge;
         };
 
         yabai-zsh-completions = final.callPackage ./pkgs/yabai-zsh-completions { };
