@@ -6,7 +6,7 @@ require("nvim-treesitter.install").compilers = { "gcc" }
 local parser_install_dir = vim.fn.stdpath("cache") .. "/treesitters"
 vim.fn.mkdir(parser_install_dir, "p")
 -- Prevents reinstall of treesitter plugins every boot
--- vim.opt.runtimepath:append(parser_install_dir)
+vim.opt.runtimepath:append(parser_install_dir)
 
 -- local treesitter = require'nvim-treesitter.configs'
 
@@ -19,7 +19,7 @@ vim.fn.mkdir(parser_install_dir, "p")
 
 require("nvim-treesitter.configs").setup({
   -- ensure_installed = "all",
-  -- parser_install_dir = parser_install_dir,
+  parser_install_dir = parser_install_dir,
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
 
