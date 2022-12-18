@@ -418,7 +418,7 @@ in
       lua require("rb.nvim-treesitter")
       lua require("rb.autopairs")
       lua require("rb.lsp")
-      lua require("rb.telescope")
+      lua require("rb.telescope.setup")
       lua require("rb.telescope.mappings")
       lua require("rb.projections")
     '';

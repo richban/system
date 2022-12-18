@@ -17,7 +17,7 @@ local map_tele = function(key, f, options, buffer)
   local map_options = { noremap = true, silent = true }
 
   if not buffer then
-    vim.keymap.set(mode, key, rhs, map_options)
+    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
   else
     vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
   end
