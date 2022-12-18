@@ -111,8 +111,8 @@ local function custom_attach(client, bufnr)
   -- highlights LSP references on CursorHold and CursorMoved events
   if client.server_capabilities.documentHighlightProvider then
     autocmd_clear { group = augroup_highlight, buffer = bufnr }
-    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr }
-    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr }
+    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, bufnr }
+    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr }
   end
 
   -- Attach any filetype specific options to the client

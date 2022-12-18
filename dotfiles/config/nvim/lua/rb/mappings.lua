@@ -28,8 +28,9 @@ key_map("n", "<silent> <leader>-", ":resize -10<CR>", { noremap = true, silent =
 key_map("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", { noremap = true, silent = true })
 -- map <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
 -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
-key_map("n", "<leader>ml", "<cmd>Marks<CR>", { noremap = true, silent = true })
-key_map("n", "<leader>V", ":Vista<CR>", { noremap = true, silent = true })
+
+-- this should be a default
+key_map("n", "<C-^>", ":b#<CR>", { noremap = true, silent = true })
 
 -- use ZQ for :q! (quit & discard changes)
 -- Discard all changed buffers & quit

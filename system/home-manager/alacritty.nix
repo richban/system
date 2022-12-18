@@ -160,7 +160,7 @@ let
         # Use command + ] - to go to previous tmux window
         { key = "RBracket"; mods = "Command"; chars = "\x5c\x6e"; }
         # ctrl-^ doesn't work in some terminals like alacritty
-        { key = "Key6"; mods = "Control"; chars = "\x1e"; }
+        # { key = "Key6"; mods = "Control"; chars = "\x1e"; }
         { key = "Plus"; mods = "Command"; action = "IncreaseFontSize"; }
         { key = "Minus"; mods = "Command"; action = "DecreaseFontSize"; }
         { key = "Key0"; mods = "Command"; action = "ResetFontSize"; }
