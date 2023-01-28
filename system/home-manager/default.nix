@@ -123,6 +123,8 @@ in
           pandas
           requests
           bandit
+          jupyter
+          ipython
         ]));
     in
     {
@@ -148,6 +150,7 @@ in
         fd
         jq
         readline
+        moreutils
         # tldr
         ripgrep
         shellcheck

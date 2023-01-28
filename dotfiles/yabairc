@@ -58,7 +58,7 @@ yabai -m space 7 --label other
 
 # NOTE: come up with different rules when on working machine
 # Rules
-yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^1Password$" manage=off
 yabai -m rule --add app="^Spotify$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" sticky=on layer=above manage=off
