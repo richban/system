@@ -1,5 +1,5 @@
 local lspsaga = require("lspsaga")
-lspsaga.init_lsp_saga({
+lspsaga.setup({
   -- Options with default value
   -- "single" | "double" | "rounded" | "bold" | "plus"
   border_style = "rounded",

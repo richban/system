@@ -5,8 +5,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "projekt0n";
       repo = "github-nvim-theme";
-      rev = "a0632f9fa9b696896d4b427de0c84c1e9f192204";
-      sha256 = "sha256-cd9a8s2WIijsi4nvP1iu7/Dz7Mq8fxwFT0qOPuvyy00=";
+      rev = "24c8706c9ad26b944f5a76dea999dca8708f252e";
+      sha256 = "Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
     };
   };
   nvim-lastplace = pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -15,8 +15,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "ethanholz";
       repo = "nvim-lastplace";
-      rev = "ecced899435c6bcdd81becb5efc6d5751d0dc4c8";
-      sha256 = "030gc8q7xrkmqcsrx4h1issm4zjxxvypwawzq56kzm8x3d9bvbm0";
+      rev = "65c5d6e2501a3af9c2cd15c6548e67fa035bf640";
+      sha256 = "6tNKmUseupMfegT7g7DDk+TQEGHPlAl+Ic90oNDwkE4=";
     };
     meta.homepage = "https://github.com/ethanholz/nvim-lastplace/";
   };
@@ -25,8 +25,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "glepnir";
       repo = "lspsaga.nvim";
-      rev = "66ba565b835bb8b34dbad64c173afe89f39ea059";
-      sha256 = "XYjzI9ogKRrHtojYRtZtTRLPw4Y6zxvrsmwg6c1r8N0=";
+      rev = "19744ee0b3c84832d8848754c444b9069c953316";
+      sha256 = "ZcnUduzLZjayGXrbZOca9oEj6ers62BDKTdMnuRYU58=";
     };
   };
   annotation-toolkit = pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -34,7 +34,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "danymat";
       repo = "neogen";
-      rev = "967b280d7d7ade52d97d06e868ec4d9a0bc59282";
+      rev = "fbc3952024d2c0d57b92a3802e9e29c789abcd18";
       sha256 = "5wplf09XOljcQKYcnJTIQHJygNBVJw+tUcvWasLQbkc=";
     };
   };
@@ -43,8 +43,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "LukasPietzschmann";
       repo = "telescope-tabs";
-      rev = "7f2e038913f8bc39bb3d35f1bc94cb7d28fcfb7f";
-      sha256 = "GQCaCWw2L0UFHTABrAk/g/d3MsGOj/XMxMbW2FgCI6c=";
+      rev = "5f433255fce106bc5f06c856eff4f89fc2ad95cf";
+      sha256 = "bvPsF0TrLjJY5CcSnKgm+7B7I7uhETIloDdM4OESfSc=";
     };
   };
   projections = pkgs.vimUtils.buildVimPlugin {
@@ -52,8 +52,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "gnikdroy";
       repo = "projections.nvim";
-      rev = "485f8f5192c4825c23b2aabc30a9c4a8dee81a93";
-      sha256 = "7Aj+esjEg/FyBrZNknprb0A635sb0LWREkKtdYQRWkw=";
+      rev = "6820ad90343b5ec78f236bbe0e13d9c8078a0c48";
+      sha256 = "atKpnfoT+AA96eZCQSo1ruy+qL+IHGRv3z5WygqJ1ro=";
     };
   };
 
