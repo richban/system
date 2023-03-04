@@ -374,11 +374,11 @@ in {
       nodePackages.markdownlint-cli
       nodePackages.write-good
 
-      (python3.withPackages (ps:
+      (python39.withPackages (ps:
         with ps; [
           python-lsp-server
           jedi
-          pylsp-mypy
+          # pylsp-mypy
           pyflakes
           pyls-flake8
           mccabe

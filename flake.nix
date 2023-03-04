@@ -69,10 +69,9 @@
       else "/home";
 
     # Overlays is the list of overlays we want to apply from flake inputs.
-    # overlays = [
-    #   inputs.neovim-nightly-overlay.overlay
-    #   inputs.spacebar
-    # ];
+    overlays = [
+      inputs.neovim-nightly-overlay.overlay
+    ];
 
     # generate a darwin config
     mkDarwinConfig = {
@@ -84,8 +83,7 @@
     }:
       darwinSystem {
         inherit system;
-        # modules = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];
-        modules = baseModules ++ extraModules;
+        modules = baseModules ++ extraModules ++ [{nixpkgs.overlays = overlays;}];
         specialArgs = {inherit self inputs nixpkgs stable;};
       };
 
