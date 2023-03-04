@@ -23,15 +23,12 @@ local filetype_attach = setmetatable({
 	go = function()
 		autocmd_format(false)
 	end,
-
 	scss = function()
 		autocmd_format(false)
 	end,
-
 	css = function()
 		autocmd_format(false)
 	end,
-
 	typescript = function()
 		autocmd_format(false, function(client)
 			return client.name ~= "tsserver"
@@ -57,7 +54,6 @@ local function custom_attach(client, bufnr)
 			disable_commands = false,
 			enable_import_on_completion = false,
 			import_all_timeout = 5000, -- ms
-
 			-- eslint
 			-- using eslint lsp directly now, see below
 			eslint_enable_code_actions = false,
@@ -65,7 +61,6 @@ local function custom_attach(client, bufnr)
 			eslint_bin = "eslint",
 			eslint_config_fallback = nil,
 			eslint_enable_diagnostics = false,
-
 			-- TODO: try out update imports on file move
 			update_imports_on_move = true,
 			require_confirmation_on_move = false,
@@ -249,17 +244,13 @@ local servers = {
 					pydocstyle = { enabled = true },
 					-- linter for style checking
 					pycodestyle = { enabled = false, maxLineLength = 120 },
-
 					pylint = { enabled = true },
-
 					black = { enabled = true },
 					-- type checking
 					pylsp_mypy = { enabled = true, live_mode = true },
 					-- code formatting using isort
 					pyls_isort = { enabled = true },
-
 					pyls_flake8 = { enabled = true, executable = "flake8" },
-
 					rope_autoimport = { enabled = true },
 				},
 			},
@@ -272,7 +263,7 @@ local servers = {
 		root_dir = project_root_or_cur_dir,
 		settings = {},
 	},
-	sumneko_lua = {
+	lua_ls = {
 		-- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
 		settings = {
 			Lua = {

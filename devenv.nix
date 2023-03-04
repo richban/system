@@ -20,6 +20,7 @@
       deadnix.enable = true;
       shfmt.enable = false;
       stylua.enable = true;
+      markdownlint.enable = false;
     };
 
     settings = {
