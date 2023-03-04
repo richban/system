@@ -3,50 +3,12 @@
   pkgs,
   ...
 }: let
-  nvim-lastplace = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "nvim-lastplace";
-    version = "2022-07-05";
-    src = pkgs.fetchFromGitHub {
-      owner = "ethanholz";
-      repo = "nvim-lastplace";
-      rev = "65c5d6e2501a3af9c2cd15c6548e67fa035bf640";
-      sha256 = "6tNKmUseupMfegT7g7DDk+TQEGHPlAl+Ic90oNDwkE4=";
-    };
-    meta.homepage = "https://github.com/ethanholz/nvim-lastplace/";
-  };
-  lspsaga = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "lspsaga.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "glepnir";
-      repo = "lspsaga.nvim";
-      rev = "19744ee0b3c84832d8848754c444b9069c953316";
-      sha256 = "ZcnUduzLZjayGXrbZOca9oEj6ers62BDKTdMnuRYU58=";
-    };
-  };
-  annotation-toolkit = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "neogen";
-    src = pkgs.fetchFromGitHub {
-      owner = "danymat";
-      repo = "neogen";
-      rev = "fbc3952024d2c0d57b92a3802e9e29c789abcd18";
-      sha256 = "5wplf09XOljcQKYcnJTIQHJygNBVJw+tUcvWasLQbkc=";
-    };
-  };
-  telescope-tabs = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "telescope-tabs";
-    src = pkgs.fetchFromGitHub {
-      owner = "LukasPietzschmann";
-      repo = "telescope-tabs";
-      rev = "5f433255fce106bc5f06c856eff4f89fc2ad95cf";
-      sha256 = "bvPsF0TrLjJY5CcSnKgm+7B7I7uhETIloDdM4OESfSc=";
-    };
-  };
   projections = pkgs.vimUtils.buildVimPlugin {
     name = "projections.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "gnikdroy";
       repo = "projections.nvim";
-      rev = "6820ad90343b5ec78f236bbe0e13d9c8078a0c48";
+      rev = "008de87749e6baa402a2ce2f3ebc75e724b95da1";
       sha256 = "atKpnfoT+AA96eZCQSo1ruy+qL+IHGRv3z5WygqJ1ro=";
     };
   };
@@ -298,7 +260,8 @@ in {
       editorconfig-vim
       # lsp
       nvim-lspconfig
-      lspsaga
+      # lspsaga
+      lspsaga-nvim-original
       lsp-status-nvim
       lsp_signature-nvim
 
@@ -314,7 +277,7 @@ in {
 
       vim-surround
       {
-        plugin = annotation-toolkit;
+        plugin = neogen;
         type = "lua";
         config = ''
           require('neogen').setup({
@@ -330,13 +293,6 @@ in {
           local opts = { noremap = true, silent = true }
           vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
           vim.api.nvim_set_keymap("n", "<Leader>nf", ":lua require('neogen').generate()<CR>", opts)
-        '';
-      }
-      {
-        plugin = telescope-tabs;
-        type = "lua";
-        config = ''
-          require'telescope-tabs'.setup{}
         '';
       }
       {
