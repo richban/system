@@ -38,11 +38,11 @@ git@github.com:richban/dotfiles.git
 Bootstrap a `nix-darwin` system using:
 
 ```bash
-nix --extra-experimental-features "nix-command flakes" develop -c sysdo bootstrap --darwin darwinWorkM1
+nix --extra-experimental-features "nix-command flakes" develop -c sysdo bootstrap --darwin
 ```
 
 Bootstrap a `home-manager` configuration using:
 
 ```bash
-nix --extra-experimental-features "nix-command flakes" develop -c sysdo bootstrap --home-manager richbanWorkM1
+nix --extra-experimental-features "nix-command flakes" develop -c sysdo bootstrap --home-manager
 ```
