@@ -8,3 +8,5 @@ result
 venv/
 env/
 __pycache__/
+.devenv/
+.pre-commit-config.yaml
