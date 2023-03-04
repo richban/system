@@ -2,13 +2,13 @@ require("os")
 
 local path_sep = vim.loop.os_uname().sysname == "Windows" and "\\" or "/"
 local function path_join(...)
-  return table.concat(vim.tbl_flatten({ ... }), path_sep)
+	return table.concat(vim.tbl_flatten({ ... }), path_sep)
 end
 
 vim.cmd("filetype plugin indent on")
 
 if vim.fn.has("vim_starting") == 1 then
-  vim.cmd("syntax enable")
+	vim.cmd("syntax enable")
 end
 
 vim.o.shell = "zsh"

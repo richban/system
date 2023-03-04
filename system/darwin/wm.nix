@@ -1,5 +1,8 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
@@ -23,7 +26,7 @@
   #   };
   # };
 
-  environment.systemPackages = [ pkgs.yabai-zsh-completions ];
+  environment.systemPackages = [pkgs.yabai-zsh-completions];
 
   services.skhd.enable = true;
   services.skhd.skhdConfig = builtins.readFile ../../dotfiles/skhdrc;
@@ -67,4 +70,3 @@
     };
   };
 }
-

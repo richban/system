@@ -1,19 +1,24 @@
-{ config, lib, options, ... }:
-# module courtesy of https://github.com/kclejeune/system/blob/master/modules/primary.nix
-let inherit (lib) mkAliasDefinitions mkOption types;
-in
 {
+  config,
+  lib,
+  options,
+  ...
+}:
+# module courtesy of https://github.com/kclejeune/system/blob/master/modules/primary.nix
+let
+  inherit (lib) mkAliasDefinitions mkOption types;
+in {
   # Define some aliases for ease of use
   options = {
     user = mkOption {
       description = "Primary user configuration";
       type = types.attrs;
-      default = { };
+      default = {};
     };
 
     hm = mkOption {
       type = types.attrs;
-      default = { };
+      default = {};
     };
   };
 
@@ -25,4 +30,3 @@ in
     users.users.${config.user.name} = mkAliasDefinitions options.user;
   };
 }
-

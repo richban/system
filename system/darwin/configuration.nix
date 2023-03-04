@@ -1,23 +1,27 @@
-{ inputs, config, pkgs, ... }:
-let
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}: let
   callPackage = pkgs.callPackage;
-  hammerspoon = callPackage ../hammerspoon.nix { };
+  hammerspoon = callPackage ../hammerspoon.nix {};
 
   inherit (pkgs.stdenvNoCC) isAarch64 isAarch32;
-in
-{
-
-  homebrew.brewPrefix = if isAarch64 || isAarch32 then "/opt/homebrew/bin" else "/usr/local/bin";
+in {
+  homebrew.brewPrefix =
+    if isAarch64 || isAarch32
+    then "/opt/homebrew/bin"
+    else "/usr/local/bin";
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs;
-    [
-      alacritty
-      _1password
-      hammerspoon
-      spacebar
-    ];
+  environment.systemPackages = with pkgs; [
+    alacritty
+    _1password
+    hammerspoon
+    spacebar
+  ];
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
@@ -25,12 +29,12 @@ in
 
   environment.loginShell = pkgs.zsh;
 
-  environment.etc = { darwin.source = "${inputs.darwin}"; };
+  environment.etc = {darwin.source = "${inputs.darwin}";};
 
   # auto manage nixbld users with nix darwin
   nix = {
     configureBuildUsers = true;
-    nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
+    nixPath = ["darwin=/etc/${config.environment.etc.darwin.target}"];
     extraOptions = ''
       extra-platforms = x86_64-darwin aarch64-darwin
     '';
@@ -49,5 +53,4 @@ in
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog¡
   system.stateVersion = 4;
-
 }

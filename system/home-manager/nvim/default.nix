@@ -1,14 +1,8 @@
-{ config, pkgs, ... }:
-let
-  github-nvim-theme = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "github-nvim-theme";
-    src = pkgs.fetchFromGitHub {
-      owner = "projekt0n";
-      repo = "github-nvim-theme";
-      rev = "24c8706c9ad26b944f5a76dea999dca8708f252e";
-      sha256 = "Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
-    };
-  };
+{
+  config,
+  pkgs,
+  ...
+}: let
   nvim-lastplace = pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "nvim-lastplace";
     version = "2022-07-05";
@@ -56,10 +50,7 @@ let
       sha256 = "atKpnfoT+AA96eZCQSo1ruy+qL+IHGRv3z5WygqJ1ro=";
     };
   };
-
-in
-{
-
+in {
   home.file = {
     settings = {
       source = ../../../dotfiles/config/nvim/lua/rb/settings.lua;
@@ -136,7 +127,6 @@ in
       source = ../../../dotfiles/config/nvim/snippets;
       target = ".config/nvim/snippets";
     };
-
   };
 
   programs.neovim = {
@@ -384,26 +374,27 @@ in
       nodePackages.markdownlint-cli
       nodePackages.write-good
 
-      (python3.withPackages (ps: with ps; [
-        python-lsp-server
-        jedi
-        pylsp-mypy
-        pyflakes
-        pyls-flake8
-        mccabe
-        pycodestyle
-        python-lsp-black
-        pyls-isort
-        rope
-        # editorconfig
-      ]))
+      (python3.withPackages (ps:
+        with ps; [
+          python-lsp-server
+          jedi
+          pylsp-mypy
+          pyflakes
+          pyls-flake8
+          mccabe
+          pycodestyle
+          python-lsp-black
+          pyls-isort
+          rope
+          # editorconfig
+        ]))
 
       tree-sitter
       codespell
       # editorconfig-checker
     ];
 
-    extraPython3Packages = ps: with ps; [ jedi ];
+    extraPython3Packages = ps: with ps; [jedi];
 
     extraConfig = ''
       lua require("rb.settings")

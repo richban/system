@@ -4,10 +4,10 @@ vim.cmd([[tnoremap <Esc> <C-\><C-n> ]])
 key_map("i", "<C-c>", "<ESC>", { noremap = true, silent = true })
 -- Join yanked text on a yank (needed for terminal mode copies)
 key_map(
-  "v",
-  "yy",
-  "y<CR>:let @\"=substitute(@\", '\\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>",
-  { noremap = true, silent = true }
+	"v",
+	"yy",
+	"y<CR>:let @\"=substitute(@\", '\\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>",
+	{ noremap = true, silent = true }
 )
 -- Move selected lines
 key_map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
@@ -66,24 +66,30 @@ key_map("i", "<Tab>", [[vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']
 key_map("s", "<Tab>", [[vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']], { noremap = false, expr = true })
 
 key_map(
-  "i",
-  "<S-Tab>",
-  [[vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']],
-  { noremap = false, expr = true }
+	"i",
+	"<S-Tab>",
+	[[vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']],
+	{ noremap = false, expr = true }
 )
 
 key_map(
-  "s",
-  "<S-Tab>",
-  [[vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']],
-  { noremap = false, expr = true }
+	"s",
+	"<S-Tab>",
+	[[vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']],
+	{ noremap = false, expr = true }
 )
 
-key_map('n', 'F',
-  "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
-  , {})
+key_map(
+	"n",
+	"F",
+	"<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+	{}
+)
 -- key_map('n', 'F', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-key_map('n', 'T',
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>"
-  , {})
+key_map(
+	"n",
+	"T",
+	"<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
+	{}
+)
 -- key_map('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>", {})

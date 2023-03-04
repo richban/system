@@ -69,10 +69,10 @@
       else "/home";
 
     # Overlays is the list of overlays we want to apply from flake inputs.
-    overlays = [
-      inputs.neovim-nightly-overlay.overlay
-      # inputs.spacebar
-    ];
+    # overlays = [
+    #   inputs.neovim-nightly-overlay.overlay
+    #   inputs.spacebar
+    # ];
 
     # generate a darwin config
     mkDarwinConfig = {
@@ -84,7 +84,8 @@
     }:
       darwinSystem {
         inherit system;
-        modules = baseModules ++ extraModules ++ [{nixpkgs.overlays = overlays;}];
+        # modules = baseModules ++ extraModules ++ [{ nixpkgs.overlays = overlays; }];
+        modules = baseModules ++ extraModules;
         specialArgs = {inherit self inputs nixpkgs stable;};
       };
 
@@ -115,7 +116,8 @@
         };
         extraSpecialArgs = {inherit self inputs nixpkgs stable;};
         modules = {
-          imports = baseModules ++ extraModules ++ [./system/overlays.nix];
+          # imports = baseModules ++ extraModules ++ [ ./system/overlays.nix ];
+          imports = baseModules ++ extraModules;
         };
       };
   in {
@@ -152,6 +154,11 @@
         inherit inputs pkgs;
         modules = [
           (import ./devenv.nix)
+          # {
+          #   enterShell = ''
+          #     export PATH=$PATH:${pkgs.sysdo}/bin/
+          #   '';
+          # }
         ];
       };
     });
@@ -179,9 +186,6 @@
         program = "${self.packages.${system}.sysdo}/bin/sysdo";
       };
       default = sysdo;
-      shellHook = ''
-        export PATH=$PATH:${self.packages.${system}.sysdo}/bin/
-      '';
     });
 
     overlays = {
@@ -189,10 +193,18 @@
         # expose other channels via overlays
         unstable = import inputs.unstable {system = prev.system;};
       };
-      extraPackages = final: prev: {
-        sysdo = self.packages.${prev.system}.sysdo;
-        pyEnv = self.packages.${prev.system}.pyEnv;
-      };
+      extraPackages = final: prev: let
+        pkgs = final;
+      in
+        with pkgs; {
+          sysdo = self.packages.${prev.system}.sysdo;
+          pyEnv = self.packages.${prev.system}.pyEnv;
+          yabai = final.callPackage ./pkgs/yabai {
+            inherit (darwin.apple_sdk_11_0.frameworks) SkyLight Cocoa Carbon ScriptingBridge;
+          };
+          yabai-zsh-completions = final.callPackage ./pkgs/yabai-zsh-completions {};
+          neovim = inputs.neovim-nightly-overlay.overlay;
+        };
     };
   };
 }

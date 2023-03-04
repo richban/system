@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }: {
+{...}: {
   homebrew = {
     enable = true;
     autoUpdate = false;
@@ -16,7 +16,6 @@
       "homebrew/services"
       "koekeishiya/formulae"
     ];
-    casks = [ ];
+    casks = [];
   };
 }
-

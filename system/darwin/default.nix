@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{...}: {
   imports = [
     ../common.nix
     ./wm.nix
@@ -6,4 +6,3 @@
     ./preferences.nix
   ];
 }
-

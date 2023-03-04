@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: {
-  imports = [./primary.nix ./nixpkgs.nix ./overlays.nix];
+  imports = [./primary.nix ./nixpkgs.nix];
 
   nixpkgs.overlays = builtins.attrValues self.overlays;
 

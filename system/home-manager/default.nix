@@ -1,11 +1,14 @@
-{ inputs, config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   relativeXDGConfigPath = ".config";
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
-in
-{
-  imports = [ ./zsh.nix ./alacritty.nix ./git.nix ./nvim ];
+in {
+  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim];
 
   xdg = {
     enable = true;
@@ -108,16 +111,17 @@ in
         compact = false;
         use_pager = true;
       };
-      updates = { auto_update = true; };
+      updates = {auto_update = true;};
     };
   };
 
-  home =
-    let
-      NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
+  home = let
+    NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
 
-      pyEnv = (pkgs.python39.withPackages
-        (ps: with ps; [
+    pyEnv =
+      pkgs.python39.withPackages
+      (ps:
+        with ps; [
           black
           ec2instanceconnectcli
           pandas
@@ -125,95 +129,93 @@ in
           bandit
           jupyter
           ipython
-        ]));
-    in
-    {
-      # Home Manager needs a bit of information about you and the
-      # paths it should manage.
-      stateVersion = "21.11";
-      sessionVariables = {
-        GPG_TTY = "/dev/ttys000";
-        EDITOR = "nvim";
-        VISUAL = "nvim";
-        JAVA_HOME = "${pkgs.openjdk11.home}";
-        NODE_PATH = "${NODE_GLOBAL}/lib";
-        # HOMEBREW_NO_AUTO_UPDATE = 1;
+        ]);
+  in {
+    # Home Manager needs a bit of information about you and the
+    # paths it should manage.
+    stateVersion = "21.11";
+    sessionVariables = {
+      GPG_TTY = "/dev/ttys000";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      JAVA_HOME = "${pkgs.openjdk11.home}";
+      NODE_PATH = "${NODE_GLOBAL}/lib";
+      # HOMEBREW_NO_AUTO_UPDATE = 1;
+    };
+    sessionPath = [
+      "${NODE_GLOBAL}/bin"
+    ];
+
+    packages = with pkgs; [
+      coreutils
+      lua
+      fzf
+      fd
+      jq
+      readline
+      moreutils
+      # tldr
+      ripgrep
+      shellcheck
+      graphviz
+      gnupg
+      # zenith
+      htop
+      bottom
+      tree
+      neofetch
+      curl
+      wget
+      glow
+      universal-ctags
+      unzip
+      gnused
+      starship
+      exa
+
+      (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
+
+      treefmt
+      # formats shell programs
+      shfmt
+      pre-commit
+      git-sizer
+      git-lfs
+
+      bat
+      bat-extras.batgrep
+      bat-extras.batman
+      bat-extras.batwatch
+      bat-extras.prettybat
+
+      terraform
+      docker
+      docker-compose
+      google-cloud-sdk
+
+      pyEnv
+
+      nodejs-slim-14_x
+      nodePackages.npm
+      yarn
+    ];
+
+    file = {
+      hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+        source = ../../dotfiles/hammerspoon;
+        target = ".hammerspoon";
+        recursive = true;
       };
-      sessionPath = [
-        "${NODE_GLOBAL}/bin"
-      ];
-
-      packages = with pkgs; [
-        coreutils
-        lua
-        fzf
-        fd
-        jq
-        readline
-        moreutils
-        # tldr
-        ripgrep
-        shellcheck
-        graphviz
-        gnupg
-        # zenith
-        htop
-        bottom
-        tree
-        neofetch
-        curl
-        wget
-        glow
-        universal-ctags
-        unzip
-        gnused
-        starship
-        exa
-
-        (pkgs.ruby.withPackages (ps: with ps; [ jekyll ]))
-
-        treefmt
-        # formats shell programs
-        shfmt
-        pre-commit
-        git-sizer
-        git-lfs
-
-        bat
-        bat-extras.batgrep
-        bat-extras.batman
-        bat-extras.batwatch
-        bat-extras.prettybat
-
-        terraform
-        docker
-        docker-compose
-        google-cloud-sdk
-
-        pyEnv
-
-        nodejs-slim-14_x
-        nodePackages.npm
-        yarn
-      ];
-
-      file = {
-        hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-          source = ../../dotfiles/hammerspoon;
-          target = ".hammerspoon";
-          recursive = true;
-        };
-        ctags = {
-          source = ../../dotfiles/ctags;
-          target = ".ctags";
-          recursive = true;
-        };
-        tmuxinator = {
-          source = ../../dotfiles/config/tmuxinator;
-          target = ".config/tmuxinator";
-          recursive = true;
-        };
+      ctags = {
+        source = ../../dotfiles/ctags;
+        target = ".ctags";
+        recursive = true;
+      };
+      tmuxinator = {
+        source = ../../dotfiles/config/tmuxinator;
+        target = ".config/tmuxinator";
+        recursive = true;
       };
     };
+  };
 }
-

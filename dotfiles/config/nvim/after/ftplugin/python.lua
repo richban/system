@@ -5,11 +5,11 @@ vim.b.vsnip_snippet_dir = vim.fn.expand("~/.config/nvim/snippets/python/")
 vim.api.nvim_buf_set_keymap(0, "n", "ga", [[<cmd>lua vim.lsp.buf.code_action()<CR>]], { noremap = true, silent = true })
 
 vim.api.nvim_buf_set_keymap(
-  0,
-  "n",
-  "<c-k>",
-  [[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
-  { noremap = true, silent = true }
+	0,
+	"n",
+	"<c-k>",
+	[[<cmd>lua vim.lsp.buf.signature_help()<CR>]],
+	{ noremap = true, silent = true }
 )
 
 vim.api.nvim_buf_set_keymap(0, "n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]], { noremap = true, silent = true })
@@ -43,7 +43,7 @@ vim.api.nvim_buf_set_keymap(0, "n", "gd", [[<cmd>lua vim.lsp.buf.definition()<CR
 ---- JUPYTER NOTEBOOK ---------------------------------------------------------
 
 vim.api.nvim_exec(
-  [[
+	[[
     function! GetKernelFromPipenv()
         let l:kernel = tolower(system('basename $(pipenv --venv)'))
         " Remove control characters (most importantly newline)
@@ -112,6 +112,6 @@ vim.api.nvim_exec(
     " Connects nvim-ipy to the existing ipykernel (interactive)
     command! -nargs=0 ConnectConsole terminal /bin/bash -i -c 'jupyter console --existing'
     command! -nargs=0 AddFilepathToSyspath call AddFilepathToSyspath()
-]] ,
-  false
+]],
+	false
 )

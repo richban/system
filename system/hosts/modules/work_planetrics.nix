@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     awscli2
     kubectl
@@ -9,4 +9,3 @@
     AWS_PROFILE = "analytics";
   };
 }
-

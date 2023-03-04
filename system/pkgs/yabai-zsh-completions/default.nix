@@ -1,10 +1,10 @@
-{ lib
-, runCommand
-, fetchFromGitHub
-, installShellFiles
-, yabai
+{
+  lib,
+  runCommand,
+  fetchFromGitHub,
+  installShellFiles,
+  yabai,
 }:
-
 runCommand "yabai-zsh-completions"
 {
   pname = "yabai-zsh-completions";
@@ -26,9 +26,8 @@ runCommand "yabai-zsh-completions"
     description = "zsh completions for yabai, the tiling window manager";
     license = licenses.mit;
     platforms = yabai.meta.platforms;
-    maintainers = with maintainers; [ ivar ];
+    maintainers = with maintainers; [ivar];
   };
 } ''
   installShellCompletion --zsh $src/_yabai
 ''
-

@@ -1,5 +1,8 @@
-{ config, pkgs, libs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.file.functions = {
     source = ../../dotfiles/functions;
     target = ".functions";
@@ -11,7 +14,7 @@
     enableCompletion = true;
     enableSyntaxHighlighting = true;
     enableAutosuggestions = true;
-    shellAliases = import ./aliases.nix { pkgs = pkgs; };
+    shellAliases = import ./aliases.nix {pkgs = pkgs;};
     sessionVariables = {
       ZSH_HIGHLIGHT_HIGHLIGHTERS = "brackets";
     };
@@ -97,4 +100,3 @@
     '';
   };
 }
-
