@@ -1,5 +1,13 @@
-{ self, inputs, config, lib, pkgs, ... }: {
-  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ];
+{
+  self,
+  inputs,
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [./primary.nix ./nixpkgs.nix ./overlays.nix];
+
+  nixpkgs.overlays = builtins.attrValues self.overlays;
 
   programs.zsh = {
     enable = true;
@@ -12,8 +20,10 @@
     description = "Richard Banyi";
     name = "${config.user.name}";
     home = "${
-        if pkgs.stdenvNoCC.isDarwin then "/Users" else "/home"
-      }/${config.user.name}";
+      if pkgs.stdenvNoCC.isDarwin
+      then "/Users"
+      else "/home"
+    }/${config.user.name}";
     shell = pkgs.zsh;
   };
 
@@ -22,7 +32,7 @@
 
   # Enable home-manager
   home-manager = {
-    extraSpecialArgs = { inherit self inputs; };
+    extraSpecialArgs = {inherit self inputs;};
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
@@ -52,13 +62,12 @@
       stable.source = "${inputs.nixos-stable}";
     };
     # list of acceptable shells in /etc/shells
-    shells = with pkgs; [ bash zsh ];
+    shells = with pkgs; [bash zsh];
   };
 
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     # Selection of fonts from the package, you can overwrite the font selection
-    (nerdfonts.override { fonts = [ "Hack" "FiraMono" ]; })
+    (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
   ];
 }
-
