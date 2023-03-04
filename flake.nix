@@ -136,8 +136,8 @@
           .system
           .build
           .toplevel;
-        "${username}_home" =
-          self.homeConfigurations."${username}@${arch}-${os}".activationPackage;
+        # "${username}_home" =
+        #   self.homeConfigurations."${username}@${arch}-${os}".activationPackage;
         devShell = self.devShells."${arch}-${os}".default;
       };
     };
