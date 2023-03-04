@@ -26,7 +26,7 @@
   #   };
   # };
 
-  environment.systemPackages = [pkgs.yabai-zsh-completions];
+  # environment.systemPackages = [pkgs.yabai-zsh-completions];
 
   services.skhd.enable = true;
   services.skhd.skhdConfig = builtins.readFile ../../dotfiles/skhdrc;

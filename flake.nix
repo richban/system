@@ -84,6 +84,7 @@
       darwinSystem {
         inherit system;
         modules = baseModules ++ extraModules ++ [{nixpkgs.overlays = overlays;}];
+        # modules = baseModules ++ extraModules;
         specialArgs = {inherit self inputs nixpkgs stable;};
       };
 
@@ -197,11 +198,6 @@
         with pkgs; {
           sysdo = self.packages.${prev.system}.sysdo;
           pyEnv = self.packages.${prev.system}.pyEnv;
-          yabai = final.callPackage ./pkgs/yabai {
-            inherit (darwin.apple_sdk_11_0.frameworks) SkyLight Cocoa Carbon ScriptingBridge;
-          };
-          yabai-zsh-completions = final.callPackage ./pkgs/yabai-zsh-completions {};
-          neovim = inputs.neovim-nightly-overlay.overlay;
         };
     };
   };
