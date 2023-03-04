@@ -84,14 +84,13 @@
       darwinSystem {
         inherit system;
         modules = baseModules ++ extraModules ++ [{nixpkgs.overlays = overlays;}];
-        # modules = baseModules ++ extraModules;
         specialArgs = {inherit self inputs nixpkgs stable;};
       };
 
     # generate a home-manager config for any unix system
     mkHomeConfig = {
       username,
-      system ? "aarch64-darwinn",
+      system ? "aarch64-darwin",
       nixpkgs ? inputs.nixpkgs,
       stable ? inputs.nixos-stable,
       baseModules ? [
@@ -119,24 +118,59 @@
           imports = baseModules ++ extraModules;
         };
       };
+
+    mkChecks = {
+      arch,
+      os,
+      username ? "richban",
+    }: {
+      "${arch}-${os}" = {
+        "${username}_${os}" =
+          (
+            if os == "darwin"
+            then self.darwinConfigurations
+            else self.nixosConfigurations
+          )
+          ."${username}@${arch}-${os}"
+          .config
+          .system
+          .build
+          .toplevel;
+        "${username}_home" =
+          self.homeConfigurations."${username}@${arch}-${os}".activationPackage;
+        devShell = self.devShells."${arch}-${os}".default;
+      };
+    };
   in {
+    checks =
+      {}
+      // (mkChecks {
+        arch = "aarch64";
+        os = "darwin";
+        username = "richard_banyi";
+      })
+      // (mkChecks {
+        arch = "x86_64";
+        os = "darwin";
+      });
+
     darwinConfigurations = {
-      darwinCasperIntel = mkDarwinConfig {
+      "richban@x86_64-darwin" = mkDarwinConfig {
         system = "x86_64-darwin";
         extraModules = [./system/hosts/personal.nix];
       };
-      darwinWorkM1 = mkDarwinConfig {
+      "richard_banyi@aarch64-darwin" = mkDarwinConfig {
         system = "aarch64-darwin";
         extraModules = [./system/hosts/work.nix];
       };
     };
 
     homeConfigurations = {
-      richbanIntel = mkHomeConfig {
+      "richban@x86_64-darwin" = mkHomeConfig {
         username = "richban";
         system = "x86_64-darwin";
       };
-      richbanWorkM1 = mkHomeConfig {
+      "richard_banyi@aarch64-darwin" = mkHomeConfig {
         username = "richard_banyi";
         system = "aarch64-darwin";
         extraModules = [./system/hosts/work.nix];
