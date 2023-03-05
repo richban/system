@@ -19,7 +19,7 @@
       alejandra.enable = true;
       deadnix.enable = true;
       shfmt.enable = false;
-      stylua.enable = false;
+      stylua.enable = true;
       markdownlint.enable = false;
     };
 

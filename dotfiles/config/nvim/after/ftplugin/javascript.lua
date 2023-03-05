@@ -14,18 +14,18 @@ vim.b.vsnip_snippet_dir = vim.fn.expand("~/.config/nvim/snippets/javascript/")
 -- Setup cmp source buffer configuration
 local cmp = require("cmp")
 cmp.setup.buffer({
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "treesitter" },
-		{ name = "vsnip" },
-		{
-			name = "buffer",
-			option = {
-				get_bufnrs = function()
-					return vim.api.nvim_list_bufs()
-				end,
-			},
-		},
-		{ name = "path" },
-	},
+  sources = {
+    { name = "nvim_lsp" },
+    { name = "treesitter" },
+    { name = "vsnip" },
+    {
+      name = "buffer",
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
+    { name = "path" },
+  },
 })

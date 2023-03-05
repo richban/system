@@ -1,21 +1,21 @@
 -- https://github.dev/tjdevries/config_manager/blob/master/xdg_config/nvim/lua/tj/globals.lua#L1-L21
 local ok, plenary_reload = pcall(require, "plenary.reload")
 if not ok then
-	reloader = require
+  reloader = require
 else
-	reloader = plenary_reload.reload_module
+  reloader = plenary_reload.reload_module
 end
 
 P = function(v)
-	print(vim.inspect(v))
-	return v
+  print(vim.inspect(v))
+  return v
 end
 
 RELOAD = function(...)
-	return reloader(...)
+  return reloader(...)
 end
 
 R = function(name)
-	RELOAD(name)
-	return require(name)
+  RELOAD(name)
+  return require(name)
 end
