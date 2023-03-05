@@ -8,6 +8,7 @@ local autocmd_format = require("rb.auto").autocmd_format
 local autocmd_clear = vim.api.nvim_clear_autocmds
 
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+local augroup_lsp_custom_attach = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true })
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
@@ -71,6 +72,19 @@ local function custom_attach(client, bufnr)
     ts_utils.setup_client(client)
     -- disable tsserver formatting if you plan on formatting via null-ls
     client.server_capabilities.documentFormattingProvider = false
+  end
+
+  -- NOTE:  attempt to attach python to pylsp client and not null-ls; does not work
+  if filetype == "python" then
+    autocmd_clear({ group = augroup_lsp_custom_attach, buffer = bufnr })
+    autocmd({
+      "BufEnter",
+      augroup_highlight,
+      function()
+        vim.lsp.buf.buf_attach_client(tonumber(client.id), bufnr)
+      end,
+      bufnr,
+    })
   end
 
   -- add signature autocompletion while typing

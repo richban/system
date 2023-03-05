@@ -19,6 +19,7 @@ null_ls.setup({
     code_actions.statix,
     formatting.prettier,
     formatting.black,
+    formatting.isort,
     formatting.gofmt,
     formatting.shfmt,
     formatting.clang_format,
@@ -42,7 +43,7 @@ null_ls.setup({
     --     "--break-after-table-lb",
     --     "--indent-width=2",
     --   },
-    -- }), -- formatting.isort,
+    -- }),
     formatting.codespell.with({ filetypes = { "markdown" } }), -- Markdown
     code_actions.proselint,
     diagnostics.proselint,
