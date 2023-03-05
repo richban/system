@@ -50,15 +50,15 @@ null_ls.setup({
     diagnostics.markdownlint,
     -- diagnostics.misspell,
   },
-  -- on_attach = function(client, bufnr)
-  --   if client.server_capabilities.document_formatting then
-  --     autocmd_format(false)
-  --   end
-  --
-  --   if client.server_capabilities.documentHighlightProvider then
-  --     autocmd_clear({ group = augroup_highlight, buffer = bufnr })
-  --     autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr })
-  --     autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr })
-  --   end
-  -- end,
+  on_attach = function(client, bufnr)
+    if client.server_capabilities.documentFormattingProvider then
+      autocmd_format(false)
+    end
+
+    if client.server_capabilities.documentHighlightProvider then
+      autocmd_clear({ group = augroup_highlight, buffer = bufnr })
+      autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr })
+      autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr })
+    end
+  end,
 })
