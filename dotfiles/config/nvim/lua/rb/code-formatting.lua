@@ -13,6 +13,7 @@ local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", {
 null_ls.setup({
   sources = {
     -- Nix
+    formatting.alejandra,
     diagnostics.deadnix,
     diagnostics.statix,
     code_actions.statix,
@@ -33,30 +34,30 @@ null_ls.setup({
     code_actions.shellcheck,
     diagnostics.shellcheck,
     diagnostics.write_good,
-    formatting.lua_format.with({
-      extra_args = {
-        "--no-keep-simple-function-one-line",
-        "--no-break-after-operator",
-        "--column-limit=100",
-        "--break-after-table-lb",
-        "--indent-width=2",
-      },
-    }), -- formatting.isort,
+    -- formatting.lua_format.with({
+    --   extra_args = {
+    --     "--no-keep-simple-function-one-line",
+    --     "--no-break-after-operator",
+    --     "--column-limit=100",
+    --     "--break-after-table-lb",
+    --     "--indent-width=2",
+    --   },
+    -- }), -- formatting.isort,
     formatting.codespell.with({ filetypes = { "markdown" } }), -- Markdown
     code_actions.proselint,
     diagnostics.proselint,
     diagnostics.markdownlint,
     -- diagnostics.misspell,
   },
-  on_attach = function(client, bufnr)
-    if client.server_capabilities.document_formatting then
-      autocmd_format(false)
-    end
-
-    if client.server_capabilities.documentHighlightProvider then
-      autocmd_clear({ group = augroup_highlight, buffer = bufnr })
-      autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr })
-      autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr })
-    end
-  end,
+  -- on_attach = function(client, bufnr)
+  --   if client.server_capabilities.document_formatting then
+  --     autocmd_format(false)
+  --   end
+  --
+  --   if client.server_capabilities.documentHighlightProvider then
+  --     autocmd_clear({ group = augroup_highlight, buffer = bufnr })
+  --     autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer = bufnr })
+  --     autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer = bufnr })
+  --   end
+  -- end,
 })

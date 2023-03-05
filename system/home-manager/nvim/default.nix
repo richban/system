@@ -74,6 +74,10 @@ in {
       source = ../../../dotfiles/config/nvim/lua/rb/lsp;
       target = ".config/nvim/lua/rb/lsp";
     };
+    stylua = {
+      source = ../../../dotfiles/config/nvim/lua/rb/stylua.lua;
+      target = ".config/nvim/lua/rb/stylua.lua";
+    };
 
     projections = {
       source = ../../../dotfiles/config/nvim/lua/rb/projections.lua;
@@ -232,7 +236,10 @@ in {
       }
       nvim-tree-lua
       vim-nix
-      null-ls-nvim
+      {
+        plugin = null-ls-nvim;
+        config = ''lua require('rb.code-formatting')'';
+      }
       # https://nixos.wiki/wiki/Tree_sitters
       (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       # markdown-preview-nvim
@@ -315,6 +322,7 @@ in {
       proselint
       terraform-ls
       gitlint
+      alejandra
 
       # nodePackages.beancount-langserver
       nodePackages.typescript-language-server

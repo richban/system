@@ -164,7 +164,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 local servers = {
   -- diagnosticls = diagnostics.options,
-  rnix = true,
+  rnix = false,
   bashls = true,
   vimls = {
     init_options = {
@@ -264,8 +264,6 @@ local servers = {
     settings = {},
   },
   lua_ls = {
-    -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-    root_dir = project_root_or_cur_dir,
     settings = {
       Lua = {
         runtime = {
@@ -286,8 +284,7 @@ local servers = {
         },
         telemetry = { enable = false },
         format = {
-          enable = true,
-          args = { "--config-path=${workspaceRoot}/stylua.toml", "-" },
+          enable = false,
         },
       },
     },
