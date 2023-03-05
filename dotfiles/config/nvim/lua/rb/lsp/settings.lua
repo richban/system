@@ -133,7 +133,7 @@ updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- local servers_path = vim.fn.stdpath("cache") .. "/lspconfig"
 
 local function project_root_or_cur_dir(path)
-  return lsp.util.root_pattern("pyproject.toml", "Pipfile", ".git", "requirements.txt")(path)
+  return lsp.util.root_pattern("pyproject.toml", "Pipfile", ".git", "requirements.txt", "stylua.toml")(path)
     or lsp.util.find_git_ancestor(path)
 end
 
@@ -265,6 +265,7 @@ local servers = {
   },
   lua_ls = {
     -- cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+    root_dir = project_root_or_cur_dir,
     settings = {
       Lua = {
         runtime = {
@@ -284,6 +285,10 @@ local servers = {
           preloadFileSize = 1000,
         },
         telemetry = { enable = false },
+        format = {
+          enable = true,
+          args = { "--config-path=${workspaceRoot}/stylua.toml", "-" },
+        },
       },
     },
   },
