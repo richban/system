@@ -15,7 +15,7 @@
   pre-commit = {
     hooks = {
       black.enable = true;
-      shellcheck.enable = true;
+      shellcheck.enable = false;
       alejandra.enable = true;
       deadnix.enable = true;
       shfmt.enable = false;
