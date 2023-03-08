@@ -21,6 +21,13 @@ in {
     _1password
     hammerspoon
     spacebar
+    github-desktop
+    obsidian
+    vscode
+    spotify
+    postman
+    karabiner-elements
+    goku
   ];
 
   # Use a custom configuration.nix location.
