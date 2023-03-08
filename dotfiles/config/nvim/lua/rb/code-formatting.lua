@@ -20,6 +20,7 @@ null_ls.setup({
     formatting.prettier,
     formatting.black,
     formatting.isort,
+    diagnostics.mypy,
     formatting.gofmt,
     formatting.shfmt,
     formatting.clang_format,

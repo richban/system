@@ -12,6 +12,16 @@
       sha256 = "atKpnfoT+AA96eZCQSo1ruy+qL+IHGRv3z5WygqJ1ro=";
     };
   };
+  refactoring = pkgs.vimUtils.buildVimPlugin {
+    name = "refactoring.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "ThePrimeagen";
+      repo = "refactoring.nvim";
+      rev = "57c32c6b7a211e5a3a5e4ddc4ad2033daff5cf9a";
+      sha256 = "m/WCIF4GWMXkys4oii4GZ9RCO4cfUD/X6rCRtBLgj3A=";
+    };
+    buildInputs = [pkgs.stylua];
+  };
 in {
   home.file = {
     settings = {
@@ -305,6 +315,11 @@ in {
       {
         plugin = projections;
       }
+      {
+        plugin = refactoring;
+        type = "lua";
+        config = ''require('refactoring').setup({})'';
+      }
     ];
 
     extraPackages = with pkgs; [
@@ -345,6 +360,7 @@ in {
           # pylsp-mypy
           pyflakes
           pyls-flake8
+          mypy
           mccabe
           pycodestyle
           python-lsp-black
