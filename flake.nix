@@ -175,6 +175,11 @@
         system = "aarch64-darwin";
         extraModules = [./system/hosts/work.nix];
       };
+      "richard.banyi@aarch64-darwin" = mkHomeConfig {
+        username = "richard.banyi";
+        system = "aarch64-darwin";
+        extraModules = [./system/hosts/work_m2.nix];
+      };
     };
 
     devShells = eachSystemMap defaultSystems (system: let
@@ -230,8 +235,8 @@
         pkgs = final;
       in
         with pkgs; {
-          sysdo = self.packages.${prev.system}.sysdo;
-          pyEnv = self.packages.${prev.system}.pyEnv;
+          inherit (self.packages.${prev.system}) sysdo;
+          inherit (self.packages.${prev.system}) pyEnv;
         };
     };
   };
