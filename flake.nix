@@ -163,6 +163,10 @@
         system = "aarch64-darwin";
         extraModules = [./system/hosts/work.nix];
       };
+      "richard.banyi@aarch64-darwin" = mkDarwinConfig {
+        system = "aarch64-darwin";
+        extraModules = [./system/hosts/work_m2.nix];
+      };
     };
 
     homeConfigurations = {
