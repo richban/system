@@ -104,6 +104,8 @@ in {
     '';
   };
 
+  programs.vscode.enable = true;
+
   programs.tealdeer = {
     enable = true;
     settings = {

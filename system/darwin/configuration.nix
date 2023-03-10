@@ -6,7 +6,6 @@
 }: let
   callPackage = pkgs.callPackage;
   hammerspoon = callPackage ../hammerspoon.nix {};
-
   inherit (pkgs.stdenvNoCC) isAarch64 isAarch32;
 in {
   homebrew.brewPrefix =
@@ -21,10 +20,7 @@ in {
     _1password
     hammerspoon
     spacebar
-    github-desktop
     obsidian
-    vscode
-    spotify
     postman
     karabiner-elements
     goku
