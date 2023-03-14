@@ -2,7 +2,8 @@
     <code>Nix System Config & dotfiles</code>
 </h1>
 
-This repository manages system configurations for all of my OSX based machines. The system configurations are defined as a [flake.nix](https://nixos.wiki/wiki/Flakes).
+This repository manages system configurations for all of my OSX based machines.
+The system configurations are defined as a [flake.nix](https://nixos.wiki/wiki/Flakes).
 
 ## 🧠 Philosophy
 

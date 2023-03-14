@@ -274,7 +274,6 @@ in {
         plugin = hop-nvim;
         config = ''lua require'hop'.setup()'';
       }
-      editorconfig-vim
       # lsp
       nvim-lspconfig
       # lspsaga
