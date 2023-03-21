@@ -9,7 +9,7 @@
       owner = "gnikdroy";
       repo = "projections.nvim";
       rev = "008de87749e6baa402a2ce2f3ebc75e724b95da1";
-      sha256 = "atKpnfoT+AA96eZCQSo1ruy+qL+IHGRv3z5WygqJ1ro=";
+      sha256 = "nJAZ0e9jWKErl1UASnPZltRdnaebt8E4hRvHI8xD48g=";
     };
   };
   refactoring = pkgs.vimUtils.buildVimPlugin {
