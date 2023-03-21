@@ -90,7 +90,7 @@ yabai -m rule --add app="^Obsidian$" space=productivity
 #
 yabai -m rule --add app="^Microsoft Outlook" space=work-comm
 yabai -m rule --add app="^Microsoft Teams" space=work-comm
-yabai -m rule --add app="^Slack" space=comm
+yabai -m rule --add app="^Slack" space=work-comm
 #
 # yabai -m rule --add app="^WeChat$" grid=1:1:0:0:1:1 manage=off space=comm
 # yabai -m rule --add app="^WhatsApp" space=comm

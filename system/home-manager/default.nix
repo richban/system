@@ -196,6 +196,7 @@ in {
       google-cloud-sdk
 
       pyEnv
+      cookiecutter
 
       nodejs-slim-14_x
       nodePackages.npm
