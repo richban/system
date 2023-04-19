@@ -18,6 +18,7 @@ in {
   environment.systemPackages = with pkgs; [
     alacritty
     _1password
+    _1password-gui
     hammerspoon
     spacebar
     obsidian

@@ -67,7 +67,8 @@
 
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
+    nerdfonts
     # Selection of fonts from the package, you can overwrite the font selection
-    (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
+    # (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
   ];
 }
