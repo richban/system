@@ -195,7 +195,19 @@ local servers = {
       suggest = { fromRuntimepath = true, fromVimruntime = true },
     },
   },
-  dockerls = true,
+  dockerls = {
+    settings = {
+      Dockerfile = {
+        lsp = {
+          formatting = {
+            options = {
+              tabSize = 2,
+            },
+          },
+        },
+      },
+    },
+  },
   yamlls = { settings = { yaml = { format = { printWidth = 100, singleQuote = true } } } },
   jsonls = {
     filetypes = { "json" },

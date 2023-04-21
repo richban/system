@@ -22,7 +22,9 @@ null_ls.setup({
     formatting.isort,
     diagnostics.mypy,
     formatting.gofmt,
-    formatting.shfmt,
+    formatting.shfmt.with({
+      extra_args = { "-i=2" },
+    }),
     formatting.clang_format,
     formatting.cmake_format,
     formatting.bean_format,
@@ -31,7 +33,7 @@ null_ls.setup({
     formatting.terrafmt,
     formatting.terraform_fmt,
     formatting.trim_whitespace,
-    -- diagnostics.editorconfig_checker,
+    diagnostics.editorconfig_checker,
     diagnostics.gitlint, -- Shell scripts
     code_actions.shellcheck,
     diagnostics.shellcheck,
