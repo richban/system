@@ -89,7 +89,6 @@
       export LANG="$LANGUAGE"
       export LC_ALL="$LANGUAGE"
       export LC_CTYPE="$LANGUAGE"
-      export GPG_TTY=$(tty)
       export FZF_DEFAULT_OPTS="
       --reverse
       --multi

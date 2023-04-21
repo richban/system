@@ -15,11 +15,6 @@
     userName = "richban";
     userEmail = "rbanyi@me.com";
 
-    signing = {
-      key = "2E32ED161EBD663C";
-      signByDefault = true;
-    };
-
     lfs.enable = true;
 
     aliases = {
@@ -55,6 +50,10 @@
         features = "side-by-side line-numbers decorations";
       };
 
+      gpg = {
+        format = "ssh";
+      };
+
       "delta \"decorations\"" = {
         commit-decoration-style = "bold yellow box ul";
         file-style = "bold yellow";
@@ -68,6 +67,6 @@
     settings.git_protocol = "ssh";
   };
 
-  programs.gpg.enable = pkgs.stdenv.isLinux;
+  programs.gpg.enable = true;
   services.gpg-agent.enable = pkgs.stdenv.isLinux;
 }

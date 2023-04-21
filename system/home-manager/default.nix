@@ -8,7 +8,7 @@
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim];
+  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim ./1password.nix];
 
   xdg = {
     enable = true;
@@ -88,6 +88,11 @@ in {
   };
 
   programs.go.enable = true;
+
+  programs.ssh = {
+    enable = true;
+    forwardAgent = true;
+  };
 
   programs.direnv = {
     enable = true;
