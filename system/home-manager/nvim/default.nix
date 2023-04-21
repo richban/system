@@ -370,7 +370,7 @@ in {
 
       tree-sitter
       codespell
-      # editorconfig-checker
+      editorconfig-checker
     ];
 
     extraPython3Packages = ps: with ps; [jedi];
