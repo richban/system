@@ -59,10 +59,10 @@ shift + alt - c : yabai -m window --toggle float;\
 # Float & center
 # <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 hyper - c: yabai -m window --toggle float && \
-           yabai -m window --grid 1:1:1:1:1:2
+           yabai -m window --grid 4:4:1:0:2:4
 
 # toggle window float
-shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+shift + alt - t : yabai -m window --toggle float --grid 4:4:1:0:2:4
 
 # Equalize size of windows
 lctrl + alt - 0 : yabai -m space --balance
@@ -140,4 +140,8 @@ shift + lctrl + alt - r :
     /usr/bin/env osascript <<< \
         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
     launchctl kickstart -k "gui/${UID}/org.nixos.yabai"
-    # launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
+shift + lctrl + alt - s :
+    /usr/bin/env osascript <<< \
+        "display notification \"Restarting skhd\" with title \"skhd\""; \
+    launchctl kickstart -k "gui/${UID}/org.nixos.skhd"
