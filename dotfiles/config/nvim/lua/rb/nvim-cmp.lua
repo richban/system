@@ -97,6 +97,7 @@ cmp.setup({
   },
   sources = {
     -- order of the sources sets priority in the completion menu
+    { name = "nvim_lsp_signature_help" },
     { name = "nvim_lsp" },
     { name = "vsnip" },
     { name = "codeium", group_index = 1 },

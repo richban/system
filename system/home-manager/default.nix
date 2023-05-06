@@ -202,6 +202,7 @@ in {
 
       pyEnv
       cookiecutter
+      ruff
 
       nodejs-slim-14_x
       nodePackages.npm
