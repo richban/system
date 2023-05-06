@@ -75,6 +75,7 @@ cmp.setup({
           zsh = "",
           vsnip = "",
           spell = "暈",
+          codeium = "",
         })[entry.source.name]
         -- Get the full snippet (and only keep first line)
         local word = entry:get_insert_text()
@@ -98,6 +99,7 @@ cmp.setup({
     -- order of the sources sets priority in the completion menu
     { name = "nvim_lsp" },
     { name = "vsnip" },
+    { name = "codeium", group_index = 1 },
     { name = "treesitter" },
     { name = "path" },
     { name = "buffer" },

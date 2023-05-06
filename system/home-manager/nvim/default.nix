@@ -22,6 +22,33 @@
     };
     buildInputs = [pkgs.stylua];
   };
+  codeium = pkgs.vimUtils.buildVimPlugin {
+    name = "codeium.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "jcdickinson";
+      repo = "codeium.nvim";
+      rev = "04dea474c2c90633a0e94560e6bfb4b6dea291c9";
+      sha256 = "14rQf+ttkRsMkn7GbRosR6Jbdzal+yuF/F0vgFo/XpY=";
+    };
+  };
+  nui = pkgs.vimUtils.buildVimPlugin {
+    name = "nui.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "MunifTanjim";
+      repo = "nui.nvim";
+      rev = "698e75814cd7c56b0dd8af4936bcef2d13807f3c";
+      sha256 = "wVGshQpYx7lz6gl/MDSGkSQJriUbZ0J0OnTFALrXsxk=";
+    };
+  };
+  chatgpt = pkgs.vimUtils.buildVimPlugin {
+    name = "ChatGPT.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "jackMort";
+      repo = "ChatGPT.nvim";
+      rev = "be6d89615216339e8bee47f52290ae204372c248";
+      sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
+    };
+  };
 in {
   home.file = {
     settings = {
@@ -318,6 +345,18 @@ in {
         plugin = refactoring;
         type = "lua";
         config = ''require('refactoring').setup({})'';
+      }
+      # AI
+      nui
+      {
+        plugin = codeium;
+        type = "lua";
+        config = ''require("codeium").setup({})'';
+      }
+      {
+        plugin = chatgpt;
+        type = "lua";
+        config = ''require("chatgpt").setup({ })'';
       }
     ];
 
