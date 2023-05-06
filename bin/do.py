@@ -268,7 +268,7 @@ def update(
 
 @app.command(help="pull changes from remote repo", hidden=not is_local)
 def pull():
-    cmd = f"git stash && git pull && git stash apply"
+    cmd = "git stash && git pull && git stash apply"
     run_cmd(cmd.split())
 
 
@@ -297,11 +297,11 @@ def switch(
     if cfg is None:
         return
     elif cfg == FlakeOutputs.NIXOS:
-        cmd = f"sudo nixos-rebuild switch --flake"
+        cmd = "sudo nixos-rebuild switch --flake"
     elif cfg == FlakeOutputs.DARWIN:
-        cmd = f"darwin-rebuild switch --flake"
+        cmd = "darwin-rebuild switch --flake"
     elif cfg == FlakeOutputs.HOME_MANAGER:
-        cmd = f"home-manager switch --flake"
+        cmd = "home-manager switch --flake"
     else:
         typer.secho("could not infer system type.", fg=Colors.ERROR.value)
         raise typer.Abort()

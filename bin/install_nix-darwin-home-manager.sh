@@ -2,12 +2,12 @@
 
 # Install if you want nix-darwin & home-manager CLI's
 if ! grep -q nix-darwin ~/.nix-channels; then
-	echo "https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin" >>~/.nix-channels
+  echo "https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin" >>~/.nix-channels
 fi
 export NIX_PATH=darwin=$HOME/.nix-defexpr/channels/darwin:$NIX_PATH
 
 if ! grep -q home-manager ~/.nix-channels; then
-	echo "https://github.com/rycee/home-manager/archive/master.tar.gz home-manager" >>~/.nix-channels
+  echo "https://github.com/rycee/home-manager/archive/master.tar.gz home-manager" >>~/.nix-channels
 fi
 export NIX_PATH=home-manager=$HOME/.nix-defexpr/channels/home-manager:$NIX_PATH
 
