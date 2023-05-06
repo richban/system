@@ -2,78 +2,30 @@ local M = {}
 
 local telescope_mapper = require("rb.telescope.mappings")
 
-function M.set(client)
+function M.set(client, buffer)
+  local self = M.new(client, buffer)
   local opts = { noremap = true, silent = true }
+
+  self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
+  self:map("gr", "Telescope lsp_references", { desc = "References" })
+  self:map("gI", "Telescope lsp_implementations", { desc = "Goto Implementation" })
+  self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
+  self:map("K", vim.lsp.buf.hover, { desc = "Hover" })
+  self:map("gK", vim.lsp.buf.signature_help, { desc = "Signature Help", has = "signatureHelp" })
+  self:map("[d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
+  self:map("]d", M.diagnostic_goto(false), { desc = "Prev Diagnostic" })
+  self:map("]e", M.diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+  self:map("[e", M.diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+  self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
+  self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
+  self:map("<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
+  self:map("<leader>cr", M.rename, { expr = true, desc = "Rename", has = "rename" })
 
   -- gives definition & references
   vim.api.nvim_set_keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
-
   vim.api.nvim_set_keymap("n", "<leader>h", "<cmd>Lspsaga hover_doc<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>gs", "<cmd>Lspsaga signature_help<CR>", opts)
-
-  -- Outline
-  vim.api.nvim_set_keymap("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
-
-  -- Diagnostic
-  vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
-  vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
-
-  vim.api.nvim_set_keymap("n", "[d", "<cmd><Lspsaga diagnostic_jump_prev<CR>", opts)
-  vim.api.nvim_set_keymap("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts)
-
-  -- Only jump to error
-  vim.keymap.set("n", "[e", function()
-    require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-  end, opts)
-  vim.keymap.set("n", "]e", function()
-    require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
-  end, opts)
-  --
-
-  vim.api.nvim_set_keymap("n", "<C-l>", "<cmd>Telescope workspaces<CR>", opts)
-
   vim.api.nvim_set_keymap("n", "<leader>lc", ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>lp", ":lua print(vim.lsp.get_log_path())<CR>", opts)
-
-  if client.definitionProvider then
-    vim.api.nvim_set_keymap("n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts)
-    vim.api.nvim_set_keymap("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  end
-
-  if client.implementationProvider then
-    vim.api.nvim_set_keymap("n", "<leader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  end
-
-  if client.referencesProvider then
-    -- vim.api.nvim_set_keymap('n','<leader>tr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_set_keymap("n", "<leader>gr", "<cmd>lua require('telescope.builtin').lsp_references()<CR>", opts)
-  end
-
-  vim.api.nvim_set_keymap(
-    "n",
-    "<leader>ca",
-    "<cmd>lua require('telescope.builtin').lsp_code_actions({ timeout = 1000 })<CR>",
-    opts
-  )
-  vim.api.nvim_set_keymap(
-    "v",
-    "<leader>car",
-    "<cmd>lua require('telescope.builtin').lsp_range_code_actions({ timeout = 1000 })<CR>",
-    opts
-  )
-  vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
-  vim.api.nvim_set_keymap("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
-
-  if client.renameProvider then
-    -- vim.api.nvim_set_keymap('n','<leader>rr','<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_set_keymap("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
-  end
-
-  vim.api.nvim_set_keymap("n", "<leader>bf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
-  if client.documentRangeFormattingProvider then
-    vim.api.nvim_set_keymap("n", "<leader>bF", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  end
 
   -- Typescript
   vim.api.nvim_set_keymap("n", "<leader>to", ":TSLspOrganize<CR>", opts)
@@ -82,11 +34,46 @@ function M.set(client)
   vim.api.nvim_set_keymap("n", "<leader>ti", ":TSLspImportAll<CR>", opts)
 
   -- Telescope
-  telescope_mapper("gr", "lsp_references", nil, true)
-  telescope_mapper("gI", "lsp_implementations", nil, true)
-  telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
-  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
-  -- telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
+  telescope_mapper("<leader>wd", "lsp_document_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<leader>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
+end
+
+function M.new(client, buffer)
+  return setmetatable({ client = client, buffer = buffer }, { __index = M })
+end
+
+function M:has(cap)
+  return self.client.server_capabilities[cap .. "Provider"]
+end
+
+function M:map(lhs, rhs, opts)
+  opts = opts or {}
+  if opts.has and not self:has(opts.has) then
+    return
+  end
+  vim.keymap.set(
+    opts.mode or "n",
+    lhs,
+    type(rhs) == "string" and ("<cmd>%s<cr>"):format(rhs) or rhs,
+    ---@diagnostic disable-next-line: no-unknown
+    { silent = true, buffer = self.buffer, expr = opts.expr, desc = opts.desc }
+  )
+end
+
+function M.rename()
+  if pcall(require, "inc_rename") then
+    return ":IncRename " .. vim.fn.expand("<cword>")
+  else
+    vim.lsp.buf.rename()
+  end
+end
+
+function M.diagnostic_goto(next, severity)
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go({ severity = severity })
+  end
 end
 
 return M

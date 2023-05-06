@@ -58,6 +58,15 @@
       sha256 = "rmJgfrEr/PYBq0S7j3tzRZvxi7PMMaAo0k528miXOQc=";
     };
   };
+  inc-rename = pkgs.vimUtils.buildVimPlugin {
+    name = "inc-rename.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "smjonas";
+      repo = "inc-rename.nvim";
+      rev = "fb1b7468f27d874feb209eac46be5205e20b7fd3";
+      sha256 = "2D2jlDSeB2fy5/PK3M7aHk/X4Zv7esKPya3QOiH8GdI=";
+    };
+  };
 in {
   home.file = {
     settings = {
@@ -364,6 +373,11 @@ in {
         plugin = refactoring;
         type = "lua";
         config = ''require('refactoring').setup({})'';
+      }
+      {
+        plugin = inc-rename;
+        type = "lua";
+        config = ''require('inc_rename').setup({})'';
       }
       # AI
       nui
