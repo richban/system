@@ -49,6 +49,15 @@
       sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
     };
   };
+  lsp-fidget = pkgs.vimUtils.buildVimPlugin {
+    name = "fidget.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "j-hui";
+      repo = "fidget.nvim";
+      rev = "0ba1e16d07627532b6cae915cc992ecac249fb97";
+      sha256 = "rmJgfrEr/PYBq0S7j3tzRZvxi7PMMaAo0k528miXOQc=";
+    };
+  };
 in {
   home.file = {
     settings = {
@@ -307,6 +316,11 @@ in {
       lspsaga-nvim-original
       lsp-status-nvim
       lsp_signature-nvim
+      {
+        plugin = lsp-fidget;
+        type = "lua";
+        config = ''require("fidget").setup()'';
+      }
 
       # telescope
       telescope-nvim
