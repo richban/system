@@ -93,8 +93,8 @@ in {
       target = ".config/nvim/lua/rb/indent-blankline.lua";
     };
     statusline = {
-      source = ../../../dotfiles/config/nvim/lua/rb/statusline.lua;
-      target = ".config/nvim/lua/rb/statusline.lua";
+      source = ../../../dotfiles/config/nvim/lua/rb/statusline;
+      target = ".config/nvim/lua/rb/statusline";
     };
     gitsigns = {
       source = ../../../dotfiles/config/nvim/lua/rb/gitsigns.lua;
@@ -123,6 +123,11 @@ in {
     stylua = {
       source = ../../../dotfiles/config/nvim/lua/rb/stylua.lua;
       target = ".config/nvim/lua/rb/stylua.lua";
+    };
+
+    icons = {
+      source = ../../../dotfiles/config/nvim/lua/rb/icons.lua;
+      target = ".config/nvim/lua/rb/icons.lua";
     };
 
     projections = {
