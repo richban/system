@@ -55,13 +55,13 @@
     font = {
       size = 16;
 
-      normal.family = "FiraMono Nerd Font Mono";
+      normal.family = "FiraCode Nerd Font";
       normal.style = "Regular";
-      bold.family = "FiraMono Nerd Font Mono";
+      bold.family = "FiraCode Nerd Font";
       bold.style = "Bold";
-      italic.family = "FiraMono Nerd Font Mono";
+      italic.family = "FiraCode Nerd Font";
       italic.style = "Italic";
-      bold_italic.family = "FiraMono Nerd Font Mono";
+      bold_italic.family = "FiraCode Nerd Font";
       bold_italic.style = "Bold Italic";
     };
 
