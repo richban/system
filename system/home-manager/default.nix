@@ -126,14 +126,11 @@ in {
     NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
 
     pyEnv =
-      pkgs.python39.withPackages
+      pkgs.python310.withPackages
       (ps:
         with ps; [
           black
-          ec2instanceconnectcli
           pandas
-          requests
-          bandit
           jupyter
           ipython
         ]);
