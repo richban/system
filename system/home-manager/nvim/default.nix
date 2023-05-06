@@ -427,6 +427,7 @@ in {
       (python39.withPackages (ps:
         with ps; [
           python-lsp-server
+          ruff-lsp
           jedi
           # pylsp-mypy
           pyflakes
