@@ -67,6 +67,24 @@
       sha256 = "2D2jlDSeB2fy5/PK3M7aHk/X4Zv7esKPya3QOiH8GdI=";
     };
   };
+  # firenvim = pkgs.vimUtils.buildVimPlugin {
+  #   name = "firenvim";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "glacambre";
+  #     repo = "firenvim";
+  #     rev = "ee4ef314bd990b2b05b7fbd95b857159e444a2fe";
+  #     sha256 = "hY6EcQ4y+t3EXe4qHAGjJ06Fo2bWjBc6W6XKpRZtYFM=";
+  #   };
+  # };
+  diffview = pkgs.vimUtils.buildVimPlugin {
+    name = "diffview.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "sindrets";
+      repo = "diffview.nvim";
+      rev = "8c1702470fd5186cb401b21f9bf8bdfad6d5cc87";
+      sha256 = "6RDVUVLFqSws7ouZ1bRWsGfBpyVOHO+9yEiMFVWUbC0=";
+    };
+  };
 in {
   home.file = {
     settings = {
@@ -286,6 +304,7 @@ in {
           vim.api.nvim_set_keymap("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = true })
         '';
       }
+      diffview
       {
         plugin = neoscroll-nvim;
         config = ''lua require('neoscroll').setup()'';
@@ -379,6 +398,12 @@ in {
         type = "lua";
         config = ''require('inc_rename').setup({})'';
       }
+      # {
+      #   plugin = firenvim;
+      #   type = "lua";
+      #   config = ''vim.fn["firenvim#install"](0)'';
+      # }
+
       # AI
       nui
       {
