@@ -1,47 +1,77 @@
-vim.g.diagnostics_active = true
+local M = {}
 
-function _G.toggle_diagnostics()
-  if vim.g.diagnostics_active then
-    vim.g.diagnostics_active = false
-    vim.lsp.diagnostic.clear(0)
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
-  else
-    vim.g.diagnostics_active = true
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = true,
-      signs = true,
-      underline = true,
+local icons = require("rb.icons")
+
+function M.lsp_init()
+  local signs = {
+    { name = "DiagnosticSignError", text = icons.diagnostics.Error },
+    { name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
+    { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
+    { name = "DiagnosticSignInfo", text = icons.diagnostics.Info },
+  }
+  for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
+  end
+
+  -- LSP handlers configuration
+  local config = {
+    float = {
+      focusable = true,
+      style = "minimal",
+      border = "rounded",
+    },
+
+    diagnostic = {
+      -- virtual_text = false,
+      -- virtual_text = { spacing = 4, prefix = "●" },
+      virtual_text = {
+        severity = {
+          min = vim.diagnostic.severity.ERROR,
+        },
+      },
+      signs = {
+        active = signs,
+      },
+      underline = false,
       update_in_insert = false,
-    })
-  end
+      severity_sort = true,
+      float = {
+        focusable = true,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
+      -- virtual_lines = true,
+    },
+  }
+  -- Override various utility functions.
+  -- vim.lsp.diagnostic.show_line_diagnostics = require("lspsaga.diagnostic").show_line_diagnostics
+
+  -- Diagnostic configuration
+  vim.diagnostic.config(config.diagnostic)
+
+  -- Hover configuration
+  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
+  vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
+
+  -- Signature help configuration
+  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
+
+  -- Jump directly to the first available definition every time.
+  -- vim.lsp.handlers["textDocument/definition"] = function(_, result)
+  --   if not result or vim.tbl_isempty(result) then
+  --     print("[LSP] Could not find definition")
+  --     return
+  --   end
+  --
+  --   if vim.tbl_islist(result) then
+  --     vim.lsp.util.jump_to_location(result[1], "utf-8")
+  --   else
+  --     vim.lsp.util.jump_to_location(result, "utf-8")
+  --   end
+  -- end
 end
 
-vim.api.nvim_set_keymap("n", "<leader>tt", ":call v:lua.toggle_diagnostics()<CR>", { noremap = true, silent = true })
-
--- LSP Enable diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  -- virtual_text = false,
-  virtual_text = { spacing = 0, prefix = "■", severity_limit = "Warning" },
-  underline = true,
-  signs = true,
-  update_in_insert = true,
-  severity_sort = true,
-})
-
-vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
--- Override various utility functions.
-vim.lsp.diagnostic.show_line_diagnostics = require("lspsaga.diagnostic").show_line_diagnostics
-
--- Jump directly to the first available definition every time.
-vim.lsp.handlers["textDocument/definition"] = function(_, result)
-  if not result or vim.tbl_isempty(result) then
-    print("[LSP] Could not find definition")
-    return
-  end
-
-  if vim.tbl_islist(result) then
-    vim.lsp.util.jump_to_location(result[1], "utf-8")
-  else
-    vim.lsp.util.jump_to_location(result, "utf-8")
-  end
-end
+return M

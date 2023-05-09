@@ -17,7 +17,8 @@ vim.lsp.set_log_level("error")
 -- Adds beautiful icon to completion
 require("lspkind").init()
 
--- require("rb.lsp.handlers")
+-- diagnostics, handlers
+require("rb.lsp.handlers").lsp_init()
 
 local filetype_attach = setmetatable({
   go = function()
