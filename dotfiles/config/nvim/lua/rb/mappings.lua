@@ -93,3 +93,15 @@ key_map(
   {}
 )
 -- key_map('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>", {})
+
+-- Auto indent
+key_map("n", "i", function()
+  if #vim.fn.getline(".") == 0 then
+    return [["_cc]]
+  else
+    return "i"
+  end
+end, { expr = true })
+
+-- Paste over currently selected text without yanking it
+key_map("v", "p", '"_dP')
