@@ -7,10 +7,11 @@ function M.set(client, buffer)
   local opts = { noremap = true, silent = true }
 
   self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
+  self:map("gD", "Lspsaga peek_definition", { desc = "Peek Definition" })
   self:map("gr", "Telescope lsp_references", { desc = "References" })
   self:map("gI", "Telescope lsp_implementations", { desc = "Goto Implementation" })
   self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
-  self:map("K", vim.lsp.buf.hover, { desc = "Hover" })
+  self:map("K", "Lspsaga hover_doc", { desc = "Hover" })
   self:map("gK", vim.lsp.buf.signature_help, { desc = "Signature Help", has = "signatureHelp" })
   self:map("[d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
   self:map("]d", M.diagnostic_goto(false), { desc = "Prev Diagnostic" })
@@ -18,12 +19,17 @@ function M.set(client, buffer)
   self:map("[e", M.diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
   self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
-  self:map("<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
+  self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
+
+  local format = require("plugins.lsp.format").format
+  self:map("<leader>cf", format, { desc = "Format Document", has = "documentFormatting" })
+  self:map("<leader>cf", format, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
   self:map("<leader>cr", M.rename, { expr = true, desc = "Rename", has = "rename" })
+
+  self:map("<leader>cw", require("rb.lsp.utils").toggle_diagnostics, { desc = "Toggle Inline Diagnostics" })
 
   -- gives definition & references
   vim.api.nvim_set_keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>h", "<cmd>Lspsaga hover_doc<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>lc", ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", opts)
   vim.api.nvim_set_keymap("n", "<leader>lp", ":lua print(vim.lsp.get_log_path())<CR>", opts)
 

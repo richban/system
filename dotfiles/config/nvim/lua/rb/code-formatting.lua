@@ -21,7 +21,7 @@ null_ls.setup({
     formatting.black,
     formatting.isort,
     diagnostics.mypy,
-    diagnostics.ruff.with({ extra_args = { "--max-line-length=180" } }),
+    -- diagnostics.ruff.with({ extra_args = { "--max-line-length=180" } }),
     formatting.gofmt,
     formatting.shfmt.with({
       extra_args = { "-i=2" },
