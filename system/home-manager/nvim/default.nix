@@ -306,6 +306,17 @@ in {
       }
       diffview
       {
+        plugin = neogit;
+        type = "lua";
+        config = ''
+          require("neogit").setup({
+            integrations = {
+              diffview = true;
+            }
+          })
+        '';
+      }
+      {
         plugin = neoscroll-nvim;
         config = ''lua require('neoscroll').setup()'';
       }
