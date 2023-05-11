@@ -127,10 +127,6 @@ in {
       source = ../../../dotfiles/config/nvim/lua/rb/gitsigns.lua;
       target = ".config/nvim/lua/rb/gitsigns.lua";
     };
-    code-formatting = {
-      source = ../../../dotfiles/config/nvim/lua/rb/code-formatting.lua;
-      target = ".config/nvim/lua/rb/code-formatting.lua";
-    };
     nvim-tree = {
       source = ../../../dotfiles/config/nvim/lua/rb/nvim-tree.lua;
       target = ".config/nvim/lua/rb/nvim-tree.lua";
@@ -309,6 +305,7 @@ in {
         type = "lua";
         config = ''
           require("neogit").setup({
+            disable_commit_confirmation = true,
             integrations = {
               diffview = true;
             }
@@ -326,10 +323,7 @@ in {
       }
       nvim-tree-lua
       vim-nix
-      {
-        plugin = null-ls-nvim;
-        config = ''lua require('rb.code-formatting')'';
-      }
+      null-ls-nvim
       # https://nixos.wiki/wiki/Tree_sitters
       (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       # markdown-preview-nvim
