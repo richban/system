@@ -6,16 +6,11 @@ local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
   sources = {
-    -- Nix
+    --  formatting
     formatting.alejandra,
-    diagnostics.deadnix,
-    diagnostics.statix,
-    code_actions.statix,
     formatting.prettier,
-    formatting.black,
+    formatting.black.with({ extra_args = { "--fast" } }),
     formatting.isort,
-    diagnostics.mypy,
-    diagnostics.ruff.with({ extra_args = { "--max-line-length=180" } }),
     formatting.gofmt,
     formatting.shfmt.with({
       extra_args = { "-i=2" },
@@ -28,11 +23,7 @@ null_ls.setup({
     formatting.terrafmt,
     formatting.terraform_fmt,
     formatting.trim_whitespace,
-    diagnostics.editorconfig_checker,
-    diagnostics.gitlint, -- Shell scripts
-    code_actions.shellcheck,
-    diagnostics.shellcheck,
-    diagnostics.write_good,
+    formatting.codespell.with({ filetypes = { "markdown" } }), -- Markdown
     -- formatting.lua_format.with({
     --   extra_args = {
     --     "--no-keep-simple-function-one-line",
@@ -42,10 +33,25 @@ null_ls.setup({
     --     "--indent-width=2",
     --   },
     -- }),
-    formatting.codespell.with({ filetypes = { "markdown" } }), -- Markdown
-    code_actions.proselint,
+
+    -- diagnostics
+    diagnostics.deadnix,
+    diagnostics.statix,
+    diagnostics.mypy,
+    diagnostics.ruff.with({ extra_args = { "--max-line-length=180" } }),
+    diagnostics.editorconfig_checker,
+    diagnostics.gitlint,
+    diagnostics.write_good,
+    diagnostics.shellcheck,
     diagnostics.proselint,
     diagnostics.markdownlint,
     -- diagnostics.misspell,
+
+    -- code actions
+    code_actions.statix,
+    code_actions.shellcheck,
+    code_actions.proselint,
+    code_actions.gitsigns,
+    code_actions.gitrebase,
   },
 })
