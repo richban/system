@@ -219,6 +219,10 @@
           #! ${pyEnv}/bin/python3
           ${builtins.readFile ./bin/do.py}
         '';
+        gitmanager = pkgs.writeScriptBin "gitmanager" ''
+          #! ${pyEnv}/bin/python3
+          ${builtins.readFile ./bin/git_manager.py}
+        '';
       }
     );
 
@@ -226,6 +230,10 @@
       sysdo = {
         type = "app";
         program = "${self.packages.${system}.sysdo}/bin/sysdo";
+      };
+      gitmanager = {
+        type = "app";
+        program = "${self.packages.${system}.gitmanager}/bin/gitmanager";
       };
       default = sysdo;
     });
@@ -241,6 +249,7 @@
         with pkgs; {
           inherit (self.packages.${prev.system}) sysdo;
           inherit (self.packages.${prev.system}) pyEnv;
+          inherit (self.packages.${prev.system}) gitmanager;
         };
     };
   };

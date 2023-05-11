@@ -6,10 +6,10 @@ A command-line application to backup and restore non-text attachments (PDF, PPTX
 Usage:
 
 1. To backup attachments, run the following command:
-   $ python obsidian_backup.py backup /path/to/your/obsidian/vault /path/to/your/backup/folder
+    $ python obsidian_backup.py backup /path/to/your/obsidian/vault /path/to/your/backup/folder
 
 2. To restore attachments, run the following command:
-   $ python obsidian_backup.py restore /path/to/your/obsidian/vault /path/to/your/backup/folder
+    $ python obsidian_backup.py restore /path/to/your/obsidian/vault /path/to/your/backup/folder
 
 Note: Replace /path/to/your/obsidian/vault and /path/to/your/backup/folder with the correct paths to your Obsidian vault and backup folder.
 """
