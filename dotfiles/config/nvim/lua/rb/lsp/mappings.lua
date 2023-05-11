@@ -2,7 +2,7 @@ local M = {}
 
 local telescope_mapper = require("rb.telescope.mappings")
 
-function M.set(client, buffer)
+function M.on_attach(client, buffer)
   local self = M.new(client, buffer)
   local opts = { noremap = true, silent = true }
 
@@ -21,7 +21,7 @@ function M.set(client, buffer)
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
   self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
 
-  local format = require("plugins.lsp.format").format
+  local format = require("rb.lsp.format").format
   self:map("<leader>cf", format, { desc = "Format Document", has = "documentFormatting" })
   self:map("<leader>cf", format, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
   self:map("<leader>cr", M.rename, { expr = true, desc = "Rename", has = "rename" })
