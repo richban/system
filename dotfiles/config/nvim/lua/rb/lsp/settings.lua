@@ -1,6 +1,4 @@
 local lsp = require("lspconfig")
-local lsp_status = require("lsp-status")
-local mappings = require("rb.lsp.mappings")
 
 -- new  autocmd API
 local autocmd = require("rb.auto").autocmd
@@ -8,7 +6,6 @@ local autocmd_format = require("rb.auto").autocmd_format
 local autocmd_clear = vim.api.nvim_clear_autocmds
 
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
-local augroup_lsp_custom_attach = vim.api.nvim_create_augroup("custom-lsp-attach", { clear = true })
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
@@ -44,8 +41,8 @@ local filetype_attach = setmetatable({
 local function custom_attach(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
-  mappings.set(client, bufnr)
-  lsp_status.on_attach(client)
+  require("rb.lsp.format").on_attach(client, bufnr)
+  require("rb.lsp.mappings").on_attach(client, bufnr)
 
   if filetype == "typescript" then
     local ts_utils = require("nvim-lsp-ts-utils")
@@ -74,19 +71,6 @@ local function custom_attach(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
   end
 
-  -- NOTE:  attempt to attach python to pylsp client and not null-ls; does not work
-  -- if filetype == "python" then
-  --   autocmd_clear({ group = augroup_lsp_custom_attach, buffer = bufnr })
-  --   autocmd({
-  --     "BufEnter",
-  --     augroup_highlight,
-  --     function()
-  --       vim.lsp.buf.buf_attach_client(tonumber(client.id), bufnr)
-  --     end,
-  --     bufnr,
-  --   })
-  -- end
-
   -- add signature autocompletion while typing
   -- require'lsp_signature'.on_attach()
   require("lsp_signature").on_attach({
@@ -110,11 +94,6 @@ local function custom_attach(client, bufnr)
     },
     extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
   })
-
-  --  format on doument save
-  if client.server_capabilities.documentFormattingProvider then
-    autocmd_format(false)
-  end
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
@@ -248,11 +227,11 @@ local servers = {
       "typescript.tsx",
     },
   },
-  ruff_lsp = {
-    settings = {},
-  },
+  -- ruff_lsp = {
+  --   settings = {},
+  -- },
   pylsp = {
-    enabled = false,
+    enabled = true,
     formatCommand = { "black" },
     root_dir = function(fname)
       local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
@@ -311,6 +290,7 @@ local servers = {
           library = vim.api.nvim_get_runtime_file("", true),
           maxPreload = 5000,
           preloadFileSize = 1000,
+          checkThirdParty = false,
         },
         telemetry = { enable = false },
         format = {
@@ -335,6 +315,17 @@ local setup_server = function(server, config)
 
   lsp[server].setup(config)
 end
+
+local null_opts = {
+  on_attach = custom_attach,
+  capabilities = updated_capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+}
+
+-- null-ls
+require("rb.lsp.null-ls").setup(null_opts)
 
 for server, config in pairs(servers) do
   setup_server(server, config)
