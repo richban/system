@@ -1,1 +1,3 @@
 dotfiles/config/tmuxinator/planetrics.yaml filter=git-crypt diff=git-crypt
+dotfies/config/raycast/Raycast.rayconfig filter=git-crypt diff=git-crypt
+repos_list.txt filter=git-crypt diff=git-crypt
