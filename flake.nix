@@ -223,6 +223,10 @@
           #! ${pyEnv}/bin/python3
           ${builtins.readFile ./bin/git_manager.py}
         '';
+        obsidianbackup = pkgs.writeScriptBin "obsidianbackup" ''
+          #! ${pyEnv}/bin/python3
+          ${builtins.readFile ./bin/obsidian_backup.py}
+        '';
       }
     );
 
@@ -235,13 +239,17 @@
         type = "app";
         program = "${self.packages.${system}.gitmanager}/bin/gitmanager";
       };
+      obsidianbackup = {
+        type = "app";
+        program = "${self.packages.${system}.obsidianbackup}/bin/obsidianbackup";
+      };
       default = sysdo;
     });
 
     overlays = {
       channels = final: prev: {
         # expose other channels via overlays
-        unstable = import inputs.unstable {system = prev.system;};
+        unstable = import inputs.unstable {inherit (prev) system;};
       };
       extraPackages = final: prev: let
         pkgs = final;
@@ -250,6 +258,7 @@
           inherit (self.packages.${prev.system}) sysdo;
           inherit (self.packages.${prev.system}) pyEnv;
           inherit (self.packages.${prev.system}) gitmanager;
+          inherit (self.packages.${prev.system}) obsidianbackup;
         };
     };
   };
