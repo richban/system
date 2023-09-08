@@ -3,6 +3,7 @@
     git
     git-crypt
     gitAndTools.delta
+    act
   ];
 
   home.file.gitignore = {
