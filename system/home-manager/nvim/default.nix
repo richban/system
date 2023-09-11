@@ -8,8 +8,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "gnikdroy";
       repo = "projections.nvim";
-      rev = "008de87749e6baa402a2ce2f3ebc75e724b95da1";
-      sha256 = "nJAZ0e9jWKErl1UASnPZltRdnaebt8E4hRvHI8xD48g=";
+      rev = "f18a8505f84f45a0fe024cafca5b969447f63cd5";
+      sha256 = "vkxiM+65k4/iAV2Y+FkFJpnB8/hArGA061JPNENjkvo=";
     };
   };
   refactoring = pkgs.vimUtils.buildVimPlugin {
@@ -351,7 +351,7 @@ in {
       # lsp
       nvim-lspconfig
       # lspsaga
-      lspsaga-nvim-original
+      lspsaga-nvim
       lsp-status-nvim
       lsp_signature-nvim
       {
@@ -416,11 +416,11 @@ in {
         type = "lua";
         config = ''require("codeium").setup({})'';
       }
-      {
-        plugin = chatgpt;
-        type = "lua";
-        config = ''require("chatgpt").setup({ })'';
-      }
+      # {
+      #   plugin = chatgpt;
+      #   type = "lua";
+      #   config = ''require("chatgpt").setup({ })'';
+      # }
     ];
 
     extraPackages = with pkgs; [
@@ -454,7 +454,7 @@ in {
       nodePackages.markdownlint-cli
       nodePackages.write-good
 
-      (python39.withPackages (ps:
+      (python310.withPackages (ps:
         with ps; [
           python-lsp-server
           ruff-lsp

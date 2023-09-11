@@ -36,7 +36,6 @@
         "richban.cachix.org-1:b22iBPRwWfvVe1ldyn3ca1JRw0OEzzf3jrurGJQN3LA="
       ];
     };
-    readOnlyStore = true;
 
     # Add inputs to registry & nix path
     nixPath =
