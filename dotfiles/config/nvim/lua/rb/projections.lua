@@ -1,6 +1,6 @@
 require("projections").setup({
   workspaces = {
-    { "~/Developer/mckinsey/planetrics", { ".git" } },
+    { "~/Developer/mckinsey", { ".git" } },
     { "~/Developer", { ".git" } },
   },
   patterns = { ".git", ".svn", ".hg" },
