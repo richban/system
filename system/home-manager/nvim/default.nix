@@ -17,8 +17,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "ThePrimeagen";
       repo = "refactoring.nvim";
-      rev = "57c32c6b7a211e5a3a5e4ddc4ad2033daff5cf9a";
-      sha256 = "m/WCIF4GWMXkys4oii4GZ9RCO4cfUD/X6rCRtBLgj3A=";
+      rev = "2ec9bc0fb5f3c8c6a0f776f0159dd2a3b1663554";
+      sha256 = "k4nHB0VznnlDDOZayy1T36pydRO5cDVWV0OtJPtnDA0=";
     };
     buildInputs = [pkgs.stylua];
   };
@@ -27,8 +27,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "jcdickinson";
       repo = "codeium.nvim";
-      rev = "04dea474c2c90633a0e94560e6bfb4b6dea291c9";
-      sha256 = "14rQf+ttkRsMkn7GbRosR6Jbdzal+yuF/F0vgFo/XpY=";
+      rev = "61b751e94cab0aaf5b1f46de40730196330b6d8f";
+      sha256 = "qtOoUDkYj7LUXIlCKwLGsntDnGkM6Tq7Qa4sZebeemI=";
     };
   };
   nui = pkgs.vimUtils.buildVimPlugin {
@@ -36,26 +36,26 @@
     src = pkgs.fetchFromGitHub {
       owner = "MunifTanjim";
       repo = "nui.nvim";
-      rev = "698e75814cd7c56b0dd8af4936bcef2d13807f3c";
-      sha256 = "wVGshQpYx7lz6gl/MDSGkSQJriUbZ0J0OnTFALrXsxk=";
+      rev = "c8de23342caf8d50b15d6b28368d36a56a69d76f";
+      sha256 = "Ao+xnowsZPR9x3Wm439l1QIlgt3Rt6n9DZIqkUKsR1k=";
     };
   };
-  chatgpt = pkgs.vimUtils.buildVimPlugin {
-    name = "ChatGPT.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "jackMort";
-      repo = "ChatGPT.nvim";
-      rev = "be6d89615216339e8bee47f52290ae204372c248";
-      sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
-    };
-  };
+  # chatgpt = pkgs.vimUtils.buildVimPlugin {
+  #   name = "ChatGPT.nvim";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "jackMort";
+  #     repo = "ChatGPT.nvim";
+  #     rev = "be6d89615216339e8bee47f52290ae204372c248";
+  #     sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
+  #   };
+  # };
   lsp-fidget = pkgs.vimUtils.buildVimPlugin {
     name = "fidget.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "j-hui";
       repo = "fidget.nvim";
-      rev = "0ba1e16d07627532b6cae915cc992ecac249fb97";
-      sha256 = "rmJgfrEr/PYBq0S7j3tzRZvxi7PMMaAo0k528miXOQc=";
+      rev = "89b633f3bd0b7187f070236b348697de176860e2";
+      sha256 = "gmpRk1b/fpNRPUPBA9UnYbmiGRoW5otzW9Nfcfvju74=";
     };
   };
   inc-rename = pkgs.vimUtils.buildVimPlugin {
@@ -63,8 +63,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "smjonas";
       repo = "inc-rename.nvim";
-      rev = "fb1b7468f27d874feb209eac46be5205e20b7fd3";
-      sha256 = "2D2jlDSeB2fy5/PK3M7aHk/X4Zv7esKPya3QOiH8GdI=";
+      rev = "ed0f6f2b917cac4eb3259f907da0a481b27a3b7e";
+      sha256 = "i1VVtV86cpz7E3n9dOxVl6ZvxttqG3RqcxXrk2c/FCE=";
     };
   };
   # firenvim = pkgs.vimUtils.buildVimPlugin {

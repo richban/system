@@ -8,7 +8,7 @@
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim ./1password.nix];
+  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim ./1password.nix ./direnv.nix];
 
   xdg = {
     enable = true;
