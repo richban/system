@@ -22,15 +22,6 @@
     };
     buildInputs = [pkgs.stylua];
   };
-  codeium = pkgs.vimUtils.buildVimPlugin {
-    name = "codeium.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "jcdickinson";
-      repo = "codeium.nvim";
-      rev = "61b751e94cab0aaf5b1f46de40730196330b6d8f";
-      sha256 = "qtOoUDkYj7LUXIlCKwLGsntDnGkM6Tq7Qa4sZebeemI=";
-    };
-  };
   nui = pkgs.vimUtils.buildVimPlugin {
     name = "nui.nvim";
     src = pkgs.fetchFromGitHub {
@@ -411,11 +402,11 @@ in {
 
       # AI
       nui
-      {
-        plugin = codeium;
-        type = "lua";
-        config = ''require("codeium").setup({})'';
-      }
+      # {
+      #   plugin = codeium;
+      #   type = "lua";
+      #   config = ''require("codeium").setup({})'';
+      # }
       # {
       #   plugin = chatgpt;
       #   type = "lua";

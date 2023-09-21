@@ -70,7 +70,7 @@
 
     # Overlays is the list of overlays we want to apply from flake inputs.
     overlays = [
-      # inputs.neovim-nightly-overlay.overlay
+      inputs.neovim-nightly-overlay.overlay
     ];
 
     # generate a darwin config
