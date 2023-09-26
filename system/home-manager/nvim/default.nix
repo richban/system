@@ -45,7 +45,7 @@
     src = pkgs.fetchFromGitHub {
       owner = "j-hui";
       repo = "fidget.nvim";
-      rev = "89b633f3bd0b7187f070236b348697de176860e2";
+      rev = "0ba1e16d07627532b6cae915cc992ecac249fb97";
       sha256 = "gmpRk1b/fpNRPUPBA9UnYbmiGRoW5otzW9Nfcfvju74=";
     };
   };
