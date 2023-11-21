@@ -21,8 +21,8 @@ in {
     _1password-gui
     hammerspoon
     spacebar
-    obsidian
-    postman
+    # obsidian
+    # postman
     karabiner-elements
     goku
   ];
