@@ -40,15 +40,6 @@
   #     sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
   #   };
   # };
-  lsp-fidget = pkgs.vimUtils.buildVimPlugin {
-    name = "fidget.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "j-hui";
-      repo = "fidget.nvim";
-      rev = "0ba1e16d07627532b6cae915cc992ecac249fb97";
-      sha256 = "gmpRk1b/fpNRPUPBA9UnYbmiGRoW5otzW9Nfcfvju74=";
-    };
-  };
   inc-rename = pkgs.vimUtils.buildVimPlugin {
     name = "inc-rename.nvim";
     src = pkgs.fetchFromGitHub {
@@ -74,6 +65,15 @@
       repo = "diffview.nvim";
       rev = "8c1702470fd5186cb401b21f9bf8bdfad6d5cc87";
       sha256 = "6RDVUVLFqSws7ouZ1bRWsGfBpyVOHO+9yEiMFVWUbC0=";
+    };
+  };
+  oxacarbon-colors = pkgs.vimUtils.buildVimPlugin {
+    name = "nyoom-engineering";
+    src = pkgs.fetchFromGitHub {
+      owner = "nyoom-engineering";
+      repo = "oxocarbon.nvim";
+      rev = "b47c0ecab3a4270815afb3b05e03423b04cca8f2";
+      sha256 = "sha256-HhHtEeQF0q4Sn13KfWesVbm2Kn5+pLjLrxepWvphcsI=";
     };
   };
 in {
@@ -220,6 +220,14 @@ in {
           vim.cmd('colorscheme rose-pine')
         '';
       }
+      {
+        plugin = oxacarbon-colors;
+        type = "lua";
+        config = ''
+          vim.opt.background = "dark" -- set this to dark or light
+          vim.cmd.colorscheme "oxocarbon"
+        '';
+      }
       nvim-autopairs
       # adds vscode-like pictogram
       lspkind-nvim
@@ -272,7 +280,10 @@ in {
           ]])
         '';
       }
-      indent-blankline-nvim
+      {
+        plugin = indent-blankline-nvim;
+        config = ''lua require("ibl").setup()'';
+      }
       lualine-nvim
       {
         plugin = nvim-colorizer-lua;
@@ -316,7 +327,8 @@ in {
       vim-nix
       null-ls-nvim
       # https://nixos.wiki/wiki/Tree_sitters
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      nvim-treesitter.withAllGrammars
       # markdown-preview-nvim
       # goyo-vim
       {
@@ -345,11 +357,11 @@ in {
       lspsaga-nvim
       lsp-status-nvim
       lsp_signature-nvim
-      {
-        plugin = lsp-fidget;
-        type = "lua";
-        config = ''require("fidget").setup()'';
-      }
+      # {
+      #   plugin = lsp-fidget;
+      #   type = "lua";
+      #   config = ''require("fidget").setup()'';
+      # }
 
       # telescope
       telescope-nvim
@@ -475,7 +487,6 @@ in {
       lua require("rb.globals")
       lua require("rb.autocmd")
       lua require("rb.nvim-cmp")
-      lua require("rb.indent-blankline")
       lua require("rb.statusline")
       lua require("rb.gitsigns")
       lua require("rb.nvim-tree")
