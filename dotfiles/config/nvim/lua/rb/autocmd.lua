@@ -82,3 +82,20 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+local group = vim.api.nvim_create_augroup("MyCustomNeogitEvents", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  pattern = "NeogitPushComplete",
+  group = group,
+  callback = function()
+    require("neogit").close()
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "BufWritePost,BufEnter,FocusGained,ShellCmdPost,VimResume",
+  group = augroup("DefaultRefreshEvents"),
+  callback = function()
+    require("neogit").refresh_manually()
+  end,
+})

@@ -17,7 +17,7 @@
     src = pkgs.fetchFromGitHub {
       owner = "ThePrimeagen";
       repo = "refactoring.nvim";
-      rev = "2ec9bc0fb5f3c8c6a0f776f0159dd2a3b1663554";
+      rev = "pre_release";
       sha256 = "k4nHB0VznnlDDOZayy1T36pydRO5cDVWV0OtJPtnDA0=";
     };
     buildInputs = [pkgs.stylua];
@@ -74,6 +74,15 @@
       repo = "oxocarbon.nvim";
       rev = "b47c0ecab3a4270815afb3b05e03423b04cca8f2";
       sha256 = "sha256-HhHtEeQF0q4Sn13KfWesVbm2Kn5+pLjLrxepWvphcsI=";
+    };
+  };
+  copilot = pkgs.vimUtils.buildVimPlugin {
+    name = "copilot.vim";
+    src = pkgs.fetchFromGitHub {
+      owner = "github";
+      repo = "copilot.vim";
+      rev = "5b19fb001d7f31c4c7c5556d7a97b243bd29f45f";
+      sha256 = "sha256-mHwK8vw3vbcMKuTb1aMRSL5GS0+4g3tw3G4uZGMA2lQ=";
     };
   };
 in {
@@ -414,6 +423,7 @@ in {
 
       # AI
       nui
+      copilot
       # {
       #   plugin = codeium;
       #   type = "lua";
