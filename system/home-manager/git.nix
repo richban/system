@@ -26,6 +26,7 @@
       color.ui = true;
       pull.ff = "only";
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
 
       core = {
         pager = "delta";
@@ -40,6 +41,10 @@
         prompt = false;
         tool = "vimdiff";
         algorithm = "histogram";
+      };
+
+      push = {
+        autoSetupRemote = true;
       };
 
       "difftool \"vimdiff\"" = {

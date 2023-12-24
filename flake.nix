@@ -18,9 +18,7 @@
   inputs = {
     # We use the unstable nixpkgs repo for some packages.
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    # TODO: configure NixOS
-    nixos-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixos-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Darwin system management
@@ -259,6 +257,7 @@
           inherit (self.packages.${prev.system}) pyEnv;
           inherit (self.packages.${prev.system}) gitmanager;
           inherit (self.packages.${prev.system}) obsidianbackup;
+          inherit (self.packages.${prev.system}) devenv;
         };
     };
   };

@@ -8,7 +8,7 @@
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim ./1password.nix];
+  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim ./1password.nix ./direnv.nix];
 
   xdg = {
     enable = true;
@@ -37,7 +37,7 @@ in {
 
     changeDirWidgetOptions = [
       # Preview the contents of the selected directory - ALT-C
-      "--preview 'exa -l --tree --level=2 --color=always {}'"
+      "--preview 'eza -l --tree --level=2 --color=always {}'"
     ];
 
     historyWidgetOptions = [
@@ -175,7 +175,7 @@ in {
       unzip
       gnused
       starship
-      exa
+      eza
 
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
 
@@ -201,7 +201,7 @@ in {
       cookiecutter
       ruff
 
-      nodejs-slim-14_x
+      nodejs-slim
       nodePackages.npm
       yarn
     ];

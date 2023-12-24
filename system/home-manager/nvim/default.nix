@@ -8,8 +8,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "gnikdroy";
       repo = "projections.nvim";
-      rev = "008de87749e6baa402a2ce2f3ebc75e724b95da1";
-      sha256 = "nJAZ0e9jWKErl1UASnPZltRdnaebt8E4hRvHI8xD48g=";
+      rev = "f18a8505f84f45a0fe024cafca5b969447f63cd5";
+      sha256 = "vkxiM+65k4/iAV2Y+FkFJpnB8/hArGA061JPNENjkvo=";
     };
   };
   refactoring = pkgs.vimUtils.buildVimPlugin {
@@ -17,54 +17,36 @@
     src = pkgs.fetchFromGitHub {
       owner = "ThePrimeagen";
       repo = "refactoring.nvim";
-      rev = "57c32c6b7a211e5a3a5e4ddc4ad2033daff5cf9a";
-      sha256 = "m/WCIF4GWMXkys4oii4GZ9RCO4cfUD/X6rCRtBLgj3A=";
+      rev = "pre_release";
+      sha256 = "k4nHB0VznnlDDOZayy1T36pydRO5cDVWV0OtJPtnDA0=";
     };
     buildInputs = [pkgs.stylua];
-  };
-  codeium = pkgs.vimUtils.buildVimPlugin {
-    name = "codeium.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "jcdickinson";
-      repo = "codeium.nvim";
-      rev = "04dea474c2c90633a0e94560e6bfb4b6dea291c9";
-      sha256 = "14rQf+ttkRsMkn7GbRosR6Jbdzal+yuF/F0vgFo/XpY=";
-    };
   };
   nui = pkgs.vimUtils.buildVimPlugin {
     name = "nui.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "MunifTanjim";
       repo = "nui.nvim";
-      rev = "698e75814cd7c56b0dd8af4936bcef2d13807f3c";
-      sha256 = "wVGshQpYx7lz6gl/MDSGkSQJriUbZ0J0OnTFALrXsxk=";
+      rev = "c8de23342caf8d50b15d6b28368d36a56a69d76f";
+      sha256 = "Ao+xnowsZPR9x3Wm439l1QIlgt3Rt6n9DZIqkUKsR1k=";
     };
   };
-  chatgpt = pkgs.vimUtils.buildVimPlugin {
-    name = "ChatGPT.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "jackMort";
-      repo = "ChatGPT.nvim";
-      rev = "be6d89615216339e8bee47f52290ae204372c248";
-      sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
-    };
-  };
-  lsp-fidget = pkgs.vimUtils.buildVimPlugin {
-    name = "fidget.nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "j-hui";
-      repo = "fidget.nvim";
-      rev = "0ba1e16d07627532b6cae915cc992ecac249fb97";
-      sha256 = "rmJgfrEr/PYBq0S7j3tzRZvxi7PMMaAo0k528miXOQc=";
-    };
-  };
+  # chatgpt = pkgs.vimUtils.buildVimPlugin {
+  #   name = "ChatGPT.nvim";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "jackMort";
+  #     repo = "ChatGPT.nvim";
+  #     rev = "be6d89615216339e8bee47f52290ae204372c248";
+  #     sha256 = "2of3YTLlFw7GyjQ4dPztpqX+nwMF2Bvohc0R8krdx2A=";
+  #   };
+  # };
   inc-rename = pkgs.vimUtils.buildVimPlugin {
     name = "inc-rename.nvim";
     src = pkgs.fetchFromGitHub {
       owner = "smjonas";
       repo = "inc-rename.nvim";
-      rev = "fb1b7468f27d874feb209eac46be5205e20b7fd3";
-      sha256 = "2D2jlDSeB2fy5/PK3M7aHk/X4Zv7esKPya3QOiH8GdI=";
+      rev = "ed0f6f2b917cac4eb3259f907da0a481b27a3b7e";
+      sha256 = "i1VVtV86cpz7E3n9dOxVl6ZvxttqG3RqcxXrk2c/FCE=";
     };
   };
   # firenvim = pkgs.vimUtils.buildVimPlugin {
@@ -83,6 +65,33 @@
       repo = "diffview.nvim";
       rev = "8c1702470fd5186cb401b21f9bf8bdfad6d5cc87";
       sha256 = "6RDVUVLFqSws7ouZ1bRWsGfBpyVOHO+9yEiMFVWUbC0=";
+    };
+  };
+  oxacarbon-colors = pkgs.vimUtils.buildVimPlugin {
+    name = "nyoom-engineering";
+    src = pkgs.fetchFromGitHub {
+      owner = "nyoom-engineering";
+      repo = "oxocarbon.nvim";
+      rev = "b47c0ecab3a4270815afb3b05e03423b04cca8f2";
+      sha256 = "sha256-HhHtEeQF0q4Sn13KfWesVbm2Kn5+pLjLrxepWvphcsI=";
+    };
+  };
+  copilot = pkgs.vimUtils.buildVimPlugin {
+    name = "copilot.lua";
+    src = pkgs.fetchFromGitHub {
+      owner = "zbirenbaum";
+      repo = "copilot.lua";
+      rev = "858bbfa6fa81c88fb1f64107d7981f1658619e0a";
+      hash = "sha256-x6ylgVR7nrMhvSvtwbh7CufOJO/q+30G+Tvrj3/wgZY=";
+    };
+  };
+  copilot-cmp = pkgs.vimUtils.buildVimPlugin {
+    name = "copilot-cmpp";
+    src = pkgs.fetchFromGitHub {
+      owner = "zbirenbaum";
+      repo = "copilot-cmp";
+      rev = "72fbaa03695779f8349be3ac54fa8bd77eed3ee3";
+      sha256 = "sha256-srgNohm/aJpswNJ5+T7p+zi9Jinp9e5FA8/wdk6VRiY=";
     };
   };
 in {
@@ -229,6 +238,14 @@ in {
           vim.cmd('colorscheme rose-pine')
         '';
       }
+      {
+        plugin = oxacarbon-colors;
+        type = "lua";
+        config = ''
+          vim.opt.background = "dark" -- set this to dark or light
+          vim.cmd.colorscheme "oxocarbon"
+        '';
+      }
       nvim-autopairs
       # adds vscode-like pictogram
       lspkind-nvim
@@ -241,6 +258,12 @@ in {
       cmp-nvim-lua
       cmp-spell
       cmp-vsnip
+      {
+        plugin = copilot-cmp;
+        type = "lua";
+        config = ''
+          require("copilot").setup({})'';
+      }
       # snippets
       vim-vsnip
 
@@ -281,7 +304,10 @@ in {
           ]])
         '';
       }
-      indent-blankline-nvim
+      {
+        plugin = indent-blankline-nvim;
+        config = ''lua require("ibl").setup()'';
+      }
       lualine-nvim
       {
         plugin = nvim-colorizer-lua;
@@ -325,7 +351,8 @@ in {
       vim-nix
       null-ls-nvim
       # https://nixos.wiki/wiki/Tree_sitters
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      nvim-treesitter.withAllGrammars
       # markdown-preview-nvim
       # goyo-vim
       {
@@ -351,14 +378,14 @@ in {
       # lsp
       nvim-lspconfig
       # lspsaga
-      lspsaga-nvim-original
+      lspsaga-nvim
       lsp-status-nvim
       lsp_signature-nvim
-      {
-        plugin = lsp-fidget;
-        type = "lua";
-        config = ''require("fidget").setup()'';
-      }
+      # {
+      #   plugin = lsp-fidget;
+      #   type = "lua";
+      #   config = ''require("fidget").setup()'';
+      # }
 
       # telescope
       telescope-nvim
@@ -411,16 +438,28 @@ in {
 
       # AI
       nui
+      # copilot
       {
-        plugin = codeium;
+        plugin = copilot;
         type = "lua";
-        config = ''require("codeium").setup({})'';
+        config = ''
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+          })
+        '';
       }
-      {
-        plugin = chatgpt;
-        type = "lua";
-        config = ''require("chatgpt").setup({ })'';
-      }
+
+      # {
+      #   plugin = codeium;
+      #   type = "lua";
+      #   config = ''require("codeium").setup({})'';
+      # }
+      # {
+      #   plugin = chatgpt;
+      #   type = "lua";
+      #   config = ''require("chatgpt").setup({ })'';
+      # }
     ];
 
     extraPackages = with pkgs; [
@@ -454,7 +493,7 @@ in {
       nodePackages.markdownlint-cli
       nodePackages.write-good
 
-      (python39.withPackages (ps:
+      (python310.withPackages (ps:
         with ps; [
           python-lsp-server
           ruff-lsp
@@ -484,7 +523,6 @@ in {
       lua require("rb.globals")
       lua require("rb.autocmd")
       lua require("rb.nvim-cmp")
-      lua require("rb.indent-blankline")
       lua require("rb.statusline")
       lua require("rb.gitsigns")
       lua require("rb.nvim-tree")
