@@ -77,12 +77,21 @@
     };
   };
   copilot = pkgs.vimUtils.buildVimPlugin {
-    name = "copilot.vim";
+    name = "copilot.lua";
     src = pkgs.fetchFromGitHub {
-      owner = "github";
-      repo = "copilot.vim";
-      rev = "5b19fb001d7f31c4c7c5556d7a97b243bd29f45f";
-      sha256 = "sha256-mHwK8vw3vbcMKuTb1aMRSL5GS0+4g3tw3G4uZGMA2lQ=";
+      owner = "zbirenbaum";
+      repo = "copilot.lua";
+      rev = "858bbfa6fa81c88fb1f64107d7981f1658619e0a";
+      hash = "sha256-x6ylgVR7nrMhvSvtwbh7CufOJO/q+30G+Tvrj3/wgZY=";
+    };
+  };
+  copilot-cmp = pkgs.vimUtils.buildVimPlugin {
+    name = "copilot-cmpp";
+    src = pkgs.fetchFromGitHub {
+      owner = "zbirenbaum";
+      repo = "copilot-cmp";
+      rev = "72fbaa03695779f8349be3ac54fa8bd77eed3ee3";
+      sha256 = "sha256-srgNohm/aJpswNJ5+T7p+zi9Jinp9e5FA8/wdk6VRiY=";
     };
   };
 in {
@@ -249,6 +258,12 @@ in {
       cmp-nvim-lua
       cmp-spell
       cmp-vsnip
+      {
+        plugin = copilot-cmp;
+        type = "lua";
+        config = ''
+          require("copilot").setup({})'';
+      }
       # snippets
       vim-vsnip
 
@@ -423,7 +438,18 @@ in {
 
       # AI
       nui
-      copilot
+      # copilot
+      {
+        plugin = copilot;
+        type = "lua";
+        config = ''
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+          })
+        '';
+      }
+
       # {
       #   plugin = codeium;
       #   type = "lua";
