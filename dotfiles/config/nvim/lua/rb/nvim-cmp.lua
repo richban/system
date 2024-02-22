@@ -77,6 +77,7 @@ cmp.setup({
           vsnip = "",
           spell = "暈",
           codeium = "",
+          copilot = "",
         })[entry.source.name]
         -- Get the full snippet (and only keep first line)
         local word = entry:get_insert_text()
@@ -98,11 +99,11 @@ cmp.setup({
   },
   sources = {
     -- Copilot Source
-    { name = "copilot", group_index = 2 },
+    { name = "copilot" },
     -- order of the sources sets priority in the completion menu
-    { name = "nvim_lsp_signature_help" },
     { name = "nvim_lsp" },
-    { name = "vsnip" },
+    { name = "nvim_lsp_signature_help" },
+    -- { name = "vsnip" },
     -- { name = "codeium", group_index = 1 },
     { name = "treesitter" },
     { name = "path" },
@@ -111,7 +112,11 @@ cmp.setup({
   },
   experimental = { ghost_text = true },
   window = {
-    completion = cmp.config.window.bordered(),
+    completion = {
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      col_offset = -3,
+      side_padding = 0,
+    },
     documentation = cmp.config.window.bordered(),
   },
 })
