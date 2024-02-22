@@ -35,6 +35,35 @@
 
     # Other packages
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    projections = {
+      url = "github:gnikdroy/projections.nvim/pre_release";
+      flake = false;
+    };
+    nui = {
+      url = "github:MunifTanjim/nui.nvim";
+      flake = false;
+    };
+    incRename = {
+      url = "github:smjonas/inc-rename.nvim";
+      flake = false;
+    };
+    diffview = {
+      url = "github:sindrets/diffview.nvim";
+      flake = false;
+    };
+    oxacarbonColors = {
+      url = "github:nyoom-engineering/oxocarbon.nvim";
+      flake = false;
+    };
+    copilot = {
+      url = "github:zbirenbaum/copilot.lua";
+      flake = false;
+    };
+    copilotCmp = {
+      url = "github:zbirenbaum/copilot-cmp";
+      flake = false;
+    };
+
     # comma = { url = github:Shopify/comma; flake = false; };
     # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
     flake-utils.url = "github:numtide/flake-utils";
@@ -69,6 +98,40 @@
     # Overlays is the list of overlays we want to apply from flake inputs.
     overlays = [
       inputs.neovim-nightly-overlay.overlay
+      (final: prev: {
+        vimPlugins =
+          prev.vimPlugins
+          // {
+            projections = prev.vimUtils.buildVimPlugin {
+              name = "projections";
+              src = inputs.projections;
+            };
+            nui = prev.vimUtils.buildVimPlugin {
+              name = "nui";
+              src = inputs.nui;
+            };
+            incRename = prev.vimUtils.buildVimPlugin {
+              name = "inc-rename";
+              src = inputs.incRename;
+            };
+            diffview = prev.vimUtils.buildVimPlugin {
+              name = "diffview";
+              src = inputs.diffview;
+            };
+            oxacarbonColors = prev.vimUtils.buildVimPlugin {
+              name = "oxacarbon-colors";
+              src = inputs.oxacarbonColors;
+            };
+            copilot = prev.vimUtils.buildVimPlugin {
+              name = "copilot";
+              src = inputs.copilot;
+            };
+            copilotCmp = prev.vimUtils.buildVimPlugin {
+              name = "copilot-cmp";
+              src = inputs.copilotCmp;
+            };
+          };
+      })
     ];
 
     # generate a darwin config
