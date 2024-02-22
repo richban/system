@@ -1,5 +1,37 @@
 {
   "nodes": {
+    "copilot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1707072714,
+        "narHash": "sha256-H8dwtkk5ADagpIXfZ2rL8Giy77cC6daWoSgntO9eh0c=",
+        "owner": "zbirenbaum",
+        "repo": "copilot.lua",
+        "rev": "03f825956ec49e550d07875d867ea6e7c4dc8c00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zbirenbaum",
+        "repo": "copilot.lua",
+        "type": "github"
+      }
+    },
+    "copilotCmp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1694286652,
+        "narHash": "sha256-srgNohm/aJpswNJ5+T7p+zi9Jinp9e5FA8/wdk6VRiY=",
+        "owner": "zbirenbaum",
+        "repo": "copilot-cmp",
+        "rev": "72fbaa03695779f8349be3ac54fa8bd77eed3ee3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zbirenbaum",
+        "repo": "copilot-cmp",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -63,6 +95,22 @@
       "original": {
         "owner": "numtide",
         "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "diffview": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1700506468,
+        "narHash": "sha256-3EdnBUka9Rh5Brl6TWpN6GlD9z32mmY3Ip+wyiKob/8=",
+        "owner": "sindrets",
+        "repo": "diffview.nvim",
+        "rev": "3dc498c9777fe79156f3d32dddd483b8b3dbd95f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sindrets",
+        "repo": "diffview.nvim",
         "type": "github"
       }
     },
@@ -252,6 +300,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "incRename": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1703794018,
+        "narHash": "sha256-troS1bXmhhvJeetn0YD/vSqknhLjevA+q85fX7FWJC8=",
+        "owner": "smjonas",
+        "repo": "inc-rename.nvim",
+        "rev": "6f9b5f9cb237e12935144cdc535322b8c93c1b25",
+        "type": "github"
+      },
+      "original": {
+        "owner": "smjonas",
+        "repo": "inc-rename.nvim",
         "type": "github"
       }
     },
@@ -453,6 +517,38 @@
         "type": "github"
       }
     },
+    "nui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708115118,
+        "narHash": "sha256-gT7a4//PEHPInN5e0U+uHLvmBBnDwPZ4M4/e6eurQnI=",
+        "owner": "MunifTanjim",
+        "repo": "nui.nvim",
+        "rev": "c3c7fd618dcb5a89e443a2e1033e7d11fdb0596b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MunifTanjim",
+        "repo": "nui.nvim",
+        "type": "github"
+      }
+    },
+    "oxacarbonColors": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1701119822,
+        "narHash": "sha256-++JALLPklok9VY2ChOddTYDvDNVadmCeB98jCAJYCZ0=",
+        "owner": "nyoom-engineering",
+        "repo": "oxocarbon.nvim",
+        "rev": "c5846d10cbe4131cc5e32c6d00beaf59cb60f6a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nyoom-engineering",
+        "repo": "oxocarbon.nvim",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
@@ -481,16 +577,40 @@
         "type": "github"
       }
     },
+    "projections": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1684385322,
+        "narHash": "sha256-fgsvMhWBqA9qixVp/Q9frFamQeUxl1MFtCpKsbfrSMI=",
+        "owner": "gnikdroy",
+        "repo": "projections.nvim",
+        "rev": "889914169fa1f5c00fb8659653b5a8330fb223e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gnikdroy",
+        "ref": "pre_release",
+        "repo": "projections.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "copilot": "copilot",
+        "copilotCmp": "copilotCmp",
         "darwin": "darwin",
         "devenv": "devenv",
         "devshell": "devshell",
+        "diffview": "diffview",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
+        "incRename": "incRename",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixos-stable": "nixos-stable",
         "nixpkgs": "nixpkgs_3",
+        "nui": "nui",
+        "oxacarbonColors": "oxacarbonColors",
+        "projections": "projections",
         "treefmt-nix": "treefmt-nix"
       }
     },
