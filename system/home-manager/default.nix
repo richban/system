@@ -126,7 +126,7 @@ in {
     NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
 
     pyEnv =
-      pkgs.python310.withPackages
+      pkgs.python311.withPackages
       (ps:
         with ps; [
           black
