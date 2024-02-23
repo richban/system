@@ -23,26 +23,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
-vim.api.nvim_exec(
-  [[
-  augroup Format
-    autocmd!
-    autocmd BufWritePre *.ts TSLspOrganize
-  augroup END
-]],
-  false
-)
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("Format", { clear = true }),
+  pattern = "*.ts",
+  callback = function()
+    -- Execute TSLspOrganize command
+    vim.cmd("TSLspOrganize")
+  end,
+})
 
 -- set markdown FTs
-vim.api.nvim_exec(
-  [[
-  augroup SetMarkdownFt
-    autocmd!
-    autocmd BufNewFile,BufFilePre,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md,*.MD  set ft=markdown
-  augroup end
-]],
-  false
-)
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufFilePre", "BufRead" }, {
+  group = vim.api.nvim_create_augroup("SetMarkdownFt", { clear = true }),
+  pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.mdwn", "*.md", "*.MD" },
+  callback = function()
+    -- Set filetype to markdown
+    vim.cmd("set ft=markdown")
+  end,
+})
 
 function vim.fn.TrimWhiteSpace()
   local l = vim.fn.line(".")
