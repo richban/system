@@ -104,22 +104,28 @@ local function custom_attach(client, bufnr)
     autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr })
   end
 
+  if filetype == "typescript" or filetype == "lua" then
+    client.server_capabilities.semanticTokensProvider = nil
+  end
+
   -- Attach any filetype specific options to the client
   filetype_attach[filetype]()
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
 
 -- Completion configuration
-updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
+-- updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
+vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
 
+updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
 updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
 -- LSP this is needed for LSP completions in CSS along with the snippets plugin
-updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
-updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = { "documentation", "detail", "additionalTextEdits" },
-}
+-- updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
+--   properties = { "documentation", "detail", "additionalTextEdits" },
+-- }
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
@@ -227,11 +233,11 @@ local servers = {
       "typescript.tsx",
     },
   },
-  -- ruff_lsp = {
-  --   settings = {},
-  -- },
+  ruff_lsp = {
+    settings = {},
+  },
   pylsp = {
-    enabled = true,
+    enabled = false,
     formatCommand = { "black" },
     root_dir = function(fname)
       local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
@@ -325,6 +331,7 @@ local null_opts = {
 }
 
 -- null-ls
+-- NOTE: the plugin is archived will have to replaced in the future
 require("rb.lsp.null-ls").setup(null_opts)
 
 for server, config in pairs(servers) do
