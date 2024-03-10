@@ -1,12 +1,5 @@
 local lsp = require("lspconfig")
 
--- new  autocmd API
-local autocmd = require("rb.auto").autocmd
-local autocmd_format = require("rb.auto").autocmd_format
-local autocmd_clear = vim.api.nvim_clear_autocmds
-
-local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
-
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
 vim.lsp.set_log_level("error")
@@ -17,31 +10,9 @@ require("lspkind").init()
 -- diagnostics, handlers
 require("rb.lsp.handlers").lsp_init()
 
-local filetype_attach = setmetatable({
-  go = function()
-    autocmd_format(false)
-  end,
-  scss = function()
-    autocmd_format(false)
-  end,
-  css = function()
-    autocmd_format(false)
-  end,
-  typescript = function()
-    autocmd_format(false, function(client)
-      return client.name ~= "tsserver"
-    end)
-  end,
-}, {
-  __index = function()
-    return function() end
-  end,
-})
-
 local function custom_attach(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
-  require("rb.lsp.format").on_attach(client, bufnr)
   require("rb.lsp.mappings").on_attach(client, bufnr)
 
   if filetype == "typescript" then
@@ -59,7 +30,6 @@ local function custom_attach(client, bufnr)
       eslint_bin = "eslint",
       eslint_config_fallback = nil,
       eslint_enable_diagnostics = false,
-      -- TODO: try out update imports on file move
       update_imports_on_move = true,
       require_confirmation_on_move = false,
       watch_dir = nil,
@@ -99,33 +69,25 @@ local function custom_attach(client, bufnr)
 
   -- highlights LSP references on CursorHold and CursorMoved events
   if client.server_capabilities.documentHighlightProvider then
-    autocmd_clear({ group = augroup_highlight, buffer = bufnr })
-    autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, bufnr })
-    autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr })
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
   end
 
   if filetype == "typescript" or filetype == "lua" then
     client.server_capabilities.semanticTokensProvider = nil
   end
-
-  -- Attach any filetype specific options to the client
-  filetype_attach[filetype]()
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
--- updated_capabilities = vim.tbl_deep_extend("keep", updated_capabilities or {}, lsp_status.capabilities)
-
--- Completion configuration
--- updated_capabilities = require("cmp_nvim_lsp").default_capabilities(updated_capabilities)
-vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = false
-updated_capabilities.textDocument.codeLens = { dynamicRegistration = false }
--- LSP this is needed for LSP completions in CSS along with the snippets plugin
--- updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
---   properties = { "documentation", "detail", "additionalTextEdits" },
--- }
+updated_capabilities =
+  vim.tbl_deep_extend("force", updated_capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 -- Servers PATH on MacOS/Linux
 -- local servers_path = "~/.local/share/vim-lsp-settings/servers"
@@ -137,26 +99,6 @@ local function project_root_or_cur_dir(path)
 end
 
 require("os")
--- local path_sep = vim.loop.os_uname().sysname == "Windows" and "\\" or "/"
--- local function path_join(...)
---   return table.concat(vim.tbl_flatten({ ... }), path_sep)
--- end
-
--- local system_name
--- if vim.fn.has("mac") == 1 then
---   system_name = "macOS"
--- elseif vim.fn.has("unix") == 1 then
---   system_name = "Linux"
--- elseif vim.fn.has("win32") == 1 then
---   system_name = "Windows"
--- else
---   print("Unsupported system for sumneko")
--- end
-
--- set the path to the sumneko installation; if you previously installed via the now deprecated :LspIn
--- local sumneko_root_path = servers_path .. "/sumneko-lua-language-server/extension/server"
--- local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
-
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
