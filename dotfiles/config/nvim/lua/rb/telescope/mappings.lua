@@ -38,8 +38,8 @@ map_tele("<leader>gw", "grep_string", {
   sorter = sorters.get_fzy_sorter(),
 })
 map_tele("<leader>f/", "grep_last_search", { layout_strategy = "vertical" })
-
 -- Files
+vim.keymap.set("n", "<leader><leader>", "<Cmd>Telescope frecency<CR>")
 map_tele("<C-p>", "git_files")
 map_tele("<leader>bg", "live_grep")
 map_tele("<leader>ed", "fd")
@@ -48,7 +48,6 @@ map_tele("<leader>ea", "search_all_files")
 map_tele("<leader>e", "file_explorer")
 -- FIXME:
 map_tele("<leader>em", "media_files")
-
 map_tele("<leader>fb", "file_browser")
 -- Nvim
 map_tele("<C-b>", "buffers")
