@@ -63,17 +63,25 @@
       url = "github:zbirenbaum/copilot-cmp";
       flake = false;
     };
+    copilotLualine = {
+      url = "github:AndreM222/copilot-lualine";
+      flake = false;
+    };
+    copilotChat = {
+      url = "github:CopilotC-Nvim/CopilotChat.nvim";
+      flake = false;
+    };
 
     # comma = { url = github:Shopify/comma; flake = false; };
     # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
     flake-utils.url = "github:numtide/flake-utils";
     devenv.url = "github:cachix/devenv/latest";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # devshell = {
+    #   url = "github:numtide/devshell";
+    #   inputs.flake-utils.follows = "flake-utils";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = {
@@ -129,6 +137,14 @@
             copilotCmp = prev.vimUtils.buildVimPlugin {
               name = "copilot-cmp";
               src = inputs.copilotCmp;
+            };
+            copilotLualine = prev.vimUtils.buildVimPlugin {
+              name = "copilot-lualine";
+              src = inputs.copilotLualine;
+            };
+            copilotChat = prev.vimUtils.buildVimPlugin {
+              name = "CopilotChat.nvim";
+              src = inputs.copilotChat;
             };
           };
       })
