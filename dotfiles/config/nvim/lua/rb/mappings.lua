@@ -26,6 +26,7 @@ key_map("n", "<silent> <leader>+", ":resize +10<CR>", { noremap = true, silent =
 key_map("n", "<silent> <leader>-", ":resize -10<CR>", { noremap = true, silent = true })
 -- Change directory to current directory
 key_map("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", { noremap = true, silent = true })
+
 -- map <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
 -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
 
@@ -60,25 +61,6 @@ key_map("n", "<leader>sr", ":%s/<C-R><C-W>//gI<left><left><left>", { noremap = f
 -- Replace word under cursor on Line (case-sensitive)
 key_map("n", "<leader>sl", ":s/<C-R><C-W>//gI<left><left><left>", { noremap = false })
 
--- vsnip jump through snippets with <Tab>
-key_map("i", "<Tab>", [[vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']], { noremap = false, expr = true })
-
-key_map("s", "<Tab>", [[vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>']], { noremap = false, expr = true })
-
-key_map(
-  "i",
-  "<S-Tab>",
-  [[vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']],
-  { noremap = false, expr = true }
-)
-
-key_map(
-  "s",
-  "<S-Tab>",
-  [[vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>']],
-  { noremap = false, expr = true }
-)
-
 key_map(
   "n",
   "F",
@@ -95,13 +77,19 @@ key_map(
 -- key_map('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>", {})
 
 -- Auto indent
-key_map("n", "i", function()
-  if #vim.fn.getline(".") == 0 then
-    return [["_cc]]
-  else
-    return "i"
-  end
-end, { expr = true })
+-- key_map("n", "i", function()
+--   if #vim.fn.getline(".") == 0 then
+--     return [["_cc]]
+--   else
+--     return "i"
+--   end
+-- end, { expr = true })
 
 -- Paste over currently selected text without yanking it
 key_map("v", "p", '"_dP')
+
+vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>Gvdiffsplit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gb", "<cmd>Git blame<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gh", "<cmd>0Gclog!<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gj", "<cmd>diffget //2<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = true })
