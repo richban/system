@@ -99,3 +99,4 @@ vim.o.cmdheight = 1
 -- using treesitter for folding
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.g.vsnip_snippet_dir = path_join(os.getenv("HOME"), "/.config/nvim/snippets")
