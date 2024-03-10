@@ -55,6 +55,13 @@
         '';
       }
       {
+        plugin = tokyonight-nvim;
+        type = "lua";
+        config = ''
+          vim.cmd.colorscheme "tokyonight-storm"
+        '';
+      }
+      {
         plugin = nvim-autopairs;
         type = "lua";
         config = ''
@@ -125,8 +132,8 @@
       vim-nix
       null-ls-nvim
       # https://nixos.wiki/wiki/Tree_sitters
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
-      # nvim-treesitter.withAllGrammars
+      # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      nvim-treesitter.withAllGrammars
       # {
       #   plugin = nvim-treesitter.withPlugins (p: [
       #     p.tree-sitter-nix
