@@ -101,18 +101,16 @@ require("telescope").setup({
       find_cmd = "rg", -- find command (defaults to `fd`)
     },
     fzf_writer = { use_highlighter = false, minimum_grep_characters = 6 },
-    frecency = { workspaces = { ["conf"] = "~/Developer/dotfiles/" } },
-    workspaces = {
-      -- keep insert mode after selection in the picker, default is false
-      keep_insert = true,
+    frecency = {},
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown(),
     },
   },
 })
 
 -- Load the fzy native extension at the start.
--- pcall(require('telescope').load_extension, "fzy_native")
--- require("telescope").load_extension("fzf")
 pcall(require("telescope").load_extension, "fzf")
+pcall(require("telescope").load_extension, "ui-select")
 
 -- github CLI
 pcall(require("telescope").load_extension, "gh")
@@ -126,9 +124,5 @@ pcall(require("telescope").load_extension, "dap")
 pcall(require("telescope").load_extension, "file_browser")
 pcall(require("telescope").load_extension, "project")
 
-if pcall(require("telescope").load_extension, "frecency") then
-  -- frecency
-  vim.cmd([[highlight TelescopeBufferLoaded guifg=yellow]])
-end
-
+pcall(require("telescope").load_extension, "frecency")
 pcall(require("telescope").load_extension, "projections")

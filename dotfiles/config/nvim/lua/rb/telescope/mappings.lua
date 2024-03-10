@@ -23,63 +23,46 @@ local map_tele = function(key, f, options, buffer)
   end
 end
 
-vim.keymap.set("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = false, nowait = true })
-
--- Dotfiles
-map_tele("<leader>en", "edit_neovim")
-map_tele("<leader>ec", "find_configs")
-
--- Search
-map_tele("<leader>gw", "grep_string", {
-  short_path = true,
-  word_match = "-w",
-  only_sort_text = true,
-  layout_strategy = "vertical",
-  sorter = sorters.get_fzy_sorter(),
-})
-map_tele("<leader>f/", "grep_last_search", { layout_strategy = "vertical" })
--- Files
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+vim.keymap.set("n", "<C-b>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader><leader>", "<Cmd>Telescope frecency<CR>")
+
+-- Slightly advanced example of overriding default behavior and theme
+vim.keymap.set("n", "<leader>/", function()
+  -- You can pass additional configuration to telescope to change theme, layout, etc.
+  builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+    winblend = 10,
+    previewer = false,
+  }))
+end, { desc = "[/] Fuzzily search in current buffer" })
+
+-- Also possible to pass additional configuration options.
+--  See `:help telescope.builtin.live_grep()` for information about particular keys
+vim.keymap.set("n", "<leader>s/", function()
+  builtin.live_grep({
+    grep_open_files = true,
+    prompt_title = "Live Grep in Open Files",
+  })
+end, { desc = "[S]earch [/] in Open Files" })
+
+map_tele("<leader>f/", "grep_last_search", { layout_strategy = "vertical" })
 map_tele("<C-p>", "git_files")
-map_tele("<leader>bg", "live_grep")
-map_tele("<leader>ed", "fd")
-map_tele("<leader>ea", "search_all_files")
--- FIXME:
-map_tele("<leader>e", "file_explorer")
--- FIXME:
-map_tele("<leader>em", "media_files")
-map_tele("<leader>fb", "file_browser")
--- Nvim
-map_tele("<C-b>", "buffers")
-map_tele("<leader>ep", "installed_plugins")
--- FIXME:
-map_tele("<leader>bf", "curbuf")
-map_tele("<leader>th", "help_tags")
-
--- Workspaces
-map_tele("<C-;>", "list_workspaces")
-
--- Git
--- map_tele("<space>gs", "git_status")
--- FIXME:
-map_tele("<space>er", "git_repos")
-map_tele("<space>gc", "git_commits")
-map_tele("<space>gb", "git_branches")
-
+map_tele("<leader>sc", "git_commits")
+map_tele("<leader>sb", "git_branches")
 map_tele("<leader>so", "vim_options")
-map_tele("<leader>gp", "grep_prompt")
-
 map_tele("<leader>/c", "commands")
 map_tele("<leader>/r", "registers")
 map_tele("<leader>/m", "marks")
 map_tele("<leader>/t", "treesitter")
-
--- Telescope Meta
 map_tele("<leader>fB", "builtin")
-
--- Notes
-map_tele("<leader>gn", "grep_notes")
--- map_tele("<leader>nf", "find_notes")
--- map_tele("<leader>ne", "browse_notes")
 
 return map_tele

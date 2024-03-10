@@ -179,6 +179,7 @@
       telescope-frecency-nvim
       telescope-dap-nvim
       telescope-project-nvim
+      telescope-ui-select-nvim
       sqlite-lua
 
       vim-surround
