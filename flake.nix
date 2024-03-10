@@ -71,6 +71,10 @@
       url = "github:CopilotC-Nvim/CopilotChat.nvim";
       flake = false;
     };
+    conformNvim = {
+      url = "github:stevearc/conform.nvim";
+      flake = false;
+    };
 
     # comma = { url = github:Shopify/comma; flake = false; };
     # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
@@ -145,6 +149,10 @@
             copilotChat = prev.vimUtils.buildVimPlugin {
               name = "CopilotChat.nvim";
               src = inputs.copilotChat;
+            };
+            conformNvim = prev.vimUtils.buildVimPlugin {
+              name = "conform.nvim";
+              src = inputs.conformNvim;
             };
           };
       })

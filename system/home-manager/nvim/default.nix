@@ -16,15 +16,17 @@
       recursive = true;
     };
 
-    snippets = {
-      source = ../../../dotfiles/config/nvim/snippets;
-      target = ".config/nvim/snippets";
-      recursive = true;
-    };
+    # snippets = {
+    #   source = ../../../dotfiles/config/nvim/snippets;
+    #   target = ".config/nvim/snippets";
+    #   recursive = true;
+    # };
   };
 
   programs.neovim = {
     enable = true;
+    package = pkgs.neovim-nightly;
+    coc.enable = false;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -37,14 +39,13 @@
     plugins = with pkgs.vimPlugins; [
       plenary-nvim
       # theme
-      {
-        plugin = rose-pine;
-        type = "lua";
-        config = ''
-          require('rb.colorscheme').config()
-          vim.cmd('colorscheme rose-pine')
-        '';
-      }
+      # {
+      #   plugin = rose-pine;
+      #   type = "lua";
+      #   config = ''
+      #     require('rb.colorscheme').config()
+      #   '';
+      # }
       {
         plugin = oxacarbonColors;
         type = "lua";
@@ -53,7 +54,15 @@
           vim.cmd.colorscheme "oxocarbon"
         '';
       }
-      nvim-autopairs
+      {
+        plugin = nvim-autopairs;
+        type = "lua";
+        config = ''
+          require('nvim-autopairs').setup({
+            disable_filetype = { "TelescopePrompt" , "vim" },
+          })
+        '';
+      }
       # adds vscode-like pictogram
       lspkind-nvim
       # completion engine
@@ -71,19 +80,22 @@
         config = ''
           require("copilot").setup({})'';
       }
+      copilotLualine
       # snippets
-      vim-vsnip
-
+      luasnip
+      cmp_luasnip
+      # vim-vsnip
+      # vim-vsnip-integ
       # UI
       {
         plugin = nvim-web-devicons;
         config = ''lua require'nvim-web-devicons'.setup()'';
       }
-      {
-        plugin = bufferline-nvim;
-        type = "lua";
-        config = ''require("rb.bufferline").config()'';
-      }
+      # {
+      #   plugin = bufferline-nvim;
+      #   type = "lua";
+      #   config = ''require("rb.bufferline").config()'';
+      # }
       {
         plugin = indent-blankline-nvim;
         config = ''lua require("ibl").setup()'';
@@ -94,6 +106,7 @@
         config = ''lua require'colorizer'.setup()'';
       }
       gitsigns-nvim
+      vim-fugitive
       diffview
       {
         plugin = neogit;
@@ -112,18 +125,18 @@
       vim-nix
       null-ls-nvim
       # https://nixos.wiki/wiki/Tree_sitters
-      # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       # nvim-treesitter.withAllGrammars
-      {
-        plugin = nvim-treesitter.withPlugins (p: [
-          p.tree-sitter-nix
-          p.tree-sitter-vim
-          p.tree-sitter-bash
-          p.tree-sitter-lua
-          p.tree-sitter-python
-          p.tree-sitter-json
-        ]);
-      }
+      # {
+      #   plugin = nvim-treesitter.withPlugins (p: [
+      #     p.tree-sitter-nix
+      #     p.tree-sitter-vim
+      #     p.tree-sitter-bash
+      #     p.tree-sitter-lua
+      #     p.tree-sitter-python
+      #     p.tree-sitter-json
+      #   ]);
+      # }
       # markdown-preview-nvim
       # goyo-vim
       {
@@ -201,6 +214,19 @@
         type = "lua";
         config = ''require("rb.copilot").config()'';
       }
+      {
+        plugin = copilotChat;
+        type = "lua";
+        config = ''
+          require("rb.copilotchat").mappings()
+          require("rb.copilotchat").config()
+        '';
+      }
+      {
+        plugin = conformNvim;
+        type = "lua";
+        config = ''require("rb.conform").config()'';
+      }
     ];
 
     extraPackages = with pkgs; [
@@ -256,23 +282,32 @@
       editorconfig-checker
     ];
 
-    extraPython3Packages = ps: with ps; [jedi];
+    extraPython3Packages = ps:
+      with ps; [
+        jedi
+        tiktoken
+        python-dotenv
+        prompt-toolkit
+        pynvim
+        ruff-lsp
+        python-lsp-server
+        mypy
+      ];
 
     extraConfig = ''
       lua require("rb.settings")
       lua require("rb.mappings")
       lua require("rb.globals")
       lua require("rb.autocmd")
-      lua require("rb.nvim-cmp")
       lua require("rb.statusline")
       lua require("rb.gitsigns")
       lua require("rb.nvim-tree")
       lua require("rb.nvim-treesitter")
-      lua require("rb.autopairs")
       lua require("rb.lsp")
       lua require("rb.telescope.setup")
       lua require("rb.telescope.mappings")
       lua require("rb.projections")
+      lua require("rb.nvim-cmp")
     '';
   };
 }
