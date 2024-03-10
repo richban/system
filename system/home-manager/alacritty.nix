@@ -5,14 +5,6 @@
       "TERM" = "alacritty";
     };
 
-    opacity = 1.0;
-    use_thin_strokes = false;
-
-    glyph_offset = {
-      x = 0;
-      y = 7;
-    };
-
     selection = {
       semantic_escape_chars = ",│`|:\"' ()[]{}<>\t";
 
@@ -149,74 +141,76 @@
       # };
     };
 
-    key_bindings = [
-      {
-        key = "V";
-        mods = "Command";
-        action = "Paste";
-      }
-      {
-        key = "C";
-        mods = "Command";
-        action = "Copy";
-      }
-      {
-        key = "Paste";
-        action = "Paste";
-      }
-      {
-        key = "Copy";
-        action = "Copy";
-      }
-      {
-        key = "H";
-        mods = "Command";
-        action = "Hide";
-      }
-      {
-        key = "Q";
-        mods = "Command";
-        action = "Quit";
-      }
-      {
-        key = "W";
-        mods = "Command";
-        action = "Quit";
-      }
-      {
-        key = "LBracket";
-        mods = "Command";
-        chars = "\x5c\x70";
-      }
-      # Use command + ] - to go to previous tmux window
-      {
-        key = "RBracket";
-        mods = "Command";
-        chars = "\x5c\x6e";
-      }
-      # ctrl-^ doesn't work in some terminals like alacritty
-      # { key = "Key6"; mods = "Control"; chars = "\x1e"; }
-      {
-        key = "Plus";
-        mods = "Command";
-        action = "IncreaseFontSize";
-      }
-      {
-        key = "Minus";
-        mods = "Command";
-        action = "DecreaseFontSize";
-      }
-      {
-        key = "Key0";
-        mods = "Command";
-        action = "ResetFontSize";
-      }
-      {
-        key = "F";
-        mods = "Command|Control";
-        action = "ToggleFullscreen";
-      }
-    ];
+    keyboard = {
+      bindings = [
+        {
+          key = "V";
+          mods = "Command";
+          action = "Paste";
+        }
+        {
+          key = "C";
+          mods = "Command";
+          action = "Copy";
+        }
+        {
+          key = "Paste";
+          action = "Paste";
+        }
+        {
+          key = "Copy";
+          action = "Copy";
+        }
+        {
+          key = "H";
+          mods = "Command";
+          action = "Hide";
+        }
+        {
+          key = "Q";
+          mods = "Command";
+          action = "Quit";
+        }
+        {
+          key = "W";
+          mods = "Command";
+          action = "Quit";
+        }
+        {
+          key = "LBracket";
+          mods = "Command";
+          chars = "\x5c\x70";
+        }
+        # Use command + ] - to go to previous tmux window
+        {
+          key = "RBracket";
+          mods = "Command";
+          chars = "\x5c\x6e";
+        }
+        # ctrl-^ doesn't work in some terminals like alacritty
+        # { key = "Key6"; mods = "Control"; chars = "\x1e"; }
+        {
+          key = "Plus";
+          mods = "Command";
+          action = "IncreaseFontSize";
+        }
+        {
+          key = "Minus";
+          mods = "Command";
+          action = "DecreaseFontSize";
+        }
+        {
+          key = "Key0";
+          mods = "Command";
+          action = "ResetFontSize";
+        }
+        {
+          key = "F";
+          mods = "Command|Control";
+          action = "ToggleFullscreen";
+        }
+      ];
+    };
   };
 in {
   programs.alacritty = {
