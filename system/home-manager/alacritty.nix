@@ -78,67 +78,51 @@
 
     # Colors (One Dark)
     colors = {
+      # TokyoNight Alacritty Colors
       # Default colors
       primary = {
-        background = colors.bg-primary;
-        foreground = colors.fg-primary;
-
-        # Bright and dim foreground colors
-        #
-        # The dimmed foreground color is calculated automatically if it is not
-        # present.  If the bright foreground color is not set, or
-        # `draw_bold_text_with_bright_colors` is `false`, the normal foreground
-        # color will be used.
-        #dim_foreground  = "0x9a9a9a";
-        bright_foreground = colors.fg-primary-bright;
+        background = "#24283b";
+        foreground = "#c0caf5";
+        # Uncomment below if bright or dim foreground needed
+        # bright_foreground = "#c0caf5"; # Example value
+        # dim_foreground = "#a9b1d6"; # Example value, adjust as necessary
       };
-
-      # Cursor colors
-      #
-      # Colors which should be used to draw the terminal cursor. If these are unset,
-      # the cursor color will be the inverse of the cell color.
-      #cursor
-      #  text  = "0x000000";
-      #  cursor  = "0xffffff";
 
       # Normal colors
       normal = {
-        black = colors.black;
-        red = colors.red;
-        green = colors.green;
-        yellow = colors.yellow;
-        blue = colors.blue;
-        magenta = colors.magenta;
-        cyan = colors.cyan;
-        white = colors.white;
+        black = "#1d202f";
+        red = "#f7768e";
+        green = "#9ece6a";
+        yellow = "#e0af68";
+        blue = "#7aa2f7";
+        magenta = "#bb9af7";
+        cyan = "#7dcfff";
+        white = "#a9b1d6";
       };
 
-      # # Bright colors
-      # bright = {
-      #   black    = "0x5c6370";
-      #   red      = "0xe06c75";
-      #   green    = "0x98c379";
-      #   yellow   = "0xd19a66";
-      #   blue     = "0x61afef";
-      #   magenta  = "0xc678dd";
-      #   cyan     = "0x56b6c2";
-      #   white    = "0xe6efff";
-      # };
-      #
-      # # Dim colors
-      # #
-      # # If the dim colors are not set, they will be calculated automatically based
-      # # on the `normal` colors.
-      # dim = {
-      #   black    = "0x1e2127";
-      #   red      = "0xe06c75";
-      #   green    = "0x98c379";
-      #   yellow   = "0xd19a66";
-      #   blue     = "0x61afef";
-      #   magenta  = "0xc678dd";
-      #   cyan     = "0x56b6c2";
-      #   white    = "0x828791";
-      # };
+      # Bright colors
+      bright = {
+        black = "#414868";
+        red = "#f7768e";
+        green = "#9ece6a";
+        yellow = "#e0af68";
+        blue = "#7aa2f7";
+        magenta = "#bb9af7";
+        cyan = "#7dcfff";
+        white = "#c0caf5";
+      };
+
+      # Indexed Colors
+      indexed_colors = [
+        {
+          index = 16;
+          color = "#ff9e64";
+        }
+        {
+          index = 17;
+          color = "#db4b4b";
+        }
+      ];
     };
 
     keyboard = {
