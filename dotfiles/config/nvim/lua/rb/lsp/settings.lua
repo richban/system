@@ -322,18 +322,6 @@ local setup_server = function(server, config)
   lsp[server].setup(config)
 end
 
-local null_opts = {
-  on_attach = custom_attach,
-  capabilities = updated_capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
-}
-
--- null-ls
--- NOTE: the plugin is archived will have to replaced in the future
-require("rb.lsp.null-ls").setup(null_opts)
-
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
