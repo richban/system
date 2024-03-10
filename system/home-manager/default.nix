@@ -137,7 +137,7 @@ in {
   in {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
-    stateVersion = "21.11";
+    stateVersion = "22.05";
     sessionVariables = {
       GPG_TTY = "/dev/ttys000";
       EDITOR = "nvim";
