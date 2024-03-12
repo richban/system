@@ -105,6 +105,10 @@ require("telescope").setup({
     ["ui-select"] = {
       require("telescope.themes").get_dropdown(),
     },
+    workspaces = {
+      -- keep insert mode after selection in the picker, default is false
+      keep_insert = true,
+    },
   },
 })
 
