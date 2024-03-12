@@ -1,16 +1,17 @@
 local present, cmp = pcall(require, "cmp")
-local types = require("cmp.types")
-local str = require("cmp.utils.str")
+-- local types = require("cmp.types")
+-- local str = require("cmp.utils.str")
 local icons = require("rb.icons")
+local lspkind = require("lspkind")
 
 local luasnip = require("luasnip")
 luasnip.config.setup({})
 
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-local cmp = require("cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
-local lspkind = require("lspkind")
+require("luasnip.loaders.from_vscode").lazy_load()
+
 lspkind.init({
   -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
   mode = "symbol_text",
@@ -144,7 +145,3 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
 })
-
--- If you want insert `(` after select function or method item
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
