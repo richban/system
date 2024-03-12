@@ -15,12 +15,6 @@
       target = ".config/nvim/after";
       recursive = true;
     };
-
-    # snippets = {
-    #   source = ../../../dotfiles/config/nvim/snippets;
-    #   target = ".config/nvim/snippets";
-    #   recursive = true;
-    # };
   };
 
   programs.neovim = {
@@ -93,6 +87,7 @@
       cmp_luasnip
       # vim-vsnip
       # vim-vsnip-integ
+      friendly-snippets
       # UI
       {
         plugin = nvim-web-devicons;
@@ -189,7 +184,27 @@
       telescope-ui-select-nvim
       sqlite-lua
 
-      vim-surround
+      # vim-surround
+      {
+        plugin = mini-nvim;
+        type = "lua";
+        config = ''
+          -- Better Around/Inside textobjects
+          --
+          -- Examples:
+          --  - va)  - [V]isually select [A]round [)]paren
+          --  - yinq - [Y]ank [I]nside [N]ext [']quote
+          --  - ci'  - [C]hange [I]nside [']quote
+          require('mini.ai').setup { n_lines = 500 }
+
+          -- Add/delete/replace surroundings (brackets, quotes, etc.)
+          --
+          -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+          -- - sd'   - [S]urround [D]elete [']quotes
+          -- - sr)'  - [S]urround [R]eplace [)] [']
+          require('mini.surround').setup()
+        '';
+      }
       # annotations
       {
         plugin = neogen;
@@ -246,13 +261,14 @@
       luaformatter
       ccls
       sqls
-      # sqlfluff
+      sqlfluff
       deadnix
       statix
       proselint
       terraform-ls
       gitlint
       alejandra
+      nil
 
       # nodePackages.beancount-langserver
       nodePackages.typescript-language-server
@@ -283,6 +299,10 @@
           pyls-isort
           rope
           # editorconfig
+          tiktoken
+          python-dotenv
+          prompt-toolkit
+          pynvim
         ]))
 
       tree-sitter
