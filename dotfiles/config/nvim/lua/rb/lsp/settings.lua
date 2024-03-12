@@ -105,7 +105,9 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 local servers = {
   -- diagnosticls = diagnostics.options,
-  rnix = false,
+  nix = {
+    cmd = { "nil" },
+  },
   bashls = true,
   vimls = {
     init_options = {
@@ -175,9 +177,9 @@ local servers = {
       "typescript.tsx",
     },
   },
-  ruff_lsp = {
-    settings = {},
-  },
+  -- ruff_lsp = {
+  --   settings = {},
+  -- },
   pylsp = {
     enabled = false,
     formatCommand = { "black" },

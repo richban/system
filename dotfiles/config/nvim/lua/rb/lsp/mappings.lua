@@ -1,13 +1,11 @@
 local M = {}
 
-local telescope_mapper = require("rb.telescope.mappings")
-
 function M.on_attach(client, buffer)
   local self = M.new(client, buffer)
   local opts = { noremap = true, silent = true }
 
   local map = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+    vim.keymap.set("n", keys, func, { buffer = buffer, desc = "LSP: " .. desc })
   end
 
   -- Jump to the definition of the word under your cursor.
