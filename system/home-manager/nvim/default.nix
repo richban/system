@@ -250,69 +250,55 @@
         type = "lua";
         config = ''require("rb.conform").config()'';
       }
+      mason-nvim
+      mason-lspconfig-nvim
+      mason-tool-installer-nvim
     ];
 
     extraPackages = with pkgs; [
       neovim-remote
-      rnix-lsp
-      nixfmt
-      sumneko-lua-language-server
-      stylua
-      luaformatter
-      ccls
-      sqls
-      sqlfluff
-      deadnix
-      statix
-      proselint
-      terraform-ls
-      gitlint
-      alejandra
-      nil
+      cargo # for mason
+      # nixfmt
+      # sumneko-lua-language-server
+      # stylua
+      # luaformatter
+      # ccls
+      # sqls
+      # sqlfluff
+      # deadnix
+      # statix
+      # proselint
+      # terraform-ls
+      # gitlint
+      # alejandra
 
       # nodePackages.beancount-langserver
-      nodePackages.typescript-language-server
-      nodePackages.bash-language-server
-      nodePackages.vscode-json-languageserver
-      nodePackages.yaml-language-server
-      nodePackages.vscode-html-languageserver-bin
-      nodePackages.vscode-css-languageserver-bin
-      nodePackages.vim-language-server
-      nodePackages.dockerfile-language-server-nodejs
-      nodePackages.fixjson
-      nodePackages.prettier
-      nodePackages.markdownlint-cli
-      nodePackages.write-good
-
-      (python311.withPackages (ps:
-        with ps; [
-          python-lsp-server
-          ruff-lsp
-          jedi
-          # pylsp-mypy
-          pyflakes
-          pyls-flake8
-          mypy
-          mccabe
-          pycodestyle
-          python-lsp-black
-          pyls-isort
-          rope
-          # editorconfig
-          tiktoken
-          python-dotenv
-          prompt-toolkit
-          pynvim
-        ]))
-
-      tree-sitter
-      codespell
-      editorconfig-checker
+      # nodePackages.typescript-language-server
+      # nodePackages.bash-language-server
+      # nodePackages.vscode-json-languageserver
+      # nodePackages.yaml-language-server
+      # nodePackages.vscode-html-languageserver-bin
+      # nodePackages.vscode-css-languageserver-bin
+      # nodePackages.vim-language-server
+      # nodePackages.dockerfile-language-server-nodejs
+      # nodePackages.fixjson
+      # nodePackages.prettier
+      # nodePackages.markdownlint-cli
+      # nodePackages.write-good
     ];
 
     extraPython3Packages = ps:
       with ps; [
-        jedi
+        pip
+        pyflakes
+        pyls-flake8
+        mypy
+        mccabe
+        pycodestyle
+        python-lsp-black
+        pyls-isort
+        rope
+        editorconfig
         tiktoken
         python-dotenv
         prompt-toolkit

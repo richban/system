@@ -2,7 +2,7 @@ local lsp = require("lspconfig")
 
 -- for debugging lsp: ~/.cache/nvim/lsp.log
 -- Levels by name: 'trace', 'debug', 'info', 'warn', 'error'
-vim.lsp.set_log_level("error")
+vim.lsp.set_log_level("info")
 
 -- Adds beautiful icon to completion
 require("lspkind").init()
@@ -104,11 +104,8 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 local servers = {
-  -- diagnosticls = diagnostics.options,
-  nix = {
-    cmd = { "nil" },
-  },
-  bashls = true,
+  nil_ls = {},
+  bashls = {},
   vimls = {
     init_options = {
       iskeyword = "@,48-57,_,192-255,-#",
@@ -163,9 +160,9 @@ local servers = {
       },
     },
   },
-  html = true,
-  cssls = true,
-  vuels = true,
+  html = {},
+  cssls = {},
+  -- vuels = true,
   terraformls = { filetypes = { "terraform", "hcl" } },
   tsserver = {
     filetypes = {
@@ -177,51 +174,51 @@ local servers = {
       "typescript.tsx",
     },
   },
-  -- ruff_lsp = {
-  --   settings = {},
-  -- },
-  pylsp = {
-    enabled = false,
-    formatCommand = { "black" },
-    root_dir = function(fname)
-      local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
-      return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname)
-    end,
-    settings = {
-      pylsp = {
-        plugins = {
-          jedi_completion = { enabled = true },
-          jedi_hover = { enabled = true },
-          jedi_references = { enabled = true },
-          jedi_signature_help = { enabled = true },
-          jedi_symbols = { enabled = true, all_scopes = true },
-          -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
-          configurationSources = { "flake8" },
-          -- linter to detect various errors
-          pyflakes = { enabled = false },
-          -- linter for docstring style checking
-          pydocstyle = { enabled = false },
-          -- linter for style checking
-          pycodestyle = { enabled = false, maxLineLength = 120 },
-          pylint = { enabled = false },
-          black = { enabled = true },
-          -- type checking
-          pylsp_mypy = { enabled = true, live_mode = true },
-          -- code formatting using isort
-          pyls_isort = { enabled = true },
-          pyls_flake8 = { enabled = false, executable = "flake8" },
-          rope_autoimport = { enabled = true },
-        },
-      },
-    },
-  },
-  -- pyright = {},
-  sqlls = {
-    -- cmd = { "/usr/local/bin/sql-language-server", "up", "--method", "stdio" },
-    filetypes = { "sql", "mysql" },
-    root_dir = project_root_or_cur_dir,
+  ruff_lsp = {
     settings = {},
   },
+  -- pylsp = {
+  --   enabled = true,
+  --   formatCommand = { "black" },
+  --   root_dir = function(fname)
+  --     local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
+  --     return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname)
+  --   end,
+  --   settings = {
+  --     pylsp = {
+  --       plugins = {
+  --         jedi_completion = { enabled = true },
+  --         jedi_hover = { enabled = true },
+  --         jedi_references = { enabled = true },
+  --         jedi_signature_help = { enabled = true },
+  --         jedi_symbols = { enabled = true, all_scopes = true },
+  --         -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
+  --         configurationSources = { "flake8" },
+  --         -- linter to detect various errors
+  --         pyflakes = { enabled = false },
+  --         -- linter for docstring style checking
+  --         pydocstyle = { enabled = false },
+  --         -- linter for style checking
+  --         pycodestyle = { enabled = false, maxLineLength = 120 },
+  --         pylint = { enabled = false },
+  --         black = { enabled = true },
+  --         -- type checking
+  --         pylsp_mypy = { enabled = true, live_mode = true },
+  --         -- code formatting using isort
+  --         pyls_isort = { enabled = true },
+  --         pyls_flake8 = { enabled = false, executable = "flake8" },
+  --         rope_autoimport = { enabled = true },
+  --       },
+  --     },
+  --   },
+  -- },
+  -- pyright = {},
+  -- sqlls = {
+  --   -- cmd = { "/usr/local/bin/sql-language-server", "up", "--method", "stdio" },
+  --   filetypes = { "sql", "mysql" },
+  --   root_dir = project_root_or_cur_dir,
+  --   settings = {},
+  -- },
   lua_ls = {
     settings = {
       Lua = {
@@ -229,7 +226,7 @@ local servers = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
           -- Setup your lua path
-          path = runtime_path,
+          -- path = runtime_path,
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
@@ -249,23 +246,34 @@ local servers = {
       },
     },
   },
-  beancount = {},
+  -- beancount = {},
 }
 
-local setup_server = function(server, config)
-  if not config then
-    return
-  end
+-- Ensure the servers and tools above are installed
+require("mason").setup()
 
-  if type(config) ~= "table" then
-    config = {}
-  end
+local ensure_installed = vim.tbl_keys(servers or {})
+vim.list_extend(ensure_installed, {
+  "stylua", -- Used to format lua code
+  "codespell",
+  "gitlint",
+  "sqlfluff",
+})
+require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-  config = vim.tbl_deep_extend("force", { on_attach = custom_attach, capabilities = updated_capabilities }, config)
+require("mason-lspconfig").setup({
+  handlers = {
+    function(server_name)
+      local server = servers[server_name] or {}
+      -- This handles overriding only values explicitly passed
+      -- by the server configuration above. Useful when disabling
+      -- certain features of an LSP (for example, turning off formatting for tsserver)
+      -- server.capabilities = vim.tbl_deep_extend("force", {}, updated_capabilities, server.capabilities or {})
+      -- server.on_attach = vim.tbl_deep_extend("force", {}, custom_attach, server.on_attach or {})
 
-  lsp[server].setup(config)
-end
+      config = vim.tbl_deep_extend("force", { on_attach = custom_attach, capabilities = updated_capabilities }, server)
 
-for server, config in pairs(servers) do
-  setup_server(server, config)
-end
+      lsp[server_name].setup(config)
+    end,
+  },
+})
