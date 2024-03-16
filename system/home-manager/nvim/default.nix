@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.file = {
     settings = {
       source = ../../../dotfiles/config/nvim/lua;
@@ -40,14 +36,14 @@
       #     require('rb.colorscheme').config()
       #   '';
       # }
-      {
-        plugin = oxacarbonColors;
-        type = "lua";
-        config = ''
-          vim.opt.background = "dark" -- set this to dark or light
-          vim.cmd.colorscheme "oxocarbon"
-        '';
-      }
+      # {
+      #   plugin = oxacarbonColors;
+      #   type = "lua";
+      #   config = ''
+      #     vim.opt.background = "dark" -- set this to dark or light
+      #     vim.cmd.colorscheme "oxocarbon"
+      #   '';
+      # }
       {
         plugin = tokyonight-nvim;
         type = "lua";
@@ -74,9 +70,8 @@
       cmp-path
       cmp-nvim-lua
       cmp-spell
-      cmp-vsnip
       {
-        plugin = copilotCmp;
+        plugin = copilot-lua;
         type = "lua";
         config = ''
           require("copilot").setup({})'';
@@ -85,8 +80,6 @@
       # snippets
       luasnip
       cmp_luasnip
-      # vim-vsnip
-      # vim-vsnip-integ
       friendly-snippets
       # UI
       {
@@ -125,7 +118,7 @@
       }
       nvim-tree-lua
       vim-nix
-      null-ls-nvim
+      # null-ls-nvim
       # https://nixos.wiki/wiki/Tree_sitters
       # (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       nvim-treesitter.withAllGrammars
@@ -167,11 +160,11 @@
       lspsaga-nvim
       lsp-status-nvim
       lsp_signature-nvim
-      # {
-      #   plugin = lsp-fidget;
-      #   type = "lua";
-      #   config = ''require("fidget").setup()'';
-      # }
+      {
+        plugin = fidget-nvim;
+        type = "lua";
+        config = ''require("fidget").setup()'';
+      }
 
       # telescope
       telescope-nvim
@@ -182,7 +175,6 @@
       telescope-dap-nvim
       telescope-project-nvim
       telescope-ui-select-nvim
-      sqlite-lua
 
       # vim-surround
       {
@@ -303,9 +295,6 @@
         python-dotenv
         prompt-toolkit
         pynvim
-        ruff-lsp
-        python-lsp-server
-        mypy
       ];
 
     extraConfig = ''
