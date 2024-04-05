@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   home.file = {
     settings = {
       source = ../../../dotfiles/config/nvim/lua;
@@ -70,8 +74,9 @@
       cmp-path
       cmp-nvim-lua
       cmp-spell
+      cmp-vsnip
       {
-        plugin = copilot-lua;
+        plugin = copilotCmp;
         type = "lua";
         config = ''
           require("copilot").setup({})'';
@@ -80,6 +85,8 @@
       # snippets
       luasnip
       cmp_luasnip
+      # vim-vsnip
+      # vim-vsnip-integ
       friendly-snippets
       # UI
       {
@@ -281,7 +288,8 @@
 
     extraPython3Packages = ps:
       with ps; [
-        pip
+        isort
+        black
         pyflakes
         pyls-flake8
         mypy

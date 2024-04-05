@@ -1,11 +1,12 @@
 local M = {
   "zbirenbaum/copilot.lua",
-  enabled = false,
-  event = "VeryLazy",
+  enabled = true,
+  event = "InsertEnter",
 }
 
 function M.config()
   require("copilot").setup({
+    event = "InsertEnter",
     panel = {
       enabled = true,
       auto_refresh = true,
@@ -35,10 +36,11 @@ function M.config()
       },
     },
     filetypes = {
+      python = true,
       yaml = false,
       markdown = false,
       help = false,
-      gitcommit = false,
+      gitcommit = true,
       gitrebase = false,
       hgcommit = false,
       svn = false,
