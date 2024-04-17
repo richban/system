@@ -13,7 +13,7 @@
     enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    enableAutosuggestions = true;
+    autosuggestion = true;
     shellAliases = import ./aliases.nix {pkgs = pkgs;};
     sessionVariables = {
       ZSH_HIGHLIGHT_HIGHLIGHTERS = "brackets";

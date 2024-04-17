@@ -200,6 +200,7 @@ in {
       pyEnv
       cookiecutter
       ruff
+      uv
 
       nodejs-slim
       nodePackages.npm

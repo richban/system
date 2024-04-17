@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.file = {
     settings = {
       source = ../../../dotfiles/config/nvim/lua;
@@ -255,6 +251,7 @@
     ];
 
     extraPackages = with pkgs; [
+      luajitPackages.tiktoken_core
       neovim-remote
       cargo # for mason
       # nixfmt
