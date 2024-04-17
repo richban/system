@@ -79,8 +79,11 @@
     # comma = { url = github:Shopify/comma; flake = false; };
     # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
     flake-utils.url = "github:numtide/flake-utils";
-    devenv.url = "github:cachix/devenv/latest";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    devenv = {
+      url = "github:cachix/devenv/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # devshell = {
     #   url = "github:numtide/devshell";
     #   inputs.flake-utils.follows = "flake-utils";

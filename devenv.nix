@@ -1,15 +1,15 @@
 {
   self,
-  inputs,
   pkgs,
-  lib,
+  # inputs,
+  # lib,
   ...
 }: {
   packages = [
-    pkgs.rnix-lsp
+    pkgs.nixd
     self.packages.${pkgs.system}.pyEnv
     self.packages.${pkgs.system}.sysdo
-    (inputs.treefmt-nix.lib.mkWrapper pkgs (import ./treefmt.nix))
+    # (inputs.treefmt-nix.lib.mkWrapper pkgs (import ./treefmt.nix))
   ];
 
   pre-commit = {
