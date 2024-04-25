@@ -223,6 +223,11 @@ in {
         target = ".config/tmuxinator";
         recursive = true;
       };
+      catppuccinMocha = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+        source = ../../dotfiles/config/alacritty/catppuccin-mocha.toml;
+        target = ".config/alacritty/catppuccin/catppuccin-mocha.toml";
+        recursive = true;
+      };
     };
   };
 }

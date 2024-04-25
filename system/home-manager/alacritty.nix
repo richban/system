@@ -76,54 +76,7 @@
     #     program = "/home/sherub/.nix-profile/bin/nu";
     #   };
 
-    # Colors (One Dark)
-    colors = {
-      # TokyoNight Alacritty Colors
-      # Default colors
-      primary = {
-        background = "#24283b";
-        foreground = "#c0caf5";
-        # Uncomment below if bright or dim foreground needed
-        # bright_foreground = "#c0caf5"; # Example value
-        # dim_foreground = "#a9b1d6"; # Example value, adjust as necessary
-      };
-
-      # Normal colors
-      normal = {
-        black = "#1d202f";
-        red = "#f7768e";
-        green = "#9ece6a";
-        yellow = "#e0af68";
-        blue = "#7aa2f7";
-        magenta = "#bb9af7";
-        cyan = "#7dcfff";
-        white = "#a9b1d6";
-      };
-
-      # Bright colors
-      bright = {
-        black = "#414868";
-        red = "#f7768e";
-        green = "#9ece6a";
-        yellow = "#e0af68";
-        blue = "#7aa2f7";
-        magenta = "#bb9af7";
-        cyan = "#7dcfff";
-        white = "#c0caf5";
-      };
-
-      # Indexed Colors
-      indexed_colors = [
-        {
-          index = 16;
-          color = "#ff9e64";
-        }
-        {
-          index = 17;
-          color = "#db4b4b";
-        }
-      ];
-    };
+    import = ["~/.config/alacritty/catppuccin/catppuccin-mocha.toml"];
 
     keyboard = {
       bindings = [
