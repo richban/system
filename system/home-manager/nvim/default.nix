@@ -45,10 +45,18 @@
       #   '';
       # }
       {
-        plugin = tokyonight-nvim;
+        plugin = catppuccin-nvim;
         type = "lua";
         config = ''
-          vim.cmd.colorscheme "tokyonight-storm"
+          require("catppuccin").setup({
+            flavour = "mocha",
+            background = {
+                light = "latte",
+                dark = "mocha",
+            },
+          })
+
+          vim.cmd.colorscheme "catppuccin"
         '';
       }
       {
@@ -248,6 +256,7 @@
       mason-nvim
       mason-lspconfig-nvim
       mason-tool-installer-nvim
+      ropeVim
     ];
 
     extraPackages = with pkgs; [
@@ -292,12 +301,10 @@
         mypy
         mccabe
         pycodestyle
-        python-lsp-black
-        pyls-isort
         rope
+        pylsp-rope
         editorconfig
         tiktoken
-        python-dotenv
         prompt-toolkit
         pynvim
       ];

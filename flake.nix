@@ -75,6 +75,10 @@
       url = "github:stevearc/conform.nvim";
       flake = false;
     };
+    ropeVim = {
+      url = "github:python-rope/ropevim";
+      flake = false;
+    };
 
     # comma = { url = github:Shopify/comma; flake = false; };
     # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
@@ -156,6 +160,10 @@
             conformNvim = prev.vimUtils.buildVimPlugin {
               name = "conform.nvim";
               src = inputs.conformNvim;
+            };
+            ropeVim = prev.vimUtils.buildVimPlugin {
+              name = "ropevim";
+              src = inputs.ropeVim;
             };
           };
       })
