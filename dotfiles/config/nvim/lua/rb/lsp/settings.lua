@@ -175,6 +175,10 @@ local servers = {
     },
   },
   ruff_lsp = {
+    root_dir = function(fname)
+      local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
+      return lsp.util.root_pattern(unpack(root_files))(fname) or lsp.util.find_git_ancestor(fname)
+    end,
     settings = {},
   },
   pylsp = {
@@ -187,27 +191,28 @@ local servers = {
     settings = {
       pylsp = {
         plugins = {
-          jedi_completion = { enabled = true },
+          jedi_completion = { enabled = false },
           jedi_hover = { enabled = true },
           jedi_references = { enabled = true },
           jedi_signature_help = { enabled = true },
           jedi_symbols = { enabled = true, all_scopes = true },
           -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
-          configurationSources = { "flake8" },
+          -- configurationSources = { "flake8" },
           -- linter to detect various errors
-          pyflakes = { enabled = false },
+          -- pyflakes = { enabled = false },
           -- linter for docstring style checking
-          pydocstyle = { enabled = false },
+          pydocstyle = { enabled = true },
           -- linter for style checking
-          pycodestyle = { enabled = false, maxLineLength = 120 },
-          pylint = { enabled = false },
-          black = { enabled = true },
+          -- pycodestyle = { enabled = false, maxLineLength = 120 },
+          -- pylint = { enabled = false },
+          -- black = { enabled = false },
           -- type checking
           pylsp_mypy = { enabled = true, live_mode = true },
           -- code formatting using isort
           pyls_isort = { enabled = true },
-          pyls_flake8 = { enabled = false, executable = "flake8" },
+          -- pyls_flake8 = { enabled = false, executable = "flake8" },
           rope_autoimport = { enabled = true },
+          pylsp_rope = { enabled = true },
         },
       },
     },
@@ -247,6 +252,7 @@ local servers = {
     },
   },
   -- beancount = {},
+  jinja_lsp = {},
 }
 
 -- Ensure the servers and tools above are installed
