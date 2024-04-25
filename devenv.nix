@@ -17,15 +17,15 @@
       black.enable = true;
       shellcheck.enable = false;
       alejandra.enable = true;
-      deadnix.enable = true;
       shfmt.enable = false;
       stylua.enable = true;
       markdownlint.enable = false;
-    };
-
-    settings = {
-      deadnix.edit = true;
-      deadnix.noLambdaArg = true;
+      deadnix = {
+        settings = {
+          noLambdaArg = true;
+          edit = true;
+        };
+      };
     };
   };
 }
