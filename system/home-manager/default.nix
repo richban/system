@@ -223,6 +223,7 @@ in {
       cookiecutter
       ruff
       uv
+      poetry
 
       nodejs-slim
       nodePackages.npm
