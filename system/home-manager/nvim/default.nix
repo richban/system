@@ -256,58 +256,52 @@
       mason-nvim
       mason-lspconfig-nvim
       mason-tool-installer-nvim
-      ropeVim
+      # ropeVim
     ];
 
     extraPackages = with pkgs; [
       luajitPackages.tiktoken_core
       neovim-remote
       cargo # for mason
+      ruff
+      (python311.withPackages (ps:
+        with ps; [
+          python-lsp-server
+          pydocstyle
+          pylsp-rope
+          pylsp-mypy
+          editorconfig
+          tiktoken
+          prompt-toolkit
+          pynvim
+        ]))
+      lua-language-server
       # nixfmt
       # sumneko-lua-language-server
-      # stylua
-      # luaformatter
+      stylua
+      luaformatter
+      nil
       # ccls
       # sqls
-      # sqlfluff
+      sqlfluff
       # deadnix
       # statix
-      # proselint
-      # terraform-ls
-      # gitlint
-      # alejandra
+      proselint
+      terraform-ls
+      gitlint
+      alejandra
 
-      # nodePackages.beancount-langserver
-      # nodePackages.typescript-language-server
-      # nodePackages.bash-language-server
-      # nodePackages.vscode-json-languageserver
-      # nodePackages.yaml-language-server
-      # nodePackages.vscode-html-languageserver-bin
-      # nodePackages.vscode-css-languageserver-bin
-      # nodePackages.vim-language-server
-      # nodePackages.dockerfile-language-server-nodejs
-      # nodePackages.fixjson
+      nodePackages.typescript-language-server
+      nodePackages.bash-language-server
+      nodePackages.vscode-json-languageserver-bin
+      nodePackages.vscode-html-languageserver-bin
+      nodePackages.vscode-css-languageserver-bin
+      nodePackages.dockerfile-language-server-nodejs
+      nodePackages.fixjson
       # nodePackages.prettier
       # nodePackages.markdownlint-cli
       # nodePackages.write-good
     ];
-
-    extraPython3Packages = ps:
-      with ps; [
-        isort
-        black
-        pyflakes
-        pyls-flake8
-        mypy
-        mccabe
-        pycodestyle
-        rope
-        pylsp-rope
-        editorconfig
-        tiktoken
-        prompt-toolkit
-        pynvim
-      ];
 
     extraConfig = ''
       lua require("rb.settings")
