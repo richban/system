@@ -101,6 +101,9 @@ in {
           set -g @catppuccin_status_fill "icon"
           set -g @catppuccin_status_connect_separator "no"
           set -g @catppuccin_directory_text "#{b:pane_current_path}"
+
+          set -g @continuum-boot 'on'
+          set -g @continuum-boot-options 'alacritty'
         '';
       }
     ];
