@@ -186,7 +186,7 @@ local servers = {
           -- linter to detect various errors
           -- pyflakes = { enabled = false },
           -- linter for docstring style checking
-          pydocstyle = { enabled = true },
+          pydocstyle = { enabled = true, convention = "google" },
           -- linter for style checking
           -- pycodestyle = { enabled = false, maxLineLength = 120 },
           -- pylint = { enabled = false },
@@ -206,6 +206,7 @@ local servers = {
             extendIgnore = { "E501" },
             ignore = { "E501" },
           },
+          isort = { enabled = true },
         },
       },
     },
