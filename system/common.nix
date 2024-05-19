@@ -65,10 +65,13 @@
     shells = with pkgs; [bash zsh];
   };
 
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
-    nerdfonts
-    # Selection of fonts from the package, you can overwrite the font selection
-    # (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
-  ];
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      nerdfonts
+      fira-code-nerdfont
+      # Selection of fonts from the package, you can overwrite the font selection
+      # (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
+    ];
+  };
 }
