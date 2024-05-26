@@ -1,7 +1,6 @@
 .DS_Store
 .cfg
 packer_compiled.vim
-dotfiles/config/nvim/plugin/
 .vscode/
 result
 .direnv/
