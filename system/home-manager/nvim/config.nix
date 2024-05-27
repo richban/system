@@ -46,6 +46,10 @@ in {
     extraPackages = with pkgs; [
       neovim-remote
       luajitPackages.tiktoken_core # copilot (optional)
+      cargo # for mason
+      alejandra # nix formatter
+      ruff
+      nil
       (python311.withPackages (ps:
         with ps; [
           python-dotenv
