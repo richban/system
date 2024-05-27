@@ -1,0 +1,10 @@
+return {
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-tree/nvim-web-devicons", optional = true },
+    config = function()
+      require("rb.statusline")
+    end,
+  },
+}
