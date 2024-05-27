@@ -338,8 +338,7 @@
       lua require("rb.nvim-tree")
       lua require("rb.nvim-treesitter")
       lua require("rb.lsp")
-      lua require("rb.telescope.setup")
-      lua require("rb.telescope.mappings")
+      lua require("rb.telescope")
       lua require("rb.projections")
       lua require("rb.nvim-cmp")
     '';

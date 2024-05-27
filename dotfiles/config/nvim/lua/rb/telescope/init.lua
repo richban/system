@@ -7,6 +7,9 @@ local reloader = function()
   end
 end
 
+require("rb.telescope.setup")
+require("rb.telescope.mappings")
+
 local actions = require("telescope.actions")
 local themes = require("telescope.themes")
 
