@@ -8,7 +8,6 @@ local reloader = function()
 end
 
 local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
 local themes = require("telescope.themes")
 
 M = {}
