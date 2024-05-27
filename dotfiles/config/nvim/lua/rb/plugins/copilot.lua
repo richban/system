@@ -2,6 +2,9 @@ local M = {
   "zbirenbaum/copilot.lua",
   enabled = true,
   event = "InsertEnter",
+  config = function()
+    M.config()
+  end,
 }
 
 function M.config()
