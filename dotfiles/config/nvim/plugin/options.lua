@@ -65,7 +65,6 @@ vim.cmd([[set shortmess+=c]])
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 -- delays and poor user experience.
 vim.o.updatetime = 2000
-vim.g.mapleader = " "
 -- providers
 -- vim.g.python_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim2/bin/python")
 -- vim.g.python3_host_prog = path_join(os.getenv("HOME"), ".pyenv/versions/neovim3/bin/python")
