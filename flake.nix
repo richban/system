@@ -18,7 +18,7 @@
   inputs = {
     # We use the unstable nixpkgs repo for some packages.
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    # nixos-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     # nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Darwin system management
@@ -116,7 +116,7 @@
 
     # Overlays is the list of overlays we want to apply from flake inputs.
     overlays = [
-      inputs.neovim-nightly-overlay.overlay
+      inputs.neovim-nightly-overlay.overlays.default
       (final: prev: {
         vimPlugins =
           prev.vimPlugins
@@ -173,14 +173,13 @@
     mkDarwinConfig = {
       system ? "x86_64-darwin",
       nixpkgs ? inputs.nixpkgs,
-      stable ? inputs.nixos-stable,
       baseModules ? [home-manager.darwinModules.home-manager ./system/darwin],
       extraModules ? [],
     }:
       darwinSystem {
         inherit system;
         modules = baseModules ++ extraModules ++ [{nixpkgs.overlays = overlays;}];
-        specialArgs = {inherit self inputs nixpkgs stable;};
+        specialArgs = {inherit self inputs nixpkgs;};
       };
 
     # generate a home-manager config for any unix system
@@ -188,7 +187,6 @@
       username,
       system ? "aarch64-darwin",
       nixpkgs ? inputs.nixpkgs,
-      stable ? inputs.nixos-stable,
       baseModules ? [
         ./system/home-manager
         {
@@ -196,9 +194,8 @@
             inherit username;
             homeDirectory = "${homePrefix system}/${username}";
             sessionVariables = {
-              NIX_PATH = "nixpkgs=${nixpkgs}:stable=${stable}\${NIX_PATH:+:}$NIX_PATH";
+              NIX_PATH = "nixpkgs=${nixpkgs}";
             };
-            # stateVersion = "22.05";
           };
         }
       ],
@@ -207,8 +204,9 @@
       homeManagerConfiguration rec {
         pkgs = import nixpkgs {
           inherit system;
+          overlays = builtins.attrValues self.overlays;
         };
-        extraSpecialArgs = {inherit self inputs nixpkgs stable;};
+        extraSpecialArgs = {inherit self inputs nixpkgs;};
         modules = {
           # imports = baseModules ++ extraModules ++ [ ./system/overlays.nix ];
           imports = baseModules ++ extraModules;

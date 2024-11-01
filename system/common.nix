@@ -59,15 +59,14 @@
     etc = {
       home-manager.source = "${inputs.home-manager}";
       nixpkgs.source = "${inputs.nixpkgs}";
-      stable.source = "${inputs.nixos-stable}";
+      # stable.source = "${inputs.nixos-stable}";
     };
     # list of acceptable shells in /etc/shells
     shells = with pkgs; [bash zsh];
   };
 
   fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       nerdfonts
       fira-code-nerdfont
       # Selection of fonts from the package, you can overwrite the font selection

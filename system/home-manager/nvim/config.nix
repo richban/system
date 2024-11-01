@@ -28,7 +28,6 @@ in {
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
     coc.enable = false;
     viAlias = true;
     vimAlias = true;
