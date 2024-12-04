@@ -227,8 +227,9 @@ in {
       ruff
       uv
       poetry
+      sqlfluff
 
-      nodejs-slim
+      nodejs_20
       nodePackages.npm
       yarn
     ];

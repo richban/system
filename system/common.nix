@@ -67,9 +67,8 @@
 
   fonts = {
     packages = with pkgs; [
-      nerdfonts
-      fira-code-nerdfont
-      # Selection of fonts from the package, you can overwrite the font selection
+      nerd-fonts.fira-code
+      # Selection offonts from the package, you can overwrite the font selection
       # (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
     ];
   };

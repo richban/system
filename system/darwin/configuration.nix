@@ -17,7 +17,7 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     alacritty
-    _1password
+    _1password-cli
     # _1password-gui
     hammerspoon
     spacebar
@@ -30,8 +30,6 @@ in {
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/Developer/dotfiles/system/darwin";
-
-  environment.loginShell = pkgs.zsh;
 
   environment.etc = {darwin.source = "${inputs.darwin}";};
 
