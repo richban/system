@@ -1,21 +1,28 @@
 {...}: {
   homebrew = {
     enable = true;
-    autoUpdate = false;
     global = {
       brewfile = true;
-      noLock = true;
     };
-    brews = [
-      "yabai"
-    ];
+    brews = [];
     taps = [
+      "1password/tap"
       "homebrew/bundle"
-      "homebrew/cask"
-      "homebrew/core"
       "homebrew/services"
       "koekeishiya/formulae"
     ];
-    casks = [];
+    casks = [
+      "1password"
+      "1password-cli"
+      "hammerspoon"
+      "obsidian"
+      "raycast"
+      "visual-studio-code"
+      "discord"
+      "dropbox"
+      "notion"
+      "signal"
+      "slack"
+    ];
   };
 }
