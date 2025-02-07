@@ -24,7 +24,6 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager = {
     enable = true;
-    path = "${config.home.homeDirectory}/Developer/dotfiles/system/home-manager";
   };
 
   programs.bat.enable = true;
