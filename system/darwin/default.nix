@@ -2,7 +2,8 @@
   imports = [
     ../common.nix
     ./wm.nix
-    ./configuration.nix
+    ./core.nix
     ./preferences.nix
+    ./brew.nix
   ];
 }
