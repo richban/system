@@ -211,15 +211,14 @@ in {
       docker-compose
       google-cloud-sdk
 
-      pkgs.python311.withPackages
-        (ps:
-          with ps; [
-            duckdb
-            pandas
-            polars
-            jupyter
-            ipython
-        ])
+      (pkgs.python311.withPackages (ps: with ps; [
+        duckdb
+        pandas
+        polars
+        jupyter
+        ipython
+      ]))
+
       cookiecutter
       ruff
       uv
