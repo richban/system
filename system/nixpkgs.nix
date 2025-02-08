@@ -23,7 +23,7 @@
 
     settings = {
       max-jobs = 8;
-      trusted-users = ["${config.user.name}" "root" "@admin" "@wheel"];
+      trusted-users = ["${config.user.name}" "root" "@admin" "@sudo" "@wheel"];
       trusted-substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
@@ -36,31 +36,9 @@
       ];
     };
 
-    # Add inputs to registry & nix path
-    nixPath =
-      builtins.map
-      (source: "${source}=/etc/${config.environment.etc.${source}.target}") [
-        "home-manager"
-        # "nixpkgs"
-        # "stable"
-      ];
+    registry = {
+      home-manager.flake = inputs.home-manager;
+    };
 
-    # registry = {
-    #   nixpkgs = {
-    #     from = {
-    #       id = "nixpkgs";
-    #       type = "indirect";
-    #     };
-    #     flake = inputs.nixpkgs;
-    #   };
-    #
-    #   stable = {
-    #     from = {
-    #       id = "stable";
-    #       type = "indirect";
-    #     };
-    #     flake = inputs.nixos-stable;
-    #   };
-    # };
   };
 }
