@@ -12,6 +12,7 @@
       "koekeishiya/formulae"
     ];
     casks = [
+      "alacritty"
       "1password"
       "1password-cli"
       "hammerspoon"
@@ -23,6 +24,9 @@
       "notion"
       "signal"
       "slack"
+      "wechat"
+      "ticktick"
+      "github"
     ];
   };
 }
