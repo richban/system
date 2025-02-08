@@ -1,9 +1,18 @@
+#! /usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.11,<3.14"
+# dependencies = [
+#     "colorama",
+#     "shellingham",
+#     "typer",
+# ]
+# ///
 import os
-import platform
 import subprocess
 from enum import Enum
 from typing import List
 
+import platform
 import typer
 
 app = typer.Typer()
@@ -23,7 +32,7 @@ class Colors(Enum):
 
 check_git = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True)
 LOCAL_FLAKE = os.path.realpath(check_git.stdout.decode().strip())
-REMOTE_FLAKE = "github:richban/dotfiles"
+REMOTE_FLAKE = "github:richban/system"
 is_local = check_git.returncode == 0 and os.path.isfile(
     os.path.join(LOCAL_FLAKE, "flake.nix")
 )
@@ -60,7 +69,14 @@ def fmt_command(cmd: List[str]):
 
 
 def test_cmd(cmd: List[str]):
-    return subprocess.run(cmd).returncode == 0
+    out = subprocess.run(cmd)
+    if out.returncode == 0:
+        return True
+    else:
+        typer.secho(fmt_command(cmd), fg=Colors.ERROR.value)
+        typer.secho(
+            f"command failed with return code {out.returncode}", fg=Colors.ERROR.value
+        )
 
 
 def run_cmd(cmd: List[str], shell=False):
@@ -108,7 +124,11 @@ def bootstrap(
     home_manager: bool = False,
 ):
     cfg = select(nixos=nixos, darwin=darwin, home_manager=home_manager)
-    flags = ["-v", "--experimental-features", "nix-command flakes"]
+    flags = [
+        "-v",
+        "--experimental-features",
+        "nix-command flakes",
+    ]
 
     bootstrap_flake = REMOTE_FLAKE if remote else FLAKE_PATH
     if host is None:
@@ -206,16 +226,21 @@ def clean(
     help="configure disk setup for nix-darwin",
 )
 def disk_setup():
-    if not test_cmd("grep -q ^run\\b /etc/synthetic.conf".split()):
-        APFS_UTIL = "/System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util"
-        typer.secho("setting up /etc/synthetic.conf", fg=Colors.INFO.value)
+    synthetic_conf = "/etc/synthetic.conf"
+    apfs_util = "/System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util"
+    run_mount_configured = False
+    with open(synthetic_conf, "r") as f:
+        run_mount_configured = any(
+            "run\tprivate/var/run" == l.strip() for l in f.readlines()
+        )
+    if not run_mount_configured:
+        typer.secho(f"setting up {synthetic_conf}", fg=Colors.INFO.value)
         run_cmd(
-            "echo 'run\tprivate/var/run' | sudo tee -a /etc/synthetic.conf".split(),
+            f"echo 'run\\tprivate/var/run' | sudo tee -a {synthetic_conf}".split(),
             shell=True,
         )
-        run_cmd([APFS_UTIL, "-B"])
-        run_cmd([APFS_UTIL, "-t"])
-    if not test_cmd(["test", "-L", "/run"]):
+        run_cmd(f"sudo {apfs_util} -t".split())
+    if not os.path.islink("/run"):
         typer.secho("linking /run directory", fg=Colors.INFO.value)
         run_cmd("sudo ln -sfn private/var/run /run".split())
     typer.secho("disk setup complete", fg=Colors.SUCCESS.value)
@@ -268,7 +293,7 @@ def update(
 
 @app.command(help="pull changes from remote repo", hidden=not is_local)
 def pull():
-    cmd = "git stash && git pull && git stash apply"
+    cmd = f"git stash && git pull && git stash apply"
     run_cmd(cmd.split())
 
 
@@ -297,11 +322,11 @@ def switch(
     if cfg is None:
         return
     elif cfg == FlakeOutputs.NIXOS:
-        cmd = "sudo nixos-rebuild switch --flake"
+        cmd = f"sudo nixos-rebuild switch --flake"
     elif cfg == FlakeOutputs.DARWIN:
-        cmd = "darwin-rebuild switch --flake"
+        cmd = f"darwin-rebuild switch --flake"
     elif cfg == FlakeOutputs.HOME_MANAGER:
-        cmd = "home-manager switch --flake"
+        cmd = f"home-manager switch --flake"
     else:
         typer.secho("could not infer system type.", fg=Colors.ERROR.value)
         raise typer.Abort()
