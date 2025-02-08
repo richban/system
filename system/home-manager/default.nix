@@ -7,14 +7,15 @@
   relativeXDGConfigPath = ".config";
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
+  homeDir = config.home.homeDirectory;
 in {
   imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim/config.nix ./1password.nix ./direnv.nix];
 
   xdg = {
     enable = true;
-    configHome = "${config.home.homeDirectory}/${relativeXDGConfigPath}";
-    dataHome = "${config.home.homeDirectory}/${relativeXDGDataPath}";
-    cacheHome = "${config.home.homeDirectory}/${relativeXDGCachePath}";
+    configHome = "${homeDir}/${relativeXDGConfigPath}";
+    dataHome = "${homeDir}/${relativeXDGDataPath}";
+    cacheHome = "${homeDir}/${relativeXDGCachePath}";
   };
 
   nixpkgs.config = {
@@ -146,19 +147,7 @@ in {
     };
   };
 
-  home = let
-    NODE_GLOBAL = "${config.home.homeDirectory}/.node-packages";
-
-    pyEnv =
-      pkgs.python311.withPackages
-      (ps:
-        with ps; [
-          black
-          pandas
-          jupyter
-          ipython
-        ]);
-  in {
+  home = {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
     stateVersion = "22.05";
@@ -167,11 +156,12 @@ in {
       EDITOR = "nvim";
       VISUAL = "nvim";
       JAVA_HOME = "${pkgs.openjdk11.home}";
-      NODE_PATH = "${NODE_GLOBAL}/lib";
+      NODE_PATH = "${homeDir}/.node";
       # HOMEBREW_NO_AUTO_UPDATE = 1;
     };
     sessionPath = [
-      "${NODE_GLOBAL}/bin"
+      "${homeDir}/.local/bin"
+      "${homeDir}/.node/bin"
     ];
 
     packages = with pkgs; [
@@ -221,7 +211,15 @@ in {
       docker-compose
       google-cloud-sdk
 
-      pyEnv
+      pkgs.python311.withPackages
+        (ps:
+          with ps; [
+            duckdb
+            pandas
+            polars
+            jupyter
+            ipython
+        ])
       cookiecutter
       ruff
       uv
