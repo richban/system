@@ -246,6 +246,11 @@
       // (mkChecks {
         arch = "x86_64";
         os = "darwin";
+      })
+      // (mkChecks {
+        arch = "aarch64";
+        os = "darwin";
+        username = "melchior";
       });
 
     darwinConfigurations = {
@@ -260,6 +265,10 @@
       "richban@aarch64-darwin" = mkDarwinConfig {
         system = "aarch64-darwin";
         extraModules = [./system/hosts/work_m2.nix];
+      };
+      "melchior@aarch64-darwin" = mkDarwinConfig {
+        system = "aarch64-darwin";
+        extraModules = [./system/hosts/mac_mini.nix];
       };
     };
 
@@ -277,6 +286,11 @@
         username = "richard.banyi";
         system = "aarch64-darwin";
         extraModules = [./system/hosts/work_m2.nix];
+      };
+      "melchior@aarch64-darwin" = mkHomeConfig {
+        username = "melchior";
+        system = "aarch64-darwin";
+        extraModules = [./system/hosts/mac_mini.nix];
       };
     };
 
