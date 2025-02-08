@@ -1,13 +1,11 @@
 {
   config,
-  pkgs,
+  inputs,
   ...
 }: {
   nixpkgs = {config = import ./config.nix;};
 
   nix = {
-    package = pkgs.nix;
-
     # Enable flakes
     extraOptions = ''
       keep-outputs = true
