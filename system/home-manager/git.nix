@@ -4,6 +4,7 @@
     git-crypt
     gitAndTools.delta
     act
+    github-cli
   ];
 
   home.file.gitignore = {
@@ -202,10 +203,15 @@
       lf = "!git lfs install";
       # Uninstall Git LFS and recommit files
       ulf = "!git lfs uninstall && touch **/* && git commit -a";
+
+      ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi";
     };
     extraConfig = {
+      init.defaultBranch = "main";
       github.user = "richban";
       color.ui = true;
+      commit.verbose = true;
+      pull.rebase = true;
       pull.ff = "only";
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
@@ -254,7 +260,4 @@
     enable = true;
     settings.git_protocol = "ssh";
   };
-
-  programs.gpg.enable = true;
-  services.gpg-agent.enable = pkgs.stdenv.isLinux;
 }
