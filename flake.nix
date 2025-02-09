@@ -1,25 +1,22 @@
 {
   description = "NixOS systems and tools by richban";
 
-  nixConfig = {
-    # substituters = [
-    #   "https://cache.nixos.org"
-    #   "https://nix-community.cachix.org"
-    #   "https://richban.cachix.org"
-    # ];
-    #
-    # trusted-public-keys = [
-    #   "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    #   "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    #   "richban.cachix.org-1:b22iBPRwWfvVe1ldyn3ca1JRw0OEzzf3jrurGJQN3LA="
-    # ];
-  };
-
   inputs = {
     # We use the unstable nixpkgs repo for some packages.
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixos-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     # nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0";
+
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
+    nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
+
+    # manage homebrew declaratively
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     # Darwin system management
     darwin = {
