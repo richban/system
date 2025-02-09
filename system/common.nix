@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: {
-  imports = [./primary.nix ./nixpkgs.nix];
+  imports = [./primary.nix ./nixpkgs.nix ./fonts.nix];
 
   nixpkgs.overlays = builtins.attrValues self.overlays;
 
@@ -63,13 +63,5 @@
     };
     # list of acceptable shells in /etc/shells
     shells = with pkgs; [bash zsh];
-  };
-
-  fonts = {
-    packages = with pkgs; [
-      nerd-fonts.fira-code
-      # Selection offonts from the package, you can overwrite the font selection
-      # (nerdfonts.override {fonts = ["Hack" "FiraMono"];})
-    ];
   };
 }
