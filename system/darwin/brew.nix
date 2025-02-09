@@ -13,6 +13,7 @@
     ];
     casks = [
       "alacritty"
+      "arc"
       "1password"
       "1password-cli"
       "hammerspoon"
