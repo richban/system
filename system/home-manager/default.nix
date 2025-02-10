@@ -3,12 +3,17 @@
   pkgs,
   lib,
   self,
+  stateVersion,
+  username,
   ...
 }: let
+  inherit (pkgs.stdenv) isDarwin isLinux;
+  homeDir = config.home.homeDirectory;
+  
   relativeXDGConfigPath = ".config";
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
-  homeDir = config.home.homeDirectory;
+
 in {
   imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim/config.nix ./1password.nix ./direnv.nix];
 
@@ -145,9 +150,13 @@ in {
   };
 
   home = {
-    # Home Manager needs a bit of information about you and the
-    # paths it should manage.
-    stateVersion = "22.05";
+    inherit stateVersion;
+    inherit username;
+    homeDirectory =
+      if isDarwin then
+        "/Users/${username}"
+      else
+        "/home/${username}";
     sessionVariables = {
       GPG_TTY = "/dev/ttys000";
       EDITOR = "nvim";
