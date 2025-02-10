@@ -96,6 +96,7 @@
     self,
     nixpkgs,
     darwin,
+    determinate,
     home-manager,
     flake-utils,
     devenv,
@@ -111,71 +112,16 @@
       then "/Users"
       else "/home";
 
-    # Overlays is the list of overlays we want to apply from flake inputs.
-    overlays = [
-      inputs.neovim-nightly-overlay.overlays.default
-      (final: prev: {
-        vimPlugins =
-          prev.vimPlugins
-          // {
-            projections = prev.vimUtils.buildVimPlugin {
-              name = "projections";
-              src = inputs.projections;
-            };
-            nui = prev.vimUtils.buildVimPlugin {
-              name = "nui";
-              src = inputs.nui;
-            };
-            incRename = prev.vimUtils.buildVimPlugin {
-              name = "inc-rename";
-              src = inputs.incRename;
-            };
-            diffview = prev.vimUtils.buildVimPlugin {
-              name = "diffview";
-              src = inputs.diffview;
-            };
-            oxacarbonColors = prev.vimUtils.buildVimPlugin {
-              name = "oxacarbon-colors";
-              src = inputs.oxacarbonColors;
-            };
-            copilot = prev.vimUtils.buildVimPlugin {
-              name = "copilot";
-              src = inputs.copilot;
-            };
-            copilotCmp = prev.vimUtils.buildVimPlugin {
-              name = "copilot-cmp";
-              src = inputs.copilotCmp;
-            };
-            copilotLualine = prev.vimUtils.buildVimPlugin {
-              name = "copilot-lualine";
-              src = inputs.copilotLualine;
-            };
-            copilotChat = prev.vimUtils.buildVimPlugin {
-              name = "CopilotChat.nvim";
-              src = inputs.copilotChat;
-            };
-            conformNvim = prev.vimUtils.buildVimPlugin {
-              name = "conform.nvim";
-              src = inputs.conformNvim;
-            };
-            ropeVim = prev.vimUtils.buildVimPlugin {
-              name = "ropevim";
-              src = inputs.ropeVim;
-            };
-          };
-      })
-    ];
-
     # generate a darwin config
     mkDarwinConfig = {
       system ? "x86_64-darwin",
       nixpkgs ? inputs.nixpkgs,
-      baseModules ? [home-manager.darwinModules.home-manager ./system/darwin],
+      baseModules ? [determinate.darwinModules.default home-manager.darwinModules.home-manager ./system/darwin],
       extraModules ? [],
     }:
       darwinSystem {
         inherit system;
-        modules = baseModules ++ extraModules ++ [{nixpkgs.overlays = overlays;}];
+        modules = baseModules ++ extraModules;
         specialArgs = {inherit self inputs nixpkgs;};
       };
 
@@ -199,13 +145,9 @@
       extraModules ? [],
     }:
       homeManagerConfiguration rec {
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues self.overlays;
-        };
+        pkgs = nixpkgs;
         extraSpecialArgs = {inherit self inputs nixpkgs;};
         modules = {
-          # imports = baseModules ++ extraModules ++ [ ./system/overlays.nix ];
           imports = baseModules ++ extraModules;
         };
       };
@@ -351,10 +293,11 @@
       default = sysdo;
     });
 
-    overlays = {
+  overlays =
+      custom = import ./overlays { inherit inputs; };
       channels = final: prev: {
-        # expose other channels via overlays
-        unstable = import inputs.unstable {inherit (prev) system;};
+        # Expose other channels via overlays
+        unstable = import inputs.unstable { inherit (prev) system; };
       };
       extraPackages = final: prev: let
         pkgs = final;

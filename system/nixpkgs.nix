@@ -1,27 +1,35 @@
 {
   config,
   inputs,
+  self,
   ...
 }: {
-  nixpkgs = {config = import ./config.nix;};
+  nixpkgs = {
+    config   = {
+      allowUnsupportedSystem = true;
+      allowUnfree = true;
+      allowBroken = false;
+    };
+  };
 
   nix = {
-    # Enable flakes
+    # Enable flakes.
     extraOptions = ''
       keep-outputs = true
       keep-derivations = true
       experimental-features = nix-command flakes
     '';
 
-    # Garbage collection
+    # Garbage collection.
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
     };
 
     settings = {
-      max-jobs = 8;
+      max-jobs      = 8;
       trusted-users = ["${config.user.name}" "root" "@admin" "@sudo" "@wheel"];
+      # Optionally add trusted-substituters and trusted-public-keys:
       # trusted-substituters = [
       #   "https://cache.nixos.org"
       #   "https://nix-community.cachix.org"
@@ -37,6 +45,5 @@
     registry = {
       home-manager.flake = inputs.home-manager;
     };
-
   };
 }

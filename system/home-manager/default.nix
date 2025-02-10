@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  self,
   ...
 }: let
   relativeXDGConfigPath = ".config";
@@ -18,8 +19,11 @@ in {
     cacheHome = "${homeDir}/${relativeXDGCachePath}";
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
+  nixpkgs = {
+    overlays = self.overlays.custom;
+    config = {
+      allowUnfree = true;
+    };
   };
 
   # Let Home Manager install and manage itself.

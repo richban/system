@@ -7,8 +7,6 @@
 }: {
   imports = [./primary.nix ./nixpkgs.nix ./fonts.nix];
 
-  nixpkgs.overlays = builtins.attrValues self.overlays;
-
   programs.zsh = {
     enable = true;
     enableCompletion = true;
