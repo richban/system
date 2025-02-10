@@ -6,6 +6,11 @@
     nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
     nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
     
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,12 +88,33 @@
     inherit (darwin.lib) darwinSystem;
     inherit (home-manager.lib) homeManagerConfiguration;
     inherit (flake-utils.lib) eachSystemMap defaultSystems;
+    inherit (inputs.nixpkgs) lib;
+    inherit (lib) mapAttrsToList;
 
     isDarwin = system: (builtins.elem system nixpkgs.lib.platforms.darwin);
     homePrefix = system:
       if isDarwin system
       then "/Users"
       else "/home";
+
+    mkHooks = system:
+      inputs.pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          black.enable = true;
+          shellcheck.enable = true;
+          alejandra.enable = true;
+          shfmt.enable = false;
+          stylua.enable = true;
+          deadnix = {
+            enable = true;
+            settings = {
+              edit = true;
+              noLambdaArg = true;
+            };
+          };
+        };
+      };
 
     # generate a darwin config
     mkDarwinConfig = {
@@ -214,19 +240,22 @@
     devShells = eachSystemMap defaultSystems (system: let
       pkgs = import inputs.nixpkgs {
         inherit system;
-        overlays = builtins.attrValues self.overlays;
+        overlays = [self.overlays.default];
       };
+      pre-commit-check = mkHooks system;
     in {
-      default = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          (import ./devenv.nix)
-          # {
-          #   enterShell = ''
-          #     export PATH=$PATH:${pkgs.sysdo}/bin/
-          #   '';
-          # }
-        ];
+      default = pkgs.mkShell {
+        inherit (pre-commit-check) shellHook;
+        packages = with pkgs;
+          [
+            bashInteractive
+            fd
+            nixd
+            ripgrep
+            uv
+          ]
+          ++ (mapAttrsToList (name: value: value) self.packages.${system});
+        inputsFrom = pre-commit-check.enabledPackages;
       };
     });
 
@@ -234,24 +263,10 @@
       system: let
         pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = builtins.attrValues self.overlays;
+          overlays = [self.overlays.default];
         };
       in rec {
-        pyEnv =
-          pkgs.python3.withPackages
-          (ps: with ps; [black typer colorama shellingham]);
-        sysdo = pkgs.writeScriptBin "sysdo" ''
-          #! ${pyEnv}/bin/python3
-          ${builtins.readFile ./bin/do.py}
-        '';
-        gitmanager = pkgs.writeScriptBin "gitmanager" ''
-          #! ${pyEnv}/bin/python3
-          ${builtins.readFile ./bin/git_manager.py}
-        '';
-        obsidianbackup = pkgs.writeScriptBin "obsidianbackup" ''
-          #! ${pyEnv}/bin/python3
-          ${builtins.readFile ./bin/obsidian_backup.py}
-        '';
+        sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run -q ${./bin/do.py} $@";
       }
     );
 
@@ -260,31 +275,14 @@
         type = "app";
         program = "${self.packages.${system}.sysdo}/bin/sysdo";
       };
-      gitmanager = {
-        type = "app";
-        program = "${self.packages.${system}.gitmanager}/bin/gitmanager";
-      };
-      obsidianbackup = {
-        type = "app";
-        program = "${self.packages.${system}.obsidianbackup}/bin/obsidianbackup";
-      };
       default = sysdo;
     });
 
-  overlays = {
-    custom = import ./system/overlays { inherit inputs; };
-    channels = final: prev: {
-      unstable = import inputs.unstable { inherit (prev) system; };
-    };
-    extraPackages = final: prev: let
-      pkgs = final;
-    in with pkgs; {
-      inherit (self.packages.${prev.system}) sysdo;
-      inherit (self.packages.${prev.system}) pyEnv;
-      inherit (self.packages.${prev.system}) gitmanager;
-      inherit (self.packages.${prev.system}) obsidianbackup;
-      inherit (self.packages.${prev.system}) devenv;
+    overlays = {
+      neovimOverlay = import ./system/overlays/neovim.nix { inherit inputs; };
+      default = final: prev: {
+        sysdo = self.packages.${prev.system}.sysdo;
+      };
     };
   };
-
 }

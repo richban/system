@@ -19,13 +19,6 @@ in {
     cacheHome = "${homeDir}/${relativeXDGCachePath}";
   };
 
-  nixpkgs = {
-    overlays = self.overlays.custom;
-    config = {
-      allowUnfree = true;
-    };
-  };
-
   # Let Home Manager install and manage itself.
   programs.home-manager = {
     enable = true;

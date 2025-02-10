@@ -5,6 +5,7 @@
   ...
 }: {
   nixpkgs = {
+    overlays = [self.overlays.neovimOverlay];
     config   = {
       allowUnsupportedSystem = true;
       allowUnfree = true;
