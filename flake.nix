@@ -272,7 +272,7 @@
     });
 
   overlays = {
-    custom = import ./overlays { inherit inputs; };
+    custom = import ./system/overlays { inherit inputs; };
     channels = final: prev: {
       unstable = import inputs.unstable { inherit (prev) system; };
     };
