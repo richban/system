@@ -6,89 +6,52 @@
     nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
     nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
     
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    darwin = {
-      url = "github:lnl7/nix-darwin/master";
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    projections = {
-      url = "github:gnikdroy/projections.nvim/pre_release";
-      flake = false;
-    };
-    nui = {
-      url = "github:MunifTanjim/nui.nvim";
-      flake = false;
-    };
-    incRename = {
-      url = "github:smjonas/inc-rename.nvim";
-      flake = false;
-    };
-    diffview = {
-      url = "github:sindrets/diffview.nvim";
-      flake = false;
-    };
-    oxacarbonColors = {
-      url = "github:nyoom-engineering/oxocarbon.nvim";
-      flake = false;
-    };
-    copilot = {
-      url = "github:zbirenbaum/copilot.lua";
-      flake = false;
-    };
-    copilotCmp = {
-      url = "github:zbirenbaum/copilot-cmp";
-      flake = false;
-    };
-    copilotLualine = {
-      url = "github:AndreM222/copilot-lualine";
-      flake = false;
-    };
-    copilotChat = {
-      url = "github:CopilotC-Nvim/CopilotChat.nvim";
-      flake = false;
-    };
-    conformNvim = {
-      url = "github:stevearc/conform.nvim";
-      flake = false;
-    };
-    ropeVim = {
-      url = "github:python-rope/ropevim";
-      flake = false;
-    };
-
-    flake-utils.url = "github:numtide/flake-utils";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
     devenv = {
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Neovim flakes
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    projections = { url = "github:gnikdroy/projections.nvim/pre_release"; flake = false; };
+    nui = { url = "github:MunifTanjim/nui.nvim"; flake = false; };
+    incRename = { url = "github:smjonas/inc-rename.nvim"; flake = false; };
+    diffview = { url = "github:sindrets/diffview.nvim"; flake = false; };
+    oxacarbonColors = { url = "github:nyoom-engineering/oxocarbon.nvim"; flake = false; };
+    copilot = { url = "github:zbirenbaum/copilot.lua"; flake = false; };
+    copilotCmp = { url = "github:zbirenbaum/copilot-cmp"; flake = false; };
+    copilotLualine = { url = "github:AndreM222/copilot-lualine"; flake = false; };
+    copilotChat = { url = "github:CopilotC-Nvim/CopilotChat.nvim"; flake = false; };
+    conformNvim = { url = "github:stevearc/conform.nvim"; flake = false; };
+    ropeVim = { url = "github:python-rope/ropevim"; flake = false; };
   };
 
   outputs = {
     self,
     nixpkgs,
-    darwin,
-    determinate,
-    home-manager,
-    flake-utils,
     devenv,
     ...
   } @ inputs: let
-    inherit (darwin.lib) darwinSystem;
-    inherit (home-manager.lib) homeManagerConfiguration;
+    inherit (inputs.nix-darwin.lib) darwinSystem;
+    inherit (inputs.home-manager.lib) homeManagerConfiguration;
     inherit (inputs.nixpkgs) lib;
     inherit (lib) attrValues elem filterAttrs genAttrs intersectLists map mapAttrs mapAttrs' mapAttrsToList mergeAttrsList nameValuePair platforms;
+
+    stateVersion = "24.11";
+    helper = import ./system/lib { inherit inputs self stateVersion; };
 
     defaultSystems =
       intersectLists
@@ -97,12 +60,6 @@
     darwinSystems = intersectLists defaultSystems platforms.darwin;
     linuxSystems = intersectLists defaultSystems platforms.linux;
     eachSystemMap = genAttrs;
-
-    isDarwin = system: (builtins.elem system nixpkgs.lib.platforms.darwin);
-    homePrefix = system:
-      if isDarwin system
-      then "/Users"
-      else "/home";
 
     mkHooks = system:
       inputs.pre-commit-hooks.lib.${system}.run {
@@ -123,49 +80,9 @@
         };
       };
 
-    # generate a darwin config
-    mkDarwinConfig = {
-      system ? "x86_64-darwin",
-      nixpkgs ? inputs.nixpkgs,
-      baseModules ? [determinate.darwinModules.default home-manager.darwinModules.home-manager ./system/darwin],
-      extraModules ? [],
-    }:
-      darwinSystem {
-        inherit system;
-        modules = baseModules ++ extraModules;
-        specialArgs = {inherit self inputs nixpkgs;};
-      };
-
-    # generate a home-manager config for any unix system
-    mkHomeConfig = {
-      username,
-      system ? "aarch64-darwin",
-      nixpkgs ? inputs.nixpkgs,
-      baseModules ? [
-        ./system/home-manager
-        {
-          home = {
-            inherit username;
-            homeDirectory = "${homePrefix system}/${username}";
-            sessionVariables = {
-              NIX_PATH = "nixpkgs=${nixpkgs}";
-            };
-          };
-        }
-      ],
-      extraModules ? [],
-    }:
-      homeManagerConfiguration rec {
-        pkgs = nixpkgs;
-        extraSpecialArgs = {inherit self inputs nixpkgs;};
-        modules = {
-          imports = baseModules ++ extraModules;
-        };
-      };
-
   in {
     checks = mergeAttrsList [
-      # verify devShell + pre-commit hooks; need to work on all platforms
+      # verify devShell + pre-commit hooks;
       (eachSystemMap defaultSystems (
         system: {
           devShell = self.devShells.${system}.default;
@@ -189,17 +106,18 @@
     ];
 
     darwinConfigurations = {
-      "melchior@aarch64-darwin" = mkDarwinConfig {
-        system = "aarch64-darwin";
-        extraModules = [./system/hosts/mac_mini.nix];
+      "melchior@aarch64-darwin" = helper.mkDarwin {
+        hostname = "mac-mini";
+        username = "melchior";
+        platform = "aarch64-darwin";
       };
     };
 
     homeConfigurations = {
-      "melchior@aarch64-darwin" = mkHomeConfig {
+      "melchior@aarch64-darwin" = helper.mkHome {
+        hostname = "mac-mini";
         username = "melchior";
-        system = "aarch64-darwin";
-        extraModules = [./system/hosts/mac_mini.nix];
+        platform = "aarch64-darwin";
       };
     };
 
@@ -214,13 +132,13 @@
         inherit (pre-commit-check) shellHook;
         packages = with pkgs;
           [
-            bashInteractive
-            fd
-            nixd
-            ripgrep
-            uv
+            bashInteractive  # Enhanced bash shell
+            fd # Fast alternative to 'find'
+            nixd # Nix language server
+            ripgrep # Fast text search tool
+            uv # Python packaging tool
           ]
-          ++ (mapAttrsToList (name: value: value) self.packages.${system});
+          ++ (mapAttrsToList (name: value: value) self.packages.${system}); # Adds all packages defined in packages attribute
         inputsFrom = pre-commit-check.enabledPackages;
       };
     });
