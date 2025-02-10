@@ -87,9 +87,16 @@
   } @ inputs: let
     inherit (darwin.lib) darwinSystem;
     inherit (home-manager.lib) homeManagerConfiguration;
-    inherit (flake-utils.lib) eachSystemMap defaultSystems;
     inherit (inputs.nixpkgs) lib;
-    inherit (lib) mapAttrsToList;
+    inherit (lib) attrValues elem filterAttrs genAttrs intersectLists map mapAttrs mapAttrs' mapAttrsToList mergeAttrsList nameValuePair platforms;
+
+    defaultSystems =
+      intersectLists
+      (platforms.linux ++ platforms.darwin)
+      (platforms.x86_64 ++ platforms.aarch64);
+    darwinSystems = intersectLists defaultSystems platforms.darwin;
+    linuxSystems = intersectLists defaultSystems platforms.linux;
+    eachSystemMap = genAttrs;
 
     isDarwin = system: (builtins.elem system nixpkgs.lib.platforms.darwin);
     homePrefix = system:
@@ -156,59 +163,32 @@
         };
       };
 
-    mkChecks = {
-      arch,
-      os,
-      username ? "richban",
-    }: {
-      "${arch}-${os}" = {
-        "${username}_${os}" =
-          (
-            if os == "darwin"
-            then self.darwinConfigurations
-            else self.nixosConfigurations
-          )
-          ."${username}@${arch}-${os}"
-          .config
-          .system
-          .build
-          .toplevel;
-        # "${username}_home" =
-        #   self.homeConfigurations."${username}@${arch}-${os}".activationPackage;
-        devShell = self.devShells."${arch}-${os}".default;
-      };
-    };
   in {
-    checks =
-      {}
-      // (mkChecks {
-        arch = "aarch64";
-        os = "darwin";
-        username = "richard_banyi";
-      })
-      // (mkChecks {
-        arch = "x86_64";
-        os = "darwin";
-      })
-      // (mkChecks {
-        arch = "aarch64";
-        os = "darwin";
-        username = "melchior";
-      });
+    checks = mergeAttrsList [
+      # verify devShell + pre-commit hooks; need to work on all platforms
+      (eachSystemMap defaultSystems (
+        system: {
+          devShell = self.devShells.${system}.default;
+          pre-commit-check = mkHooks system;
+        }
+      ))
+      # home-manager checks; add _home suffix to original config to avoid nixos coflict
+      (eachSystemMap defaultSystems (system:
+        mapAttrs'
+        (name: drv: (nameValuePair "${name}_home" drv.activationPackage))
+        (filterAttrs
+          (name: drv: lib.strings.hasSuffix system name)
+          self.homeConfigurations)))
+      # darwin checks; limit these to darwinSystems
+      (eachSystemMap darwinSystems (system:
+        mapAttrs
+        (name: drv: drv.config.system.build.toplevel)
+        (filterAttrs
+          (name: drv: lib.strings.hasSuffix system name)
+          self.darwinConfigurations)))
+    ];
 
     darwinConfigurations = {
-      "richban@x86_64-darwin" = mkDarwinConfig {
-        system = "x86_64-darwin";
-        extraModules = [./system/hosts/personal.nix];
-      };
-      "richard_banyi@aarch64-darwin" = mkDarwinConfig {
-        system = "aarch64-darwin";
-        extraModules = [./system/hosts/work.nix];
-      };
-      "richban@aarch64-darwin" = mkDarwinConfig {
-        system = "aarch64-darwin";
-        extraModules = [./system/hosts/work_m2.nix];
-      };
       "melchior@aarch64-darwin" = mkDarwinConfig {
         system = "aarch64-darwin";
         extraModules = [./system/hosts/mac_mini.nix];
@@ -216,20 +196,6 @@
     };
 
     homeConfigurations = {
-      "richban@x86_64-darwin" = mkHomeConfig {
-        username = "richban";
-        system = "x86_64-darwin";
-      };
-      "richard_banyi@aarch64-darwin" = mkHomeConfig {
-        username = "richard_banyi";
-        system = "aarch64-darwin";
-        extraModules = [./system/hosts/work.nix];
-      };
-      "richban@aarch64-darwin" = mkHomeConfig {
-        username = "richard.banyi";
-        system = "aarch64-darwin";
-        extraModules = [./system/hosts/work_m2.nix];
-      };
       "melchior@aarch64-darwin" = mkHomeConfig {
         username = "melchior";
         system = "aarch64-darwin";
