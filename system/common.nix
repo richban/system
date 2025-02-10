@@ -3,9 +3,11 @@
   inputs,
   config,
   pkgs,
+  username,
+  stateVersion,
   ...
 }: {
-  imports = [./primary.nix ./nixpkgs.nix ./fonts.nix];
+  imports = [./nixpkgs.nix ./fonts.nix];
 
   programs.zsh = {
     enable = true;
@@ -14,23 +16,23 @@
   };
 
   # bootsrap primary user
-  user = {
+  users.users.${username} = {
     description = "Richard Banyi";
-    name = "${config.user.name}";
+    name = "${username}";
     home = "${
       if pkgs.stdenvNoCC.isDarwin
       then "/Users"
       else "/home"
-    }/${config.user.name}";
+    }/${username}";
     shell = pkgs.zsh;
   };
 
   # bootstrap home-manager
-  hm = import ./home-manager;
+  home-manager.users.${username} = import ./home-manager;
 
   # Enable home-manager
   home-manager = {
-    extraSpecialArgs = {inherit self inputs;};
+    extraSpecialArgs = {inherit self inputs stateVersion username;};
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
