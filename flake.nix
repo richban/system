@@ -2,36 +2,21 @@
   description = "NixOS systems and tools by richban";
 
   inputs = {
-    # We use the unstable nixpkgs repo for some packages.
-    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # nixos-stable.url = "github:nixos/nixpkgs/nixos-23.11";
-    # nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0";
-
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
     nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
-
-    # manage homebrew declaratively
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-
-    # Darwin system management
+    
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      # We want home-manager to use the same set of nixpkgs as our system.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Other packages
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     projections = {
       url = "github:gnikdroy/projections.nvim/pre_release";
       flake = false;
@@ -77,19 +62,12 @@
       flake = false;
     };
 
-    # comma = { url = github:Shopify/comma; flake = false; };
-    # spacebar.url = "github:cmacrae/spacebar/v1.4.0";
     flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     devenv = {
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # devshell = {
-    #   url = "github:numtide/devshell";
-    #   inputs.flake-utils.follows = "flake-utils";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 
   outputs = {
