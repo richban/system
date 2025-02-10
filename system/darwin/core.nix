@@ -1,4 +1,10 @@
 {inputs, ...}: {
+
+  documentation.enable = true;
+  documentation.doc.enable = false;
+  documentation.info.enable = false;
+  documentation.man.enable = true;
+
   # auto manage nixbld users with nix darwin
   nix = {
     configureBuildUsers = true;

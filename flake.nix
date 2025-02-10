@@ -271,22 +271,20 @@
       default = sysdo;
     });
 
-  overlays =
-      custom = import ./overlays { inherit inputs; };
-      channels = final: prev: {
-        # Expose other channels via overlays
-        unstable = import inputs.unstable { inherit (prev) system; };
-      };
-      extraPackages = final: prev: let
-        pkgs = final;
-      in
-        with pkgs; {
-          inherit (self.packages.${prev.system}) sysdo;
-          inherit (self.packages.${prev.system}) pyEnv;
-          inherit (self.packages.${prev.system}) gitmanager;
-          inherit (self.packages.${prev.system}) obsidianbackup;
-          inherit (self.packages.${prev.system}) devenv;
-        };
+  overlays = {
+    custom = import ./overlays { inherit inputs; };
+    channels = final: prev: {
+      unstable = import inputs.unstable { inherit (prev) system; };
+    };
+    extraPackages = final: prev: let
+      pkgs = final;
+    in with pkgs; {
+      inherit (self.packages.${prev.system}) sysdo;
+      inherit (self.packages.${prev.system}) pyEnv;
+      inherit (self.packages.${prev.system}) gitmanager;
+      inherit (self.packages.${prev.system}) obsidianbackup;
+      inherit (self.packages.${prev.system}) devenv;
     };
   };
+
 }
