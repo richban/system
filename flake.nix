@@ -2,16 +2,17 @@
   description = "NixOS systems and tools by richban";
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0";
-    nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
-    nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
+    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0";
+    # nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
     
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
+      url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -24,6 +25,7 @@
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
     # Neovim flakes
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     projections = { url = "github:gnikdroy/projections.nvim/pre_release"; flake = false; };

@@ -232,10 +232,6 @@
       pull.ff = "only";
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
 
-      gpg.format = "ssh";
-      user.signingkey = "key::SHA256:c5UsSIBK/Cx0dA9UGt08hnAZhZzfzFqaSAEPa4Swwwk";
-      commit.gpgsign = true;
-
       core = {
         pager = "delta";
         excludesfile = "~/.gitignore";

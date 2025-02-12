@@ -167,21 +167,6 @@ in {
     forwardAgent = true;
   };
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    stdlib = ''
-      # https://github.com/direnv/direnv/wiki/Customizing-cache-location
-      declare -A direnv_layout_dirs
-      direnv_layout_dir() {
-          echo "''${direnv_layout_dirs[$PWD]:=$(
-              echo -n "${config.xdg.cacheHome}"/direnv/layouts/
-              echo -n "$PWD" | shasum | cut -d ' ' -f 1
-          )}"
-      }
-    '';
-  };
-
   programs.vscode.enable = true;
 
   programs.tealdeer = {
