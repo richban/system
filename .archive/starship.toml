@@ -1,0 +1,11 @@
+[character]
+error_symbol = "[✗](bold red) "
+vicmd_symbol = "[V](bold green) "
+
+[gcloud]
+format = 'on [$symbol$account(\($project\))]($style) '
+disabled = true
+
+[python]
+format = '[${symbol}${pyenv_prefix}${version}( \($virtualenv\))]($style) '
+symbol = ''
