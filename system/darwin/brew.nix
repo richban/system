@@ -4,12 +4,16 @@
     global = {
       brewfile = true;
     };
+    onActivation = {
+      autoUpdate = false;
+      upgrade = false;
+      cleanup = "zap";
+    };
     brews = [];
     taps = [
       "1password/tap"
       "homebrew/bundle"
       "homebrew/services"
-      "koekeishiya/formulae"
     ];
     casks = [
       "alacritty"
@@ -21,9 +25,7 @@
       "raycast"
       "visual-studio-code"
       "discord"
-      "dropbox"
       "notion"
-      "signal"
       "slack"
       "wechat"
       "ticktick"

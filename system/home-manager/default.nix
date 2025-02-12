@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -15,13 +16,37 @@
   relativeXDGCachePath = ".cache";
 
 in {
-  imports = [./zsh.nix ./alacritty.nix ./git.nix ./nvim/config.nix ./1password.nix ./direnv.nix];
+  imports = [
+     inputs.catppuccin.homeManagerModules.catppuccin
+    ./zsh.nix 
+    ./git.nix
+    ./nvim/config.nix
+    ./1password.nix
+    ./direnv.nix
+    ./alacritty.nix
+    ./starship.nix
+  ];
 
   xdg = {
     enable = true;
     configHome = "${homeDir}/${relativeXDGConfigPath}";
     dataHome = "${homeDir}/${relativeXDGDataPath}";
     cacheHome = "${homeDir}/${relativeXDGCachePath}";
+  };
+
+  # Enable the Catppuccin theme
+  catppuccin = {
+    accent = "blue";
+    flavor = "mocha";
+    bat.enable = config.programs.bat.enable;
+    bottom.enable = config.programs.bottom.enable;
+    fzf.enable = config.programs.fzf.enable;
+    gh-dash.enable = config.programs.gh.extensions.gh-dash;
+    gitui.enable = config.programs.gitui.enable;
+    starship.enable = config.programs.starship.enable;
+    alacritty.enable = config.programs.alacritty.enable;
+    tmux.enable = config.programs.tmux.enable;
+    zsh-syntax-highlighting.enable = true;
   };
 
   # Let Home Manager install and manage itself.
@@ -47,21 +72,42 @@ in {
     ];
   };
 
-  programs.starship = {
+  # programs.starship = {
+  #   enable = true;
+  #   # Configuration written to ~/.config/starship.toml
+  #   settings = {
+  #     "$schema" = "https://starship.rs/config-schema.json";
+
+  #     add_newline = true;
+
+  #     character = {
+  #       success_symbol = "[➜](bold green)";
+  #       error_symbol = "[➜](bold red)";
+  #       vicmd_symbol = "[V](bold green) ";
+  #     };
+
+  #     # package.disabled = true;
+  #   };
+  # };
+      
+  programs.bottom = {
     enable = true;
-    # Configuration written to ~/.config/starship.toml
     settings = {
-      "$schema" = "https://starship.rs/config-schema.json";
-
-      add_newline = true;
-
-      character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
-        vicmd_symbol = "[V](bold green) ";
+      disk_filter = {
+        is_list_ignored = true;
+        list = [ "/dev/loop" ];
+        regex = true;
+        case_sensitive = false;
+        whole_word = false;
       };
-
-      # package.disabled = true;
+      flags = {
+        dot_marker = false;
+        enable_gpu_memory = true;
+        group_processes = true;
+        hide_table_gap = true;
+        mem_as_value = true;
+        tree = true;
+      };
     };
   };
 
@@ -163,7 +209,6 @@ in {
       VISUAL = "nvim";
       JAVA_HOME = "${pkgs.openjdk11.home}";
       NODE_PATH = "${homeDir}/.node";
-      # HOMEBREW_NO_AUTO_UPDATE = 1;
     };
     sessionPath = [
       "${homeDir}/.local/bin"
@@ -250,11 +295,6 @@ in {
       tmuxinator = {
         source = ../../dotfiles/config/tmuxinator;
         target = ".config/tmuxinator";
-        recursive = true;
-      };
-      catppuccinMocha = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-        source = ../../dotfiles/config/alacritty/catppuccin-mocha.toml;
-        target = ".config/alacritty/catppuccin/catppuccin-mocha.toml";
         recursive = true;
       };
     };

@@ -2,20 +2,11 @@
 {
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "NerdFontsSymbolsOnly"
-        ];
-      })
-      fira
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.hack
+      nerd-fonts.symbols-only
       font-awesome
-      liberation_ttf
-      noto-fonts-emoji
-      noto-fonts-monochrome-emoji
-      source-serif
-      symbola
-      work-sans
     ];
   };
 }

@@ -12,6 +12,23 @@
     target = ".gitignore";
   };
 
+  programs.gh = {
+    enable = true;
+    extensions = with pkgs; [
+      gh-dash
+      gh-markdown-preview
+    ];
+    settings = {
+      editor = "nvim";
+      git_protocol = "ssh";
+      prompt = "enabled";
+    };
+  };
+
+  programs.gitui = {
+    enable = true;
+  };
+
   programs.git = {
     enable = true;
     userName = "richban";
@@ -214,7 +231,10 @@
       pull.rebase = true;
       pull.ff = "only";
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
-      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+
+      gpg.format = "ssh";
+      user.signingkey = "key::SHA256:c5UsSIBK/Cx0dA9UGt08hnAZhZzfzFqaSAEPa4Swwwk";
+      commit.gpgsign = true;
 
       core = {
         pager = "delta";
@@ -244,20 +264,11 @@
         features = "side-by-side line-numbers decorations";
       };
 
-      gpg = {
-        format = "ssh";
-      };
-
       "delta \"decorations\"" = {
         commit-decoration-style = "bold yellow box ul";
         file-style = "bold yellow";
         file-decoration-style = "none";
       };
     };
-  };
-
-  programs.gh = {
-    enable = true;
-    settings.git_protocol = "ssh";
   };
 }

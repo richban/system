@@ -4,23 +4,26 @@
   pkgs,
   ...
 }: let
-  home = config.home.homeDirectory;
-  darwinSockPath = "${home}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
-  sockPath = "/.1password/agent.sock";
+  homePath = config.home.homeDirectory;
+  darwinSockPath = "${homePath}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+  sockPath = ".1password/agent.sock";
   aliases = {
     gh = "op plugin run -- gh";
     cachix = "op plugin run -- cachix";
   };
 in {
   home.sessionVariables = {
-    SSH_AUTH_SOCK = "${home}/${sockPath}";
+    SSH_AUTH_SOCK = "${homePath}/${sockPath}";
     OP_PLUGIN_ALIASES_SOURCED = 1;
   };
 
-  home.file.sock = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-    source = config.lib.file.mkOutOfStoreSymlink darwinSockPath;
-    target = sockPath;
+  home.activation = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+    link1PasswordSocket = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      $DRY_RUN_CMD mkdir -p "$(dirname "${homePath}/${sockPath}")"
+      $DRY_RUN_CMD ln -sf "${darwinSockPath}" "${homePath}/${sockPath}"
+    '';
   };
+
   programs.bash = {
     initExtra = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
       if command -v op >/dev/null; then
@@ -29,12 +32,7 @@ in {
     '';
     shellAliases = aliases;
   };
-  programs.fish = {
-    interactiveShellInit = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
-      op completion fish | source
-    '';
-    shellAliases = aliases;
-  };
+
   programs.zsh = {
     initExtra = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
       if command -v op >/dev/null; then
@@ -43,8 +41,34 @@ in {
     '';
     shellAliases = aliases;
   };
+
   programs.ssh = {
     enable = true;
     extraConfig = "IdentityAgent ~/${sockPath}";
+  };
+
+  xdg.configFile = {
+    opAgent = {
+      recursive = true;
+      target = "1Password/ssh/agent.toml";
+      text = ''
+        [[ssh-keys]]
+        vault = "Personal"
+      '';
+    };
+  };
+
+  programs.git = {
+    signing = {
+      signByDefault = true;
+      key = null;
+      gpgPath =
+        if pkgs.stdenvNoCC.isDarwin
+        then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+        else "${pkgs._1password-gui}/share/1password/op-ssh-sign";
+    };
+    extraConfig = {
+      gpg.format = "ssh";
+    };
   };
 }

@@ -1,5 +1,44 @@
 {...}: {
   system.defaults = {
+    CustomUserPreferences = {
+      "com.apple.AdLib" = {
+        allowApplePersonalizedAdvertising = false;
+      };
+      "com.apple.controlcenter" = {
+        BatteryShowPercentage = true;
+      };
+      "com.apple.desktopservices" = {
+        # Avoid creating .DS_Store files on network or USB volumes
+        DSDontWriteNetworkStores = true;
+        DSDontWriteUSBStores = true;
+      };
+      "com.apple.finder" = {
+        _FXSortFoldersFirst = true;
+        FXDefaultSearchScope = "SCcf"; # Search current folder by default
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowHardDrivesOnDesktop = false;
+        ShowMountedServersOnDesktop = true;
+        ShowRemovableMediaOnDesktop = true;
+      };
+      # Prevent Photos from opening automatically
+      "com.apple.ImageCapture".disableHotPlug = true;
+      "com.apple.screencapture" = {
+        location = "~/Pictures/Screenshots";
+        type = "png";
+      };
+      "com.apple.SoftwareUpdate" = {
+        AutomaticCheckEnabled = true;
+        # Check for software updates daily, not just once per week
+        ScheduleFrequency = 1;
+        # Download newly available updates in background
+        AutomaticDownload = 0;
+        # Install System data files & security updates
+        CriticalUpdateInstall = 1;
+      };
+      "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
+      # Turn on app auto-update
+      "com.apple.commerce".AutoUpdate = true;
+    };
     # login window settings
     loginwindow = {
       # disable guest account
@@ -13,6 +52,11 @@
       AppleShowAllExtensions = true;
       FXEnableExtensionChangeWarning = true;
       _FXShowPosixPathInTitle = true;
+      FXPreferredViewStyle = "Nlsv";
+      AppleShowAllFiles = true;
+      QuitMenuItem = true;
+      ShowPathbar = true;
+      ShowStatusBar = true;
     };
 
     # trackpad settings
@@ -67,6 +111,19 @@
       KeyRepeat = 1;
       AppleShowAllExtensions = true;
       AppleShowScrollBars = "Automatic";
+      AppleICUForce24HourTime = true;
+      AppleInterfaceStyle = "Dark";
+      AppleInterfaceStyleSwitchesAutomatically = false;
+      AppleMeasurementUnits = "Centimeters";
+      AppleMetricUnits = 1;
+      AppleTemperatureUnit = "Celsius";
+      NSAutomaticCapitalizationEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticSpellingCorrectionEnabled = true;
+      NSNavPanelExpandedStateForSaveMode = true;
+      NSNavPanelExpandedStateForSaveMode2 = true;
     };
   };
 
