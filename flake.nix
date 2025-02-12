@@ -25,6 +25,8 @@
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
     # Neovim flakes
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";

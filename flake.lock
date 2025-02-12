@@ -785,6 +785,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739071773,
+        "narHash": "sha256-/Ak+Quinhmdxa9m3shjm4lwwwqmzG8zzGhhhhgR1k9I=",
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "rev": "895d81b6228bbd50a6ef22f5a58a504ca99763ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nix_2": {
       "inputs": {
         "flake-compat": [
@@ -1209,6 +1229,7 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
+        "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_7",
         "nui": "nui",
         "oxacarbonColors": "oxacarbonColors",

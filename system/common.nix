@@ -9,10 +9,14 @@
 }: {
   imports = [./nixpkgs.nix ./fonts.nix];
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableBashCompletion = true;
+  programs = {
+    zsh ={
+      enable = true;
+      enableCompletion = true;
+      enableBashCompletion = true;
+    };
+    info.enable = false;
+    nix-index-database.comma.enable = true;
   };
 
   # bootsrap primary user
@@ -45,16 +49,9 @@
       curl
       coreutils-full
       wget
-      git
-      jq
-      gnupg
       nix-prefetch-github
       nix-template
       cachix
-      # helpful shell stuff
-      bat
-      fzf
-      ripgrep
     ];
     etc = {
       home-manager.source = "${inputs.home-manager}";

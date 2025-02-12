@@ -47,6 +47,7 @@ in {
     alacritty.enable = config.programs.alacritty.enable;
     tmux.enable = config.programs.tmux.enable;
     zsh-syntax-highlighting.enable = true;
+    delta.enable = true;
   };
 
   # Let Home Manager install and manage itself.
@@ -54,7 +55,26 @@ in {
     enable = true;
   };
 
-  programs.bat.enable = true;
+  programs.dircolors = {
+    enable = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  programs.bat = {
+    enable = true;
+    extraPackages = with pkgs.bat-extras; [
+      batgrep
+      batwatch
+      prettybat
+      batman
+    ];
+    config = {
+      style = "plain";
+    };
+  };
+
   programs.fzf = {
     enable = true;
     fileWidgetOptions = [
@@ -114,50 +134,33 @@ in {
   programs.tmux = {
     enable = true;
     tmuxinator.enable = true;
-    # prefix = "C-a";
     shortcut = "a";
     baseIndex = 1;
-
+    shell = "${pkgs.zsh}/bin/zsh";
+    
+    # Add default command to ensure login shell
+    extraConfig = ''
+      ${builtins.readFile ../../dotfiles/config/tmux/tmux.conf}
+      set-option -g default-command "${pkgs.zsh}/bin/zsh"
+    '';
+    
     plugins = with pkgs; [
+      # Core plugins
       tmuxPlugins.sensible
       tmuxPlugins.yank
       tmuxPlugins.copycat
       tmuxPlugins.fpp
+      
+      # Session management
       tmuxPlugins.resurrect
-      tmuxPlugins.continuum
-      tmuxPlugins.better-mouse-mode
-      tmuxPlugins.pain-control
-      # tmuxPlugins.vim-tmux-navigator
-      # tmuxPlugins.dracula
       {
-        plugin = tmuxPlugins.catppuccin;
+        plugin = tmuxPlugins.continuum;
         extraConfig = ''
-          set -g @catppuccin_flavour 'mocha'
-          set -g @catppuccin_window_left_separator ""
-          set -g @catppuccin_window_right_separator " "
-          set -g @catppuccin_window_middle_separator " █"
-          set -g @catppuccin_window_number_position "right"
-          set -g @catppuccin_window_default_fill "number"
-          set -g @catppuccin_window_default_text "#W"
-          set -g @catppuccin_window_current_fill "number"
-          set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
-          set -g @catppuccin_status_modules_right "directory meetings date_time"
-          set -g @catppuccin_status_modules_left "session"
-          set -g @catppuccin_status_left_separator  " "
-          set -g @catppuccin_status_right_separator " "
-          set -g @catppuccin_status_right_separator_inverse "no"
-          set -g @catppuccin_status_fill "icon"
-          set -g @catppuccin_status_connect_separator "no"
-          set -g @catppuccin_directory_text "#{b:pane_current_path}"
-
           set -g @continuum-boot 'on'
           set -g @continuum-boot-options 'alacritty'
         '';
       }
     ];
-    extraConfig = ''
-      ${builtins.readFile ../../dotfiles/config/tmux/tmux.conf}
-    '';
   };
 
   programs.go.enable = true;
@@ -201,69 +204,74 @@ in {
     ];
 
     packages = with pkgs; [
-      coreutils
-      lua
-      fzf
-      fd
-      jq
-      readline
-      moreutils
-      # tldr
-      ripgrep
-      shellcheck
-      graphviz
-      gnupg
-      # zenith
-      htop
-      bottom
-      tree
-      neofetch
-      curl
-      wget
-      glow
-      universal-ctags
-      unzip
-      gnused
-      starship
-      eza
-
+      # CLI Utilities
+      jq           # JSON processor and formatter
+      jiq          # Modern Unix `jq`
+      fzf          # Fuzzy file finder
+      fd           # Simple find alternative
+      ripgrep      # Fast text search tool
+      tree         # Directory structure viewer
+      eza          # Modern ls replacement
+      moreutils    # Additional Unix tools
+      htop         # System monitoring tool
+      neofetch     # System info display
+      curl         # URL transfer tool
+      wget         # File download utility
+      glow         # Markdown CLI renderer
+      unzip        # Archive extraction tool
+      gnused       # Stream editor
+      universal-ctags  # Code indexing tool
+      
+      # Development Tools
+      lua          # Lua programming language
+      readline     # Line editing library
+      shellcheck   # Shell script analyzer
+      graphviz     # Graph visualization
+      treefmt      # Code formatter
+      shfmt        # Shell formatter
+      pre-commit   # Git hooks manager
+      git-sizer    # Git repo analyzer
+      git-lfs      # Git large file storage
+      
+      # Ruby Environment
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
 
-      treefmt
-      # formats shell programs
-      shfmt
-      pre-commit
-      git-sizer
-      git-lfs
+      # Infrastructure & Containers
+      terraform       # Infrastructure as code
+      docker         # Container platform
+      docker-compose # Container orchestration
+      google-cloud-sdk # GCP toolkit
 
-      bat
-      bat-extras.batgrep
-      bat-extras.batman
-      bat-extras.batwatch
-      bat-extras.prettybat
+      nixfmt-rfc-style # Nix code formatter
+      nixpkgs-review # Nix code review
+      nix-prefetch-scripts # Nix code fetcher
+      nurl # Nix URL fetcher
 
-      terraform
-      docker
-      docker-compose
-      google-cloud-sdk
-
+      # Python Environment
       (pkgs.python311.withPackages (ps: with ps; [
-        duckdb
-        pandas
-        polars
-        jupyter
-        ipython
+        duckdb      # SQL database engine
+        pandas      # Data analysis library
+        polars      # Fast dataframe library
+        jupyter     # Interactive notebooks
+        ipython     # Enhanced Python shell
       ]))
 
-      cookiecutter
-      ruff
-      uv
-      poetry
-      sqlfluff
+      # Python Development Tools
+      cookiecutter  # Project template tool
+      ruff         # Fast Python linter
+      uv           # Python package installer
+      sqlfluff     # SQL linter
 
-      nodejs_20
-      nodePackages.npm
-      yarn
+      # Node.js Environment
+      nodejs_20    # JavaScript runtime
+      nodePackages.npm # Node package manager
+
+       asciicam # Terminal webcam
+       bandwhich # Modern Unix `iftop`
+       cpufetch # Terminal CPU info
+       difftastic # Modern Unix `diff`
+       fastfetch # Modern Unix system info
+       ipfetch # Terminal IP info
     ];
 
     file = {

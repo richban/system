@@ -5,6 +5,7 @@
     gitAndTools.delta
     act
     github-cli
+    git-igitt # Modern Unix git log/graph
   ];
 
   home.file.gitignore = {
