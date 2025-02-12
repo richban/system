@@ -280,11 +280,6 @@ in {
         target = ".hammerspoon";
         recursive = true;
       };
-      ctags = {
-        source = ../../dotfiles/ctags;
-        target = ".ctags";
-        recursive = true;
-      };
       tmuxinator = {
         source = ../../dotfiles/config/tmuxinator;
         target = ".config/tmuxinator";
