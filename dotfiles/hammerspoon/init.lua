@@ -30,8 +30,18 @@ hs.notify.new({ title = "Hammerspoon", informativeText = "Config loaded" }):send
 
 function displayMicMuteStatus()
   local currentAudioInput = hs.audiodevice.current(true)
+  if not currentAudioInput then
+    hs.alert.show("No audio input device found")
+    return
+  end
+  
   local currentAudioInputObject = hs.audiodevice.findInputByUID(currentAudioInput.uid)
-  muted = currentAudioInputObject:inputMuted()
+  if not currentAudioInputObject then
+    hs.alert.show("Could not find audio input device")
+    return
+  end
+  
+  local muted = currentAudioInputObject:inputMuted()
   if muted then
     hs.alert.show("Microphone Muted")
   else
@@ -45,7 +55,18 @@ end
 
 function toggleMicMuteStatus()
   local currentAudioInput = hs.audiodevice.current(true)
+  if not currentAudioInput then
+    hs.alert.show("No audio input device found")
+    return
+  end
+  
   local currentAudioInputObject = hs.audiodevice.findInputByUID(currentAudioInput.uid)
+  if not currentAudioInputObject then
+    hs.alert.show("Could not find audio input device")
+    return
+  end
+  
+  local muted = currentAudioInputObject:inputMuted()
   currentAudioInputObject:setInputMuted(not muted)
   displayMicMuteStatus()
 end
