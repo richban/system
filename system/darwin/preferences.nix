@@ -98,6 +98,23 @@
       show-process-indicators = true;
       orientation = "bottom";
       mru-spaces = false;
+      persistent-apps = [
+        "/System/Applications/Launchpad.app"
+        "/Applications/Arc.app"
+        "/System/Applications/Messages.app"
+        "/System/Applications/FaceTime.app"
+        "/System/Applications/Mail.app"
+        "/Applications/WeChat.app"
+        "/Applications/Discord.app"
+        "/System/Applications/Calendar.app"
+        "/System/Applications/Notes.app"
+        "/System/Applications/Freeform.app"
+        "/Applications/Obsidian.app"
+        "/Applications/Notion.app"
+        "/Applications/TickTick.app"
+        "/Applications/Alacritty.app"
+        "/Applications/Windsurf.app"
+      ];
     };
 
     NSGlobalDomain = {
