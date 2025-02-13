@@ -6,7 +6,7 @@
     # nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";
-    
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,17 +30,50 @@
     catppuccin.url = "github:catppuccin/nix";
     # Neovim flakes
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    projections = { url = "github:gnikdroy/projections.nvim/pre_release"; flake = false; };
-    nui = { url = "github:MunifTanjim/nui.nvim"; flake = false; };
-    incRename = { url = "github:smjonas/inc-rename.nvim"; flake = false; };
-    diffview = { url = "github:sindrets/diffview.nvim"; flake = false; };
-    oxacarbonColors = { url = "github:nyoom-engineering/oxocarbon.nvim"; flake = false; };
-    copilot = { url = "github:zbirenbaum/copilot.lua"; flake = false; };
-    copilotCmp = { url = "github:zbirenbaum/copilot-cmp"; flake = false; };
-    copilotLualine = { url = "github:AndreM222/copilot-lualine"; flake = false; };
-    copilotChat = { url = "github:CopilotC-Nvim/CopilotChat.nvim"; flake = false; };
-    conformNvim = { url = "github:stevearc/conform.nvim"; flake = false; };
-    ropeVim = { url = "github:python-rope/ropevim"; flake = false; };
+    projections = {
+      url = "github:gnikdroy/projections.nvim/pre_release";
+      flake = false;
+    };
+    nui = {
+      url = "github:MunifTanjim/nui.nvim";
+      flake = false;
+    };
+    incRename = {
+      url = "github:smjonas/inc-rename.nvim";
+      flake = false;
+    };
+    diffview = {
+      url = "github:sindrets/diffview.nvim";
+      flake = false;
+    };
+    oxacarbonColors = {
+      url = "github:nyoom-engineering/oxocarbon.nvim";
+      flake = false;
+    };
+    copilot = {
+      url = "github:zbirenbaum/copilot.lua";
+      flake = false;
+    };
+    copilotCmp = {
+      url = "github:zbirenbaum/copilot-cmp";
+      flake = false;
+    };
+    copilotLualine = {
+      url = "github:AndreM222/copilot-lualine";
+      flake = false;
+    };
+    copilotChat = {
+      url = "github:CopilotC-Nvim/CopilotChat.nvim";
+      flake = false;
+    };
+    conformNvim = {
+      url = "github:stevearc/conform.nvim";
+      flake = false;
+    };
+    ropeVim = {
+      url = "github:python-rope/ropevim";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -55,7 +88,7 @@
     inherit (lib) attrValues elem filterAttrs genAttrs intersectLists map mapAttrs mapAttrs' mapAttrsToList mergeAttrsList nameValuePair platforms;
 
     stateVersion = "24.11";
-    helper = import ./system/lib { inherit inputs self stateVersion; };
+    helper = import ./system/lib {inherit inputs self stateVersion;};
 
     defaultSystems =
       intersectLists
@@ -83,7 +116,6 @@
           };
         };
       };
-
   in {
     checks = mergeAttrsList [
       # verify devShell + pre-commit hooks;
@@ -136,7 +168,7 @@
         inherit (pre-commit-check) shellHook;
         packages = with pkgs;
           [
-            bashInteractive  # Enhanced bash shell
+            bashInteractive # Enhanced bash shell
             fd # Fast alternative to 'find'
             nixd # Nix language server
             ripgrep # Fast text search tool
@@ -167,7 +199,7 @@
     });
 
     overlays = {
-      neovimOverlay = import ./system/overlays/neovim.nix { inherit inputs; };
+      neovimOverlay = import ./system/overlays/neovim.nix {inherit inputs;};
       default = final: prev: {
         sysdo = self.packages.${prev.system}.sysdo;
       };
