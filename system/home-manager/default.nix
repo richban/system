@@ -3,22 +3,20 @@
   config,
   pkgs,
   lib,
-  self,
   stateVersion,
   username,
   ...
 }: let
-  inherit (pkgs.stdenv) isDarwin isLinux;
+  inherit (pkgs.stdenv) isDarwin;
   homeDir = config.home.homeDirectory;
-  
+
   relativeXDGConfigPath = ".config";
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
-
 in {
   imports = [
-     inputs.catppuccin.homeManagerModules.catppuccin
-    ./zsh.nix 
+    inputs.catppuccin.homeManagerModules.catppuccin
+    ./zsh.nix
     ./git.nix
     ./nvim/config.nix
     ./1password.nix
@@ -109,13 +107,13 @@ in {
   #     # package.disabled = true;
   #   };
   # };
-      
+
   programs.bottom = {
     enable = true;
     settings = {
       disk_filter = {
         is_list_ignored = true;
-        list = [ "/dev/loop" ];
+        list = ["/dev/loop"];
         regex = true;
         case_sensitive = false;
         whole_word = false;
@@ -137,20 +135,20 @@ in {
     shortcut = "a";
     baseIndex = 1;
     shell = "${pkgs.zsh}/bin/zsh";
-    
+
     # Add default command to ensure login shell
     extraConfig = ''
       ${builtins.readFile ../../dotfiles/config/tmux/tmux.conf}
       set-option -g default-command "${pkgs.zsh}/bin/zsh"
     '';
-    
+
     plugins = with pkgs; [
       # Core plugins
       tmuxPlugins.sensible
       tmuxPlugins.yank
       tmuxPlugins.copycat
       tmuxPlugins.fpp
-      
+
       # Session management
       tmuxPlugins.resurrect
       {
@@ -187,10 +185,9 @@ in {
     inherit stateVersion;
     inherit username;
     homeDirectory =
-      if isDarwin then
-        "/Users/${username}"
-      else
-        "/home/${username}";
+      if isDarwin
+      then "/Users/${username}"
+      else "/home/${username}";
     sessionVariables = {
       GPG_TTY = "/dev/ttys000";
       EDITOR = "nvim";
@@ -205,40 +202,40 @@ in {
 
     packages = with pkgs; [
       # CLI Utilities
-      jq           # JSON processor and formatter
-      jiq          # Modern Unix `jq`
-      fzf          # Fuzzy file finder
-      fd           # Simple find alternative
-      ripgrep      # Fast text search tool
-      tree         # Directory structure viewer
-      eza          # Modern ls replacement
-      moreutils    # Additional Unix tools
-      htop         # System monitoring tool
-      neofetch     # System info display
-      curl         # URL transfer tool
-      wget         # File download utility
-      glow         # Markdown CLI renderer
-      unzip        # Archive extraction tool
-      gnused       # Stream editor
-      universal-ctags  # Code indexing tool
-      
+      jq # JSON processor and formatter
+      jiq # Modern Unix `jq`
+      fzf # Fuzzy file finder
+      fd # Simple find alternative
+      ripgrep # Fast text search tool
+      tree # Directory structure viewer
+      eza # Modern ls replacement
+      moreutils # Additional Unix tools
+      htop # System monitoring tool
+      neofetch # System info display
+      curl # URL transfer tool
+      wget # File download utility
+      glow # Markdown CLI renderer
+      unzip # Archive extraction tool
+      gnused # Stream editor
+      universal-ctags # Code indexing tool
+
       # Development Tools
-      lua          # Lua programming language
-      readline     # Line editing library
-      shellcheck   # Shell script analyzer
-      graphviz     # Graph visualization
-      treefmt      # Code formatter
-      shfmt        # Shell formatter
-      pre-commit   # Git hooks manager
-      git-sizer    # Git repo analyzer
-      git-lfs      # Git large file storage
-      
+      lua # Lua programming language
+      readline # Line editing library
+      shellcheck # Shell script analyzer
+      graphviz # Graph visualization
+      treefmt # Code formatter
+      shfmt # Shell formatter
+      pre-commit # Git hooks manager
+      git-sizer # Git repo analyzer
+      git-lfs # Git large file storage
+
       # Ruby Environment
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
 
       # Infrastructure & Containers
-      terraform       # Infrastructure as code
-      docker         # Container platform
+      terraform # Infrastructure as code
+      docker # Container platform
       docker-compose # Container orchestration
       google-cloud-sdk # GCP toolkit
 
@@ -248,30 +245,31 @@ in {
       nurl # Nix URL fetcher
 
       # Python Environment
-      (pkgs.python311.withPackages (ps: with ps; [
-        duckdb      # SQL database engine
-        pandas      # Data analysis library
-        polars      # Fast dataframe library
-        jupyter     # Interactive notebooks
-        ipython     # Enhanced Python shell
-      ]))
+      (pkgs.python311.withPackages (ps:
+        with ps; [
+          duckdb # SQL database engine
+          pandas # Data analysis library
+          polars # Fast dataframe library
+          jupyter # Interactive notebooks
+          ipython # Enhanced Python shell
+        ]))
 
       # Python Development Tools
-      cookiecutter  # Project template tool
-      ruff         # Fast Python linter
-      uv           # Python package installer
-      sqlfluff     # SQL linter
+      cookiecutter # Project template tool
+      ruff # Fast Python linter
+      uv # Python package installer
+      sqlfluff # SQL linter
 
       # Node.js Environment
-      nodejs_20    # JavaScript runtime
+      nodejs_20 # JavaScript runtime
       nodePackages.npm # Node package manager
 
-       asciicam # Terminal webcam
-       bandwhich # Modern Unix `iftop`
-       cpufetch # Terminal CPU info
-       difftastic # Modern Unix `diff`
-       fastfetch # Modern Unix system info
-       ipfetch # Terminal IP info
+      asciicam # Terminal webcam
+      bandwhich # Modern Unix `iftop`
+      cpufetch # Terminal CPU info
+      difftastic # Modern Unix `diff`
+      fastfetch # Modern Unix system info
+      ipfetch # Terminal IP info
     ];
 
     file = {

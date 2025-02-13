@@ -1,7 +1,6 @@
 {
   self,
   inputs,
-  config,
   pkgs,
   username,
   stateVersion,
@@ -10,7 +9,7 @@
   imports = [./nixpkgs.nix ./fonts.nix];
 
   programs = {
-    zsh ={
+    zsh = {
       enable = true;
       enableCompletion = true;
       enableBashCompletion = true;

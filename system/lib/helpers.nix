@@ -1,18 +1,15 @@
 {
   inputs,
-  self  ,
+  self,
   stateVersion,
   ...
-}:
-{
+}: {
   # Helper function for generating home-manager configs
-  mkHome =
-    {
-      hostname,
-      username ? "richban",
-      desktop ? null,
-      platform ? "aarch64-darwin",
-    }:
+  mkHome = {
+    hostname,
+    username ? "richban",
+    platform ? "aarch64-darwin",
+  }:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${platform};
       extraSpecialArgs = {
@@ -25,15 +22,14 @@
           stateVersion
           ;
       };
-      modules = [ ../home-manager ];
+      modules = [../home-manager];
     };
 
-  mkDarwin =
-    {
-      hostname,
-      username ? "richban",
-      platform ? "aarch64-darwin",
-    }:
+  mkDarwin = {
+    hostname,
+    username ? "richban",
+    platform ? "aarch64-darwin",
+  }:
     inputs.nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit
@@ -45,7 +41,7 @@
           stateVersion
           ;
       };
-      modules = [ 
+      modules = [
         ../darwin
       ];
     };

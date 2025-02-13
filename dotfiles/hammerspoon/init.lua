@@ -34,13 +34,13 @@ function displayMicMuteStatus()
     hs.alert.show("No audio input device found")
     return
   end
-  
+
   local currentAudioInputObject = hs.audiodevice.findInputByUID(currentAudioInput.uid)
   if not currentAudioInputObject then
     hs.alert.show("Could not find audio input device")
     return
   end
-  
+
   local muted = currentAudioInputObject:inputMuted()
   if muted then
     hs.alert.show("Microphone Muted")
@@ -59,13 +59,13 @@ function toggleMicMuteStatus()
     hs.alert.show("No audio input device found")
     return
   end
-  
+
   local currentAudioInputObject = hs.audiodevice.findInputByUID(currentAudioInput.uid)
   if not currentAudioInputObject then
     hs.alert.show("Could not find audio input device")
     return
   end
-  
+
   local muted = currentAudioInputObject:inputMuted()
   currentAudioInputObject:setInputMuted(not muted)
   displayMicMuteStatus()

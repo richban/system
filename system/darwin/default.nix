@@ -1,4 +1,10 @@
-{inputs, hostname, platform, username, ...}: {
+{
+  inputs,
+  hostname,
+  platform,
+  username,
+  ...
+}: {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
     # inputs.determinate.darwinModules.default
@@ -12,7 +18,10 @@
 
   nix-homebrew = {
     enable = true;
-    enableRosetta = if (platform == "aarch64-darwin") then true else false;
+    enableRosetta =
+      if (platform == "aarch64-darwin")
+      then true
+      else false;
     autoMigrate = true;
     user = "${username}";
     mutableTaps = true;

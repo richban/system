@@ -61,9 +61,24 @@ function M.on_attach(client, buffer)
   <leader>li - Show active LSP client information
   <leader>ll - Show LSP log file path
   --]]
-  vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { buffer = buffer, desc = "LSP: Show Definition & References" })
-  vim.keymap.set("n", "<leader>li", ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", { buffer = buffer, desc = "LSP: Show Info" })
-  vim.keymap.set("n", "<leader>ll", ":lua print(vim.lsp.get_log_path())<CR>", { buffer = buffer, desc = "LSP: Show Log Path" })
+  vim.keymap.set(
+    "n",
+    "gh",
+    "<cmd>Lspsaga lsp_finder<CR>",
+    { buffer = buffer, desc = "LSP: Show Definition & References" }
+  )
+  vim.keymap.set(
+    "n",
+    "<leader>li",
+    ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>",
+    { buffer = buffer, desc = "LSP: Show Info" }
+  )
+  vim.keymap.set(
+    "n",
+    "<leader>ll",
+    ":lua print(vim.lsp.get_log_path())<CR>",
+    { buffer = buffer, desc = "LSP: Show Log Path" }
+  )
 
   --[[ TypeScript Specific
   Key mappings only active in TypeScript files:

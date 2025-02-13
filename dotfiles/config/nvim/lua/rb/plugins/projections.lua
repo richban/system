@@ -14,25 +14,25 @@ return {
       store_hooks = { pre = nil, post = nil },
       restore_hooks = { pre = nil, post = nil },
     })
-    
+
     local Session = require("projections.session")
-    
+
     -- Syntax highlighting
     vim.opt.ssop:append({ "localoptions" })
-    
+
     -- Bind <leader>fp to Telescope projections
     require("telescope").load_extension("projections")
     vim.keymap.set("n", "<leader>fp", function()
       vim.cmd("Telescope projections")
     end)
-    
+
     -- Autostore session on VimExit
     vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
       callback = function()
         Session.store(vim.loop.cwd())
       end,
     })
-    
+
     -- Switch to project if vim was started in a project dir
     local switcher = require("projections.switcher")
     vim.api.nvim_create_autocmd({ "VimEnter" }, {
@@ -42,7 +42,7 @@ return {
         end
       end,
     })
-    
+
     -- If vim was started with arguments, do nothing
     -- If in some project's root, attempt to restore that project's session
     -- If not, restore last session

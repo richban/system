@@ -79,13 +79,10 @@
   outputs = {
     self,
     nixpkgs,
-    devenv,
     ...
   } @ inputs: let
-    inherit (inputs.nix-darwin.lib) darwinSystem;
-    inherit (inputs.home-manager.lib) homeManagerConfiguration;
     inherit (inputs.nixpkgs) lib;
-    inherit (lib) attrValues elem filterAttrs genAttrs intersectLists map mapAttrs mapAttrs' mapAttrsToList mergeAttrsList nameValuePair platforms;
+    inherit (lib) filterAttrs genAttrs intersectLists mapAttrs mapAttrs' mapAttrsToList mergeAttrsList nameValuePair platforms;
 
     stateVersion = "24.11";
     helper = import ./system/lib {inherit inputs self stateVersion;};
@@ -95,7 +92,6 @@
       (platforms.linux ++ platforms.darwin)
       (platforms.x86_64 ++ platforms.aarch64);
     darwinSystems = intersectLists defaultSystems platforms.darwin;
-    linuxSystems = intersectLists defaultSystems platforms.linux;
     eachSystemMap = genAttrs;
 
     mkHooks = system:
@@ -204,5 +200,8 @@
         sysdo = self.packages.${prev.system}.sysdo;
       };
     };
+
+    # Formatter for .nix files, available via 'nix fmt'
+    formatter = eachSystemMap defaultSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
   };
 }
