@@ -26,6 +26,7 @@
       "obsidian"
       "raycast"
       "visual-studio-code"
+      "windsurf"
       "discord"
       "notion"
       "slack"
