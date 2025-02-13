@@ -69,7 +69,10 @@ in {
     };
     extraConfig = {
       gpg.format = "ssh";
-      gpg.ssh.defaultKeyCommand = "op read 'op://Personal/Github SSH Key/public key'";
+      gpg.ssh = {
+        defaultKeyCommand = "op read 'op://Personal/Github SSH Key/public key'";
+        allowedSignersFile = "~/.ssh/allowed_signers";
+      };
     };
   };
 }
