@@ -9,7 +9,9 @@
       upgrade = false;
       cleanup = "zap";
     };
-    brews = [];
+    brews = [
+      "terminal-notifier"
+    ];
     taps = [
       "1password/tap"
       "homebrew/bundle"
@@ -30,6 +32,9 @@
       "wechat"
       "ticktick"
       "github"
+      "karabiner-elements"
+      "zoom"
+      "whatsapp"
     ];
   };
 }

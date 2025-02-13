@@ -22,28 +22,22 @@ The system configurations are defined as a [flake.nix](https://nixos.wiki/wiki/F
 
 Run the installer script to perform a multi-user installation. The installer also installs `nix-darwin`, since it doesn't work with flakes out of the box.
 
-```
-./bin/install_nix.sh
+```bash
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
 ## 🚀 Bootstrapping
 
 ### Darwin
 
-Clone this repository into `~/Developer`:
+Clone this repository into `~/.nixpkgs`:
 
 ```bash
-git@github.com:richban/dotfiles.git
+git clone https://github.com/kclejeune/system ~/.nixpkgs
 ```
 
-Bootstrap a `nix-darwin` system using:
+Bootstrap a new system using:
 
 ```bash
-nix --extra-experimental-features "nix-command flakes" develop -c sysdo bootstrap --darwin
-```
-
-Bootstrap a `home-manager` configuration using:
-
-```bash
-nix --extra-experimental-features "nix-command flakes" develop -c sysdo bootstrap --home-manager
+nix run .#sysdo bootstrap
 ```

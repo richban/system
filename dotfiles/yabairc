@@ -31,18 +31,18 @@ yabai -m config right_padding 10
 yabai -m config window_gap 10
 
 # create at lease 8 spaces
-# yabai -m space --create
-# yabai -m space --create
-# yabai -m space --create
-# yabai -m space --create
-# yabai -m space --create
-# yabai -m space --create
-# yabai -m space --create
+yabai -m space --create
+yabai -m space --create
+yabai -m space --create
+yabai -m space --create
+yabai -m space --create
+yabai -m space --create
+yabai -m space --create
 
 # mark spaces respectively
-yabai -m space 1 --label code
-yabai -m space 2 --label main
-yabai -m space 3 --label browsing
+yabai -m space 1 --label terminal
+yabai -m space 2 --label browsing
+yabai -m space 3 --label code
 yabai -m space 4 --label productivity
 yabai -m space 5 --label work-comm
 yabai -m space 6 --label comm
@@ -70,27 +70,26 @@ yabai -m rule --add app="^Browserosaurus$" sticky=off layer=above manage=off
 yabai -m rule --add app="^Box$" sticky=off layer=above manage=off
 yabai -m rule --add app="Bartender 4" sticky=off layer=above manage=off
 #
-yabai -m rule --add app="^Alacritty" space=main
-yabai -m rule --add app="^Google" space=main
+yabai -m rule --add app="^Alacritty" space=terminal
 #
 yabai -m rule --add app="^Code" space=code
 yabai -m rule --add app="^Github Desktop" space=code
 #
 yabai -m rule --add app="^Firefox" space=browsing
+yabai -m rule --add app="^Arc" space=browsing
 yabai -m rule --add app="^Safari" space=browsing
 #
 yabai -m rule --add app="^TickTick$" space=productivity
 yabai -m rule --add app="^Notion$" space=productivity
 yabai -m rule --add app="^Obsidian$" space=productivity
 #
-yabai -m rule --add app="^Microsoft Outlook" space=work-comm
-yabai -m rule --add app="^Microsoft Teams" space=work-comm
+yabai -m rule --add app="^Mail" space=work-comm
 yabai -m rule --add app="^Slack" space=work-comm
 #
 # yabai -m rule --add app="^WeChat$" grid=1:1:0:0:1:1 manage=off space=comm
-# yabai -m rule --add app="^WhatsApp" space=comm
-# yabai -m rule --add app="^Mail" space=comm
-# yabai -m rule --add app="^Messages" space=comm
-# yabai -m rule --add app="^Discord" space=comm
+yabai -m rule --add app="^WhatsApp" space=comm
+yabai -m rule --add app="^WeChat" space=comm
+yabai -m rule --add app="^Messages" space=comm
+yabai -m rule --add app="^Discord" space=comm
 
 echo "yabai configuration loaded.."

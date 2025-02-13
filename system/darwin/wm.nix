@@ -7,11 +7,13 @@
     enable = true;
     package = pkgs.yabai;
     enableScriptingAddition = true;
-    extraConfig = builtins.readFile ../../dotfiles/yabairc;
+    extraConfig = ''
+      ${builtins.readFile ../../dotfiles/yabairc}
+    '';
   };
 
   services.skhd.enable = true;
-  services.skhd.skhdConfig = builtins.readFile ../../dotfiles/skhdrc;
+  services.skhd.skhdConfig = ''${builtins.readFile ../../dotfiles/skhdrc}'';
 
   services.spacebar = {
     enable = true;
