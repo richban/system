@@ -11,6 +11,9 @@
     };
     sessionVariables = {
       ENHANCD_FILTER = "fzy:fzf:peco";
+      TERM = "xterm-256color";
+      LANG = "en_US.UTF-8";
+      GPG_TTY = "/dev/ttys000";
       PATH = "${config.home.homeDirectory}/.local/bin:/opt/homebrew/bin:$PATH";
     };
   };
@@ -20,11 +23,11 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
-    shellAliases = import ./aliases.nix { inherit pkgs; };
+    shellAliases = import ./aliases.nix {inherit pkgs;};
 
     plugins = [
       {
-        name = "autopair";
+        name = "zsh-autopair";
         src = pkgs.fetchFromGitHub {
           owner = "hlissner";
           repo = "zsh-autopair";
