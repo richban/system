@@ -2,6 +2,10 @@
     <code>Nix System Config & dotfiles</code>
 </h1>
 
+<a href="docs/img/terminal.png">
+    <img src="docs/img/terminal.png" alt="Terminal Screenshot" width="600">
+</a>
+
 This repository manages system configurations for all of my OSX based machines.
 The system configurations are defined as a [flake.nix](https://nixos.wiki/wiki/Flakes).
 
@@ -40,4 +44,3 @@ Bootstrap a new system using:
 
 ```bash
 nix run .#sysdo bootstrap
-```
