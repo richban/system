@@ -18,10 +18,8 @@ return {
     -- Define your formatters
     formatters_by_ft = {
       lua = { "stylua" },
-      -- Conform will run multiple formatters sequentially
       python = { "ruff" },
-      -- Use a sub-list to run only the first available formatter
-      javascript = { { "prettierd", "prettier" } },
+      javascript = { "prettierd", "prettier" },
       nix = { "alejandra" },
     },
     -- Set up format-on-save
@@ -32,9 +30,14 @@ return {
         prepend_args = { "-i", "2" },
       },
     },
+    -- Use stop_after_first for JavaScript
+    javascript = {
+      stop_after_first = true,
+    },
   },
   init = function()
     -- If you want the formatexpr, here is the place to set it
+    -- Use `gqap` to format a paragraph
     vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   end,
 }

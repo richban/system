@@ -8,34 +8,34 @@ function M.on_attach(client, buffer)
     vim.keymap.set("n", keys, func, { buffer = buffer, desc = "LSP: " .. desc })
   end
 
-  -- Jump to the definition of the word under your cursor.
-  --  This is where a variable was first declared, or where a function is defined, etc.
-  --  To jump back, press <C-T>.
+  --[[ Navigation
+  Key mappings for code navigation and jumping between symbols:
+  gd - Jump to definition of symbol under cursor
+  gD - Jump to declaration (useful in header files)
+  gr - Find all references of symbol under cursor
+  gI - Jump to implementation (useful for interfaces)
+  <leader>D - Jump to type definition
+  --]]
   self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
-  --  For example, in C this would take you to the header
   map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-  -- Find references for the word under your cursor.
-  self:map("gr", "Telescope lsp_references", { desc = "References" })
-  -- Jump to the implementation of the word under your cursor.
-  --  Useful when your language has ways of declaring types without an actual implementation.
+  self:map("gr", "Telescope lsp_references", { desc = "Find References" })
   map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-  -- self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
-  -- Jump to the type of the word under your cursor.
-  --  Useful when you're not sure what type a variable is and you want to see
-  --  the definition of its *type*, not where it was *defined*.
   map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-  -- Opens a popup that displays documentation about the word under your cursor
-  --  See `:help K` for why this keymap
-  -- self:map("K", "Lspsaga hover_doc", { desc = "Hover" })
+
+  --[[ Documentation
+  Key mappings for viewing documentation and signatures:
+  K - Show hover documentation for symbol under cursor
+  gK - Show signature help (useful when writing function calls)
+  --]]
   map("K", vim.lsp.buf.hover, "Hover Documentation")
   self:map("gK", vim.lsp.buf.signature_help, { desc = "Signature Help", has = "signatureHelp" })
 
-  -- Fuzzy find all the symbols in your current document.
-  --  Symbols are things like variables, functions, types, etc.
+  --[[ Symbols
+  Key mappings for symbol search and navigation:
+  <leader>ds - List all symbols in current document
+  <leader>ws - List all symbols in current workspace/project
+  --]]
   map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-
-  -- Fuzzy find all the symbols in your current workspace
-  --  Similar to document symbols, except searches over your whole project.
   map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
   self:map("[d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
@@ -45,28 +45,37 @@ function M.on_attach(client, buffer)
   self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
 
-  -- Execute a code action, usually your cursor needs to be on top of an error
-  -- or a suggestion from your LSP for this to activate.
-  map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+  --[[ Code Actions
+  Key mappings for code modifications and refactoring:
+  <leader>ca - Show available code actions (fixes, refactorings)
+  <leader>rn - Rename symbol under cursor (uses inc_rename if available)
+  <leader>cw - Toggle inline diagnostic messages
+  --]]
   self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
-
-  -- Rename the variable under your cursor
-  --  Most Language Servers support renaming across files, etc.
-  map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-  -- self:map("<leader>cr", M.rename, { expr = true, desc = "Rename", has = "rename" })
-
+  self:map("<leader>rn", M.rename, { expr = true, desc = "Rename", has = "rename" })
   self:map("<leader>cw", require("rb.lsp.utils").toggle_diagnostics, { desc = "Toggle Inline Diagnostics" })
 
-  -- gives definition & references
-  vim.api.nvim_set_keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>lc", ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>lp", ":lua print(vim.lsp.get_log_path())<CR>", opts)
+  --[[ LSP Information
+  Key mappings for LSP debugging and information:
+  gh - Show definition and references in Lspsaga
+  <leader>li - Show active LSP client information
+  <leader>ll - Show LSP log file path
+  --]]
+  vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { buffer = buffer, desc = "LSP: Show Definition & References" })
+  vim.keymap.set("n", "<leader>li", ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>", { buffer = buffer, desc = "LSP: Show Info" })
+  vim.keymap.set("n", "<leader>ll", ":lua print(vim.lsp.get_log_path())<CR>", { buffer = buffer, desc = "LSP: Show Log Path" })
 
-  -- Typescript
-  vim.api.nvim_set_keymap("n", "<leader>to", ":TSLspOrganize<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>tc", ":TSLspFixCurrent<CR>", opts)
-  -- vim.api.nvim_set_keymap("n", "gr", ":TSLspRenameFile<CR>", 'lsp', 'lsp_', '')
-  vim.api.nvim_set_keymap("n", "<leader>ti", ":TSLspImportAll<CR>", opts)
+  --[[ TypeScript Specific
+  Key mappings only active in TypeScript files:
+  <leader>to - Organize imports automatically
+  <leader>tc - Fix current code issue
+  <leader>ti - Import all missing imports
+  --]]
+  if client.name == "tsserver" then
+    vim.keymap.set("n", "<leader>to", ":TSLspOrganize<CR>", { buffer = buffer, desc = "TS: Organize Imports" })
+    vim.keymap.set("n", "<leader>tc", ":TSLspFixCurrent<CR>", { buffer = buffer, desc = "TS: Fix Current" })
+    vim.keymap.set("n", "<leader>ti", ":TSLspImportAll<CR>", { buffer = buffer, desc = "TS: Import All" })
+  end
 end
 
 function M.new(client, buffer)

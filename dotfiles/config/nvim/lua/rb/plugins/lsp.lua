@@ -122,7 +122,7 @@ return {
         bashls = true,
         lua_ls = true,
         cssls = true,
-        tsserver = true,
+        ts_ls = true,
         dockerls = {
           settings = {
             Dockerfile = {
@@ -159,7 +159,6 @@ return {
         terraformls = { filetypes = { "terraform", "hcl" } },
         pylsp = {
           enabled = true,
-          -- formatCommand = { "black" },
           root_dir = function(fname)
             local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
             return lspconfig.util.root_pattern(unpack(root_files))(fname) or lspconfig.util.find_git_ancestor(fname)
@@ -167,41 +166,39 @@ return {
           settings = {
             pylsp = {
               plugins = {
+                -- Disable other linters and formatters
                 jedi_completion = { enabled = false },
+                pycodestyle = { enabled = false },
+                pyflakes = { enabled = false },
+                mccabe = { enabled = false },
+                pylint = { enabled = false },
+                yapf = { enabled = false },
+                autopep8 = { enabled = false },
+                black = { enabled = false },
+                isort = { enabled = false },
+                -- Keep documentation and type checking
                 jedi_hover = { enabled = true },
                 jedi_references = { enabled = true },
                 jedi_signature_help = { enabled = true },
                 jedi_symbols = { enabled = true, all_scopes = true },
-                -- The default configuration source is pycodestyle. Change the pylsp.configurationSources setting to ['flake8'] in order to respect flake8 configuration instead
-                -- configurationSources = { "flake8" },
-                -- linter to detect various errors
-                -- pyflakes = { enabled = false },
-                -- linter for docstring style checking
                 pydocstyle = { enabled = true, convention = "google" },
-                -- linter for style checking
-                -- pycodestyle = { enabled = false, maxLineLength = 120 },
-                -- pylint = { enabled = false },
-                -- black = { enabled = false },
-                -- type checking
                 pylsp_mypy = { enabled = true, live_mode = true },
-                -- code formatting using isort
-                -- pyls_isort = { enabled = false },
-                -- pyls_flake8 = { enabled = false, executable = "flake8" },
-                rope_autoimport = {
-                  enabled = true,
-                  completions = { enabled = true },
-                  code_actions = { enabled = true },
-                },
-                rope_rename = { enabled = false },
-                pylsp_rope = { enabled = true },
+                -- Enable Ruff for both linting and formatting
                 ruff = {
-                  enabled = true, -- Enable the plugin
-                  executable = "/etc/profiles/per-user/richard.banyi/bin/ruff", -- Custom path to ruff
-                  formatEnabled = true,
-                  extendIgnore = { "E501" },
-                  ignore = { "E501" },
+                  enabled = true,
+                  executable = "/etc/profiles/per-user/richard.banyi/bin/ruff",
+                  formatEnabled = true, -- Enable ruff as formatter
+                  extendIgnore = { "E501" }, -- Ignore line length errors
+                  format = { -- Ruff format configuration
+                    args = {
+                      "--select=E,F,W,I,N,B,A,C4,PT,RUF",
+                      "--fix",
+                      "--line-length=120",
+                    },
+                  },
+                  lineLength = 120,
+                  organizeImports = true, -- Use ruff for import organization
                 },
-                isort = { enabled = true },
               },
             },
           },
@@ -229,16 +226,21 @@ return {
       vim.list_extend(ensure_installed, servers_to_install)
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-      for name, config in pairs(servers) do
-        if config == true then
-          config = {}
-        end
-        config = vim.tbl_deep_extend("force", {}, {
+      -- Setup all defined servers with the capabilities
+      for server_name, server_settings in pairs(servers) do
+        local config = {
           capabilities = capabilities,
           on_attach = custom_attach,
-        }, config)
+        }
 
-        lspconfig[name].setup(config)
+        -- Merge any custom settings
+        if type(server_settings) == "table" then
+          for k, v in pairs(server_settings) do
+            config[k] = v
+          end
+        end
+
+        lspconfig[server_name].setup(config)
       end
 
       vim.api.nvim_create_autocmd("BufWritePre", {

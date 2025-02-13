@@ -65,13 +65,27 @@ cmp.setup({
       }),
       { "i", "c" }
     ),
-    -- ["<C-Space>"] = cmp.mapping.complete(),
-    -- ["<C-e>"] = cmp.mapping.close(),
-    -- ["<CR>"] = cmp.mapping({
-    --   i = cmp.mapping.confirm({ select = true }),
-    -- }),
-    -- ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
-    -- ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
     -- Copilot completion
     ["<c-h>"] = cmp.mapping.complete({
       config = {
@@ -133,19 +147,15 @@ cmp.setup({
     }),
   },
   sources = {
-    -- Copilot Source
-    { name = "copilot" },
-    -- order of the sources sets priority in the completion menu
-    { name = "nvim_lsp" },
-    { name = "nvim_lsp_signature_help" },
-    { name = "nvim_lsp_document_symbol" },
-    { name = "luasnip" },
-    -- { name = "vsnip" },
-    -- { name = "codeium", group_index = 1 },
-    { name = "treesitter" },
-    { name = "path" },
-    { name = "buffer" },
-    { name = "spell" },
+    { name = "nvim_lsp", priority = 1000 },
+    { name = "copilot", priority = 900 },
+    { name = "luasnip", priority = 750 },
+    { name = "nvim_lsp_signature_help", priority = 700 },
+    { name = "nvim_lsp_document_symbol", priority = 600 },
+    { name = "buffer", priority = 500 },
+    { name = "path", priority = 250 },
+    { name = "treesitter", priority = 200 },
+    { name = "spell", priority = 100 },
   },
   experimental = { ghost_text = true, native_menu = false },
   window = {
