@@ -138,9 +138,9 @@ shift + alt - x : yabai -m space --mirror x-axis
 # Restart Yabai
 shift + lctrl + alt - y : \
     terminal-notifier -title Yabai -message "Restarting Yabai" -sound default; \
-    launchctl kickstart -k "gui/${UID}/org.nixos.yabai"
+    launchctl kickstart -k "gui/$( id -u )/org.nixos.yabai"
 
 # Restart skhd
 shift + lctrl + alt - s : \
     terminal-notifier -title Skhd -message "Restarting Skhd" -sound default; \
-    launchctl kickstart -k "gui/${UID}/org.nixos.skhd"
+    launchctl kickstart -k "gui/$( id -u )/org.nixos.skhd"

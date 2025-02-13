@@ -13,7 +13,7 @@ export NIX_PATH=home-manager=$HOME/.nix-defexpr/channels/home-manager:$NIX_PATH
 
 # Changing nix-darwin default config path to local git repo
 export NIX_PATH=darwin-config=$HOME/Developer/dotfiles/system/darwin/default.nix:$NIX_PATH
-echo $NIX_PATH
+echo "$NIX_PATH"
 
 nix-channel --update
 
@@ -23,6 +23,6 @@ nix-build '<darwin>' -A installer --out-link /tmp/nix-darwin && /tmp/nix-darwin/
 
 # courtesy of: https://github.com/burke/b
 rm -rf /run/*
-ln -shf /nix/store/$(ls /nix/store | grep darwin-system- | grep -v drv | head -1) /run/current-system
+ln -shf /nix/store/"$(find /nix/store -maxdepth 1 -name 'darwin-system-*' ! -name '*.drv' -printf '%f\n' | head -1)" /run/current-system
 
 # /run/current-system/sw/bin/darwin-rebuild switch
