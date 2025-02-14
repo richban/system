@@ -5,6 +5,7 @@
     };
 
     window = {
+      option_as_alt = "Both";
       padding = {
         x = 10;
         y = 10;

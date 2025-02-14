@@ -10,7 +10,6 @@
       recursive = true;
     };
     sessionVariables = {
-      ENHANCD_FILTER = "fzy:fzf:peco";
       TERM = "xterm-256color";
       LANG = "en_US.UTF-8";
       GPG_TTY = "/dev/ttys000";
@@ -36,14 +35,13 @@
         };
       }
       {
-        name = "enhancd";
+        name = "fzf-tab";
         src = pkgs.fetchFromGitHub {
-          owner = "b4b4r07";
-          repo = "enhancd";
-          rev = "v2.5.1";
-          sha256 = "XJl0XVtfi/NTysRMWant84uh8+zShTRwd7t2cxUk+qU=";
+          owner = "Aloxaf";
+          repo = "fzf-tab";
+          rev = "master";
+          sha256 = "sha256-gvZp8P3quOtcy1Xtt1LAW1cfZ/zCtnAmnWqcwrKel6w=";
         };
-        file = "init.sh";
       }
     ];
 
@@ -57,6 +55,18 @@
       # Completion
       setopt auto_list auto_menu auto_param_keys auto_param_slash list_packed
 
+      # fzf-tab configuration
+      # disable sort when completing `git checkout`
+      zstyle ':completion:*:git-checkout:*' sort false
+      # set descriptions format to enable group support
+      zstyle ':completion:*:descriptions' format '[%d]'
+      # preview directory's content with exa when completing cd
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+      # switch group using `,` and `.`
+      zstyle ':fzf-tab:*' switch-group ',' '.'
+      # show file preview for files and directories
+      zstyle ':fzf-tab:complete:*:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 {}'
+
       # Misc
       setopt vi no_beep no_flow_control magic_equal_subst correct
 
@@ -65,6 +75,13 @@
       bindkey "^B" backward-word
       bindkey "^A" beginning-of-line
       bindkey "^E" end-of-line
+
+      # fzf key bindings (Option key should work now)
+      bindkey "^[d" fzf-cd-widget       # Option+d for directory search
+      bindkey "^R" fzf-history-widget   # CTRL+R for history
+
+      # Configure fzf history widget
+      export FZF_CTRL_R_OPTS="--height=40% --layout=reverse --border --ansi"
 
       autopair-init
 
