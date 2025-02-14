@@ -248,8 +248,6 @@ in {
 
       # Infrastructure & Containers
       terraform # Infrastructure as code
-      docker # Container platform
-      docker-compose # Container orchestration
       google-cloud-sdk # GCP toolkit
 
       nixfmt-rfc-style # Nix code formatter

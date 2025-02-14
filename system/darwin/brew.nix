@@ -22,6 +22,7 @@
       "arc"
       "1password"
       "1password-cli"
+      "docker"
       "hammerspoon"
       "obsidian"
       "raycast"
