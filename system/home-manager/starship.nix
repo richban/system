@@ -5,7 +5,7 @@
     enableFishIntegration = true;
     # https://github.com/etrigan63/Catppuccin-starship
     settings = {
-      add_newline = false;
+      add_newline = true;
       command_timeout = 1000;
       time = {
         disabled = true;
@@ -110,7 +110,7 @@
           "root" = "󰱯";
         };
         format = "[ $user]($style)";
-        show_always = true;
+        show_always = false;
         style_user = "fg:green bg:surface2";
         style_root = "fg:red bg:surface2";
       };
@@ -121,9 +121,9 @@
         symbol = "󰌋";
       };
       hostname = {
-        disabled = false;
+        disabled = true;
         style = "bg:overlay0 fg:red";
-        ssh_only = false;
+        ssh_only = true;
         ssh_symbol = " 󰖈";
         format = "[ $hostname]($style)[$ssh_symbol](bg:overlay0 fg:maroon)";
       };
@@ -134,7 +134,7 @@
         read_only_style = "bold fg:crust bg:mauve";
         style = "fg:base bg:mauve";
         truncation_length = 3;
-        truncation_symbol = "…/";
+        truncation_symbol = "";
       };
       # Shorten long paths by text replacement. Order matters
       directory.substitutions = {

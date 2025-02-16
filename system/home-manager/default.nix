@@ -22,7 +22,7 @@ in {
     ./1password.nix
     ./direnv.nix
     ./alacritty.nix
-    ./starship.nix
+    # ./starship.nix
   ];
 
   xdg = {
@@ -103,23 +103,23 @@ in {
     ];
   };
 
-  # programs.starship = {
-  #   enable = true;
-  #   # Configuration written to ~/.config/starship.toml
-  #   settings = {
-  #     "$schema" = "https://starship.rs/config-schema.json";
+  programs.starship = {
+    enable = true;
+    # Configuration written to ~/.config/starship.toml
+    settings = {
+      "$schema" = "https://starship.rs/config-schema.json";
 
-  #     add_newline = true;
+      add_newline = true;
 
-  #     character = {
-  #       success_symbol = "[➜](bold green)";
-  #       error_symbol = "[➜](bold red)";
-  #       vicmd_symbol = "[V](bold green) ";
-  #     };
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+        vicmd_symbol = "[V](bold green) ";
+      };
 
-  #     # package.disabled = true;
-  #   };
-  # };
+      # package.disabled = true;
+    };
+  };
 
   programs.bottom = {
     enable = true;
