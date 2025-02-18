@@ -117,7 +117,13 @@ in {
         vicmd_symbol = "[V](bold green) ";
       };
 
-      # package.disabled = true;
+      cmd_duration = {
+        format = "[  $duration]($style)";
+        min_time = 2500;
+        min_time_to_notify = 60000;
+        show_notifications = false;
+        style = "fg:base";
+      };
     };
   };
 

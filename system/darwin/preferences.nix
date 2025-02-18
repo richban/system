@@ -98,6 +98,7 @@
       show-process-indicators = true;
       orientation = "bottom";
       mru-spaces = false;
+      minimize-to-application = true;
       persistent-apps = [
         "/System/Applications/Launchpad.app"
         "/Applications/Arc.app"
