@@ -43,6 +43,16 @@
           sha256 = "sha256-gvZp8P3quOtcy1Xtt1LAW1cfZ/zCtnAmnWqcwrKel6w=";
         };
       }
+      {
+        name = "enhancd";
+        src = pkgs.fetchFromGitHub {
+          owner = "b4b4r07";
+          repo = "enhancd";
+          rev = "5afb4eb6ba36c15821de6e39c0a7bb9d6b0ba415";
+          sha256 = "sha256-pKQbwiqE0KdmRDbHQcW18WfxyJSsKfymWt/TboY2iic=";
+        };
+        file = "init.sh";
+      }
     ];
 
     initExtra = ''
