@@ -270,7 +270,6 @@ in {
           jupyter # Interactive notebooks
           ipython # Enhanced Python shell
         ]))
-
       # Python Development Tools
       cookiecutter # Project template tool
       ruff # Fast Python linter
@@ -278,7 +277,6 @@ in {
       sqlfluff # SQL linter
 
       # Node.js Environment
-      nodejs_20 # JavaScript runtime
       nodePackages.npm # Node package manager
 
       asciicam # Terminal webcam
