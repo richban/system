@@ -6,31 +6,24 @@
 }: let
   homePath = config.home.homeDirectory;
   darwinSockPath = "${homePath}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
-  sockPath = ".1password/agent.sock";
+  sockLink = ".1password/agent.sock";
+  sockPath = "${homePath}/${sockLink}";
   aliases = {
     gh = "op plugin run -- gh";
     cachix = "op plugin run -- cachix";
   };
 in {
   home.sessionVariables = {
-    SSH_AUTH_SOCK = "${homePath}/${sockPath}";
+    SSH_AUTH_SOCK =
+      if pkgs.stdenvNoCC.isDarwin
+      then sockPath
+      else ''''${SSH_AUTH_SOCK:-${sockPath}}'';
     OP_PLUGIN_ALIASES_SOURCED = 1;
   };
 
-  home.activation = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-    link1PasswordSocket = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      $DRY_RUN_CMD mkdir -p "$(dirname "${homePath}/${sockPath}")"
-      $DRY_RUN_CMD ln -sf "${darwinSockPath}" "${homePath}/${sockPath}"
-    '';
-  };
-
-  programs.bash = {
-    initExtra = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
-      if command -v op >/dev/null; then
-        source <(op completion bash)
-      fi
-    '';
-    shellAliases = aliases;
+  home.file.sock = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+    source = config.lib.file.mkOutOfStoreSymlink darwinSockPath;
+    target = sockLink;
   };
 
   programs.zsh = {
@@ -44,7 +37,7 @@ in {
 
   programs.ssh = {
     enable = true;
-    extraConfig = "IdentityAgent ~/${sockPath}";
+    extraConfig = "IdentityAgent ${sockPath}";
   };
 
   xdg.configFile = {
@@ -71,7 +64,7 @@ in {
       gpg.format = "ssh";
       gpg.ssh = {
         defaultKeyCommand = "op read 'op://Personal/Github Signing Key/public key'";
-        allowedSignersFile = "~/.ssh/allowed_signers";
+        # allowedSignersFile = "~/.ssh/allowed_signers";
       };
     };
   };
