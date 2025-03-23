@@ -63,7 +63,7 @@ in {
     extraConfig = {
       gpg.format = "ssh";
       gpg.ssh = {
-        defaultKeyCommand = "op read 'op://Personal/Github Signing Key/public key'";
+        defaultKeyCommand = "ssh-add -L";
         # allowedSignersFile = "~/.ssh/allowed_signers";
       };
     };
