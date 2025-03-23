@@ -20,6 +20,7 @@
     casks = [
       "alacritty"
       "arc"
+      "firefox"
       "1password"
       "1password-cli"
       "docker"
@@ -37,6 +38,7 @@
       "karabiner-elements"
       "zoom"
       "whatsapp"
+      "microsoft-teams"
     ];
   };
 }

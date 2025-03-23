@@ -7,7 +7,7 @@ return {
   config = function()
     require("projections").setup({
       workspaces = {
-        { "~/Developer/mckinsey", { ".git" } },
+        { "~/.nixpkgs", { ".git" } },
         { "~/Developer", { ".git" } },
       },
       patterns = { ".git", ".svn", ".hg" },
