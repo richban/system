@@ -44,6 +44,9 @@ in {
     starship.enable = config.programs.starship.enable;
     alacritty.enable = config.programs.alacritty.enable;
     tmux.enable = config.programs.tmux.enable;
+    tmux.extraConfig = ''
+      set -g @catppuccin_window_status_style "rounded"
+    '';
     zsh-syntax-highlighting.enable = true;
     delta.enable = true;
   };
