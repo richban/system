@@ -7,8 +7,8 @@
     window = {
       option_as_alt = "Both";
       padding = {
-        x = 10;
-        y = 10;
+        x = 5;
+        y = 5;
       };
       decorations = "buttonless";
       startup_mode = "Maximized";
