@@ -1,5 +1,9 @@
 {pkgs, ...}: let
-  treesitterWithGrammars = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+  # Map all grammars to their corresponding plugins
+  treesitterGrammars = pkgs.symlinkJoin {
+    name = "nvim-treesitter-grammars";
+    paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
+  };
 in {
   home.file = {
     nvim = {
@@ -9,17 +13,18 @@ in {
     };
   };
 
-  # home.file."./.config/nvim/plugin/treesitter-parsers.lua" = {
-  #   text = ''
-  #     vim.opt.runtimepath:append("${treesitter-parsers}")
-  #   '';
-  # };
+  # Use a standalone .lua file that won't conflict with the recursive copy
+  home.file.".local/share/nvim/site/plugin/treesitter-parsers.lua" = {
+    text = ''
+      vim.opt.runtimepath:append("${treesitterGrammars}")
+    '';
+  };
 
   # Treesitter is configured as a locally developed module in lazy.nvim
   # we hardcode a symlink here so that we can refer to it in our lazy config
-  home.file."./.local/share/nvim/nix/nvim-treesitter/" = {
+  home.file.".local/share/nvim/nix/nvim-treesitter/" = {
     recursive = true;
-    source = treesitterWithGrammars;
+    source = pkgs.vimPlugins.nvim-treesitter;
   };
 
   programs.neovim = {
@@ -34,13 +39,14 @@ in {
     withRuby = true;
     withPython3 = true;
 
-    plugins = [
-      treesitterWithGrammars
-    ];
+    extraLuaPackages = luaPkgs:
+      with luaPkgs; [
+        tiktoken_core
+        magick
+      ];
 
     extraPackages = with pkgs; [
       neovim-remote
-      luajitPackages.tiktoken_core # copilot (optional)
       cargo # for mason
       alejandra # nix formatter
       ruff

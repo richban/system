@@ -15,7 +15,13 @@ return {
 
       -- List of parsers to ignore installing (for "all")
       -- ignore_install        = { "javascript" },
-      -- highlight             = { enable = true, additional_vim_regex_highlighting = true },
+
+      -- Enable highlighting - this was missing
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false, -- Set to false for better performance
+      },
+
       incremental_selection = {
         enable = true,
         keymaps = {
