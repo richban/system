@@ -18,7 +18,7 @@ in {
     inputs.catppuccin.homeManagerModules.catppuccin
     ./zsh.nix
     ./git.nix
-    ./nvim/config.nix
+    ./nvim
     ./1password.nix
     ./direnv.nix
     ./alacritty.nix

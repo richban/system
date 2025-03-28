@@ -63,86 +63,6 @@
         "type": "github"
       }
     },
-    "conformNvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739657764,
-        "narHash": "sha256-H9JLiRtixDKDN50SH6gkqgjlhLzHMAaOT1pc69ZFdco=",
-        "owner": "stevearc",
-        "repo": "conform.nvim",
-        "rev": "a6f5bdb78caa305496357d17e962bbc4c0b392e2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "stevearc",
-        "repo": "conform.nvim",
-        "type": "github"
-      }
-    },
-    "copilot": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739230958,
-        "narHash": "sha256-632UIbG1jwam+tug5+jODkT509+uBfJgUN21C3ppnEo=",
-        "owner": "zbirenbaum",
-        "repo": "copilot.lua",
-        "rev": "30321e33b03cb924fdcd6a806a0dc6fa0b0eafb9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zbirenbaum",
-        "repo": "copilot.lua",
-        "type": "github"
-      }
-    },
-    "copilotChat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740073839,
-        "narHash": "sha256-9MenFjvcQAgxG4g8DAe4jv8oYI3MJ5gwLGJfGK+A8+o=",
-        "owner": "CopilotC-Nvim",
-        "repo": "CopilotChat.nvim",
-        "rev": "91d5945ba12761b25e52843c052f02175e797c41",
-        "type": "github"
-      },
-      "original": {
-        "owner": "CopilotC-Nvim",
-        "repo": "CopilotChat.nvim",
-        "type": "github"
-      }
-    },
-    "copilotCmp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1733947099,
-        "narHash": "sha256-erRL8bY/zuwuCZfttw+avTrFV7pjv2H6v73NzY2bymM=",
-        "owner": "zbirenbaum",
-        "repo": "copilot-cmp",
-        "rev": "15fc12af3d0109fa76b60b5cffa1373697e261d1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zbirenbaum",
-        "repo": "copilot-cmp",
-        "type": "github"
-      }
-    },
-    "copilotLualine": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1737483125,
-        "narHash": "sha256-7FHSSaptU5AQ5nwgB4xOFh1xDQbB3NTqATAvXMr/Shg=",
-        "owner": "AndreM222",
-        "repo": "copilot-lualine",
-        "rev": "dc4b8ed0f75bc2557b3158c526624bf04ad233ea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AndreM222",
-        "repo": "copilot-lualine",
-        "type": "github"
-      }
-    },
     "devenv": {
       "inputs": {
         "cachix": "cachix",
@@ -165,22 +85,6 @@
         "owner": "cachix",
         "ref": "latest",
         "repo": "devenv",
-        "type": "github"
-      }
-    },
-    "diffview": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1718279802,
-        "narHash": "sha256-SX+ybIzL/w6uyCy4iZKnWnzTFwqB1oXSgyYVAdpdKi8=",
-        "owner": "sindrets",
-        "repo": "diffview.nvim",
-        "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sindrets",
-        "repo": "diffview.nvim",
         "type": "github"
       }
     },
@@ -467,22 +371,6 @@
         "type": "github"
       }
     },
-    "incRename": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1737408744,
-        "narHash": "sha256-7XaYG2UUzFuvtmRALftDv2xlmR4xHF/OjhoGTz0mnl4=",
-        "owner": "smjonas",
-        "repo": "inc-rename.nvim",
-        "rev": "f9b9e5b9a75074810f40881b7e254b5bbeaf122e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "smjonas",
-        "repo": "inc-rename.nvim",
-        "type": "github"
-      }
-    },
     "libgit2": {
       "flake": false,
       "locked": {
@@ -759,38 +647,6 @@
         "type": "github"
       }
     },
-    "nui": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1733856815,
-        "narHash": "sha256-6U7E/i5FuNXQy+sF4C5DVxuTPqNKD5wxUgFohpOjm9Q=",
-        "owner": "MunifTanjim",
-        "repo": "nui.nvim",
-        "rev": "53e907ffe5eedebdca1cd503b00aa8692068ca46",
-        "type": "github"
-      },
-      "original": {
-        "owner": "MunifTanjim",
-        "repo": "nui.nvim",
-        "type": "github"
-      }
-    },
-    "oxacarbonColors": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1724853107,
-        "narHash": "sha256-Hi/nATEvZ4a6Yxc66KtuJqss6kQV19cmtIlhCw6alOI=",
-        "owner": "nyoom-engineering",
-        "repo": "oxocarbon.nvim",
-        "rev": "004777819ba294423b638a35a75c9f0c7be758ed",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nyoom-engineering",
-        "repo": "oxocarbon.nvim",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_4",
@@ -813,61 +669,17 @@
         "type": "github"
       }
     },
-    "projections": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1684385322,
-        "narHash": "sha256-fgsvMhWBqA9qixVp/Q9frFamQeUxl1MFtCpKsbfrSMI=",
-        "owner": "gnikdroy",
-        "repo": "projections.nvim",
-        "rev": "889914169fa1f5c00fb8659653b5a8330fb223e6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gnikdroy",
-        "ref": "pre_release",
-        "repo": "projections.nvim",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
-        "conformNvim": "conformNvim",
-        "copilot": "copilot",
-        "copilotChat": "copilotChat",
-        "copilotCmp": "copilotCmp",
-        "copilotLualine": "copilotLualine",
         "devenv": "devenv",
-        "diffview": "diffview",
         "home-manager": "home-manager",
-        "incRename": "incRename",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_7",
-        "nui": "nui",
-        "oxacarbonColors": "oxacarbonColors",
-        "pre-commit-hooks": "pre-commit-hooks",
-        "projections": "projections",
-        "ropeVim": "ropeVim"
-      }
-    },
-    "ropeVim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1671018628,
-        "narHash": "sha256-AYq7P/5I7Oc7jaJV8Vi8fk0Wstm8o2ePit3QHd6qr3A=",
-        "owner": "python-rope",
-        "repo": "ropevim",
-        "rev": "c26800824295fd890316b9c5f119be37aed4d792",
-        "type": "github"
-      },
-      "original": {
-        "owner": "python-rope",
-        "repo": "ropevim",
-        "type": "github"
+        "pre-commit-hooks": "pre-commit-hooks"
       }
     },
     "treefmt-nix": {
