@@ -7,7 +7,7 @@
     window = {
       option_as_alt = "Both";
       padding = {
-        x = 5;
+        x = 10;
         y = 5;
       };
       decorations = "buttonless";
