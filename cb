@@ -1,0 +1,46 @@
+diff --git a/dotfiles/config/tmux/tmux.conf b/dotfiles/config/tmux/tmux.conf
+index 08a3332..9c756b8 100644
+--- a/dotfiles/config/tmux/tmux.conf
++++ b/dotfiles/config/tmux/tmux.conf
+@@ -13,6 +13,8 @@ bind C-b send-prefix                      # remote prefix
+ set -g base-index 1           # start windows numbering at 1
+ setw -g pane-base-index 1     # make pane numbering consistent with windows
+ setw -g automatic-rename on   # rename window to reflect current program
++# Set format for automatic rename - shows directory basename or process
++set-option -g automatic-rename-format "#{?#{==:#{pane_current_command},zsh},#{b:pane_current_path},#{pane_current_command}}"
+ set -g renumber-windows on    # renumber windows when a window is closed
+ set -g set-titles on          # set terminal title
+ set -g display-panes-time 800 # slightly longer pane indicators display time
+diff --git a/flake.nix b/flake.nix
+index 4e67040..2d516f9 100644
+--- a/flake.nix
++++ b/flake.nix
+@@ -181,8 +181,17 @@
+           inherit system;
+           overlays = [self.overlays.default];
+         };
++        
++        # Read the script template and substitute the xclip path
++        cbScript = builtins.replaceStrings 
++          ["xclip"] 
++          ["${pkgs.xclip}/bin/xclip"] 
++          (builtins.readFile ./bin/cb.sh);
++          
+       in rec {
+         sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run -q ${./bin/do.py} $@";
++        
++        cb = pkgs.writeShellScriptBin "cb" cbScript;
+       }
+     );
+ 
+@@ -191,6 +200,10 @@
+         type = "app";
+         program = "${self.packages.${system}.sysdo}/bin/sysdo";
+       };
++      cb = {
++        type = "app";
++        program = "${self.packages.${system}.cb}/bin/cb";
++      };
+       default = sysdo;
+     });
+ 

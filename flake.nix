@@ -181,8 +181,17 @@
           inherit system;
           overlays = [self.overlays.default];
         };
+
+        # Read the script template and substitute the xclip path
+        cbScript =
+          builtins.replaceStrings
+          ["xclip"]
+          ["${pkgs.xclip}/bin/xclip"]
+          (builtins.readFile ./bin/cb.sh);
       in rec {
         sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run -q ${./bin/do.py} $@";
+
+        cb = pkgs.writeShellScriptBin "cb" cbScript;
       }
     );
 
@@ -190,6 +199,10 @@
       sysdo = {
         type = "app";
         program = "${self.packages.${system}.sysdo}/bin/sysdo";
+      };
+      cb = {
+        type = "app";
+        program = "${self.packages.${system}.cb}/bin/cb";
       };
       default = sysdo;
     });
