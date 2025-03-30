@@ -11,11 +11,13 @@
     };
     brews = [
       "terminal-notifier"
+      "rilldata/tap/rill"
     ];
     taps = [
       "1password/tap"
       "homebrew/bundle"
       "homebrew/services"
+      "rilldata/tap"
     ];
     casks = [
       "alacritty"
