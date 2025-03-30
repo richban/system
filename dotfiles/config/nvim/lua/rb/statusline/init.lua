@@ -1,5 +1,10 @@
 local components = require("rb.statusline.components")
 
+-- Create a Codeium status component
+local codeium_status = function()
+  return vim.api.nvim_call_function("codeium#GetStatusString", {})
+end
+
 require("lualine").setup({
   options = {
     icons_enabled = true,
@@ -29,7 +34,7 @@ require("lualine").setup({
     lualine_a = {},
     lualine_b = {},
     lualine_c = { "filename" },
-    lualine_x = { "location" },
+    lualine_x = { "location", codeium_status },
     lualine_y = {},
     lualine_z = {},
   },

@@ -53,7 +53,10 @@ function M.on_attach(client, buffer)
   --]]
   self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
   self:map("<leader>rn", M.rename, { expr = true, desc = "Rename", has = "rename" })
-  self:map("<leader>cw", require("rb.lsp.utils").toggle_diagnostics, { desc = "Toggle Inline Diagnostics" })
+  self:map("<leader>cw", function()
+    local new_config = not vim.diagnostic.config().virtual_lines
+    vim.diagnostic.config({ virtual_lines = new_config })
+  end, { desc = "Toggle Virtual Lines Diagnostics" })
 
   --[[ LSP Information
   Key mappings for LSP debugging and information:
@@ -70,7 +73,7 @@ function M.on_attach(client, buffer)
   vim.keymap.set(
     "n",
     "<leader>li",
-    ":lua print(vim.inspect(vim.lsp.get_active_clients()))<CR>",
+    ":lua print(vim.inspect(vim.lsp.get_clients()))<CR>",
     { buffer = buffer, desc = "LSP: Show Info" }
   )
   vim.keymap.set(
