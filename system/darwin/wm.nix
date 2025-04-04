@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
@@ -12,8 +8,11 @@
     '';
   };
 
-  services.skhd.enable = true;
-  services.skhd.skhdConfig = ''${builtins.readFile ../../dotfiles/skhdrc}'';
+  services.skhd = {
+    enable = true;
+    package = pkgs.skhd;
+    skhdConfig = ''${builtins.readFile ../../dotfiles/skhdrc}'';
+  };
 
   services.spacebar = {
     enable = true;

@@ -231,6 +231,7 @@ in {
       VISUAL = "nvim";
       JAVA_HOME = "${pkgs.openjdk11.home}";
       NODE_PATH = "${homeDir}/.node";
+      SKHD_PID_FILE = "/tmp/skhd_${username}.pid";
     };
     sessionPath = [
       "${homeDir}/.local/bin"
@@ -314,6 +315,11 @@ in {
       tmuxinator = {
         source = ../../dotfiles/config/tmuxinator;
         target = ".config/tmuxinator";
+        recursive = true;
+      };
+      karabiner = {
+        source = ../../dotfiles/config/karabiner;
+        target = ".config/karabiner";
         recursive = true;
       };
     };
