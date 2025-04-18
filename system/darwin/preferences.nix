@@ -90,7 +90,7 @@
       # remove delay for showing dock
       autohide-delay = 0.0;
       # how fast is the dock showing animation
-      autohide-time-modifier = 1.0;
+      autohide-time-modifier = 0.10;
       tilesize = 50;
       static-only = false;
       showhidden = false;

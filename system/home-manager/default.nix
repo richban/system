@@ -271,6 +271,9 @@ in {
       # Ruby Environment
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
 
+      # Java
+      jdk21_headless
+
       # Infrastructure & Containers
       terraform # Infrastructure as code
       google-cloud-sdk # GCP toolkit

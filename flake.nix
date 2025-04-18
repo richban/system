@@ -167,6 +167,7 @@
       neovimOverlay = import ./system/overlays/neovim.nix {inherit inputs;};
       default = final: prev: {
         sysdo = self.packages.${prev.system}.sysdo;
+        cb = self.packages.${prev.system}.cb;
       };
     };
 
