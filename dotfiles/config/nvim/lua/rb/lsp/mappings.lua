@@ -94,6 +94,79 @@ function M.on_attach(client, buffer)
     vim.keymap.set("n", "<leader>tc", ":TSLspFixCurrent<CR>", { buffer = buffer, desc = "TS: Fix Current" })
     vim.keymap.set("n", "<leader>ti", ":TSLspImportAll<CR>", { buffer = buffer, desc = "TS: Import All" })
   end
+
+  --[[ Formatting
+  Key mappings for code formatting:
+  <leader>cf - Format current buffer
+  <leader>cF - Format selected region (visual mode)
+  --]]
+  -- self:map("<leader>cf", function()
+  --   vim.lsp.buf.format({ async = true })
+  -- end, { desc = "Format Document", has = "documentFormatting" })
+  -- self:map("<leader>cF", function()
+  --   vim.lsp.buf.format({ async = true })
+  -- end, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
+
+  --[[ Workspace
+  Key mappings for workspace management:
+  <leader>wa - Add folder to workspace
+  <leader>wr - Remove folder from workspace
+  <leader>wl - List workspace folders
+  --]]
+  self:map("<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "Workspace Add Folder" })
+  self:map("<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "Workspace Remove Folder" })
+  self:map("<leader>wl", function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, { desc = "Workspace List Folders" })
+
+  --[[ Diagnostics
+  Additional diagnostic mappings:
+  <leader>cd - Open diagnostic float
+  <leader>cl - Show diagnostics in line
+  <leader>cq - Add diagnostic to quickfix
+  --]]
+  self:map("<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+  self:map("<leader>cl", vim.diagnostic.setloclist, { desc = "Location List" })
+  self:map("<leader>cq", vim.diagnostic.setqflist, { desc = "Quickfix List" })
+
+  --[[ Code Navigation
+  Additional code navigation mappings:
+  gi - Go to implementation
+  <leader>ci - Show incoming calls
+  <leader>co - Show outgoing calls
+  --]]
+  self:map("gi", "Telescope lsp_implementations", { desc = "Goto Implementation" })
+  self:map("<leader>ci", "Lspsaga incoming_calls", { desc = "Incoming Calls" })
+  self:map("<leader>co", "Lspsaga outgoing_calls", { desc = "Outgoing Calls" })
+
+  --[[ Code Lens
+  Code lens actions:
+  <leader>cl - Run code lens action
+  --]]
+  self:map("<leader>cl", vim.lsp.codelens.run, { desc = "Code Lens", has = "codeLens" })
+
+  --[[ Additional Features
+  Enhanced code interaction:
+  <leader>ch - Highlight symbol occurrences
+  <leader>cs - Document structure
+  --]]
+  self:map("<leader>ch", vim.lsp.buf.document_highlight, { desc = "Highlight Symbol" })
+  self:map("<leader>cs", "Telescope lsp_document_symbols", { desc = "Document Symbols" })
+
+  -- Auto highlight references when cursor holds
+  if client.server_capabilities.documentHighlightProvider then
+    vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+    vim.api.nvim_create_autocmd("CursorHold", {
+      group = "lsp_document_highlight",
+      buffer = buffer,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      group = "lsp_document_highlight",
+      buffer = buffer,
+      callback = vim.lsp.buf.clear_references,
+    })
+  end
 end
 
 function M.new(client, buffer)
@@ -122,7 +195,11 @@ function M.rename()
   if pcall(require, "inc_rename") then
     return ":IncRename " .. vim.fn.expand("<cword>")
   else
-    vim.lsp.buf.rename()
+    -- Use defer_fn to avoid the "Not allowed to change text or change window" error
+    vim.defer_fn(function()
+      vim.lsp.buf.rename()
+    end, 10)
+    return ""
   end
 end
 
