@@ -15,7 +15,7 @@
   relativeXDGCachePath = ".cache";
 in {
   imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
     ./zsh.nix
     ./git.nix
     ./nvim
@@ -53,9 +53,9 @@ in {
       set -g @catppuccin_window_middle_separator " █"
       set -g @catppuccin_window_number_position "right"
       set -g @catppuccin_window_default_fill "number"
-      set -g @catppuccin_window_default_text "#W"
+      set -g @catppuccin_window_default_text "#{b:pane_current_path}"
       set -g @catppuccin_window_current_fill "number"
-      set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
+      set -g @catppuccin_window_current_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}#{?window_zoomed_flag,(),}"
       set -g @catppuccin_status_modules_right "directory meetings date_time"
       set -g @catppuccin_status_modules_left "session"
       set -g @catppuccin_status_fill "icon"
@@ -193,6 +193,7 @@ in {
         extraConfig = ''
           set -g @continuum-boot 'on'
           set -g @continuum-boot-options 'alacritty'
+          set-option -g automatic-rename-format "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
         '';
       }
     ];
@@ -229,13 +230,14 @@ in {
       GPG_TTY = "/dev/ttys000";
       EDITOR = "nvim";
       VISUAL = "nvim";
-      JAVA_HOME = "${pkgs.openjdk11.home}";
+      JAVA_HOME = "${pkgs.jdk21_headless.home}";
       NODE_PATH = "${homeDir}/.node";
       SKHD_PID_FILE = "/tmp/skhd_${username}.pid";
     };
     sessionPath = [
       "${homeDir}/.local/bin"
       "${homeDir}/.node/bin"
+      "${homeDir}/.duckdb/cli/latest" # DuckDB CLI Installed manually
     ];
 
     packages = with pkgs; [
@@ -267,6 +269,7 @@ in {
       pre-commit # Git hooks manager
       git-sizer # Git repo analyzer
       git-lfs # Git large file storage
+      claude-code # Claude CLI
 
       # Ruby Environment
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
@@ -277,6 +280,7 @@ in {
       # Infrastructure & Containers
       terraform # Infrastructure as code
       google-cloud-sdk # GCP toolkit
+      awscli # AWS Command Line Interface
 
       nixfmt-rfc-style # Nix code formatter
       nixpkgs-review # Nix code review
@@ -284,15 +288,15 @@ in {
       nurl # Nix URL fetcher
 
       # Python Environment
-      (pkgs.python311.withPackages (ps:
-        with ps; [
-          duckdb # SQL database engine
-          pandas # Data analysis library
-          polars # Fast dataframe library
-          jupyter # Interactive notebooks
-          ipython # Enhanced Python shell
-        ]))
-      # Python Development Tools
+      # (pkgs.python311.withPackages (ps:
+      #   with ps; [
+      #     duckdb # SQL database engine
+      #     pandas # Data analysis library
+      #     polars # Fast dataframe library
+      #     jupyter # Interactive notebooks
+      #     ipython # Enhanced Python shell
+      #   ]))
+      # duckdb # SQL database engine
       cookiecutter # Project template tool
       ruff # Fast Python linter
       uv # Python package installer

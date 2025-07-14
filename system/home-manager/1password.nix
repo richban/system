@@ -27,7 +27,7 @@ in {
   };
 
   programs.zsh = {
-    initExtra = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
+    initContent = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
       if command -v op >/dev/null; then
         eval "$(op completion zsh)"; compdef _op op
       fi
@@ -54,7 +54,7 @@ in {
   programs.git = {
     signing = {
       signByDefault = true;
-      key = null;
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH6/erFt5q36JNuiFG4FqiYE3flwgqyVL0FawLSSuPW8";
       signer =
         if pkgs.stdenvNoCC.isDarwin
         then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
@@ -63,7 +63,7 @@ in {
     extraConfig = {
       gpg.format = "ssh";
       gpg.ssh = {
-        defaultKeyCommand = "ssh-add -L";
+        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
         # allowedSignersFile = "~/.ssh/allowed_signers";
       };
     };

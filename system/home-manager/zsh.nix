@@ -55,7 +55,7 @@
       }
     ];
 
-    initExtra = ''
+    initContent = ''
       # History
       setopt histreduceblanks histignorespace histignorealldups share_history
 

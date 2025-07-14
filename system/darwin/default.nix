@@ -29,6 +29,11 @@
 
   networking.hostName = hostname;
   networking.computerName = hostname;
+  # firewall settings
+  # 0 = disabled 1 = enabled 2 = blocks all connections except for essential services
+  networking.applicationFirewall.enableStealthMode = true;
+  networking.applicationFirewall.enable = true;
+  networking.applicationFirewall.blockAllIncoming = false;
 
   documentation.enable = true;
   documentation.doc.enable = false;

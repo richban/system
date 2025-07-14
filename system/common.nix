@@ -30,6 +30,8 @@
     shell = pkgs.zsh;
   };
 
+  system.primaryUser = "${username}";
+
   # bootstrap home-manager
   home-manager.users.${username} = import ./home-manager;
 
