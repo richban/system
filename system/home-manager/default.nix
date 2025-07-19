@@ -53,7 +53,7 @@ in {
       set -g @catppuccin_window_middle_separator " █"
       set -g @catppuccin_window_number_position "right"
       set -g @catppuccin_window_default_fill "number"
-      set -g @catppuccin_window_default_text "#{b:pane_current_path}"
+      set -g @catppuccin_window_default_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
       set -g @catppuccin_window_current_fill "number"
       set -g @catppuccin_window_current_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}#{?window_zoomed_flag,(),}"
       set -g @catppuccin_status_modules_right "directory meetings date_time"
@@ -177,6 +177,9 @@ in {
     extraConfig = ''
       ${builtins.readFile ../../dotfiles/config/tmux/tmux.conf}
       set-option -g default-command "${pkgs.zsh}/bin/zsh"
+      set -g @vim_navigator_prefix_mapping_clear_screen ""
+      set -g @continuum-boot 'on'
+      set -g @continuum-boot-options 'alacritty'
     '';
 
     plugins = with pkgs; [
@@ -185,17 +188,9 @@ in {
       tmuxPlugins.yank
       tmuxPlugins.copycat
       tmuxPlugins.fpp
-
-      # Session management
+      tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.resurrect
-      {
-        plugin = tmuxPlugins.continuum;
-        extraConfig = ''
-          set -g @continuum-boot 'on'
-          set -g @continuum-boot-options 'alacritty'
-          set-option -g automatic-rename-format "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
-        '';
-      }
+      tmuxPlugins.continuum
     ];
   };
 
@@ -258,6 +253,7 @@ in {
       unzip # Archive extraction tool
       gnused # Stream editor
       universal-ctags # Code indexing tool
+      gemini-cli # Gemini CLI
 
       # Development Tools
       lua # Lua programming language
@@ -270,6 +266,7 @@ in {
       git-sizer # Git repo analyzer
       git-lfs # Git large file storage
       claude-code # Claude CLI
+      fpp # Fuzzy path picker
 
       # Ruby Environment
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
