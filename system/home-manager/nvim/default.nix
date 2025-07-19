@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  config,
+  ...
+}: let
   # Map all grammars to their corresponding plugins
   treesitterGrammars = pkgs.symlinkJoin {
     name = "nvim-treesitter-grammars";
@@ -6,25 +10,20 @@
   };
 in {
   home.file = {
-    nvim = {
-      source = ../../../dotfiles/config/nvim;
-      target = ".config/nvim";
-      recursive = true;
+    ".config/nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/nvim";
     };
-  };
 
-  # Use a standalone .lua file that won't conflict with the recursive copy
-  home.file.".local/share/nvim/site/plugin/treesitter-parsers.lua" = {
-    text = ''
-      vim.opt.runtimepath:append("${treesitterGrammars}")
-    '';
-  };
+    ".local/share/nvim/site/plugin/treesitter-parsers.lua" = {
+      text = ''
+        vim.opt.runtimepath:append("${treesitterGrammars}")
+      '';
+    };
 
-  # Treesitter is configured as a locally developed module in lazy.nvim
-  # we hardcode a symlink here so that we can refer to it in our lazy config
-  home.file.".local/share/nvim/nix/nvim-treesitter/" = {
-    recursive = true;
-    source = pkgs.vimPlugins.nvim-treesitter;
+    ".local/share/nvim/nix/nvim-treesitter/" = {
+      recursive = true;
+      source = pkgs.vimPlugins.nvim-treesitter;
+    };
   };
 
   programs.neovim = {
