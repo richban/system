@@ -95,6 +95,53 @@ function M.on_attach(client, buffer)
     vim.keymap.set("n", "<leader>ti", ":TSLspImportAll<CR>", { buffer = buffer, desc = "TS: Import All" })
   end
 
+  --[[ Python Specific
+  Key mappings only active in Python files:
+  <leader>po - Organize imports with ruff
+  <leader>pc - Run ruff check on current file
+  <leader>pf - Run ruff format on current file
+  <leader>pt - Run tests for current file
+  <leader>pv - Show virtual environment info
+  --]]
+  if client.name == "pylsp" then
+    vim.keymap.set("n", "<leader>po", function()
+      vim.cmd("silent !ruff check --select I --fix " .. vim.fn.expand("%"))
+      vim.cmd("edit!")
+    end, { buffer = buffer, desc = "Python: Organize Imports" })
+
+    vim.keymap.set("n", "<leader>pc", function()
+      vim.cmd("!ruff check " .. vim.fn.expand("%"))
+    end, { buffer = buffer, desc = "Python: Check with Ruff" })
+
+    vim.keymap.set("n", "<leader>pf", function()
+      vim.cmd("silent !ruff format " .. vim.fn.expand("%"))
+      vim.cmd("edit!")
+    end, { buffer = buffer, desc = "Python: Format with Ruff" })
+
+    vim.keymap.set("n", "<leader>pt", function()
+      local file = vim.fn.expand("%")
+      if file:match("test_.*%.py$") or file:match(".*_test%.py$") then
+        vim.cmd("!python -m pytest " .. file .. " -v")
+      else
+        local test_file = file:gsub("%.py$", "_test.py"):gsub("^(.*/)", "%1test_")
+        if vim.fn.filereadable(test_file) == 1 then
+          vim.cmd("!python -m pytest " .. test_file .. " -v")
+        else
+          print("No test file found for " .. file)
+        end
+      end
+    end, { buffer = buffer, desc = "Python: Run Tests" })
+
+    vim.keymap.set("n", "<leader>pv", function()
+      local venv = os.getenv("VIRTUAL_ENV")
+      if venv then
+        print("Virtual environment: " .. venv)
+      else
+        print("No virtual environment active")
+      end
+    end, { buffer = buffer, desc = "Python: Show Virtual Env" })
+  end
+
   --[[ Formatting
   Key mappings for code formatting:
   <leader>cf - Format current buffer
