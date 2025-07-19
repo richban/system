@@ -61,6 +61,9 @@ shift + alt - c : yabai -m window --toggle float;\
 hyper - c: yabai -m window --toggle float && \
            yabai -m window --grid 4:4:1:0:2:4
 
+# Center current window (without toggling float)
+alt - c : yabai -m window --grid 4:4:1:0:2:4
+
 # toggle window float
 shift + alt - t : yabai -m window --toggle float --grid 4:4:1:0:2:4
 
@@ -125,9 +128,6 @@ hyper - down: yabai -m window --swap east
 hyper - 0x21 : yabai -m space --move prev
 # ']'
 hyper - 0x1E : yabai -m space --move next
-
-# rotate layout clockwise
-shift + alt - r : yabai -m space --rotate 270
 
 # flip along y-axis
 shift + alt - y : yabai -m space --mirror y-axis
