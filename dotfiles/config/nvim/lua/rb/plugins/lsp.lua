@@ -186,7 +186,6 @@ return {
                 -- Enable Ruff for both linting and formatting
                 ruff = {
                   enabled = true,
-                  executable = "/etc/profiles/per-user/richard.banyi/bin/ruff",
                   formatEnabled = true, -- Enable ruff as formatter
                   extendIgnore = { "E501" }, -- Ignore line length errors
                   format = { -- Ruff format configuration
