@@ -148,7 +148,7 @@ def bootstrap(
         flake = f"{bootstrap_flake}#{cfg.value}.{host}.config.system.build.toplevel"
         run_cmd(["nix", "build", flake] + flags)
         run_cmd(
-            f"./result/sw/bin/darwin-rebuild switch --flake {FLAKE_PATH}#{host}".split()
+            f"sudo ./result/sw/bin/darwin-rebuild switch --flake {FLAKE_PATH}#{host}".split()
         )
     elif cfg == FlakeOutputs.HOME_MANAGER:
         flake = f"{bootstrap_flake}#{host}"
@@ -205,7 +205,7 @@ def build(
     else:
         flake = f"{FLAKE_PATH}#{host}"
 
-    flags = ["--show-trace"]
+    flags = ["--show-trace", "--impure"]
     run_cmd(cmd + [flake] + flags)
 
 
@@ -293,7 +293,7 @@ def update(
 
 @app.command(help="pull changes from remote repo", hidden=not is_local)
 def pull():
-    cmd = f"git stash && git pull && git stash apply"
+    cmd = "git stash && git pull && git stash apply"
     run_cmd(cmd.split())
 
 
@@ -322,11 +322,11 @@ def switch(
     if cfg is None:
         return
     elif cfg == FlakeOutputs.NIXOS:
-        cmd = f"sudo nixos-rebuild switch --flake"
+        cmd = "sudo nixos-rebuild switch --flake"
     elif cfg == FlakeOutputs.DARWIN:
-        cmd = f"darwin-rebuild switch --flake"
+        cmd = "sudo darwin-rebuild switch --flake"
     elif cfg == FlakeOutputs.HOME_MANAGER:
-        cmd = f"home-manager switch --flake"
+        cmd = "home-manager switch --flake"
     else:
         typer.secho("could not infer system type.", fg=Colors.ERROR.value)
         raise typer.Abort()
@@ -335,7 +335,7 @@ def switch(
         flake = f"{REMOTE_FLAKE}#{host}"
     else:
         flake = f"{FLAKE_PATH}#{host}"
-    flags = ["--show-trace"]
+    flags = ["--show-trace", "--impure"]
     run_cmd(cmd.split() + [flake] + flags)
 
 
