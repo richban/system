@@ -228,11 +228,13 @@ in {
       JAVA_HOME = "${pkgs.jdk21_headless.home}";
       NODE_PATH = "${homeDir}/.node";
       SKHD_PID_FILE = "/tmp/skhd_${username}.pid";
+      NPM_CONFIG_PREFIX = "${homeDir}/.npm-global";
     };
     sessionPath = [
       "${homeDir}/.local/bin"
       "${homeDir}/.node/bin"
       "${homeDir}/.duckdb/cli/latest" # DuckDB CLI Installed manually
+      "${homeDir}/.npm-global/bin"
     ];
 
     packages = with pkgs; [
