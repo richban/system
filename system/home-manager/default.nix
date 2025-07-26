@@ -267,7 +267,7 @@ in {
       pre-commit # Git hooks manager
       git-sizer # Git repo analyzer
       git-lfs # Git large file storage
-      claude-code # Claude CLI
+      inputs.claude-code.packages.${pkgs.system}.claude-code # Claude CLI from Nix flake
       fpp # Fuzzy path picker
 
       # Ruby Environment
@@ -328,6 +328,9 @@ in {
         target = ".config/karabiner";
         recursive = true;
       };
+      ".npmrc".text = ''
+        prefix=${homeDir}/.npm-global
+      '';
     };
   };
 }

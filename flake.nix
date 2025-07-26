@@ -28,6 +28,7 @@
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
+    claude-code.url = "github:sadjow/claude-code-nix";
     # Neovim flakes
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
@@ -165,10 +166,12 @@
 
     overlays = {
       neovimOverlay = import ./system/overlays/neovim.nix {inherit inputs;};
-      default = final: prev: {
-        sysdo = self.packages.${prev.system}.sysdo;
-        cb = self.packages.${prev.system}.cb;
-      };
+      default = final: prev:
+        {
+          sysdo = self.packages.${prev.system}.sysdo;
+          cb = self.packages.${prev.system}.cb;
+        }
+        // inputs.claude-code.overlays.default final prev;
     };
 
     # Formatter for .nix files, available via 'nix fmt'
