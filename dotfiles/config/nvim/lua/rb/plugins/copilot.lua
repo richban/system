@@ -26,7 +26,7 @@ function M.config()
       },
     },
     suggestion = {
-      enabled = true,
+      enabled = false,
       auto_trigger = false,
       debounce = 75,
       keymap = {
