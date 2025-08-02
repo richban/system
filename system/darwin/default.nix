@@ -11,7 +11,6 @@
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-index-database.darwinModules.nix-index
     ../common.nix
-    ./wm.nix
     ./preferences.nix
     ./brew.nix
   ];
