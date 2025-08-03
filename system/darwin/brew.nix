@@ -12,12 +12,15 @@
     brews = [
       "terminal-notifier"
       "rilldata/tap/rill"
+      "felixkratz/formulae/borders"
     ];
     taps = [
       "1password/tap"
       "homebrew/bundle"
       "homebrew/services"
       "rilldata/tap"
+      "nikitabobko/tap"
+      "FelixKratz/formulae"
     ];
     casks = [
       "alacritty"
@@ -29,8 +32,6 @@
       "hammerspoon"
       "obsidian"
       "raycast"
-      "visual-studio-code"
-      "windsurf"
       "discord"
       "notion"
       "slack"
@@ -41,6 +42,7 @@
       "zoom"
       "whatsapp"
       "microsoft-teams"
+      "aerospace"
     ];
   };
 }
