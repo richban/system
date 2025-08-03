@@ -189,8 +189,8 @@ in {
       tmuxPlugins.copycat
       tmuxPlugins.fpp
       tmuxPlugins.vim-tmux-navigator
-      tmuxPlugins.resurrect
-      tmuxPlugins.continuum
+      # tmuxPlugins.resurrect
+      # tmuxPlugins.continuum
     ];
   };
 
@@ -313,20 +313,18 @@ in {
     ];
 
     file = {
-      hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-        source = ../../dotfiles/hammerspoon;
-        target = ".hammerspoon";
-        recursive = true;
+      ".config/aerospace" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/aerospace";
       };
-      tmuxinator = {
-        source = ../../dotfiles/config/tmuxinator;
-        target = ".config/tmuxinator";
-        recursive = true;
+
+      ".hammerspoon" = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/hammerspoon";
       };
-      karabiner = {
-        source = ../../dotfiles/config/karabiner;
-        target = ".config/karabiner";
-        recursive = true;
+      ".config/tmuxinator" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/tmuxinator";
+      };
+      ".config/karabiner" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/karabiner";
       };
       ".npmrc".text = ''
         prefix=${homeDir}/.npm-global
