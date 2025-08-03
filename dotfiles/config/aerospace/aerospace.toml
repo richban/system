@@ -6,7 +6,7 @@
 after-startup-command = [
     # JankyBorders has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
-    'exec-and-forget borders active_color=0xff3e44b1 inactive_color=0xff494d64 width=5.0',
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
     'exec-and-forget aerospace workspace 1 layout accordion horizontal',
     'exec-and-forget aerospace workspace 2 layout accordion horizontal',
     'exec-and-forget aerospace workspace 3 layout accordion horizontal',
@@ -128,7 +128,7 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-d = 'move-node-to-workspace D --focus-follows-window' # Default workspace
     alt-shift-e = 'move-node-to-workspace E'
     alt-shift-f = 'move-node-to-workspace F'
-    alt-shift-g = 'move-node-to-workspace G',
+    alt-shift-g = 'move-node-to-workspace G'
     alt-shift-i = 'move-node-to-workspace I'
     alt-shift-m = 'move-node-to-workspace M'
     alt-shift-n = 'move-node-to-workspace N'
