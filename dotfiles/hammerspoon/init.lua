@@ -13,10 +13,6 @@ hs.hotkey.bind(hyper, "o", function()
   hs.execute(shell_cmd)
 end)
 
-hs.hotkey.bind(hyper, "c", open("Google Chrome"))
-hs.hotkey.bind(hyper, "t", open("Alacritty"))
-hs.hotkey.bind(hyper, "v", open("Visual Studio Code"))
-
 hs.hotkey.bind(hyper, "p", function()
   hs.network.ping.ping("8.8.8.8", 1, 0.01, 1.0, "any", pingResult)
 end)
