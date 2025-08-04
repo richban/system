@@ -269,6 +269,7 @@ in {
       git-lfs # Git large file storage
       inputs.claude-code.packages.${pkgs.system}.claude-code # Claude CLI from Nix flake
       fpp # Fuzzy path picker
+      zoxide
 
       # Ruby Environment
       (pkgs.ruby.withPackages (ps: with ps; [jekyll]))

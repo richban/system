@@ -94,6 +94,7 @@
       export FZF_CTRL_R_OPTS="--height=40% --layout=reverse --border --ansi"
 
       autopair-init
+      eval "$(zoxide init zsh)"
 
       # Source custom functions
       . ~/.functions
