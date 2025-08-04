@@ -6,11 +6,7 @@
 after-startup-command = [
     # JankyBorders has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
-    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
-    'exec-and-forget aerospace workspace 1 layout accordion horizontal',
-    'exec-and-forget aerospace workspace 2 layout accordion horizontal',
-    'exec-and-forget aerospace workspace 3 layout accordion horizontal',
-    'exec-and-forget aerospace workspace C layout accordion horizontal'
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
 ]
 
 # Start AeroSpace at login
@@ -60,8 +56,8 @@ automatically-unhide-macos-hidden-apps = false
 [mode.main.binding]
 
     # Layout controls
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
+    alt-slash = 'layout tiles vertical horizontal'
+    alt-comma = 'layout accordion vertical horizontal'
 
     # Focus navigation
     alt-h = 'focus left'
@@ -230,6 +226,11 @@ run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'  # Messages
+if.during-aerospace-startup = false
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'  # Messages
 if.during-aerospace-startup = false
 run = 'move-node-to-workspace C'
 
