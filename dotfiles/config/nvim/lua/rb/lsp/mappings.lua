@@ -49,7 +49,8 @@ function M.on_attach(client, buffer)
   Key mappings for code modifications and refactoring:
   <leader>ca - Show available code actions (fixes, refactorings)
   <leader>rn - Rename symbol under cursor (uses inc_rename if available)
-  <leader>cw - Toggle inline diagnostic messages
+  <leader>cw - Toggle virtual lines diagnostics
+  <leader>cv - Toggle virtual text diagnostics
   --]]
   self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
   self:map("<leader>rn", M.rename, { expr = true, desc = "Rename", has = "rename" })
@@ -57,6 +58,21 @@ function M.on_attach(client, buffer)
     local new_config = not vim.diagnostic.config().virtual_lines
     vim.diagnostic.config({ virtual_lines = new_config })
   end, { desc = "Toggle Virtual Lines Diagnostics" })
+  self:map("<leader>cv", function()
+    local current_config = vim.diagnostic.config()
+    if current_config.virtual_text then
+      vim.diagnostic.config({ virtual_text = false })
+      print("Virtual text diagnostics disabled")
+    else
+      vim.diagnostic.config({
+        virtual_text = {
+          spacing = 4,
+          prefix = require("rb.icons").diagnostics.BoldInformation,
+        },
+      })
+      print("Virtual text diagnostics enabled")
+    end
+  end, { desc = "Toggle Virtual Text Diagnostics" })
 
   --[[ LSP Information
   Key mappings for LSP debugging and information:
