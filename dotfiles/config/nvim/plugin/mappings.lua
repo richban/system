@@ -14,11 +14,11 @@ key_map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 key_map("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 -- Toggle Paste mode
 key_map("n", "<leader>p", ":set paste!<CR>", { noremap = true, silent = true })
--- Window navigation
-key_map("", "<C-J>", "<C-W><C-J>", { noremap = true, silent = true })
-key_map("", "<C-K>", "<C-W><C-K>", { noremap = true, silent = true })
-key_map("", "<C-L>", "<C-W><C-L>", { noremap = true, silent = true })
-key_map("", "<C-H>", "<C-W><C-H>", { noremap = true, silent = true })
+-- Window navigation - handled by tmux-nav plugin
+-- key_map("", "<C-J>", "<C-W><C-J>", { noremap = true, silent = true })
+-- key_map("", "<C-K>", "<C-W><C-K>", { noremap = true, silent = true })
+-- key_map("", "<C-L>", "<C-W><C-L>", { noremap = true, silent = true })
+-- key_map("", "<C-H>", "<C-W><C-H>", { noremap = true, silent = true })
 -- Adjusting splits
 key_map("n", "<silent> <leader>>", ":vertical resize +10<CR>", { noremap = true, silent = true })
 key_map("n", "<silent> <leader><", ":vertical resize -10<CR>", { noremap = true, silent = true })
