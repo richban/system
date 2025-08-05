@@ -192,6 +192,11 @@ if.app-id = 'com.apple.Safari'
 if.during-aerospace-startup = false
 run = 'move-node-to-workspace 2'
 
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'  # Arc
+if.during-aerospace-startup = false
+run = 'move-node-to-workspace 2'
+
 # Notes workspace (3)
 [[on-window-detected]]
 if.app-id = 'notion.id'
