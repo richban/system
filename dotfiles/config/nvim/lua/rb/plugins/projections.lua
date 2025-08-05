@@ -1,65 +1,68 @@
+-- | Keybinding | Command                              | Description                     |
+-- |------------|--------------------------------------|---------------------------------|
+-- | <leader>pp | :NeovimProjectDiscover               | Projects - Find all projects    |
+-- | <leader>pr | :NeovimProjectHistory                | Recent - Show project history   |
+-- | <leader>po | :NeovimProjectLoadRecent             | Open - Load most recent project |
+-- | <leader>ps | :SessionManager save_current_session | Save - Save current session     |
+-- | <leader>pl | :SessionManager load_session         | Load - Load session picker      |
+-- | <leader>pd | Go to project root                   | Directory - Navigate to root    |
+-- | <leader>px | :SessionManager delete_session       | X - Delete project session      |
+
 return {
-  "gnikdroy/projections.nvim",
-  dependencies = {
-    "nvim-telescope/telescope.nvim",
-  },
-  branch = "pre_release",
-  config = function()
-    require("projections").setup({
-      workspaces = {
-        { "~/.nixpkgs", { ".git" } },
-        { "~/Developer", { ".git" } },
+  "coffebar/neovim-project",
+  opts = {
+    projects = { -- define project roots based on your previous workspaces
+      "~/.nixpkgs", -- your main nixpkgs config
+      "~/Developer/*", -- your development projects
+      "~/.config/*", -- config directories
+    },
+    picker = {
+      type = "telescope", -- using telescope as you had before
+    },
+    -- Session management settings
+    session_manager_opts = {
+      autosave_ignore_dirs = {
+        vim.fn.expand("~"), -- don't save sessions for home directory
+        "/tmp",
       },
-      patterns = { ".git", ".svn", ".hg" },
-      store_hooks = { pre = nil, post = nil },
-      restore_hooks = { pre = nil, post = nil },
-    })
-
-    local Session = require("projections.session")
-
-    -- Syntax highlighting
-    vim.opt.ssop:append({ "localoptions" })
-
-    -- Bind <leader>fp to Telescope projections
-    require("telescope").load_extension("projections")
-    vim.keymap.set("n", "<leader>fp", function()
-      vim.cmd("Telescope projections")
-    end)
-
-    -- Autostore session on VimExit
-    vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
-      callback = function()
-        Session.store(vim.loop.cwd())
-      end,
-    })
-
-    -- Switch to project if vim was started in a project dir
-    local switcher = require("projections.switcher")
-    vim.api.nvim_create_autocmd({ "VimEnter" }, {
-      callback = function()
-        if vim.fn.argc() == 0 then
-          switcher.switch(vim.loop.cwd())
-        end
-      end,
-    })
-
-    -- If vim was started with arguments, do nothing
-    -- If in some project's root, attempt to restore that project's session
-    -- If not, restore last session
-    -- If no sessions, do nothing
-    vim.api.nvim_create_autocmd({ "VimEnter" }, {
-      callback = function()
-        if vim.fn.argc() ~= 0 then
-          return
-        end
-        local session_info = Session.info(vim.loop.cwd())
-        if session_info == nil then
-          Session.restore_latest()
-        else
-          Session.restore(vim.loop.cwd())
-        end
-      end,
-      desc = "Restore last session automatically",
-    })
+    },
+    -- Project detection patterns (similar to your previous patterns)
+    detection_methods = { "pattern" },
+    patterns = { ".git", ".svn", ".hg", "Cargo.toml", "package.json", "go.mod" },
+  },
+  init = function()
+    -- enable saving the state of plugins in the session (matching your previous setup)
+    vim.opt.sessionoptions:append("globals") -- save global variables
+    vim.opt.sessionoptions:append("localoptions") -- save local options (from your previous config)
   end,
+  config = function(_, opts)
+    require("neovim-project").setup(opts)
+
+    -- Project management keybindings under <leader>p prefix
+    vim.keymap.set("n", "<leader>pp", ":NeovimProjectDiscover<CR>", { desc = "Find Projects" })
+    vim.keymap.set("n", "<leader>pr", ":NeovimProjectHistory<CR>", { desc = "Recent Projects" })
+    vim.keymap.set("n", "<leader>po", ":NeovimProjectLoadRecent<CR>", { desc = "Open Recent Project" })
+    -- Session management
+    vim.keymap.set("n", "<leader>ps", ":SessionManager save_current_session<CR>", { desc = "Save Project Session" })
+    vim.keymap.set("n", "<leader>pl", ":SessionManager load_session<CR>", { desc = "Load Session" })
+    -- Delete current project session
+    vim.keymap.set("n", "<leader>px", ":SessionManager delete_session<CR>", { desc = "Delete Project Session" })
+    -- Project root navigation
+    vim.keymap.set("n", "<leader>pd", function()
+      local project_root = vim.fn.fnamemodify(vim.fn.finddir(".git", ".;"), ":h")
+      if project_root ~= "" then
+        vim.cmd("cd " .. project_root)
+        print("Changed to project root: " .. project_root)
+      else
+        print("No project root found")
+      end
+    end, { desc = "Go to Project Root Directory" })
+  end,
+  dependencies = {
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-telescope/telescope.nvim" }, -- removed version tag to use latest
+    { "Shatur/neovim-session-manager" },
+  },
+  lazy = false,
+  priority = 100,
 }
