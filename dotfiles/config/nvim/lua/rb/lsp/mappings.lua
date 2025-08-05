@@ -12,14 +12,14 @@ function M.on_attach(client, buffer)
   Key mappings for code navigation and jumping between symbols:
   gd - Jump to definition of symbol under cursor
   gD - Jump to declaration (useful in header files)
-  gr - Find all references of symbol under cursor
-  gI - Jump to implementation (useful for interfaces)
+  grr - Find all references of symbol under cursor (0.11 default)
+  gri - Jump to implementation (0.11 default)
   <leader>D - Jump to type definition
   --]]
   self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
   map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-  self:map("gr", "Telescope lsp_references", { desc = "Find References" })
-  map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+  self:map("grr", "Telescope lsp_references", { desc = "Find References" })
+  map("gri", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
   map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
   --[[ Documentation
@@ -32,9 +32,11 @@ function M.on_attach(client, buffer)
 
   --[[ Symbols
   Key mappings for symbol search and navigation:
-  <leader>ds - List all symbols in current document
+  gO - List all symbols in current document (0.11 default)
+  <leader>ds - List all symbols in current document (kept for compatibility)
   <leader>ws - List all symbols in current workspace/project
   --]]
+  map("gO", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
   map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
   map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
@@ -47,11 +49,15 @@ function M.on_attach(client, buffer)
 
   --[[ Code Actions
   Key mappings for code modifications and refactoring:
-  <leader>ca - Show available code actions (fixes, refactorings)
-  <leader>rn - Rename symbol under cursor (uses inc_rename if available)
+  gra - Show available code actions (0.11 default)
+  grn - Rename symbol under cursor (0.11 default)
+  <leader>ca - Show available code actions (kept for compatibility)
+  <leader>rn - Rename symbol under cursor (kept for compatibility)
   <leader>cw - Toggle virtual lines diagnostics
   <leader>cv - Toggle virtual text diagnostics
   --]]
+  self:map("gra", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
+  self:map("grn", M.rename, { expr = true, desc = "Rename", has = "rename" })
   self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
   self:map("<leader>rn", M.rename, { expr = true, desc = "Rename", has = "rename" })
   self:map("<leader>cw", function()
@@ -194,7 +200,7 @@ function M.on_attach(client, buffer)
 
   --[[ Code Navigation
   Additional code navigation mappings:
-  gi - Go to implementation
+  gi - Go to implementation (kept for muscle memory)
   <leader>ci - Show incoming calls
   <leader>co - Show outgoing calls
   --]]

@@ -6,6 +6,8 @@ function M.lsp_init()
   -- LSP handlers configuration
   local config = {
     diagnostic = {
+      -- Disable virtual lines by default (can be toggled with <leader>cw)
+      virtual_lines = false,
       virtual_text = {
         spacing = 4,
         prefix = icons.diagnostics.BoldInformation,
