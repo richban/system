@@ -3,10 +3,10 @@
 -- | <leader>pp | :NeovimProjectDiscover               | Projects - Find all projects    |
 -- | <leader>pr | :NeovimProjectHistory                | Recent - Show project history   |
 -- | <leader>po | :NeovimProjectLoadRecent             | Open - Load most recent project |
--- | <leader>ps | :SessionManager save_current_session | Save - Save current session     |
--- | <leader>pl | :SessionManager load_session         | Load - Load session picker      |
+-- | <leader>ps | :SessionSave                        | Save - Save current session     |
+-- | <leader>pl | :SessionLoad                        | Load - Load session picker      |
 -- | <leader>pd | Go to project root                   | Directory - Navigate to root    |
--- | <leader>px | :SessionManager delete_session       | X - Delete project session      |
+-- | <leader>px | :SessionDelete                      | X - Delete project session      |
 
 return {
   "coffebar/neovim-project",
@@ -43,10 +43,10 @@ return {
     vim.keymap.set("n", "<leader>pr", ":NeovimProjectHistory<CR>", { desc = "Recent Projects" })
     vim.keymap.set("n", "<leader>po", ":NeovimProjectLoadRecent<CR>", { desc = "Open Recent Project" })
     -- Session management
-    vim.keymap.set("n", "<leader>ps", ":SessionManager save_current_session<CR>", { desc = "Save Project Session" })
-    vim.keymap.set("n", "<leader>pl", ":SessionManager load_session<CR>", { desc = "Load Session" })
+    vim.keymap.set("n", "<leader>ps", ":SessionSave<CR>", { desc = "Save Project Session" })
+    vim.keymap.set("n", "<leader>pl", ":SessionLoad<CR>", { desc = "Load Session" })
     -- Delete current project session
-    vim.keymap.set("n", "<leader>px", ":SessionManager delete_session<CR>", { desc = "Delete Project Session" })
+    vim.keymap.set("n", "<leader>px", ":SessionDelete<CR>", { desc = "Delete Project Session" })
     -- Project root navigation
     vim.keymap.set("n", "<leader>pd", function()
       local project_root = vim.fn.fnamemodify(vim.fn.finddir(".git", ".;"), ":h")

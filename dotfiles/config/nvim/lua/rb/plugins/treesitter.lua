@@ -26,9 +26,9 @@ return {
         enable = true,
         keymaps = {
           init_selection = "gnn",
-          node_incremental = "grn",
-          scope_incremental = "grc",
-          node_decremental = "grm",
+          node_incremental = "gns", -- changed from grn to avoid LSP rename conflict
+          scope_incremental = "gnc", -- changed from grc for consistency
+          node_decremental = "gnm", -- changed from grm for consistency
         },
       },
       indent = { enable = true },
@@ -58,7 +58,7 @@ return {
         max_file_lines = 1000,
       },
       refactor = {
-        smart_rename = { enable = true, keymaps = { smart_rename = "grr" } },
+        smart_rename = { enable = true, keymaps = { smart_rename = "gtr" } }, -- changed from grr to avoid LSP references conflict
         highlight_definitions = { enable = true },
         navigation = {
           enable = true,

@@ -24,8 +24,8 @@ key_map("n", "<silent> <leader>>", ":vertical resize +10<CR>", { noremap = true,
 key_map("n", "<silent> <leader><", ":vertical resize -10<CR>", { noremap = true, silent = true })
 key_map("n", "<silent> <leader>+", ":resize +10<CR>", { noremap = true, silent = true })
 key_map("n", "<silent> <leader>-", ":resize -10<CR>", { noremap = true, silent = true })
--- Change directory to current directory
-key_map("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", { noremap = true, silent = true })
+-- Change directory to current directory (moved to avoid LSP conflicts)
+key_map("n", "<leader>pd", ":cd %:p:h<CR>:pwd<CR>", { noremap = true, silent = true })
 
 -- map <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
 -- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
@@ -39,11 +39,11 @@ key_map("n", "<Leader>Q", ":qall!<CR>", { noremap = true, silent = true })
 -- write all and quit
 key_map("n", "<Leader>W", ":wqall<CR>", { noremap = true, silent = true })
 
-key_map("n", "<space>t", ":TSHighlightCapturesUnderCursor<CR>", { noremap = true, silent = true })
+key_map("n", "<space>t", ":Inspect<CR>", { noremap = true, silent = true })
 
--- open quickfix / close
-key_map("n", "<leader>co", ":cope<cr>", { noremap = false, silent = true })
-key_map("n", "<leader>cl", ":cclose<cr>", { noremap = false, silent = true })
+-- open quickfix / close (moved to avoid LSP conflicts)
+key_map("n", "<leader>qo", ":cope<cr>", { noremap = false, silent = true })
+key_map("n", "<leader>qc", ":cclose<cr>", { noremap = false, silent = true })
 
 -- Surround word under cursor w/ backticks (required vim-surround)
 key_map("n", "<leader>`", "ysiW`", { noremap = false })

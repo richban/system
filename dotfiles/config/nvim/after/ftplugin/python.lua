@@ -11,7 +11,7 @@ local keymap = vim.keymap.set
 local opts = { buffer = true, silent = true }
 
 -- Run current Python file
-keymap("n", "<leader>pr", ":!python %<CR>", vim.tbl_extend("force", opts, { desc = "Run Python file" }))
+keymap("n", "<leader>pe", ":!python %<CR>", vim.tbl_extend("force", opts, { desc = "Run Python file" }))
 
 -- Interactive Python REPL
 keymap("n", "<leader>pi", ":!python -i %<CR>", vim.tbl_extend("force", opts, { desc = "Python interactive" }))

@@ -44,6 +44,14 @@ if not present then
   return
 end
 
+-- Global keymap for toggling ghost text
+vim.keymap.set({ "n", "i" }, "<leader>tg", function()
+  local current_config = cmp.get_config()
+  current_config.experimental.ghost_text = not current_config.experimental.ghost_text
+  cmp.setup(current_config)
+  vim.notify("Ghost text " .. (current_config.experimental.ghost_text and "enabled" or "disabled"))
+end, { noremap = true, silent = true, desc = "Toggle completion ghost text" })
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -71,8 +79,6 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.confirm({ select = true })
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -80,30 +86,8 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
       else
         fallback()
-      end
-    end, { "i", "s" }),
-    -- Copilot completion
-    ["<c-h>"] = cmp.mapping.complete({
-      config = {
-        sources = {
-          { name = "copilot" },
-        },
-      },
-    }),
-    -- <c-l> will move you to the right of each of the expansion locations.
-    -- <c-h> is similar, except moving you backwards.
-    ["<C-l>"] = cmp.mapping(function()
-      if luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      end
-    end, { "i", "s" }),
-    ["<C-h>"] = cmp.mapping(function()
-      if luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
       end
     end, { "i", "s" }),
   },
@@ -149,7 +133,6 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp", priority = 1000 },
     { name = "copilot", priority = 900 },
-    { name = "luasnip", priority = 750 },
     { name = "nvim_lsp_signature_help", priority = 700 },
     { name = "nvim_lsp_document_symbol", priority = 600 },
     { name = "buffer", priority = 500 },
