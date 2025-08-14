@@ -57,4 +57,6 @@
   spoton = "sudo mdutil -a -i on";
 
   mux = "tmuxinator";
+  fabric-list = "list_fabric_patterns";
+  fabric-refresh = "create_fabric_aliases";
 }

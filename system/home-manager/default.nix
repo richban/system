@@ -311,6 +311,8 @@ in {
       difftastic # Modern Unix `diff`
       fastfetch # Modern Unix system info
       ipfetch # Terminal IP info
+      fabric-ai
+      # yt-dlp
     ];
 
     file = {

@@ -8,10 +8,7 @@ function M.lsp_init()
     diagnostic = {
       -- Disable virtual lines by default (can be toggled with <leader>cw)
       virtual_lines = false,
-      virtual_text = {
-        spacing = 4,
-        prefix = icons.diagnostics.BoldInformation,
-      },
+      virtual_text = false,
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
