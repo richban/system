@@ -52,7 +52,19 @@ vim.keymap.set({ "n", "i" }, "<leader>tg", function()
   vim.notify("Ghost text " .. (current_config.experimental.ghost_text and "enabled" or "disabled"))
 end, { noremap = true, silent = true, desc = "Toggle completion ghost text" })
 
+-- Disable cmp in telescope
+local cmp_enabled = true
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt",
+  callback = function()
+    require("cmp").setup.buffer({ enabled = false })
+  end,
+})
+
 cmp.setup({
+  enabled = function()
+    return cmp_enabled and vim.bo.buftype ~= "prompt"
+  end,
   snippet = {
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.

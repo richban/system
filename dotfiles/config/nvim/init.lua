@@ -2,6 +2,9 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 vim.g.mapleader = " "
 
+-- Set termguicolors early to prevent session manager errors
+vim.opt.termguicolors = true
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",

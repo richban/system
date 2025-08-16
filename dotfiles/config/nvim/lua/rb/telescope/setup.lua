@@ -7,7 +7,13 @@ local actions = require("telescope.actions")
 require("telescope").setup({
   defaults = {
     timeoutlen = 2000,
-    mappings = { i = { ["<esc>"] = actions.close } },
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close,
+        ["<C-n>"] = actions.move_selection_next,
+        ["<C-p>"] = actions.move_selection_previous,
+      },
+    },
     vimgrep_arguments = {
       "rg",
       "--color=never",

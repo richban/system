@@ -1,6 +1,6 @@
 -- | Keybinding | Command                              | Description                     |
 -- |------------|--------------------------------------|---------------------------------|
--- | <leader>pp | :NeovimProjectDiscover               | Projects - Find all projects    |
+-- | <leader>fp | :NeovimProjectDiscover               | Projects - Find all projects    |
 -- | <leader>pr | :NeovimProjectHistory                | Recent - Show project history   |
 -- | <leader>po | :NeovimProjectLoadRecent             | Open - Load most recent project |
 -- | <leader>ps | :SessionSave                        | Save - Save current session     |
@@ -15,6 +15,7 @@ return {
       "~/.nixpkgs", -- your main nixpkgs config
       "~/Developer/*", -- your development projects
       "~/.config/*", -- config directories
+      "~/.claude",
     },
     picker = {
       type = "telescope", -- using telescope as you had before
@@ -39,7 +40,7 @@ return {
     require("neovim-project").setup(opts)
 
     -- Project management keybindings under <leader>p prefix
-    vim.keymap.set("n", "<leader>pp", ":NeovimProjectDiscover<CR>", { desc = "Find Projects" })
+    vim.keymap.set("n", "<leader>fp", ":NeovimProjectDiscover<CR>", { desc = "Find Projects" })
     vim.keymap.set("n", "<leader>pr", ":NeovimProjectHistory<CR>", { desc = "Recent Projects" })
     vim.keymap.set("n", "<leader>po", ":NeovimProjectLoadRecent<CR>", { desc = "Open Recent Project" })
     -- Session management
