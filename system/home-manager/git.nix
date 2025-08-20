@@ -259,12 +259,26 @@
       delta = {
         line-numbers = true;
         features = "side-by-side line-numbers decorations";
+        # Muted Aura theme colors for better readability
+        plus-style = "syntax #4a9d7a";
+        minus-style = "syntax #c75757";
+        plus-emph-style = "syntax #4a9d7a bold";
+        minus-emph-style = "syntax #c75757 bold";
+        line-numbers-plus-style = "#4a9d7a";
+        line-numbers-minus-style = "#c75757";
+        line-numbers-zero-style = "#6d6d6d";
+        syntax-theme = "Monokai Extended";
+        file-style = "bold #a277ff";
+        file-decoration-style = "#ffca85";
+        hunk-header-style = "file line-number syntax";
+        hunk-header-decoration-style = "#ffca85 box";
+        true-color = "always";
       };
 
       "delta \"decorations\"" = {
-        commit-decoration-style = "bold yellow box ul";
-        file-style = "bold yellow";
-        file-decoration-style = "none";
+        commit-decoration-style = "bold #ffca85 box ul";
+        file-style = "bold #a277ff";
+        file-decoration-style = "#ffca85";
       };
     };
   };

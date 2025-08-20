@@ -98,6 +98,44 @@
       blink_timeout = 5;
       unfocused_hollow = true;
     };
+
+    colors = {
+      primary = {
+        background = "#15141b";
+        foreground = "#edecee";
+      };
+
+      normal = {
+        black = "#110f18";
+        red = "#ff6767";
+        green = "#61ffca";
+        yellow = "#ffca85";
+        blue = "#a277ff";
+        magenta = "#a277ff";
+        cyan = "#61ffca";
+        white = "#edecee";
+      };
+
+      bright = {
+        black = "#4d4d4d";
+        red = "#ff6767";
+        green = "#61ffca";
+        yellow = "#ffca85";
+        blue = "#a277ff";
+        magenta = "#a277ff";
+        cyan = "#61ffca";
+        white = "#edecee";
+      };
+
+      selection = {
+        text = "CellForeground";
+        background = "#29263c";
+      };
+
+      cursor = {
+        cursor = "#a277ff";
+      };
+    };
   };
 in {
   programs.alacritty = {
