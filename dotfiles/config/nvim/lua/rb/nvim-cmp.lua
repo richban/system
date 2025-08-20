@@ -65,6 +65,9 @@ cmp.setup({
   enabled = function()
     return cmp_enabled and vim.bo.buftype ~= "prompt"
   end,
+  completion = {
+    autocomplete = false, -- Disable automatic completion
+  },
   snippet = {
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.

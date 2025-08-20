@@ -115,9 +115,9 @@
               alias "$pattern_name"="fabric --pattern $pattern_name"
             fi
           done
-          echo "✅ Fabric aliases created for $(ls ~/.config/fabric/patterns | wc -l | tr -d ' ') patterns"
+          echo "Fabric aliases created for $(ls ~/.config/fabric/patterns | wc -l | tr -d ' ') patterns"
         else
-          echo "⚠️  Fabric patterns not found. Run 'fabric --setup' first."
+          echo "Fabric patterns not found. Run 'fabric --setup' first."
         fi
       }
 

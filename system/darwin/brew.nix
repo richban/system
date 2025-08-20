@@ -43,6 +43,7 @@
       "whatsapp"
       "microsoft-teams"
       "aerospace"
+      "godot"
     ];
   };
 }
