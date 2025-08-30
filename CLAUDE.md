@@ -10,16 +10,49 @@ This is a Nix-based system configuration repository that manages macOS systems u
 
 ### Core Components
 
-- **Flake Structure**: `flake.nix` defines three main output types:
-  - `darwinConfigurations`: System-level macOS configurations via nix-darwin
-  - `homeConfigurations`: User-level configurations via home-manager  
-  - `packages` and `apps`: Custom packages and applications (sysdo, cb utilities)
+- **Flake Structure**: `flake.nix` (lines 1-120+) defines three main output types:
+  - `darwinConfigurations` (lines 36-45): System-level macOS configurations via nix-darwin
+  - `homeConfigurations` (lines 46-55): User-level configurations via home-manager  
+  - `packages` and `apps` (lines 56-80): Custom packages and applications (sysdo, cb utilities)
 
 - **Configuration Modules**:
-  - `system/darwin/`: macOS system-level configurations (preferences, brew packages, window management)
-  - `system/home-manager/`: User environment configurations (shell, dotfiles, applications)
-  - `system/lib/`: Helper functions for generating configurations
-  - `dotfiles/`: Raw configuration files that are symlinked into place
+
+  **`system/darwin/`** - macOS system-level configurations:
+  - `default.nix` (lines 8-16): Imports nix-homebrew, home-manager, common config, preferences, and brew
+  - `preferences.nix`: macOS system preferences (dock, finder, trackpad, etc.)
+  - `brew.nix`: Homebrew packages and casks managed via nix-homebrew
+  - `wm.nix`: Window management configurations (Aerospace, etc.)
+
+  **`system/home-manager/`** - User environment configurations:
+  - `default.nix` (lines 169-264): Main configuration with tmux (lines 169-264), starship (lines 124-146), fzf (lines 94-122), packages list (lines 309-385), and dotfile symlinks (lines 387-405)
+  - `zsh.nix`: Zsh shell configuration with plugins and aliases
+  - `git.nix`: Git configuration with aliases and settings
+  - `nvim/default.nix`: Neovim configuration and plugins
+  - `alacritty.nix`: Terminal emulator configuration
+  - `1password.nix`: 1Password CLI integration
+  - `direnv.nix`: Directory environment management
+  - `aliases.nix`: Shell aliases and functions
+
+  **`system/lib/`** - Helper functions:
+  - `helpers.nix`: Functions for creating darwin and home-manager configurations
+  - `default.nix`: Library exports and utilities
+
+  **`system/`** - Shared configurations:
+  - `common.nix`: Shared configuration imported by darwin systems
+  - `nixpkgs.nix`: Nixpkgs configuration and overlays
+  - `fonts.nix`: Font configurations
+  - `overlays/neovim.nix`: Custom Neovim overlay with nightly builds
+
+  **`dotfiles/`** - Raw configuration files symlinked into place:
+  - `config/nvim/`: Neovim Lua configurations
+  - `config/tmux/`: Tmux configuration files (tmux.conf, tmux.remote.conf)
+  - `config/aerospace/`: Aerospace window manager config
+  - `config/karabiner/`: Karabiner key remapping configurations
+  - `config/tmuxinator/`: Tmux session management templates
+  - `hammerspoon/`: Hammerspoon Lua automation scripts
+
+  **`bin/`** - CLI utilities:
+  - `do.py`: Primary sysdo CLI tool for system management operations
 
 ### Key Files
 
@@ -115,7 +148,9 @@ The system automatically detects platform and username, but can be overridden wi
 
 ## Key Integrations
 
-- **Catppuccin theming**: Applied across multiple applications (tmux, alacritty, etc.)
+- **Aura theming**: Applied across multiple applications (nvim, tmux) with Aura color palette (`#15141b` black background)
 - **Homebrew**: Managed via `nix-homebrew` in `system/darwin/brew.nix`
-- **Pre-commit hooks**: Integrated into development shell and CI checks
+- **Pre-commit hooks**: Integrated into development shell and CI checks (defined in `flake.nix`)
 - **Neovim**: Custom overlay with nightly builds in `system/overlays/neovim.nix`
+- **Tmux**: Custom Aura theme configuration in `system/home-manager/default.nix` (lines 184-252)
+- **Dotfiles syminking**: Raw configs in `dotfiles/` symlinked via `home.file` entries
