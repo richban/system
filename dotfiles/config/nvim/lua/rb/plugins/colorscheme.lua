@@ -23,23 +23,27 @@ return {
         }
 
         -- Core diff colors (matching Aura theme's DiffAdd, DiffChange, etc.)
-        vim.api.nvim_set_hl(0, "DiffAdd", { fg = aura.green, bg = aura.black, gui = "inverse" })
-        vim.api.nvim_set_hl(0, "DiffChange", { fg = aura.blue, bg = aura.black, gui = "inverse" })
-        vim.api.nvim_set_hl(0, "DiffDelete", { fg = aura.red, bg = aura.black, gui = "inverse" })
-        vim.api.nvim_set_hl(0, "DiffText", { fg = aura.orange, bg = aura.black, gui = "inverse" })
+        vim.api.nvim_set_hl(0, "DiffAdd", { fg = aura.green, bg = aura.black, reverse = true })
+        vim.api.nvim_set_hl(0, "DiffChange", { fg = aura.blue, bg = aura.black, reverse = true })
+        vim.api.nvim_set_hl(0, "DiffDelete", { fg = aura.red, bg = aura.black, reverse = true })
+        vim.api.nvim_set_hl(0, "DiffText", { fg = aura.orange, bg = aura.black, reverse = true })
 
         -- NeoGit diff highlights using Aura colors
         vim.api.nvim_set_hl(0, "NeogitDiffAdd", { fg = aura.green })
         vim.api.nvim_set_hl(0, "NeogitDiffDelete", { fg = aura.red })
         vim.api.nvim_set_hl(0, "NeogitDiffContext", { fg = aura.white })
         vim.api.nvim_set_hl(0, "NeogitDiffContextHighlight", { fg = aura.white, bg = aura.black })
-        vim.api.nvim_set_hl(0, "NeogitDiffAddHighlight", { fg = aura.green, bg = aura.black, gui = "inverse" })
-        vim.api.nvim_set_hl(0, "NeogitDiffDeleteHighlight", { fg = aura.red, bg = aura.black, gui = "inverse" })
-        vim.api.nvim_set_hl(0, "NeogitHunkHeader", { fg = aura.orange, bg = aura.black, gui = "bold" })
-        vim.api.nvim_set_hl(0, "NeogitHunkHeaderHighlight", { fg = aura.orange, bg = aura.black, gui = "bold,inverse" })
+        vim.api.nvim_set_hl(0, "NeogitDiffAddHighlight", { fg = aura.green, bg = aura.black, reverse = true })
+        vim.api.nvim_set_hl(0, "NeogitDiffDeleteHighlight", { fg = aura.red, bg = aura.black, reverse = true })
+        vim.api.nvim_set_hl(0, "NeogitHunkHeader", { fg = aura.orange, bg = aura.black, bold = true })
+        vim.api.nvim_set_hl(
+          0,
+          "NeogitHunkHeaderHighlight",
+          { fg = aura.orange, bg = aura.black, bold = true, reverse = true }
+        )
 
         -- NeoGit status highlights using Aura colors
-        vim.api.nvim_set_hl(0, "NeogitBranch", { fg = aura.pink, gui = "bold" })
+        vim.api.nvim_set_hl(0, "NeogitBranch", { fg = aura.pink, bold = true })
         vim.api.nvim_set_hl(0, "NeogitRemote", { fg = aura.blue })
         vim.api.nvim_set_hl(0, "NeogitUnstagedchanges", { fg = aura.orange })
         vim.api.nvim_set_hl(0, "NeogitStagedchanges", { fg = aura.green })
