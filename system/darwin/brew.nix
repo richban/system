@@ -13,6 +13,8 @@
       "terminal-notifier"
       "rilldata/tap/rill"
       "felixkratz/formulae/borders"
+      "gnuplot"
+      "graphviz"
     ];
     taps = [
       "1password/tap"
