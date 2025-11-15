@@ -92,7 +92,7 @@
       mru-spaces = false;
       minimize-to-application = true;
       persistent-apps = [
-        "/System/Applications/Launchpad.app"
+        # "/System/Applications/Launchpad.app"
         "/Applications/Arc.app"
         "/System/Applications/Messages.app"
         "/System/Applications/FaceTime.app"
@@ -104,7 +104,7 @@
         "/System/Applications/Freeform.app"
         "/Applications/Obsidian.app"
         "/Applications/Notion.app"
-        "/Applications/TickTick.app"
+        # "/Applications/TickTick.app"
         "/Applications/Alacritty.app"
         "/Applications/Cursor.app"
       ];

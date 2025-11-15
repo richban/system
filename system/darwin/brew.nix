@@ -15,6 +15,8 @@
       "felixkratz/formulae/borders"
       "gnuplot"
       "graphviz"
+      "databricks"
+      "opencode"
     ];
     taps = [
       "1password/tap"
@@ -23,6 +25,7 @@
       "rilldata/tap"
       "nikitabobko/tap"
       "FelixKratz/formulae"
+      "databricks/tap"
     ];
     casks = [
       "alacritty"
@@ -38,7 +41,7 @@
       "notion"
       "slack"
       "wechat"
-      "ticktick"
+      # "ticktick"
       "github"
       "karabiner-elements"
       "zoom"
