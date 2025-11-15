@@ -7,7 +7,7 @@
     onActivation = {
       autoUpdate = false;
       upgrade = false;
-      cleanup = "zap";
+      cleanup = "uninstall";
     };
     brews = [
       "terminal-notifier"
@@ -33,7 +33,7 @@
       "firefox"
       "1password"
       "1password-cli"
-      "docker"
+      "docker-desktop"
       "hammerspoon"
       "obsidian"
       "raycast"
