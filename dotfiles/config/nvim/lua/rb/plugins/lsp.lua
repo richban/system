@@ -27,7 +27,6 @@ return {
       },
     },
     config = function()
-      local lspconfig = require("lspconfig")
       local capabilities = nil
 
       if pcall(require, "cmp_nvim_lsp") then
@@ -161,7 +160,8 @@ return {
           enabled = true,
           root_dir = function(fname)
             local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
-            return lspconfig.util.root_pattern(unpack(root_files))(fname) or lspconfig.util.find_git_ancestor(fname)
+            local util = require("lspconfig.util")
+            return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
           end,
           settings = {
             pylsp = {
@@ -239,7 +239,9 @@ return {
           end
         end
 
-        lspconfig[server_name].setup(config)
+        -- Use new Neovim 0.11+ API: configure then enable
+        vim.lsp.config(server_name, config)
+        vim.lsp.enable(server_name)
       end
 
       vim.api.nvim_create_autocmd("BufWritePre", {
