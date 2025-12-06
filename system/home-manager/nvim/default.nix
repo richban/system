@@ -6,7 +6,32 @@
   # Map all grammars to their corresponding plugins
   treesitterGrammars = pkgs.symlinkJoin {
     name = "nvim-treesitter-grammars";
-    paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
+    paths =
+      (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins:
+        with plugins; [
+          bash
+          c
+          cpp
+          css
+          dockerfile
+          gitattributes
+          gitignore
+          go
+          gomod
+          html
+          javascript
+          json
+          lua
+          make
+          markdown
+          nix
+          python
+          rust
+          toml
+          typescript
+          vim
+          yaml
+        ])).dependencies;
   };
 in {
   home.file = {

@@ -32,6 +32,8 @@ return {
       nix = { "alejandra" },
       sql = { "sqlfluff" },
       sh = { "shfmt" },
+      c = { "clang-format" },
+      cpp = { "clang-format" },
       ["*"] = { "trim_whitespace", "trim_newlines" },
     },
     -- Set up format-on-save
@@ -56,6 +58,11 @@ return {
 
       prettier = {
         prepend_args = { "--print-width", "100" },
+      },
+      ["clang-format"] = {
+        prepend_args = {
+          "--style={BasedOnStyle: Google, IndentWidth: 2, UseTab: Never, ColumnLimit: 100}",
+        },
       },
     },
     -- Use stop_after_first for JavaScript

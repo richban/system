@@ -122,6 +122,7 @@ return {
         lua_ls = true,
         cssls = true,
         ts_ls = true,
+        clangd = true,
         dockerls = {
           settings = {
             Dockerfile = {
@@ -220,6 +221,7 @@ return {
         "codespell",
         "gitlint",
         "sqlfluff",
+        "clang-format",
       }
 
       vim.list_extend(ensure_installed, servers_to_install)
