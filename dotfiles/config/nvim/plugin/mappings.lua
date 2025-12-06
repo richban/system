@@ -93,3 +93,12 @@ vim.api.nvim_set_keymap("n", "<leader>gb", "<cmd>Git blame<CR>", { noremap = tru
 vim.api.nvim_set_keymap("n", "<leader>gh", "<cmd>0Gclog!<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>gj", "<cmd>diffget //2<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = true })
+
+local yank = require("rb.yank")
+key_map("v", "<leader>ya", function()
+  yank.yank_visual_with_path(yank.get_buffer_absolute(), "absolute")
+end, { desc = "[Y]ank selection with [A]bsolute path" })
+
+key_map("v", "<leader>yr", function()
+  yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), "relative")
+end, { desc = "[Y]ank selection with [R]elative path" })
