@@ -12,7 +12,7 @@ function M.lsp_init()
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
-          [vim.diagnostic.severity.WARN] = icons.diagnostics.Warn,
+          [vim.diagnostic.severity.WARN] = icons.diagnostics.Warning,
           [vim.diagnostic.severity.INFO] = icons.diagnostics.Info,
           [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
         },
