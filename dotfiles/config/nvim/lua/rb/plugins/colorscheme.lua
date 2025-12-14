@@ -5,63 +5,12 @@ return {
     priority = 1000,
     config = function(plugin)
       vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-      vim.cmd.colorscheme("aura-dark")
+      -- vim.cmd.colorscheme("aura-dark")
 
-      -- Fix NeoGit colors using actual Aura theme palette
-      vim.defer_fn(function()
-        -- Aura theme colors with muted diff colors for better readability
-        local aura = {
-          purple = "#a277ff",
-          green = "#4a9d7a", -- Muted green for diff additions
-          orange = "#ffca85",
-          red = "#c75757", -- Muted red for diff deletions
-          pink = "#f694ff",
-          white = "#edecee",
-          gray = "#6d6d6d",
-          black = "#15141b",
-          blue = "#82e2ff",
-        }
-
-        -- Core diff colors (matching Aura theme's DiffAdd, DiffChange, etc.)
-        vim.api.nvim_set_hl(0, "DiffAdd", { fg = aura.green, bg = aura.black, reverse = true })
-        vim.api.nvim_set_hl(0, "DiffChange", { fg = aura.blue, bg = aura.black, reverse = true })
-        vim.api.nvim_set_hl(0, "DiffDelete", { fg = aura.red, bg = aura.black, reverse = true })
-        vim.api.nvim_set_hl(0, "DiffText", { fg = aura.orange, bg = aura.black, reverse = true })
-
-        -- NeoGit diff highlights using Aura colors
-        vim.api.nvim_set_hl(0, "NeogitDiffAdd", { fg = aura.green })
-        vim.api.nvim_set_hl(0, "NeogitDiffDelete", { fg = aura.red })
-        vim.api.nvim_set_hl(0, "NeogitDiffContext", { fg = aura.white })
-        vim.api.nvim_set_hl(0, "NeogitDiffContextHighlight", { fg = aura.white, bg = aura.black })
-        vim.api.nvim_set_hl(0, "NeogitDiffAddHighlight", { fg = aura.green, bg = aura.black, reverse = true })
-        vim.api.nvim_set_hl(0, "NeogitDiffDeleteHighlight", { fg = aura.red, bg = aura.black, reverse = true })
-        vim.api.nvim_set_hl(0, "NeogitHunkHeader", { fg = aura.orange, bg = aura.black, bold = true })
-        vim.api.nvim_set_hl(
-          0,
-          "NeogitHunkHeaderHighlight",
-          { fg = aura.orange, bg = aura.black, bold = true, reverse = true }
-        )
-
-        -- NeoGit status highlights using Aura colors
-        vim.api.nvim_set_hl(0, "NeogitBranch", { fg = aura.pink, bold = true })
-        vim.api.nvim_set_hl(0, "NeogitRemote", { fg = aura.blue })
-        vim.api.nvim_set_hl(0, "NeogitUnstagedchanges", { fg = aura.orange })
-        vim.api.nvim_set_hl(0, "NeogitStagedchanges", { fg = aura.green })
-        vim.api.nvim_set_hl(0, "NeogitUntrackedfiles", { fg = aura.red })
-        vim.api.nvim_set_hl(0, "NeogitUnpushedTo", { fg = aura.blue })
-        vim.api.nvim_set_hl(0, "NeogitUnmergedInto", { fg = aura.red })
-        vim.api.nvim_set_hl(0, "NeogitRecentcommits", { fg = aura.purple })
-
-        -- File status colors using Aura palette
-        vim.api.nvim_set_hl(0, "NeogitChangeModified", { fg = aura.orange })
-        vim.api.nvim_set_hl(0, "NeogitChangeAdded", { fg = aura.green })
-        vim.api.nvim_set_hl(0, "NeogitChangeDeleted", { fg = aura.red })
-        vim.api.nvim_set_hl(0, "NeogitChangeRenamed", { fg = aura.blue })
-        vim.api.nvim_set_hl(0, "NeogitChangeUpdated", { fg = aura.pink })
-        vim.api.nvim_set_hl(0, "NeogitChangeCopied", { fg = aura.blue })
-        vim.api.nvim_set_hl(0, "NeogitChangeBothModified", { fg = aura.orange })
-        vim.api.nvim_set_hl(0, "NeogitChangeNewFile", { fg = aura.green })
-      end, 100)
+      -- vim.defer_fn(function()
+      --   vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#5a9d7a", bg = "#15141b", reverse = true })
+      --   vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#a75757", bg = "#15141b", reverse = true })
+      -- end, 50)
     end,
   },
   {
@@ -93,5 +42,24 @@ return {
       -- vim.cmd.colorscheme("blood-moon")
     end,
   },
-  x,
+  {
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require("github-theme").setup({
+        -- ...
+      })
+
+      -- vim.cmd("colorscheme github_dark_tritanopia")
+    end,
+  },
+  {
+    "nyoom-engineering/oxocarbon.nvim",
+    config = function()
+      vim.opt.background = "dark" -- set this to dark or light
+      vim.cmd("colorscheme oxocarbon")
+    end,
+  },
 }
