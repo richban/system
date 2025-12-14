@@ -17,6 +17,7 @@
       "graphviz"
       "databricks"
       "opencode"
+      "dust"
     ];
     taps = [
       "1password/tap"
@@ -33,7 +34,7 @@
       "firefox"
       "1password"
       "1password-cli"
-      "docker-desktop"
+      # "docker-desktop"
       "hammerspoon"
       "obsidian"
       "raycast"
@@ -49,6 +50,8 @@
       "microsoft-teams"
       "aerospace"
       "godot"
+      "ghostty"
+      "orbstack"
     ];
   };
 }
