@@ -162,6 +162,17 @@ return {
           root_dir = function(fname)
             local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
             local util = require("lspconfig.util")
+
+            -- Ensure fname is a string; convert buffer number to file path if needed
+            if type(fname) ~= "string" then
+              fname = vim.api.nvim_buf_get_name(fname)
+            end
+
+            -- Return nil if fname is empty or invalid
+            if not fname or fname == "" then
+              return nil
+            end
+
             return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
           end,
           settings = {
