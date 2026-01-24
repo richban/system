@@ -122,7 +122,23 @@ return {
         lua_ls = true,
         cssls = true,
         ts_ls = true,
-        clangd = true,
+        clangd = {
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+            "--query-driver=/usr/bin/clang++,/usr/bin/g++,/opt/homebrew/opt/llvm/bin/clang++,/nix/store/*/bin/clang++,/nix/store/*/bin/g++",
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
+          },
+        },
         dockerls = {
           settings = {
             Dockerfile = {
@@ -179,7 +195,7 @@ return {
             pylsp = {
               plugins = {
                 -- Disable other linters and formatters
-                jedi_completion = { enabled = false },
+                jedi_completion = { enabled = true, fuzzy = true },
                 pycodestyle = { enabled = false },
                 pyflakes = { enabled = false },
                 mccabe = { enabled = false },
