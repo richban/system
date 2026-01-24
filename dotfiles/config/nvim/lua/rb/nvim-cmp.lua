@@ -66,7 +66,8 @@ cmp.setup({
     return cmp_enabled and vim.bo.buftype ~= "prompt"
   end,
   completion = {
-    autocomplete = false, -- Disable automatic completion
+    autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
+    completeopt = "menu,menuone,noinsert",
   },
   snippet = {
     expand = function(args)

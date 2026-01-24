@@ -4,6 +4,8 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "enabled": true,
+                        "description": "Change caps_lock to hyper key (command+control+option+shift)",
                         "manipulators": [
                             {
                                 "description": "Change caps_lock to command+control+option+shift.",
