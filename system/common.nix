@@ -4,6 +4,7 @@
   pkgs,
   username,
   stateVersion,
+  homeModules ? [],
   ...
 }: {
   imports = [./nixpkgs.nix ./fonts.nix];
@@ -33,7 +34,9 @@
   system.primaryUser = "${username}";
 
   # bootstrap home-manager
-  home-manager.users.${username} = import ./home-manager;
+  home-manager.users.${username} = {
+    imports = [./home-manager] ++ homeModules;
+  };
 
   # Enable home-manager
   home-manager = {

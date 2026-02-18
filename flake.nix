@@ -99,6 +99,7 @@
         hostname = "mac-mini";
         username = "melchior";
         platform = "aarch64-darwin";
+        homeModules = [./system/profiles/personal/home-manager];
       };
     };
 
@@ -107,6 +108,13 @@
         hostname = "mac-mini";
         username = "melchior";
         platform = "aarch64-darwin";
+        extraModules = [./system/profiles/personal/home-manager];
+      };
+      "s2kuf6@x86_64-linux" = helper.mkHome {
+        hostname = "work-linux";
+        username = "s2kuf6";
+        platform = "x86_64-linux";
+        extraModules = [./system/profiles/work/home-manager];
       };
     };
 
