@@ -1,19 +1,23 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
   home = {
     file.functions = {
-      source = ../../dotfiles/functions;
+      source = ../../../dotfiles/functions;
       target = ".functions";
       recursive = true;
     };
     sessionVariables = {
       TERM = "xterm-256color";
       LANG = "en_US.UTF-8";
-      GPG_TTY = "/dev/ttys000";
-      PATH = "${config.home.homeDirectory}/.local/bin:/opt/homebrew/bin:$PATH";
+      GPG_TTY =
+        if pkgs.stdenv.isDarwin
+        then "/dev/ttys000"
+        else "/dev/tty";
+      PATH = "${config.home.homeDirectory}/.local/bin${lib.optionalString pkgs.stdenv.isDarwin ":/opt/homebrew/bin"}:$PATH";
     };
   };
 
