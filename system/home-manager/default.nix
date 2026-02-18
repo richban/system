@@ -2,7 +2,6 @@
   inputs,
   config,
   pkgs,
-  lib,
   stateVersion,
   username,
   ...
@@ -16,13 +15,6 @@
 in {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
-    ./zsh.nix
-    ./git.nix
-    ./nvim
-    ./1password.nix
-    ./direnv.nix
-    ./alacritty.nix
-    # ./starship.nix
   ];
 
   xdg = {
@@ -31,40 +23,6 @@ in {
     dataHome = "${homeDir}/${relativeXDGDataPath}";
     cacheHome = "${homeDir}/${relativeXDGCachePath}";
   };
-
-  # Disable Catppuccin theme - using Aura theme instead
-  # catppuccin = {
-  #   accent = "blue";
-  #   flavor = "mocha";
-  #   bat.enable = config.programs.bat.enable;
-  #   bottom.enable = config.programs.bottom.enable;
-  #   fzf.enable = config.programs.fzf.enable;
-  #   gh-dash.enable = config.programs.gh.extensions.gh-dash;
-  #   gitui.enable = config.programs.gitui.enable;
-  #   starship.enable = config.programs.starship.enable;
-  #   alacritty.enable = config.programs.alacritty.enable;
-  #   tmux.enable = config.programs.tmux.enable;
-  #   tmux.extraConfig = ''
-  #     set -g @catppuccin_window_status_style "rounded"
-  #     set -g @catppuccin_status_background "#1e1e2e"
-  #     set -g @catppuccin_status_fill "all"
-  #     set -g @catppuccin_window_left_separator ""
-  #     set -g @catppuccin_window_right_separator " "
-  #     set -g @catppuccin_window_middle_separator " █"
-  #     set -g @catppuccin_window_number_position "right"
-  #     set -g @catppuccin_window_default_fill "number"
-  #     set -g @catppuccin_window_default_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
-  #     set -g @catppuccin_window_current_fill "number"
-  #     set -g @catppuccin_window_current_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}#{?window_zoomed_flag,(),}"
-  #     set -g @catppuccin_status_modules_right "directory meetings date_time"
-  #     set -g @catppuccin_status_modules_left "session"
-  #     set -g @catppuccin_status_fill "icon"
-  #     set -g @catppuccin_status_connect_separator "no"
-  #     set -g @catppuccin_directory_text "#{b:pane_current_path}"
-  #   '';
-  #   zsh-syntax-highlighting.enable = true;
-  #   delta.enable = true;
-  # };
 
   # Let Home Manager install and manage itself.
   programs.home-manager = {
@@ -76,191 +34,6 @@ in {
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableZshIntegration = true;
-  };
-
-  programs.bat = {
-    enable = true;
-    extraPackages = with pkgs.bat-extras; [
-      batgrep
-      batwatch
-      prettybat
-      batman
-    ];
-    config = {
-      style = "plain";
-    };
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    defaultCommand = "fd --type f --hidden --follow --exclude .git";
-    defaultOptions = [
-      "--height=40%"
-      "--layout=reverse"
-      "--border"
-      "--info=inline"
-    ];
-
-    fileWidgetOptions = [
-      "--preview 'bat --color=always --plain {}'"
-    ];
-
-    changeDirWidgetOptions = [
-      "--preview 'eza -l --tree --level=2 --color=always {}'"
-    ];
-
-    historyWidgetOptions = [
-      "--height=40%"
-      "--layout=reverse"
-      "--border"
-      "--ansi"
-      # Process command with syntax highlighting
-      "--preview 'echo {} | bat --color=always --plain --language=sh'"
-      "--preview-window=:hidden"
-    ];
-  };
-
-  programs.starship = {
-    enable = true;
-    # Configuration written to ~/.config/starship.toml
-    settings = {
-      "$schema" = "https://starship.rs/config-schema.json";
-
-      add_newline = true;
-
-      character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
-        vicmd_symbol = "[V](bold green) ";
-      };
-
-      cmd_duration = {
-        format = "[  $duration]($style)";
-        min_time = 2500;
-        min_time_to_notify = 60000;
-        show_notifications = false;
-        style = "fg:base";
-      };
-    };
-  };
-
-  programs.bottom = {
-    enable = true;
-    settings = {
-      disk_filter = {
-        is_list_ignored = true;
-        list = ["/dev/loop"];
-        regex = true;
-        case_sensitive = false;
-        whole_word = false;
-      };
-      flags = {
-        dot_marker = false;
-        enable_gpu_memory = true;
-        group_processes = true;
-        hide_table_gap = true;
-        mem_as_value = true;
-        tree = true;
-      };
-    };
-  };
-
-  programs.tmux = {
-    enable = true;
-    tmuxinator.enable = true;
-    shortcut = "a";
-    baseIndex = 1;
-    shell = "${pkgs.zsh}/bin/zsh";
-
-    # Add default command to ensure login shell
-    extraConfig = ''
-      ${builtins.readFile ../../dotfiles/config/tmux/tmux.conf}
-      set-option -g default-command "${pkgs.zsh}/bin/zsh"
-      set -g @vim_navigator_prefix_mapping_clear_screen ""
-      set -g @continuum-boot 'on'
-      set -g @continuum-boot-options 'alacritty'
-
-      # Aura Theme for tmux (Catppuccin-style configuration with Aura colors)
-      # Background and foreground colors
-      set -g default-terminal "screen-256color"
-      set -g terminal-overrides ",xterm-256color:RGB"
-
-      # Aura color palette (matching the actual theme)
-      aura_bg="#15141b"
-      aura_fg="#edecee"
-      aura_current="#29263c"
-      aura_purple="#a277ff"
-      aura_green="#61ffca"
-      aura_orange="#ffca85"
-      aura_red="#ff6767"
-      aura_pink="#f694ff"
-      aura_blue="#82e2ff"
-      aura_gray="#6d6d6d"
-
-      # Catppuccin-style tmux configuration with Aura colors
-      set -g @aura_window_status_style "rounded"
-      set -g @aura_status_background "$aura_bg"
-      set -g @aura_status_fill "all"
-      set -g @aura_window_left_separator ""
-      set -g @aura_window_right_separator " "
-      set -g @aura_window_middle_separator " █"
-      set -g @aura_window_number_position "right"
-      set -g @aura_window_default_fill "number"
-      set -g @aura_window_default_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
-      set -g @aura_window_current_fill "number"
-      set -g @aura_window_current_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}#{?window_zoomed_flag,(),}"
-      set -g @aura_status_modules_right "directory meetings date_time"
-      set -g @aura_status_modules_left "session"
-      set -g @aura_status_fill "icon"
-      set -g @aura_status_connect_separator "no"
-      set -g @aura_directory_text "#{b:pane_current_path}"
-
-      # Status bar styling
-      set -g status on
-      set -g status-bg "$aura_bg"
-      set -g status-fg "$aura_fg"
-      set -g status-left-length 100
-      set -g status-right-length 100
-
-      # Window status styling with rounded appearance
-      set -g window-status-style "fg=$aura_gray,bg=default"
-      set -g window-status-current-style "fg=$aura_bg,bg=$aura_purple,bold"
-      set -g window-status-activity-style "fg=$aura_bg,bg=$aura_orange"
-      set -g window-status-bell-style "fg=$aura_bg,bg=$aura_red"
-
-      # Window status format (Catppuccin-style with rounded separators)
-      set -g window-status-format "#[fg=$aura_bg,bg=$aura_gray] #I #[fg=$aura_gray,bg=$aura_bg] #{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}} "
-      set -g window-status-current-format "#[fg=$aura_bg,bg=$aura_purple] #I #[fg=$aura_purple,bg=$aura_bg] #{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}#{?window_zoomed_flag,(),} "
-
-      # Pane borders
-      set -g pane-border-style "fg=$aura_gray"
-      set -g pane-active-border-style "fg=$aura_purple"
-
-      # Message styling
-      set -g message-style "fg=$aura_bg,bg=$aura_purple,bold"
-      set -g message-command-style "fg=$aura_bg,bg=$aura_orange,bold"
-
-      # Mode styling (copy mode, etc.)
-      set -g mode-style "fg=$aura_bg,bg=$aura_purple,bold"
-
-      # Clock mode
-      set -g clock-mode-colour "$aura_green"
-
-      # Status left and right with directory and date_time modules
-      set -g status-left "#[fg=$aura_bg,bg=$aura_purple,bold] #S #[fg=$aura_purple,bg=$aura_bg]"
-    '';
-
-    plugins = with pkgs; [
-      # Core plugins
-      tmuxPlugins.sensible
-      tmuxPlugins.yank
-      tmuxPlugins.copycat
-      tmuxPlugins.fpp
-      tmuxPlugins.vim-tmux-navigator
-      # tmuxPlugins.resurrect
-      # tmuxPlugins.continuum
-    ];
   };
 
   programs.go.enable = true;
@@ -275,19 +48,6 @@ in {
     };
   };
 
-  programs.vscode.enable = true;
-
-  programs.tealdeer = {
-    enable = true;
-    settings = {
-      display = {
-        compact = false;
-        use_pager = true;
-      };
-      updates = {auto_update = true;};
-    };
-  };
-
   home = {
     inherit stateVersion;
     inherit username;
@@ -296,113 +56,19 @@ in {
       then "/Users/${username}"
       else "/home/${username}";
     sessionVariables = {
-      GPG_TTY = "/dev/ttys000";
       EDITOR = "nvim";
       VISUAL = "nvim";
-      JAVA_HOME = "${pkgs.jdk21_headless.home}";
       NODE_PATH = "${homeDir}/.node";
-      SKHD_PID_FILE = "/tmp/skhd_${username}.pid";
       NPM_CONFIG_PREFIX = "${homeDir}/.npm-global";
     };
     sessionPath = [
       "${homeDir}/.local/bin"
       "${homeDir}/.node/bin"
-      "${homeDir}/.duckdb/cli/latest" # DuckDB CLI Installed manually
+      "${homeDir}/.duckdb/cli/latest"
       "${homeDir}/.npm-global/bin"
     ];
 
-    packages = with pkgs; [
-      # CLI Utilities
-      jq # JSON processor and formatter
-      jiq # Modern Unix `jq`
-      fzf # Fuzzy file finder
-      fd # Simple find alternative
-      ripgrep # Fast text search tool
-      tree # Directory structure viewer
-      eza # Modern ls replacement
-      moreutils # Additional Unix tools
-      htop # System monitoring tool
-      neofetch # System info display
-      curl # URL transfer tool
-      wget # File download utility
-      glow # Markdown CLI renderer
-      unzip # Archive extraction tool
-      gnused # Stream editor
-      universal-ctags # Code indexing tool
-      gemini-cli # Gemini CLI
-
-      # Development Tools
-      lua # Lua programming language
-      readline # Line editing library
-      shellcheck # Shell script analyzer
-      graphviz # Graph visualization
-      treefmt # Code formatter
-      shfmt # Shell formatter
-      pre-commit # Git hooks manager
-      git-sizer # Git repo analyzer
-      git-lfs # Git large file storage
-      inputs.claude-code.packages.${pkgs.system}.claude-code # Claude CLI from Nix flake
-      fpp # Fuzzy path picker
-      zoxide
-
-      # Ruby Environment
-      (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
-
-      # Java
-      jdk21_headless
-
-      # Infrastructure & Containers
-      terraform # Infrastructure as code
-      google-cloud-sdk # GCP toolkit
-      awscli # AWS Command Line Interface
-
-      nixfmt-rfc-style # Nix code formatter
-      nixpkgs-review # Nix code review
-      nix-prefetch-scripts # Nix code fetcher
-      nurl # Nix URL fetcher
-
-      # Python Environment
-      # (pkgs.python311.withPackages (ps:
-      #   with ps; [
-      #     duckdb # SQL database engine
-      #     pandas # Data analysis library
-      #     polars # Fast dataframe library
-      #     jupyter # Interactive notebooks
-      #     ipython # Enhanced Python shell
-      #   ]))
-      # duckdb # SQL database engine
-      cookiecutter # Project template tool
-      ruff # Fast Python linter
-      uv # Python package installer
-      sqlfluff # SQL linter
-
-      # Node.js Environment
-      nodePackages.npm # Node package manager
-
-      asciicam # Terminal webcam
-      bandwhich # Modern Unix `iftop`
-      cpufetch # Terminal CPU info
-      difftastic # Modern Unix `diff`
-      fastfetch # Modern Unix system info
-      ipfetch # Terminal IP info
-      fabric-ai
-      # yt-dlp
-    ];
-
     file = {
-      ".config/aerospace" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/aerospace";
-      };
-
-      ".hammerspoon" = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/hammerspoon";
-      };
-      ".config/tmuxinator" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/tmuxinator";
-      };
-      ".config/karabiner" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/karabiner";
-      };
       ".npmrc".text = ''
         prefix=${homeDir}/.npm-global
       '';
