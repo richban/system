@@ -37,7 +37,7 @@
     pre-commit # Git hooks manager
     git-sizer # Git repo analyzer
     git-lfs # Git large file storage
-    inputs.claude-code.packages.${pkgs.system}.claude-code # Claude CLI from Nix flake
+    inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.claude-code # Claude CLI from Nix flake
     fpp # Fuzzy path picker
     zoxide
 
@@ -52,7 +52,7 @@
     google-cloud-sdk # GCP toolkit
     awscli # AWS Command Line Interface
 
-    nixfmt-rfc-style # Nix code formatter
+    nixfmt # Nix code formatter
     nixpkgs-review # Nix code review
     nix-prefetch-scripts # Nix code fetcher
     nurl # Nix URL fetcher
@@ -73,7 +73,8 @@
     sqlfluff # SQL linter
 
     # Node.js Environment
-    nodePackages.npm # Node package manager
+    nodejs_22 # Node.js 22 (LTS)
+    # nodePackages.npm # Node package manager
 
     asciicam # Terminal webcam
     bandwhich # Modern Unix `iftop`

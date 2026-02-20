@@ -49,7 +49,7 @@
       "whatsapp"
       "microsoft-teams"
       "aerospace"
-      "godot"
+      # "godot"
       "ghostty"
       "orbstack"
     ];

@@ -183,6 +183,6 @@
     };
 
     # Formatter for .nix files, available via 'nix fmt'
-    formatter = eachSystemMap defaultSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+    formatter = eachSystemMap defaultSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
   };
 }
