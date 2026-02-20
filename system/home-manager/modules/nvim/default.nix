@@ -7,34 +7,7 @@
   # Map all grammars to their corresponding plugins
   treesitterGrammars = pkgs.symlinkJoin {
     name = "nvim-treesitter-grammars";
-    paths =
-      (pkgs.vimPlugins.nvim-treesitter.withPlugins (
-        plugins:
-          with plugins; [
-            bash
-            c
-            cpp
-            css
-            dockerfile
-            gitattributes
-            gitignore
-            go
-            gomod
-            html
-            javascript
-            json
-            lua
-            make
-            markdown
-            nix
-            python
-            rust
-            toml
-            typescript
-            vim
-            yaml
-          ]
-      )).dependencies;
+    paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
   };
 in {
   xdg.configFile."nvim/init.lua".enable = lib.mkForce false;
