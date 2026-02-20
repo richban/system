@@ -7,7 +7,7 @@
     ../../../home-manager/modules/alacritty.nix
     ../../../home-manager/modules/direnv.nix
     ../../../home-manager/modules/nvim
-    ../../../home-manager/modules/darwin-only.nix
+    ../../../home-manager/modules/dotfiles.nix
     ../../../home-manager/packages.nix
     ../../../home-manager/programs.nix
   ];
