@@ -1,7 +1,6 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    main = "nvim-treesitter.configs",
     dev = true,
     opts = {
       -- ensure_installed = "all",
