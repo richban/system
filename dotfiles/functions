@@ -67,3 +67,34 @@ git_get_all_blob() {
   cut -c 1-12,41- |
   $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
 }
+
+# Fabric AI patterns integration
+# Function to list all available Fabric patterns
+list_fabric_patterns() {
+  if [ -d "$HOME/.config/fabric/patterns" ]; then
+    echo "Available Fabric patterns:"
+    ls -1 "$HOME/.config/fabric/patterns" | sed 's/^/  • /'
+    echo ""
+    echo "Usage:"
+    echo "  pattern_name       - Run pattern and display output"
+    echo "  f_pattern_name     - Run pattern and save to Obsidian markdown"
+  else
+    echo "Fabric patterns not found. Run 'fabric --setup' first."
+  fi
+}
+
+# Function to create Fabric pattern aliases statically to a file
+create_fabric_aliases() {
+  local alias_file="$HOME/.config/fabric/fabric_aliases.zsh"
+  mkdir -p "$HOME/.config/fabric"
+  echo "# Auto-generated Fabric aliases by Home Manager" > "$alias_file"
+  if [ -d "$HOME/.config/fabric/patterns" ]; then
+    for pattern in "$HOME/.config/fabric/patterns"/*; do
+      if [ -d "$pattern" ]; then
+        local pattern_name=$(basename "$pattern")
+        echo "alias \"f_$pattern_name\"='fabric --pattern \"$pattern_name\" | tee \"\$OBSIDIAN_PATH/fabric-$pattern_name-\$(date +%Y%m%d-%H%M%S).md\"'" >> "$alias_file"
+        echo "alias \"$pattern_name\"='fabric --pattern \"$pattern_name\"'" >> "$alias_file"
+      fi
+    done
+  fi
+}

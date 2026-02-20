@@ -5,6 +5,14 @@
   ...
 }: {
   home = {
+    activation = {
+      generateFabricAliases = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        if [ -f "$HOME/.functions" ]; then
+          source "$HOME/.functions"
+          create_fabric_aliases
+        fi
+      '';
+    };
     file.functions = {
       source = ../../../dotfiles/functions;
       target = ".functions";
@@ -18,6 +26,7 @@
         then "/dev/ttys000"
         else "/dev/tty";
       PATH = "${config.home.homeDirectory}/.local/bin${lib.optionalString pkgs.stdenv.isDarwin ":/opt/homebrew/bin"}:$PATH";
+      OBSIDIAN_PATH = "${config.home.homeDirectory}/Developer/second-brain";
     };
   };
 
@@ -108,43 +117,10 @@
       # Source custom functions
       . ~/.functions
 
-      # Fabric AI patterns integration
-      # Set Obsidian directory for Fabric output
-      export OBSIDIAN_PATH="$HOME/Developer/second-brain"
-
-      # Function to create Fabric pattern aliases dynamically
-      create_fabric_aliases() {
-        if [[ -d "$HOME/.config/fabric/patterns" ]]; then
-          for pattern in "$HOME/.config/fabric/patterns"/*; do
-            if [[ -d "$pattern" ]]; then
-              pattern_name=$(basename "$pattern")
-              # Create alias that saves output to Obsidian in markdown format
-              alias "f_$pattern_name"="fabric --pattern $pattern_name | tee \"\$OBSIDIAN_PATH/fabric-\$pattern_name-\$(date +%Y%m%d-%H%M%S).md\""
-              # Create alias without file saving for quick use
-              alias "$pattern_name"="fabric --pattern $pattern_name"
-            fi
-          done
-          echo "Fabric aliases created for $(ls ~/.config/fabric/patterns | wc -l | tr -d ' ') patterns"
-        else
-          echo "Fabric patterns not found. Run 'fabric --setup' first."
-        fi
-      }
-
-      # Function to list all available Fabric patterns
-      list_fabric_patterns() {
-        if [[ -d "$HOME/.config/fabric/patterns" ]]; then
-          echo "Available Fabric patterns:"
-          ls -1 "$HOME/.config/fabric/patterns" | sed 's/^/  • /'
-          echo "\nUsage:"
-          echo "  pattern_name       - Run pattern and display output"
-          echo "  f_pattern_name     - Run pattern and save to Obsidian markdown"
-        else
-          echo "Fabric patterns not found. Run 'fabric --setup' first."
-        fi
-      }
-
-      # Create aliases when shell starts
-      create_fabric_aliases
+      # Load statically generated Fabric pattern aliases
+      if [ -f "$HOME/.config/fabric/fabric_aliases.zsh" ]; then
+        source "$HOME/.config/fabric/fabric_aliases.zsh"
+      fi
     '';
 
     history = {
