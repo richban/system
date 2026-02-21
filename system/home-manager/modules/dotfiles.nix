@@ -11,20 +11,29 @@
   programs.zsh.shellAliases = lib.mkIf pkgs.stdenv.isDarwin (import ./darwin-aliases.nix {});
 
   home.file = {
-    ".config/aerospace" = lib.mkIf pkgs.stdenv.isDarwin {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/aerospace";
-    };
-
     ".hammerspoon" = lib.mkIf pkgs.stdenvNoCC.isDarwin {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/hammerspoon";
     };
+  };
 
-    ".config/tmuxinator" = lib.mkIf pkgs.stdenv.isDarwin {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/tmuxinator";
-    };
+  xdg = {
+    enable = true;
+    configFile = {
+      aerospace = lib.mkIf pkgs.stdenv.isDarwin {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/aerospace";
+      };
 
-    ".config/karabiner" = lib.mkIf pkgs.stdenv.isDarwin {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/karabiner";
+      ghostty = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/ghostty";
+      };
+
+      tmuxinator = lib.mkIf pkgs.stdenv.isDarwin {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/tmuxinator";
+      };
+
+      karabiner = lib.mkIf pkgs.stdenv.isDarwin {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/karabiner";
+      };
     };
   };
 }
