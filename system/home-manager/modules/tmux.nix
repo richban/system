@@ -14,7 +14,7 @@
       set -g @continuum-boot 'on'
       set -g @continuum-boot-options 'alacritty'
 
-      ${builtins.readFile ./../../dotfiles/config/tmux/tmux-aura-theme.conf}
+      ${builtins.readFile ../../../dotfiles/config/tmux/tmux-aura-theme.conf}
     '';
 
     plugins = with pkgs; [

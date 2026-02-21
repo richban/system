@@ -103,8 +103,8 @@
       bindkey "^A" beginning-of-line
       bindkey "^E" end-of-line
 
-      # fzf key bindings (Option key should work now)
-      bindkey "^[d" fzf-cd-widget       # Option+d for directory search
+      # fzf key bindings (Option key overlaps with AeroSpace; use Ctrl+O for cd)
+      bindkey "^O" fzf-cd-widget       # Control+o for directory search
       bindkey "^R" fzf-history-widget   # CTRL+R for history
 
       # Configure fzf with Aura theme colors

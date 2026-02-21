@@ -10,7 +10,7 @@
 
   l = "exa -l --icons --classify --header --long --git --group-directories-first --sort=ext";
   la = "exa -a --header --long --git --color=always --group-directories-first --sort=ext";
-  ll = "exa -lh --links --blocks --accessed --created --header --long --git --color=always --modified --group-directories-first";
+  ll = "exa -lh --links --accessed --created --header --long --git --color=always --modified --group-directories-first";
   ld = "exa -D --color=always --group-directories-first --sort=ext";
   lt = "exa -aT --color=always --group-directories-first";
   # tree="exa --tree";
