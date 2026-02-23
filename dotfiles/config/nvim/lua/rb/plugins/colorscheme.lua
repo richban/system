@@ -16,7 +16,8 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    priority = 100,
+    lazy = false,
+    priority = 1000,
     config = function()
       require("catppuccin").setup({
         flavour = "mocha",
@@ -26,7 +27,7 @@ return {
         },
       })
 
-      -- vim.cmd.colorscheme("catppuccin")
+      vim.cmd.colorscheme("catppuccin")
     end,
   },
   {
@@ -59,7 +60,7 @@ return {
     "nyoom-engineering/oxocarbon.nvim",
     config = function()
       vim.opt.background = "dark" -- set this to dark or light
-      vim.cmd("colorscheme oxocarbon")
+      -- vim.cmd("colorscheme oxocarbon")
     end,
   },
 }

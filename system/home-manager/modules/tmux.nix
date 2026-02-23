@@ -14,7 +14,9 @@
       set -g @continuum-boot 'on'
       set -g @continuum-boot-options 'alacritty'
 
-      ${builtins.readFile ../../../dotfiles/config/tmux/tmux-aura-theme.conf}
+      # Status bar assembly — must be AFTER the plugin loads (v2 API)
+      set -g status-left "#{E:@catppuccin_status_session}"
+      set -g status-right "#{E:@catppuccin_status_directory}"
     '';
 
     plugins = with pkgs; [

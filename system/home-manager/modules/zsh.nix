@@ -70,9 +70,6 @@
     ];
 
     initContent = ''
-      # Aura Theme Colors
-      export LS_COLORS="di=1;94:fi=0;97:ln=1;96:pi=40;33:so=1;95:bd=40;33;1:cd=40;33;1:or=1;31:ex=1;92:*.tar=1;31:*.tgz=1;31:*.zip=1;31:*.gz=1;31:*.bz2=1;31:*.deb=1;31:*.rpm=1;31:*.jar=1;31"
-
       # History
       setopt histreduceblanks histignorespace histignorealldups share_history
 
@@ -85,12 +82,16 @@
       # fzf-tab configuration
       # disable sort when completing `git checkout`
       zstyle ':completion:*:git-checkout:*' sort false
+
       # set descriptions format to enable group support
       zstyle ':completion:*:descriptions' format '[%d]'
+
       # preview directory's content with exa when completing cd
       zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+
       # switch group using `,` and `.`
       zstyle ':fzf-tab:*' switch-group ',' '.'
+
       # show file preview for files and directories
       zstyle ':fzf-tab:complete:*:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 {}'
 
@@ -106,10 +107,6 @@
       # fzf key bindings (Option key overlaps with AeroSpace; use Ctrl+O for cd)
       bindkey "^O" fzf-cd-widget       # Control+o for directory search
       bindkey "^R" fzf-history-widget   # CTRL+R for history
-
-      # Configure fzf with Aura theme colors
-      export FZF_DEFAULT_OPTS="--color=bg+:#29263c,bg:#15141b,border:#a277ff,spinner:#61ffca,hl:#a277ff,fg:#edecee,header:#a277ff,info:#ffca85,pointer:#61ffca,marker:#ff6767,fg+:#edecee,prompt:#a277ff,hl+:#a277ff,scrollbar:#4d4d4d,separator:#4d4d4d --layout=reverse"
-      export FZF_CTRL_R_OPTS="--height=40% --layout=reverse --border --ansi"
 
       autopair-init
       eval "$(zoxide init zsh)"
