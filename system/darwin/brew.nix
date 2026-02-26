@@ -27,6 +27,7 @@
       "nikitabobko/tap"
       "FelixKratz/formulae"
       "databricks/tap"
+      "chmouel/lazyworktree"
     ];
     casks = [
       "alacritty"
@@ -52,6 +53,7 @@
       # "godot"
       "ghostty"
       "orbstack"
+      "lazyworktree"
     ];
   };
 }
