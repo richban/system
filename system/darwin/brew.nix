@@ -10,6 +10,7 @@
       cleanup = "uninstall";
     };
     brews = [
+      "gromgit/brewtils/taproom"
       "terminal-notifier"
       "rilldata/tap/rill"
       "felixkratz/formulae/borders"
@@ -18,6 +19,9 @@
       "databricks"
       "opencode"
       "dust"
+      "btop"
+      "chafa"
+      "csvlens"
     ];
     taps = [
       "1password/tap"
@@ -27,7 +31,12 @@
       "nikitabobko/tap"
       "FelixKratz/formulae"
       "databricks/tap"
-      "chmouel/lazyworktree"
+      "AlexsJones/llmfit"
+      "gromgit/brewtils"
+      {
+        name = "chmouel/lazyworktree";
+        clone_target = "https://github.com/chmouel/lazyworktree.git";
+      }
     ];
     casks = [
       "alacritty"
@@ -53,7 +62,7 @@
       # "godot"
       "ghostty"
       "orbstack"
-      "lazyworktree"
+      "chmouel/lazyworktree/lazyworktree"
     ];
   };
 }
