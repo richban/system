@@ -25,7 +25,6 @@
         if pkgs.stdenv.isDarwin
         then "/dev/ttys000"
         else "/dev/tty";
-      PATH = "${config.home.homeDirectory}/.local/bin${lib.optionalString pkgs.stdenv.isDarwin ":/opt/homebrew/bin"}:$PATH";
       OBSIDIAN_PATH = "${config.home.homeDirectory}/Developer/second-brain";
     };
   };
