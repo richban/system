@@ -2,6 +2,8 @@ term = xterm-256color
 
 macos-non-native-fullscreen = true
 macos-option-as-alt = left
+macos-titlebar-style = hidden
+window-decoration = false
 
 mouse-hide-while-typing = false
 copy-on-select = true
