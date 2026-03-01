@@ -39,8 +39,8 @@ in {
       set -g @catppuccin_window_number_position "right"
 
       # Inactive window
-      set -g @catppuccin_window_default_fill "number"
-      set -g @catppuccin_window_default_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
+      set -g @catppuccin_window_fill "number"
+      set -g @catppuccin_window_text "#{?#{||:#{==:#{pane_current_command},zsh},#{==:#{pane_current_command},bash}},#{b:pane_current_path},#{pane_current_command}}"
 
       # Active window
       set -g @catppuccin_window_current_fill "number"
@@ -100,12 +100,19 @@ in {
       NODE_PATH = "${homeDir}/.node";
       NPM_CONFIG_PREFIX = "${homeDir}/.npm-global";
     };
-    sessionPath = [
-      "${homeDir}/.local/bin"
-      "${homeDir}/.node/bin"
-      "${homeDir}/.duckdb/cli/latest"
-      "${homeDir}/.npm-global/bin"
-    ];
+    sessionPath =
+      [
+        "${homeDir}/.local/bin"
+        "${homeDir}/.node/bin"
+        "${homeDir}/.duckdb/cli/latest"
+        "${homeDir}/.npm-global/bin"
+        "/Applications/Obsidian.app/Contents/MacOS"
+      ]
+      ++ (
+        if isDarwin
+        then ["/opt/homebrew/bin"]
+        else []
+      );
 
     file = {
       ".npmrc".text = ''
