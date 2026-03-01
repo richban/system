@@ -84,5 +84,6 @@
     ipfetch # Terminal IP info
     fabric-ai
     # yt-dlp
+    lazygit
   ];
 }
