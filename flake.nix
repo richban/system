@@ -163,7 +163,7 @@
           builtins.readFile ./bin/cb.sh
         );
       in rec {
-        sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run --natieve-tls -q ${./bin/do.py} $@";
+        sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run --native-tls -q ${./bin/do.py} $@";
 
         cb = pkgs.writeShellScriptBin "cb" cbScript;
       }
