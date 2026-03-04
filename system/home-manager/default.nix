@@ -106,11 +106,13 @@ in {
         "${homeDir}/.node/bin"
         "${homeDir}/.duckdb/cli/latest"
         "${homeDir}/.npm-global/bin"
-        "/Applications/Obsidian.app/Contents/MacOS"
       ]
       ++ (
         if isDarwin
-        then ["/opt/homebrew/bin"]
+        then [
+          "/opt/homebrew/bin"
+          "/Applications/Obsidian.app/Contents/MacOS"
+        ]
         else []
       );
 
