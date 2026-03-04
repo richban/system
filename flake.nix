@@ -39,15 +39,25 @@
     ...
   } @ inputs: let
     inherit (inputs.nixpkgs) lib;
-    inherit (lib) filterAttrs genAttrs intersectLists mapAttrs mapAttrs' mapAttrsToList mergeAttrsList nameValuePair platforms;
+    inherit
+      (lib)
+      filterAttrs
+      genAttrs
+      intersectLists
+      mapAttrs
+      mapAttrs'
+      mapAttrsToList
+      mergeAttrsList
+      nameValuePair
+      platforms
+      ;
 
     stateVersion = "24.11";
     helper = import ./system/lib {inherit inputs self stateVersion;};
 
-    defaultSystems =
-      intersectLists
-      (platforms.linux ++ platforms.darwin)
-      (platforms.x86_64 ++ platforms.aarch64);
+    defaultSystems = intersectLists (platforms.linux ++ platforms.darwin) (
+      platforms.x86_64 ++ platforms.aarch64
+    );
     darwinSystems = intersectLists defaultSystems platforms.darwin;
     eachSystemMap = genAttrs;
 
@@ -72,26 +82,24 @@
   in {
     checks = mergeAttrsList [
       # verify devShell + pre-commit hooks;
-      (eachSystemMap defaultSystems (
-        system: {
-          devShell = self.devShells.${system}.default;
-          pre-commit-check = mkHooks system;
-        }
-      ))
+      (eachSystemMap defaultSystems (system: {
+        devShell = self.devShells.${system}.default;
+        pre-commit-check = mkHooks system;
+      }))
       # home-manager checks; add _home suffix to original config to avoid nixos coflict
-      (eachSystemMap defaultSystems (system:
-        mapAttrs'
-        (name: drv: (nameValuePair "${name}_home" drv.activationPackage))
-        (filterAttrs
-          (name: drv: lib.strings.hasSuffix system name)
-          self.homeConfigurations)))
+      (eachSystemMap defaultSystems (
+        system:
+          mapAttrs' (name: drv: (nameValuePair "${name}_home" drv.activationPackage)) (
+            filterAttrs (name: drv: lib.strings.hasSuffix system name) self.homeConfigurations
+          )
+      ))
       # darwin checks; limit these to darwinSystems
-      (eachSystemMap darwinSystems (system:
-        mapAttrs
-        (name: drv: drv.config.system.build.toplevel)
-        (filterAttrs
-          (name: drv: lib.strings.hasSuffix system name)
-          self.darwinConfigurations)))
+      (eachSystemMap darwinSystems (
+        system:
+          mapAttrs (name: drv: drv.config.system.build.toplevel) (
+            filterAttrs (name: drv: lib.strings.hasSuffix system name) self.darwinConfigurations
+          )
+      ))
     ];
 
     darwinConfigurations = {
@@ -110,35 +118,38 @@
         platform = "aarch64-darwin";
         extraModules = [./system/profiles/personal/home-manager];
       };
-      "s2kuf6@x86_64-linux" = helper.mkHome {
-        hostname = "work-linux";
-        username = "s2kuf6";
+      "richban@x86_64-linux" = helper.mkHome {
+        hostname = "SKB58713";
+        username = "richban";
         platform = "x86_64-linux";
+        flakeRoot = ".config/system";
         extraModules = [./system/profiles/work/home-manager];
       };
     };
 
-    devShells = eachSystemMap defaultSystems (system: let
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        overlays = [self.overlays.default];
-      };
-      pre-commit-check = mkHooks system;
-    in {
-      default = pkgs.mkShell {
-        inherit (pre-commit-check) shellHook;
-        packages = with pkgs;
-          [
-            bashInteractive # Enhanced bash shell
-            fd # Fast alternative to 'find'
-            nixd # Nix language server
-            ripgrep # Fast text search tool
-            uv # Python packaging tool
-          ]
-          ++ (mapAttrsToList (name: value: value) self.packages.${system}); # Adds all packages defined in packages attribute
-        inputsFrom = pre-commit-check.enabledPackages;
-      };
-    });
+    devShells = eachSystemMap defaultSystems (
+      system: let
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [self.overlays.default];
+        };
+        pre-commit-check = mkHooks system;
+      in {
+        default = pkgs.mkShell {
+          inherit (pre-commit-check) shellHook;
+          packages = with pkgs;
+            [
+              bashInteractive # Enhanced bash shell
+              fd # Fast alternative to 'find'
+              nixd # Nix language server
+              ripgrep # Fast text search tool
+              uv # Python packaging tool
+            ]
+            ++ (mapAttrsToList (name: value: value) self.packages.${system}); # Adds all packages defined in packages attribute
+          inputsFrom = pre-commit-check.enabledPackages;
+        };
+      }
+    );
 
     packages = eachSystemMap defaultSystems (
       system: let
@@ -148,13 +159,11 @@
         };
 
         # Read the script template and substitute the xclip path
-        cbScript =
-          builtins.replaceStrings
-          ["xclip"]
-          ["${pkgs.xclip}/bin/xclip"]
-          (builtins.readFile ./bin/cb.sh);
+        cbScript = builtins.replaceStrings ["xclip"] ["${pkgs.xclip}/bin/xclip"] (
+          builtins.readFile ./bin/cb.sh
+        );
       in rec {
-        sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run -q ${./bin/do.py} $@";
+        sysdo = pkgs.writeShellScriptBin "sysdo" "${pkgs.uv}/bin/uv run --natieve-tls -q ${./bin/do.py} $@";
 
         cb = pkgs.writeShellScriptBin "cb" cbScript;
       }

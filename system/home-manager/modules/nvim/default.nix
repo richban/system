@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  flakeRoot,
   ...
 }: let
   # Map all grammars to their corresponding plugins
@@ -14,7 +15,7 @@ in {
 
   home.file = {
     ".config/nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/nvim";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/${flakeRoot}/dotfiles/config/nvim";
     };
 
     ".local/share/nvim/site/plugin/treesitter-parsers.lua" = {

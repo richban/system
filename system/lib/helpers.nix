@@ -8,6 +8,7 @@
     hostname,
     username ? "richban",
     platform ? "aarch64-darwin",
+    flakeRoot ? ".nixpkgs",
     baseModules ? [
       ../home-manager
     ],
@@ -20,7 +21,10 @@
           allowUnfree = true;
           allowUnsupportedSystem = true;
         };
-        overlays = [self.overlays.default];
+        overlays = [
+          self.overlays.neovimOverlay
+          self.overlays.default
+        ];
       };
       extraSpecialArgs = {
         inherit
@@ -30,6 +34,7 @@
           platform
           username
           stateVersion
+          flakeRoot
           ;
       };
       modules = baseModules ++ extraModules;
@@ -39,6 +44,7 @@
     hostname,
     username ? "richban",
     platform ? "aarch64-darwin",
+    flakeRoot ? ".nixpkgs",
     homeModules ? [],
   }:
     inputs.nix-darwin.lib.darwinSystem {
@@ -51,6 +57,7 @@
           username
           stateVersion
           homeModules
+          flakeRoot
           ;
       };
       modules = [

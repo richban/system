@@ -4,10 +4,14 @@
   pkgs,
   username,
   stateVersion,
+  flakeRoot ? ".nixpkgs",
   homeModules ? [],
   ...
 }: {
-  imports = [./nixpkgs.nix ./fonts.nix];
+  imports = [
+    ./nixpkgs.nix
+    ./fonts.nix
+  ];
 
   programs = {
     zsh = {
@@ -40,7 +44,15 @@
 
   # Enable home-manager
   home-manager = {
-    extraSpecialArgs = {inherit self inputs stateVersion username;};
+    extraSpecialArgs = {
+      inherit
+        self
+        inputs
+        stateVersion
+        username
+        flakeRoot
+        ;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
@@ -63,6 +75,9 @@
       # stable.source = "${inputs.nixos-stable}";
     };
     # list of acceptable shells in /etc/shells
-    shells = with pkgs; [bash zsh];
+    shells = with pkgs; [
+      bash
+      zsh
+    ];
   };
 }
