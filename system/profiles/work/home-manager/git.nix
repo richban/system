@@ -10,7 +10,7 @@
   ];
 
   home.file.gitignore = {
-    source = ../../../dotfiles/gitignore;
+    source = ../../../../dotfiles/gitignore;
     target = ".gitignore";
   };
 
