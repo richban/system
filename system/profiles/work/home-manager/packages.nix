@@ -42,6 +42,8 @@
     uv # Python package installer
     sqlfluff # SQL linter
     lazygit
+    obsidian
+    duckdb
   ];
 }
 # ---------------------------------------------------------------------------

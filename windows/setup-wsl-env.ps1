@@ -65,7 +65,7 @@ foreach ($entry in $forwardOnly) {
     $name = Get-VarName $entry
     $value = [System.Environment]::GetEnvironmentVariable($name, "User")
     if ($null -eq $value) {
-        Write-Host "  WARN  $name — not found in Windows User env vars, skipping" -ForegroundColor Yellow
+        Write-Host "  WARN  $name - not found in Windows User env vars, skipping" -ForegroundColor Yellow
     } else {
         Write-Host "  OK    $name" -ForegroundColor Green
         $allWslParts += $entry
@@ -84,7 +84,7 @@ if ($defineAndForward.Count -gt 0) {
         $allWslParts += $nameWithFlag
     }
 } else {
-    Write-Host "`n[Section B] No vars defined — skipping." -ForegroundColor DarkGray
+    Write-Host "`n[Section B] No vars defined - skipping." -ForegroundColor DarkGray
 }
 
 # --- Write WSLENV ---
