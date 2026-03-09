@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./packages.nix
     ./git.nix
@@ -7,5 +7,9 @@
     # ../../../home-manager/modules/nvim
     ../../../home-manager/modules/direnv.nix
     ../../../home-manager/programs.nix
+  ];
+
+  home.packages = with pkgs; [
+    terraform
   ];
 }

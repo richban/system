@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ../../../home-manager/packages.nix
     ../../../home-manager/programs.nix
@@ -10,5 +10,9 @@
     ../../../home-manager/modules/nvim
     ../../../home-manager/modules/dotfiles.nix
     ../../../home-manager/modules/tmux.nix
+  ];
+
+  home.packages = with pkgs; [
+    antigravity
   ];
 }
