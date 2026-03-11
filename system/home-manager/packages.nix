@@ -18,7 +18,7 @@
     eza # Modern ls replacement
     moreutils # Additional Unix tools
     htop # System monitoring tool
-    neofetch # System info display
+    fastfetch # System info display
     curl # URL transfer tool
     wget # File download utility
     glow # Markdown CLI renderer

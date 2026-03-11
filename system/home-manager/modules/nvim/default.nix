@@ -54,7 +54,7 @@ in {
       alejandra # nix formatter
       ruff
       nil
-      (python311.withPackages (
+      (python312.withPackages (
         ps:
           with ps; [
             python-dotenv
