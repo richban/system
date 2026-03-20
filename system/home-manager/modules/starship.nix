@@ -3,8 +3,46 @@
     enable = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
-    # https://github.com/etrigan63/Catppuccin-starship
+    enableZshIntegration = true;
     settings = {
+      # GitHub Dark palette — maps every catppuccin color name used in styles
+      # below to a semantically equivalent GitHub Dark hex value.
+      # bg scale:    #0d1117 → #161b22 → #21262d → #30363d → #3d444d
+      # fg scale:    #e6edf3 → #c9d1d9 → #8b949e → #6e7681 → #484f58
+      palette = "github_dark";
+      palettes.github_dark = {
+        # Surfaces (dark → light)
+        base = "#0d1117"; # canvas default
+        mantle = "#161b22"; # canvas subtle
+        crust = "#010409"; # deepest bg
+        surface0 = "#21262d"; # overlay default
+        surface1 = "#30363d"; # border default
+        surface2 = "#3d444d"; # border muted
+        # Overlays (muted text)
+        overlay0 = "#484f58";
+        overlay1 = "#6e7681";
+        overlay2 = "#8b949e";
+        # Text
+        subtext0 = "#b1bac4";
+        subtext1 = "#c9d1d9";
+        text = "#e6edf3";
+        # Accents — mapped to closest GitHub Dark semantic color
+        blue = "#58a6ff"; # links / interactive
+        sapphire = "#388bfd";
+        sky = "#79c0ff";
+        teal = "#39d353"; # addition green (bright)
+        green = "#3fb950"; # success green
+        yellow = "#e3b341"; # warning
+        peach = "#f0883e"; # orange
+        maroon = "#ffa198"; # light red
+        red = "#f85149"; # danger / error
+        mauve = "#bc8cff"; # purple / accent
+        pink = "#db61a2"; # pink
+        lavender = "#bc8cff";
+        flamingo = "#f47067";
+        rosewater = "#db61a2";
+      };
+
       add_newline = true;
       command_timeout = 1000;
       time = {

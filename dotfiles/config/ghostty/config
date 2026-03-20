@@ -8,7 +8,7 @@ copy-on-select = true
 confirm-close-surface = false
 link-url = true
 
-theme = Catppuccin Mocha
+theme = Github Dark
 
 font-family = JetBrainsMono Nerd Font Mono
 font-size = 16
