@@ -1,0 +1,12 @@
+# ~/.tmuxinator/home.yml
+
+name: home
+root: ~/Developer
+
+windows:
+  - main:
+      layout: even-horizontal
+      panes:
+        -
+        - 
+        -
