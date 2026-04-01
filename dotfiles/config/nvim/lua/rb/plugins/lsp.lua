@@ -118,6 +118,7 @@ return {
 
       local servers = {
         nil_ls = { manual_install = true }, -- installed via nix
+        ty = { manual_install = false }, -- installed via: uv tool install ty@latest
         bashls = true,
         lua_ls = true,
         cssls = true,
@@ -210,7 +211,7 @@ return {
                 jedi_signature_help = { enabled = true },
                 jedi_symbols = { enabled = true, all_scopes = true },
                 pydocstyle = { enabled = true, convention = "google" },
-                pylsp_mypy = { enabled = true, live_mode = true },
+                pylsp_mypy = { enabled = false }, -- disabled: ty handles type checking
                 -- Enable Ruff for both linting and formatting
                 ruff = {
                   enabled = true,

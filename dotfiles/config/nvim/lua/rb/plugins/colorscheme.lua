@@ -25,6 +25,61 @@ return {
           light = "latte",
           dark = "mocha",
         },
+        custom_highlights = function(colors)
+          return {
+            Normal = { bg = "#0d1117" },
+            NormalNC = { bg = "#0d1117" },
+            NormalFloat = { bg = "#0d1117" },
+          }
+        end,
+        integrations = {
+          -- Completion
+          cmp = true,
+
+          -- Git
+          gitsigns = true,
+          diffview = true,
+          neogit = true,
+
+          -- File tree / navigation
+          nvimtree = true,
+          telescope = { enabled = true },
+
+          -- UI chrome
+          notify = true,
+          lualine = true,
+          bufferline = true,
+          fidget = true,
+          lspsaga = true,
+
+          -- Editing / motion
+          treesitter = true,
+          indent_blankline = {
+            enabled = true,
+            colored_indent_levels = false, -- v2 tag: no coloured levels
+          },
+          mini = { enabled = true, indentscope_color = "" },
+          neoscroll = true,
+
+          -- Diagnostics / debugging
+          lsp_trouble = true,
+          dap = true,
+          dap_ui = true,
+          todo_comments = true,
+
+          -- Disabled (plugins not active)
+          alpha = false,
+          barbar = false,
+          beacon = false,
+          blink_cmp = false,
+          colorful_winsep = { enabled = false, color = "red" },
+          dashboard = false,
+          noice = false,
+          neotest = false,
+          navic = { enabled = false },
+          overseer = false,
+          aerial = false,
+        },
       })
 
       vim.cmd.colorscheme("catppuccin")
@@ -53,7 +108,7 @@ return {
         -- ...
       })
 
-      vim.cmd("colorscheme github_dark_default")
+      -- vim.cmd("colorscheme github_dark_default")
     end,
   },
   {

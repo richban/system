@@ -210,9 +210,9 @@ function M.on_attach(client, buffer)
 
   --[[ Code Lens
   Code lens actions:
-  <leader>cl - Run code lens action
+  grx - Run code lens action (0.12 default)
   --]]
-  self:map("<leader>cl", vim.lsp.codelens.run, { desc = "Code Lens", has = "codeLens" })
+  self:map("grx", vim.lsp.codelens.run, { desc = "Code Lens", has = "codeLens" })
 
   --[[ Additional Features
   Enhanced code interaction:
