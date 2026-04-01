@@ -32,6 +32,7 @@ in {
 
   programs.neovim = {
     enable = true;
+    package = pkgs.neovim; # use neovim-nightly-overlay's build
     coc.enable = false;
     viAlias = true;
     vimAlias = true;

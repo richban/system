@@ -39,7 +39,7 @@
       }
     ];
     casks = [
-      "alacritty"
+      # "alacritty"
       "arc"
       "firefox"
       "1password"

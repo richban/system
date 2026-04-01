@@ -16,7 +16,7 @@
 
       # Status bar assembly — must be AFTER the plugin loads (v2 API)
       set -g status-left "#{E:@catppuccin_status_session}"
-      set -g status-right "#{E:@catppuccin_status_directory}"
+      set -g status-right ""
     '';
 
     plugins = with pkgs; [
