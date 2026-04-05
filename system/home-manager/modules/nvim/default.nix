@@ -18,10 +18,8 @@ in {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/${flakeRoot}/dotfiles/config/nvim";
     };
 
-    ".local/share/nvim/site/plugin/treesitter-parsers.lua" = {
-      text = ''
-        vim.opt.runtimepath:append("${treesitterGrammars}")
-      '';
+    ".local/share/nvim/nix/nvim-treesitter-parsers/" = {
+      source = treesitterGrammars;
     };
 
     ".local/share/nvim/nix/nvim-treesitter/" = {
