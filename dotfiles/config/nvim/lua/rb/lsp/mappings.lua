@@ -111,7 +111,7 @@ function M.on_attach(client, buffer)
   <leader>tc - Fix current code issue
   <leader>ti - Import all missing imports
   --]]
-  if client.name == "tsserver" then
+  if client.name == "tsserver" or client.name == "ts_ls" then
     vim.keymap.set("n", "<leader>to", ":TSLspOrganize<CR>", { buffer = buffer, desc = "TS: Organize Imports" })
     vim.keymap.set("n", "<leader>tc", ":TSLspFixCurrent<CR>", { buffer = buffer, desc = "TS: Fix Current" })
     vim.keymap.set("n", "<leader>ti", ":TSLspImportAll<CR>", { buffer = buffer, desc = "TS: Import All" })
@@ -264,11 +264,17 @@ function M.rename()
   if pcall(require, "inc_rename") then
     return ":IncRename " .. vim.fn.expand("<cword>")
   else
-    -- Use defer_fn to avoid the "Not allowed to change text or change window" error
-    vim.defer_fn(function()
-      vim.lsp.buf.rename()
-    end, 10)
-    return ""
+    -- Use Lspsaga if available, it's MUCH better than the built-in rename for project-wide renames
+    local has_saga, _ = pcall(require, "lspsaga")
+    if has_saga then
+      return ":Lspsaga rename<CR>"
+    else
+      -- Use defer_fn to avoid the "Not allowed to change text or change window" error
+      vim.defer_fn(function()
+        vim.lsp.buf.rename()
+      end, 10)
+      return ""
+    end
   end
 end
 

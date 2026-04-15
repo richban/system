@@ -22,6 +22,7 @@
       "btop"
       "chafa"
       "csvlens"
+      "PeonPing/tap/peon-ping"
     ];
     taps = [
       "1password/tap"

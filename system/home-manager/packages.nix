@@ -34,6 +34,8 @@
     graphviz # Graph visualization
     treefmt # Code formatter
     shfmt # Shell formatter
+    prettierd # Fast code formatter daemon (YAML, JSON, JS, etc.)
+    nodePackages.prettier # Code formatter for multiple languages
     pre-commit # Git hooks manager
     git-sizer # Git repo analyzer
     git-lfs # Git large file storage
@@ -75,7 +77,7 @@
     # Node.js Environment
     nodejs_22 # Node.js 22 (LTS)
     # nodePackages.npm # Node package manager
-
+    bun
     asciicam # Terminal webcam
     bandwhich # Modern Unix `iftop`
     cpufetch # Terminal CPU info
@@ -85,5 +87,6 @@
     fabric-ai
     # yt-dlp
     lazygit
+    yazi
   ];
 }

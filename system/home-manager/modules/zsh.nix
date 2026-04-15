@@ -104,8 +104,10 @@
       bindkey "^E" end-of-line
 
       # fzf key bindings (Option key overlaps with AeroSpace; use Ctrl+O for cd)
-      bindkey "^O" fzf-cd-widget       # Control+o for directory search
+      bindkey "^O" fzf-cd-widget       # CTRL+O for directory search
       bindkey "^R" fzf-history-widget   # CTRL+R for history
+      bindkey "^P" fzf-file-widget
+
 
       autopair-init
       eval "$(zoxide init zsh)"
