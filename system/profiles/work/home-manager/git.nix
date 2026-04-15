@@ -20,6 +20,7 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
+    signing.format = "openpgp";
 
     # Pull identity (name + email) from a local file not tracked by this repo.
     # Home-manager writes ~/.config/git/config which includes this path.

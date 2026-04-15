@@ -9,10 +9,12 @@
     jdk17_headless
 
     # Azure
-    azure-cli # az login, az devops, az storage, etc.
+    (azure-cli.withExtensions [azure-cli.extensions.azure-devops])
 
     # Databricks
-    databricks-cli # workspace, clusters, jobs, secrets, etc.
+    (databricks-cli.overrideAttrs (_: {
+      doCheck = false;
+    }))
 
     # Hadoop — nixpkgs tracks the latest stable 3.x (see note below)
     # If you need exactly 3.2.2, see the comment at the bottom of this file.
@@ -28,7 +30,7 @@
     eza # Modern ls replacement
     moreutils # Additional Unix tools
     htop # System monitoring tool
-    neofetch # System info display
+    fastfetch # System info display
     curl # URL transfer tool
     wget # File download utility
     glow # Markdown CLI renderer
@@ -44,6 +46,7 @@
     lazygit
     obsidian
     duckdb
+    terraform
   ];
 }
 # ---------------------------------------------------------------------------
