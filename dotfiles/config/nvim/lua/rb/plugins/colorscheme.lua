@@ -27,9 +27,13 @@ return {
         },
         custom_highlights = function(colors)
           return {
-            Normal = { bg = "#0d1117" },
-            NormalNC = { bg = "#0d1117" },
-            NormalFloat = { bg = "#0d1117" },
+            Normal = { bg = "#000000" },
+            NormalNC = { bg = "#000000" },
+            NormalFloat = { bg = "#000000" },
+            FloatBorder = { bg = "#000000" },
+            TelescopeNormal = { bg = "#000000" },
+            TelescopeBorder = { bg = "#000000" },
+            SignColumn = { bg = "#000000" },
           }
         end,
         integrations = {
