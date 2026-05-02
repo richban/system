@@ -34,6 +34,38 @@ return {
             TelescopeNormal = { bg = "#000000" },
             TelescopeBorder = { bg = "#000000" },
             SignColumn = { bg = "#000000" },
+
+            -- Git Plugins (Neogit & Diffview)
+            NeogitNormal = { bg = "#000000" },
+            NeogitPopupNormal = { bg = "#000000" },
+            DiffviewNormal = { bg = "#000000" },
+            DiffviewStatusNormal = { bg = "#000000" },
+            DiffviewFilePanelTitle = { bg = "#000000" },
+
+            -- 1. The "Unchanged Context"
+            -- Removes the huge grey boxes behind unchanged code around diffs
+            NeogitDiffContext = { bg = "#000000" }, -- unfocused
+            NeogitDiffContextHighlight = { bg = "#000000" }, -- focused
+
+            -- 2. The Hunk Headers
+            -- Makes the "@@ -23,7 +23,7 @@" lines float nicely with pure black
+            NeogitHunkHeader = { bg = "#000000" },
+            NeogitHunkHeaderHighlight = { bg = "#000000" },
+
+            -- 3. The Added Code (Green lines)
+            -- Commented out so you keep Catppuccin's default dark green backgrounds!
+            -- NeogitDiffAdd = { bg = "#000000" },
+            -- NeogitDiffAddHighlight = { bg = "#000000" },
+            -- DiffAdd = { bg = "#000000" },
+
+            -- 4. The Deleted Code (Red lines)
+            -- Commented out so you keep Catppuccin's default dark red backgrounds!
+            -- NeogitDiffDelete = { bg = "#000000" },
+            -- NeogitDiffDeleteHighlight = { bg = "#000000" },
+            -- DiffDelete = { bg = "#000000" },
+
+            -- DiffChange = { bg = "#000000" },
+            -- DiffText = { bg = "#000000" },
           }
         end,
         integrations = {
