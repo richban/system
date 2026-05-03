@@ -76,7 +76,7 @@ require("telescope").setup({
     generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
     -- path_display = true,
     winblend = 0,
-    border = {},
+    border = false,
     borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
     color_devicons = true,
     use_less = true,
