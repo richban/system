@@ -52,6 +52,11 @@ return {
             NeogitHunkHeader = { bg = "#000000" },
             NeogitHunkHeaderHighlight = { bg = "#000000" },
 
+            -- File Headers ("modified src/...") and Commit View block headers
+            NeogitDiffHeader = { bg = "#000000" },
+            NeogitDiffHeaderHighlight = { bg = "#000000" },
+            NeogitCommitViewHeader = { bg = "#000000" },
+
             -- 3. The Added Code (Green lines)
             -- Commented out so you keep Catppuccin's default dark green backgrounds!
             -- NeogitDiffAdd = { bg = "#000000" },
