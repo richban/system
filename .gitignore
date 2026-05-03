@@ -11,3 +11,4 @@ __pycache__/
 .pre-commit-config.yaml
 .claude/settings.local.json
 .gitignore
+dotfiles/config/nvim/lazy-lock.json
