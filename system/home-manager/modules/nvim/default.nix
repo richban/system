@@ -30,7 +30,7 @@ in {
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim; # use neovim-nightly-overlay's build
+    package = pkgs.neovim; # use neovim-nightly-overlay's build only on darwin
     coc.enable = false;
     viAlias = true;
     vimAlias = true;

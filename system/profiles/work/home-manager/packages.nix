@@ -7,6 +7,7 @@
   home.packages = with pkgs; [
     # Java — OpenJDK 17 (headless; no GUI libs, appropriate for a server/WSL env)
     jdk17_headless
+    maven
 
     # Azure
     (azure-cli.withExtensions [azure-cli.extensions.azure-devops])
