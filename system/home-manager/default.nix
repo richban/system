@@ -32,7 +32,25 @@ in {
     # zsh-syntax-highlighting.enable = true;
     # delta.enable = true;
     tmux.enable = config.programs.tmux.enable;
-    tmux.extraConfig = "";
+    tmux.extraConfig = ''
+      set -g @catppuccin_window_status_style "basic"
+      set -g @catppuccin_window_number_position "left"
+
+      set -g @catppuccin_window_fill "number"
+      set -g @catppuccin_window_default_text " #{?#{m:*sh,#{pane_current_command}},#{b:pane_current_path},#{pane_current_command}}"
+
+      set -g @catppuccin_window_current_fill "number"
+      set -g @catppuccin_window_current_text " #{?#{m:*sh,#{pane_current_command}},#{b:pane_current_path},#{pane_current_command}}#{?window_zoomed_flag, 󰁌 ,}"
+
+      set -g @catppuccin_session_text " #S "
+
+      set -g @catppuccin_status_background "default"
+      set -g @catppuccin_status_fill "icon"
+      set -g @catppuccin_status_connect_separator "no"
+
+      set -g @catppuccin_pane_border_style "fg=#000000"
+      set -g @catppuccin_pane_active_border_style "fg=#000000"
+    '';
   };
 
   xdg = {
