@@ -17,7 +17,6 @@
       "gnuplot"
       "graphviz"
       "databricks"
-      "opencode"
       "dust"
       "btop"
       "chafa"
