@@ -40,8 +40,8 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 Clone the repo and run the bootstrap command. `sysdo bootstrap` handles disk setup (`/etc/synthetic.conf`, `/run` symlink), builds the Darwin system closure, and activates it.
 
 ```bash
-git clone https://github.com/richban/system ~/.nixpkgs
-cd ~/.nixpkgs
+git clone https://github.com/richban/system ~/.config/nix
+cd ~/.config/nix
 
 # Bootstrap — auto-detects Darwin, defaults to melchior@aarch64-darwin
 nix run .#sysdo bootstrap

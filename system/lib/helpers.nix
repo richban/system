@@ -8,7 +8,7 @@
     hostname,
     username ? "richban",
     platform ? "aarch64-darwin",
-    flakeRoot ? ".nixpkgs",
+    flakeRoot ? ".config/nix",
     baseModules ? [
       ../home-manager
     ],
@@ -44,7 +44,7 @@
     hostname,
     username ? "richban",
     platform ? "aarch64-darwin",
-    flakeRoot ? ".nixpkgs",
+    flakeRoot ? ".config/nix",
     homeModules ? [],
     darwinModules ? [],
   }:

@@ -12,7 +12,7 @@ return {
   "coffebar/neovim-project",
   opts = {
     projects = { -- define project roots based on your previous workspaces
-      "~/.nixpkgs", -- your main nixpkgs config
+      "~/.config/nix", -- your main nixpkgs config
       "~/Developer/*", -- your development projects
       "~/.config/*", -- config directories
       "~/.claude",

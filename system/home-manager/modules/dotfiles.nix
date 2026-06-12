@@ -12,7 +12,7 @@
 
   home.file = {
     ".hammerspoon" = lib.mkIf pkgs.stdenvNoCC.isDarwin {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/hammerspoon";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/dotfiles/hammerspoon";
     };
   };
 
@@ -20,19 +20,19 @@
     enable = true;
     configFile = {
       aerospace = lib.mkIf pkgs.stdenv.isDarwin {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/aerospace";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/dotfiles/config/aerospace";
       };
 
       ghostty = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/ghostty";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/dotfiles/config/ghostty";
       };
 
       tmuxinator = lib.mkIf pkgs.stdenv.isDarwin {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/tmuxinator";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/dotfiles/config/tmuxinator";
       };
 
       karabiner = lib.mkIf pkgs.stdenv.isDarwin {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixpkgs/dotfiles/config/karabiner";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/nix/dotfiles/config/karabiner";
       };
     };
   };

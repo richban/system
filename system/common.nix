@@ -4,7 +4,7 @@
   pkgs,
   username,
   stateVersion,
-  flakeRoot ? ".nixpkgs",
+  flakeRoot ? ".config/nix",
   homeModules ? [],
   ...
 }: {
