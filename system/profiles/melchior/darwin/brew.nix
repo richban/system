@@ -2,7 +2,6 @@
   homebrew = {
     brews = [
       "gromgit/brewtils/taproom"
-      "felixkratz/formulae/borders"
       "gnuplot"
       "graphviz"
       "dust"
@@ -16,7 +15,6 @@
       "homebrew/bundle"
       "homebrew/services"
       "nikitabobko/tap"
-      "FelixKratz/formulae"
       "AlexsJones/llmfit"
       "gromgit/brewtils"
       {
