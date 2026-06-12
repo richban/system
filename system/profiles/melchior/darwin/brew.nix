@@ -15,6 +15,7 @@
       "nikitabobko/tap"
       "AlexsJones/llmfit"
       "gromgit/brewtils"
+      "nikitabobko/tap"
       {
         name = "chmouel/lazyworktree";
         clone_target = "https://github.com/chmouel/lazyworktree.git";
