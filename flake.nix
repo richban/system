@@ -2,7 +2,7 @@
   description = "NixOS systems and tools by richban";
 
   inputs = {
-    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0";
     # nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.2411.*";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # nixpkgs-unstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0";

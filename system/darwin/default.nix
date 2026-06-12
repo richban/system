@@ -7,7 +7,7 @@
 }: {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
-    # inputs.determinate.darwinModules.default
+    inputs.determinate.darwinModules.default
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-index-database.darwinModules.nix-index
     ../common.nix
@@ -44,16 +44,4 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
-
-  nix.gc = {
-    automatic = true;
-    interval = {
-      Weekday = 0;
-      Hour = 3;
-      Minute = 0;
-    };
-    options = "--delete-older-than 7d";
-  };
-
-  nix.settings.auto-optimise-store = true;
 }
