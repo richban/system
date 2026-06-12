@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   pkgs,
   stateVersion,
@@ -13,26 +12,25 @@
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  imports = [
-    inputs.catppuccin.homeModules.catppuccin
-  ];
-
-  catppuccin = {
-    accent = "blue";
-    flavor = "mocha";
-
-    # bat.enable = config.programs.bat.enable;
-    # bottom.enable = config.programs.bottom.enable;
-    # fzf.enable = config.programs.fzf.enable;
-    # gh-dash.enable = config.programs.gh.extensions.gh-dash;
-    # gitui.enable = config.programs.gitui.enable;
-    # starship.enable = config.programs.starship.enable;
-    # alacritty.enable = config.programs.alacritty.enable;
-    # ghostty.enable = config.programs.ghostty.enable;
-    # zsh-syntax-highlighting.enable = true;
-    # delta.enable = true;
-    # tmux.enable = config.programs.tmux.enable;
-  };
+  # imports = [
+  #   inputs.catppuccin.homeModules.catppuccin
+  # ];
+  #
+  # catppuccin = {
+  #   accent = "blue";
+  #   flavor = "mocha";
+  #
+  #
+  #   fzf.enable = config.programs.fzf.enable;
+  #   gh-dash.enable = config.programs.gh.extensions.gh-dash;
+  #   gitui.enable = config.programs.gitui.enable;
+  #   starship.enable = config.programs.starship.enable;
+  #   alacritty.enable = config.programs.alacritty.enable;
+  #   ghostty.enable = config.programs.ghostty.enable;
+  #   zsh-syntax-highlighting.enable = true;
+  #   delta.enable = true;
+  #   tmux.enable = config.programs.tmux.enable;
+  # };
 
   xdg = {
     enable = true;
@@ -58,7 +56,7 @@ in {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
         forwardAgent = true;
       };
@@ -68,6 +66,7 @@ in {
   home = {
     inherit stateVersion;
     inherit username;
+    enableNixpkgsReleaseCheck = false;
     homeDirectory =
       if isDarwin
       then "/Users/${username}"
@@ -84,6 +83,7 @@ in {
         "${homeDir}/.node/bin"
         "${homeDir}/.duckdb/cli/latest"
         "${homeDir}/.npm-global/bin"
+        "${homeDir}/.cache/bun/bin"
       ]
       ++ (
         if isDarwin
