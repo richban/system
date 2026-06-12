@@ -12,8 +12,6 @@
     ];
     taps = [
       "1password/tap"
-      "homebrew/bundle"
-      "homebrew/services"
       "nikitabobko/tap"
       "AlexsJones/llmfit"
       "gromgit/brewtils"
