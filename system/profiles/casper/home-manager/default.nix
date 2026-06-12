@@ -1,14 +1,8 @@
 {...}: {
   imports = [
-    ../../../home-manager/programs.nix
-    ../../../home-manager/packages.nix
-    ../../../home-manager/modules/zsh.nix
-    ../../../home-manager/modules/git.nix
-    ../../../home-manager/modules/1password.nix
-    ../../../home-manager/modules/direnv.nix
+    ../../../home-manager
+    ../../../home-manager/modules
     ../../../home-manager/modules/nvim
-    ../../../home-manager/modules/dotfiles.nix
-    ../../../home-manager/modules/tmux.nix
     ./packages.nix
   ];
 }

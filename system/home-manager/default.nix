@@ -12,9 +12,11 @@
   relativeXDGDataPath = ".local/share";
   relativeXDGCachePath = ".cache";
 in {
-  # imports = [
-  #   inputs.catppuccin.homeModules.catppuccin
-  # ];
+  imports = [
+    # inputs.catppuccin.homeModules.catppuccin
+    ./packages.nix
+    ./programs.nix
+  ];
   #
   # catppuccin = {
   #   accent = "blue";
