@@ -7,7 +7,6 @@
 }: {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
-    inputs.determinate.darwinModules.default
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-index-database.darwinModules.nix-index
     ../common.nix
@@ -44,4 +43,6 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
+  # Let Determinate Systems manage Nix entirely
+  nix.enable = false;
 }
