@@ -52,7 +52,7 @@
       platforms
       ;
 
-    stateVersion = "24.11";
+    stateVersion = "26.05";
     helper = import ./system/lib {inherit inputs self stateVersion;};
 
     defaultSystems = intersectLists (platforms.linux ++ platforms.darwin) (
@@ -104,10 +104,18 @@
 
     darwinConfigurations = {
       "melchior@aarch64-darwin" = helper.mkDarwin {
-        hostname = "mac-mini";
+        hostname = "melchior";
         username = "melchior";
         platform = "aarch64-darwin";
-        homeModules = [./system/profiles/personal/home-manager];
+        homeModules = [./system/profiles/melchior/home-manager];
+        darwinModules = [./system/profiles/melchior/darwin];
+      };
+      "casper@aarch64-darwin" = helper.mkDarwin {
+        hostname = "casper";
+        username = "casper";
+        platform = "aarch64-darwin";
+        homeModules = [./system/profiles/casper/home-manager];
+        darwinModules = [./system/profiles/casper/darwin];
       };
     };
 
@@ -116,7 +124,13 @@
         hostname = "mac-mini";
         username = "melchior";
         platform = "aarch64-darwin";
-        extraModules = [./system/profiles/personal/home-manager];
+        extraModules = [./system/profiles/melchior/home-manager];
+      };
+      "casper@aarch64-darwin" = helper.mkHome {
+        hostname = "casper";
+        username = "casper";
+        platform = "aarch64-darwin";
+        extraModules = [./system/profiles/casper/home-manager];
       };
       "richban@x86_64-linux" = helper.mkHome {
         hostname = "SKB58713";

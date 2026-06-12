@@ -46,6 +46,7 @@
     platform ? "aarch64-darwin",
     flakeRoot ? ".nixpkgs",
     homeModules ? [],
+    darwinModules ? [],
   }:
     inputs.nix-darwin.lib.darwinSystem {
       specialArgs = {
@@ -60,8 +61,10 @@
           flakeRoot
           ;
       };
-      modules = [
-        ../darwin
-      ];
+      modules =
+        [
+          ../darwin
+        ]
+        ++ darwinModules;
     };
 }
