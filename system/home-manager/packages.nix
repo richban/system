@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.sessionVariables = {
     JAVA_HOME = "${pkgs.jdk21_headless.home}";
   };
@@ -25,7 +21,6 @@
     unzip # Archive extraction tool
     gnused # Stream editor
     universal-ctags # Code indexing tool
-    gemini-cli # Gemini CLI
 
     # Development Tools
     lua # Lua programming language
@@ -39,7 +34,6 @@
     pre-commit # Git hooks manager
     git-sizer # Git repo analyzer
     git-lfs # Git large file storage
-    inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.claude-code # Claude CLI from Nix flake
     fpp # Fuzzy path picker
     zoxide
 
@@ -48,11 +42,6 @@
 
     # Java
     jdk21_headless
-
-    # Infrastructure & Containers
-    terraform # Infrastructure as code
-    google-cloud-sdk # GCP toolkit
-    awscli # AWS Command Line Interface
 
     nixfmt # Nix code formatter
     nixpkgs-review # Nix code review
@@ -72,7 +61,6 @@
     cookiecutter # Project template tool
     ruff # Fast Python linter
     uv # Python package installer
-    sqlfluff # SQL linter
 
     # Node.js Environment
     nodejs_22 # Node.js 22 (LTS)
@@ -84,8 +72,6 @@
     difftastic # Modern Unix `diff`
     fastfetch # Modern Unix system info
     ipfetch # Terminal IP info
-    fabric-ai
-    # yt-dlp
     lazygit
     yazi
   ];
