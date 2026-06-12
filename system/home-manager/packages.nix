@@ -35,7 +35,7 @@
     treefmt # Code formatter
     shfmt # Shell formatter
     prettierd # Fast code formatter daemon (YAML, JSON, JS, etc.)
-    nodePackages.prettier # Code formatter for multiple languages
+    prettier # Code formatter for multiple languages
     pre-commit # Git hooks manager
     git-sizer # Git repo analyzer
     git-lfs # Git large file storage
