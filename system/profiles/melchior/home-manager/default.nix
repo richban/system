@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ../../../home-manager/packages.nix
+    ./packages.nix
     ../../../home-manager/programs.nix
     ../../../home-manager/modules/zsh.nix
     ../../../home-manager/modules/git.nix
