@@ -247,29 +247,4 @@
 | From | To | Description |
 |---|---|---|
 | `caps_lock` | `command+control+option+shift` | Change caps_lock to command+control+option+shift. |
-| `fn + a` | `left_control + a` | Change fn + letter to left_control + letter |
-| `fn + b` | `left_control + b` | Change fn + letter to left_control + letter |
-| `fn + c` | `left_control + c` | Change fn + letter to left_control + letter |
-| `fn + d` | `left_control + d` | Change fn + letter to left_control + letter |
-| `fn + e` | `left_control + e` | Change fn + letter to left_control + letter |
-| `fn + f` | `left_control + f` | Change fn + letter to left_control + letter |
-| `fn + g` | `left_control + g` | Change fn + letter to left_control + letter |
-| `fn + h` | `left_control + h` | Change fn + letter to left_control + letter |
-| `fn + i` | `left_control + i` | Change fn + letter to left_control + letter |
-| `fn + j` | `left_control + j` | Change fn + letter to left_control + letter |
-| `fn + k` | `left_control + k` | Change fn + letter to left_control + letter |
-| `fn + l` | `left_control + l` | Change fn + letter to left_control + letter |
-| `fn + m` | `left_control + m` | Change fn + letter to left_control + letter |
-| `fn + n` | `left_control + n` | Change fn + letter to left_control + letter |
-| `fn + o` | `left_control + o` | Change fn + letter to left_control + letter |
-| `fn + p` | `left_control + p` | Change fn + letter to left_control + letter |
-| `fn + q` | `left_control + q` | Change fn + letter to left_control + letter |
-| `fn + r` | `left_control + r` | Change fn + letter to left_control + letter |
-| `fn + s` | `left_control + s` | Change fn + letter to left_control + letter |
-| `fn + t` | `left_control + t` | Change fn + letter to left_control + letter |
-| `fn + u` | `left_control + u` | Change fn + letter to left_control + letter |
-| `fn + v` | `left_control + v` | Change fn + letter to left_control + letter |
-| `fn + w` | `left_control + w` | Change fn + letter to left_control + letter |
-| `fn + x` | `left_control + x` | Change fn + letter to left_control + letter |
-| `fn + y` | `left_control + y` | Change fn + letter to left_control + letter |
-| `fn + z` | `left_control + z` | Change fn + letter to left_control + letter |
+| `fn` | `left_control` | Remap FN key to Left Control |
