@@ -21,4 +21,7 @@ require("lazy").setup({ import = "rb/plugins" }, {
     path = "~/.local/share/nvim/nix",
     fallback = false,
   },
+  rocks = {
+    enabled = false,
+  },
 })

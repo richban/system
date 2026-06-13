@@ -1,6 +1,6 @@
 -- neogit.lua
 local M = {
-  "TimUntersberger/neogit",
+  "NeogitOrg/neogit",
   cmd = "Neogit",
   keys = {
     { "<leader>gs", "<cmd>Neogit kind=tab<CR>", desc = "Neogit" },
