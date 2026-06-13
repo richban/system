@@ -42,7 +42,9 @@ function M.lsp_init()
   vim.diagnostic.config(config.diagnostic)
 
   -- Hover configuration with float options
-  vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
+  vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+    require("lspsaga.hover").handler(err, result, ctx, config)
+  end
 
   -- Signature help configuration
   -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
