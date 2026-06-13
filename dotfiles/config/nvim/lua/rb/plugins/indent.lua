@@ -8,9 +8,7 @@ return {
         char = "▏",
       },
       scope = {
-        enabled = true,
-        show_start = true,
-        show_end = false,
+        enabled = false, -- Disable active scope highlighting & underlining completely
       },
       exclude = {
         buftypes = { "terminal", "nofile", "quickfix", "prompt" },
