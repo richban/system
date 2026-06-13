@@ -40,12 +40,23 @@ return {
     require("neovim-project").setup(opts)
 
     -- Project management keybindings under <leader>p prefix
-    vim.keymap.set("n", "<leader>fp", ":NeovimProjectDiscover<CR>", { desc = "Find Projects" })
-    vim.keymap.set("n", "<leader>pr", ":NeovimProjectHistory<CR>", { desc = "Recent Projects" })
+    vim.keymap.set("n", "<leader>fp", function()
+      require("lazy").load({ plugins = { "telescope.nvim" } })
+      vim.cmd("NeovimProjectDiscover")
+    end, { desc = "Find Projects" })
+
+    vim.keymap.set("n", "<leader>pr", function()
+      require("lazy").load({ plugins = { "telescope.nvim" } })
+      vim.cmd("NeovimProjectHistory")
+    end, { desc = "Recent Projects" })
+
     vim.keymap.set("n", "<leader>po", ":NeovimProjectLoadRecent<CR>", { desc = "Open Recent Project" })
     -- Session management
     vim.keymap.set("n", "<leader>ps", ":SessionSave<CR>", { desc = "Save Project Session" })
-    vim.keymap.set("n", "<leader>pl", ":SessionLoad<CR>", { desc = "Load Session" })
+    vim.keymap.set("n", "<leader>pl", function()
+      require("lazy").load({ plugins = { "telescope.nvim" } })
+      vim.cmd("SessionLoad")
+    end, { desc = "Load Session" })
     -- Delete current project session
     vim.keymap.set("n", "<leader>px", ":SessionDelete<CR>", { desc = "Delete Project Session" })
     -- Project root navigation
@@ -61,7 +72,6 @@ return {
   end,
   dependencies = {
     { "nvim-lua/plenary.nvim" },
-    { "nvim-telescope/telescope.nvim" }, -- removed version tag to use latest
     { "Shatur/neovim-session-manager" },
   },
   lazy = false,

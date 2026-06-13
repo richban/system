@@ -7,25 +7,8 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
       "hrsh7th/cmp-nvim-lsp",
-
-      { "j-hui/fidget.nvim", opts = {} },
-      { "onsails/lspkind.nvim" },
-      -- Autoformatting
-      "stevearc/conform.nvim",
-
       -- Schema information
       "b0o/SchemaStore.nvim",
-      {
-        "nvimdev/lspsaga.nvim",
-        dependencies = {
-          { "nvim-treesitter/nvim-treesitter", optional = true },
-          "nvim-tree/nvim-web-devicons", -- optional
-        },
-      },
-      {
-        "ray-x/lsp_signature.nvim",
-        event = "VeryLazy",
-      },
     },
     config = function()
       local capabilities = nil
@@ -33,11 +16,6 @@ return {
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
       end
-
-      -- Adds beautiful icon to completion
-      require("lspkind").init()
-      -- Improves the Neovim built-in LSP experience.
-      require("rb.lsp.lspsaga")
 
       -- diagnostics, handlers
       require("rb.lsp.handlers").lsp_init()
@@ -284,6 +262,25 @@ return {
           })
         end,
       })
+    end,
+  },
+  {
+    "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter", optional = true },
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("rb.lsp.lspsaga")
+    end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts)
+      require("lsp_signature").setup(opts)
     end,
   },
 }

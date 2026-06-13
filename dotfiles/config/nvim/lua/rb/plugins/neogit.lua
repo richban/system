@@ -1,6 +1,10 @@
 -- neogit.lua
 local M = {
   "TimUntersberger/neogit",
+  cmd = "Neogit",
+  keys = {
+    { "<leader>gs", "<cmd>Neogit kind=tab<CR>", desc = "Neogit" },
+  },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "sindrets/diffview.nvim",
@@ -12,7 +16,6 @@ local M = {
         diffview = true,
       },
     })
-    vim.api.nvim_set_keymap("n", "<leader>gs", "<cmd>Neogit kind=tab<CR>", { noremap = true, silent = true })
 
     local function augroup(name)
       return vim.api.nvim_create_augroup("mnv_" .. name, { clear = true })
@@ -28,8 +31,7 @@ local M = {
       end,
     })
 
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "BufWritePost,BufEnter,FocusGained,ShellCmdPost,VimResume",
+    vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "FocusGained", "ShellCmdPost", "VimResume" }, {
       group = augroup("DefaultRefreshEvents"),
       callback = function()
         require("neogit").refresh_manually()

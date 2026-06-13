@@ -37,6 +37,7 @@ vim.api.nvim_create_autocmd("User", {
 return {
   "sindrets/diffview.nvim",
   version = "*",
+  cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewFileHistory" },
   config = function()
     local actions = require("diffview.actions")
 
