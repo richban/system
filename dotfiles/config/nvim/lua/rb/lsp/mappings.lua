@@ -112,9 +112,27 @@ function M.on_attach(client, buffer)
   <leader>ti - Import all missing imports
   --]]
   if client.name == "tsserver" or client.name == "ts_ls" then
-    vim.keymap.set("n", "<leader>to", ":TSLspOrganize<CR>", { buffer = buffer, desc = "TS: Organize Imports" })
-    vim.keymap.set("n", "<leader>tc", ":TSLspFixCurrent<CR>", { buffer = buffer, desc = "TS: Fix Current" })
-    vim.keymap.set("n", "<leader>ti", ":TSLspImportAll<CR>", { buffer = buffer, desc = "TS: Import All" })
+    vim.keymap.set("n", "<leader>to", function()
+      local params = {
+        command = "_typescript.organizeImports",
+        arguments = { vim.api.nvim_buf_get_name(0) },
+      }
+      vim.lsp.buf.execute_command(params)
+    end, { buffer = buffer, desc = "TS: Organize Imports" })
+
+    vim.keymap.set("n", "<leader>tc", function()
+      vim.lsp.buf.code_action({
+        context = { only = { "quickfix" } },
+        apply = true,
+      })
+    end, { buffer = buffer, desc = "TS: Fix Current" })
+
+    vim.keymap.set("n", "<leader>ti", function()
+      vim.lsp.buf.code_action({
+        context = { only = { "source.addMissingImports" } },
+        apply = true,
+      })
+    end, { buffer = buffer, desc = "TS: Import All" })
   end
 
   --[[ Python Specific

@@ -24,11 +24,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("Format", { clear = true }),
-  pattern = "*.ts",
+  group = vim.api.nvim_create_augroup("TS_OrganizeImports", { clear = true }),
+  pattern = { "*.ts", "*.tsx" },
   callback = function()
-    -- Execute TSLspOrganize command
-    vim.cmd("TSLspOrganize")
+    local params = {
+      command = "_typescript.organizeImports",
+      arguments = { vim.api.nvim_buf_get_name(0) },
+    }
+    pcall(vim.lsp.buf_request_sync, 0, "workspace/executeCommand", params, 1000)
   end,
 })
 
@@ -42,14 +45,17 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufFilePre", "BufRead" }, {
   end,
 })
 
-function vim.fn.TrimWhiteSpace()
-  local l = vim.fn.line(".")
-  local c = vim.fn.col(".")
-  vim.cmd("%s/\\s\\+$//e")
-  vim.fn.cursor(l, c)
-end
-
-vim.cmd("autocmd BufWritePre * :lua vim.fn.TrimWhiteSpace()")
+-- Trim trailing whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("TrimWhiteSpace", { clear = true }),
+  pattern = "*",
+  callback = function()
+    local l = vim.fn.line(".")
+    local c = vim.fn.col(".")
+    vim.cmd("%s/\\s\\+$//e")
+    vim.fn.cursor(l, c)
+  end,
+})
 
 -- windows to close
 vim.api.nvim_create_autocmd("FileType", {
