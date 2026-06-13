@@ -19,9 +19,9 @@
     ];
     casks = [
       "arc"
-      "1password"
+      # "1password"
       "1password-cli"
-      "hammerspoon"
+      # "hammerspoon"
       "raycast"
       "karabiner-elements"
       "aerospace"
