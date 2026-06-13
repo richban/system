@@ -166,7 +166,7 @@ function M.on_attach(client, buffer)
     vim.keymap.set("n", "<leader>pf", function()
       local ok, conform = pcall(require, "conform")
       if ok then
-        conform.format({ formatters = { "ruff" }, async = true })
+        conform.format({ formatters = { "ruff_format" }, async = true })
       else
         vim.cmd("silent !ruff format " .. vim.fn.expand("%"))
         vim.cmd("edit!")

@@ -154,22 +154,6 @@ return {
         terraformls = { filetypes = { "terraform", "hcl" } },
         pylsp = {
           enabled = true,
-          root_dir = function(fname)
-            local root_files = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile" }
-            local util = require("lspconfig.util")
-
-            -- Ensure fname is a string; convert buffer number to file path if needed
-            if type(fname) ~= "string" then
-              fname = vim.api.nvim_buf_get_name(fname)
-            end
-
-            -- Return nil if fname is empty or invalid
-            if not fname or fname == "" then
-              return nil
-            end
-
-            return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-          end,
           before_init = function(initialize_params, config)
             config.settings.pylsp.plugins.jedi = config.settings.pylsp.plugins.jedi or {}
 
@@ -184,8 +168,10 @@ return {
             end
 
             -- 2. Fallback to auto-detecting a local virtualenv in the project root
-            local fname = vim.api.nvim_buf_get_name(0)
-            local root = config.root_dir(fname)
+            local root = initialize_params.rootPath
+            if not root and initialize_params.rootUri then
+              root = vim.uri_to_fname(initialize_params.rootUri)
+            end
             if root then
               local venvs = { ".venv", "venv", "env" }
               for _, venv in ipairs(venvs) do
