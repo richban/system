@@ -201,22 +201,14 @@ return {
                 jedi_references = { enabled = true },
                 jedi_signature_help = { enabled = true },
                 jedi_symbols = { enabled = true, all_scopes = true },
-                pydocstyle = { enabled = true, convention = "google" },
+                pydocstyle = { enabled = false },
                 pylsp_mypy = { enabled = false }, -- disabled: ty handles type checking
                 -- Enable Ruff for both linting and formatting
                 ruff = {
                   enabled = true,
-                  formatEnabled = true, -- Enable ruff as formatter
-                  extendIgnore = { "E501" }, -- Ignore line length errors
-                  format = { -- Ruff format configuration
-                    args = {
-                      "--select=E,F,W,I,N,B,A,C4,PT,RUF",
-                      "--fix",
-                      "--line-length=120",
-                    },
-                  },
                   lineLength = 120,
-                  organizeImports = true, -- Use ruff for import organization
+                  select = { "E", "F", "W", "I", "N", "B", "A", "C4", "PT", "RUF", "D" },
+                  ignore = { "E501" },
                 },
               },
             },
