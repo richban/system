@@ -44,6 +44,7 @@ require("rb.directory-watcher").registerOnChangeHandler("hotreload", function(fi
 end)
 
 M.setup = function(opts)
+  -- 1. Focus/buffer events for checktime fallback
   vim.api.nvim_create_autocmd({ "FocusGained", "TermLeave", "BufEnter", "WinEnter", "CursorHold", "CursorHoldI" }, {
     group = vim.api.nvim_create_augroup("hotreload", { clear = true }),
     callback = function()
@@ -51,6 +52,24 @@ M.setup = function(opts)
         vim.cmd("checktime")
       end
     end,
+  })
+
+  -- 2. Start directory watcher on Neovim's current working directory
+  local function start_watcher()
+    pcall(function()
+      require("rb.directory-watcher").setup({
+        path = vim.fn.getcwd(),
+        recursive = true,
+      })
+    end)
+  end
+
+  start_watcher()
+
+  -- 3. Restart watcher if the user changes directory inside Neovim
+  vim.api.nvim_create_autocmd("DirChanged", {
+    group = vim.api.nvim_create_augroup("hotreload_dir", { clear = true }),
+    callback = start_watcher,
   })
 end
 

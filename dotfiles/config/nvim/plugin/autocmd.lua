@@ -86,3 +86,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+-- Enable hotreload for real-time buffer updates when files change on disk
+pcall(function()
+  require("rb.hotreload").setup()
+end)
