@@ -1,21 +1,35 @@
 local icons = require("rb.icons")
 
+local git_repo_cache = {}
+
 return {
   spaces = {
     function()
-      local shiftwidth = vim.api.nvim_buf_get_option(0, "shiftwidth")
-      return icons.ui.Tab .. " " .. shiftwidth
+      return icons.ui.Tab .. " " .. vim.bo.shiftwidth
     end,
     padding = 1,
   },
   git_repo = {
     function()
-      if
-        #vim.api.nvim_list_tabpages() > 1
-        and vim.fn.trim(vim.fn.system("git rev-parse --is-inside-work-tree")) == "true"
-      then
-        return vim.fn.trim(vim.fn.system("basename `git rev-parse --show-toplevel`"))
+      local bufnr = vim.api.nvim_get_current_buf()
+      if git_repo_cache[bufnr] ~= nil then
+        return git_repo_cache[bufnr]
       end
+
+      local name = vim.api.nvim_buf_get_name(bufnr)
+      if name == "" or vim.bo[bufnr].buftype ~= "" then
+        git_repo_cache[bufnr] = ""
+        return ""
+      end
+
+      local root = vim.fs.root(bufnr, ".git")
+      if root then
+        local repo_name = vim.fs.basename(root)
+        git_repo_cache[bufnr] = repo_name
+        return repo_name
+      end
+
+      git_repo_cache[bufnr] = ""
       return ""
     end,
   },
