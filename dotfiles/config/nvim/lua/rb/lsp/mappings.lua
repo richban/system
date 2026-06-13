@@ -137,26 +137,41 @@ function M.on_attach(client, buffer)
 
   --[[ Python Specific
   Key mappings only active in Python files:
-  <leader>po - Organize imports with ruff
-  <leader>pc - Run ruff check on current file
-  <leader>pf - Run ruff format on current file
+  <leader>po - Organize imports with ruff via conform.nvim
+  <leader>pc - Auto-fix lint errors with ruff via conform.nvim
+  <leader>pf - Format with ruff via conform.nvim
   <leader>pt - Run tests for current file
-  <leader>pv - Show virtual environment info
+  <leader>pv - Show active or local virtual environment info
   --]]
   if client.name == "pylsp" then
     vim.keymap.set("n", "<leader>po", function()
-      vim.cmd("silent !ruff check --select I --fix " .. vim.fn.expand("%"))
-      vim.cmd("edit!")
+      local ok, conform = pcall(require, "conform")
+      if ok then
+        conform.format({ formatters = { "ruff_organize_imports" }, async = true })
+      else
+        vim.cmd("silent !ruff check --select I --fix " .. vim.fn.expand("%"))
+        vim.cmd("edit!")
+      end
     end, { buffer = buffer, desc = "Python: Organize Imports" })
 
     vim.keymap.set("n", "<leader>pc", function()
-      vim.cmd("!ruff check " .. vim.fn.expand("%"))
-    end, { buffer = buffer, desc = "Python: Check with Ruff" })
+      local ok, conform = pcall(require, "conform")
+      if ok then
+        conform.format({ formatters = { "ruff_fix" }, async = true })
+      else
+        vim.cmd("!ruff check " .. vim.fn.expand("%"))
+      end
+    end, { buffer = buffer, desc = "Python: Auto-Fix Errors" })
 
     vim.keymap.set("n", "<leader>pf", function()
-      vim.cmd("silent !ruff format " .. vim.fn.expand("%"))
-      vim.cmd("edit!")
-    end, { buffer = buffer, desc = "Python: Format with Ruff" })
+      local ok, conform = pcall(require, "conform")
+      if ok then
+        conform.format({ formatters = { "ruff" }, async = true })
+      else
+        vim.cmd("silent !ruff format " .. vim.fn.expand("%"))
+        vim.cmd("edit!")
+      end
+    end, { buffer = buffer, desc = "Python: Format Buffer" })
 
     vim.keymap.set("n", "<leader>pt", function()
       local file = vim.fn.expand("%")
@@ -175,9 +190,20 @@ function M.on_attach(client, buffer)
     vim.keymap.set("n", "<leader>pv", function()
       local venv = os.getenv("VIRTUAL_ENV")
       if venv then
-        print("Virtual environment: " .. venv)
+        print("Virtual environment (active): " .. venv)
       else
-        print("No virtual environment active")
+        -- Fallback to checking local workspace directory
+        local root = vim.fs.root(0, { ".venv", "venv", "env" })
+        if root then
+          for _, name in ipairs({ ".venv", "venv", "env" }) do
+            local path = root .. "/" .. name
+            if vim.fn.isdirectory(path) == 1 then
+              print("Virtual environment (detected): " .. path)
+              return
+            end
+          end
+        end
+        print("No virtual environment active or detected")
       end
     end, { buffer = buffer, desc = "Python: Show Virtual Env" })
   end

@@ -170,6 +170,33 @@ return {
 
             return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
           end,
+          before_init = function(initialize_params, config)
+            config.settings.pylsp.plugins.jedi = config.settings.pylsp.plugins.jedi or {}
+
+            -- 1. Check if a virtual environment is active in the environment
+            local active_venv = os.getenv("VIRTUAL_ENV")
+            if active_venv then
+              local venv_python = active_venv .. "/bin/python"
+              if vim.fn.executable(venv_python) == 1 then
+                config.settings.pylsp.plugins.jedi.environment = venv_python
+                return
+              end
+            end
+
+            -- 2. Fallback to auto-detecting a local virtualenv in the project root
+            local fname = vim.api.nvim_buf_get_name(0)
+            local root = config.root_dir(fname)
+            if root then
+              local venvs = { ".venv", "venv", "env" }
+              for _, venv in ipairs(venvs) do
+                local venv_python = root .. "/" .. venv .. "/bin/python"
+                if vim.fn.executable(venv_python) == 1 then
+                  config.settings.pylsp.plugins.jedi.environment = venv_python
+                  break
+                end
+              end
+            end
+          end,
           settings = {
             pylsp = {
               plugins = {
