@@ -1,6 +1,7 @@
 -- Python-specific settings
 vim.opt_local.colorcolumn = "88"
-vim.opt_local.textwidth = 88
+vim.opt_local.textwidth = 0
+vim.opt_local.formatoptions:remove("t")
 vim.opt_local.expandtab = true
 vim.opt_local.tabstop = 4
 vim.opt_local.shiftwidth = 4

@@ -92,15 +92,15 @@ cmp.setup({
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
     ["<CR>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.confirm({ select = true })
+      if cmp.visible() and cmp.get_active_entry() then
+        cmp.confirm({ select = false })
       else
         fallback()
       end
     end, { "i", "s" }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.confirm({ select = true })
+        cmp.select_next_item()
       else
         fallback()
       end
