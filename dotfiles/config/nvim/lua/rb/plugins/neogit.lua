@@ -34,7 +34,7 @@ local M = {
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "FocusGained", "ShellCmdPost", "VimResume" }, {
       group = augroup("DefaultRefreshEvents"),
       callback = function()
-        require("neogit").refresh_manually()
+        require("neogit").refresh()
       end,
     })
   end,
