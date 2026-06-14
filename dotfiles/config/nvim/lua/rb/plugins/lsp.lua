@@ -169,10 +169,10 @@ return {
 
             -- 2. Fallback to auto-detecting a local virtualenv in the project root
             local root = initialize_params.rootPath
-            if not root and initialize_params.rootUri then
+            if type(root) ~= "string" and type(initialize_params.rootUri) == "string" then
               root = vim.uri_to_fname(initialize_params.rootUri)
             end
-            if root then
+            if type(root) == "string" then
               local venvs = { ".venv", "venv", "env" }
               for _, venv in ipairs(venvs) do
                 local venv_python = root .. "/" .. venv .. "/bin/python"
