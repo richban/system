@@ -85,7 +85,7 @@ in {
         "${homeDir}/.node/bin"
         "${homeDir}/.duckdb/cli/latest"
         "${homeDir}/.npm-global/bin"
-        "${homeDir}/.cache/bun/bin"
+        "${homeDir}/.cache/.bun/bin"
       ]
       ++ (
         if isDarwin
