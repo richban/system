@@ -101,6 +101,18 @@ return {
         lua_ls = true,
         cssls = true,
         ts_ls = true,
+        sqls = {
+          settings = {
+            sqls = {
+              connections = {
+                {
+                  driver = "sqlite3",
+                  dataSourceName = ":memory:",
+                },
+              },
+            },
+          },
+        },
         clangd = {
           cmd = {
             "clangd",

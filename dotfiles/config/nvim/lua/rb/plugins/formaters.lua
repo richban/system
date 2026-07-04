@@ -51,9 +51,10 @@ return {
         args = {
           "fix",
           "--dialect",
-          "postgres",
+          "duckdb",
           "-",
         },
+        exit_codes = { 0, 1 },
       },
 
       prettier = {
