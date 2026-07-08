@@ -45,9 +45,9 @@
     uv # Python package installer
     sqlfluff # SQL linter
     lazygit
-    obsidian
+    # obsidian
     duckdb
-    terraform
+    # terraform
   ];
 }
 # ---------------------------------------------------------------------------

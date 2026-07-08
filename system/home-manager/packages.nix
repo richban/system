@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  home.sessionVariables = {
-    JAVA_HOME = "${pkgs.jdk21_headless.home}";
-  };
-
   home.packages = with pkgs; [
     # CLI Utilities
     jq # JSON processor and formatter
@@ -39,9 +35,6 @@
 
     # Ruby Environment
     (pkgs.ruby.withPackages (ps: with ps; [jekyll]))
-
-    # Java
-    jdk21_headless
 
     nixfmt # Nix code formatter
     nixpkgs-review # Nix code review
