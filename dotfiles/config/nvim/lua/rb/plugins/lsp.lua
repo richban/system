@@ -243,7 +243,6 @@ return {
         "lua_ls",
         "codespell",
         "gitlint",
-        "sqlfluff",
         "clang-format",
       }
 

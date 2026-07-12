@@ -30,7 +30,7 @@ return {
       css = { "prettierd", "prettier" },
       scss = { "prettierd", "prettier" },
       nix = { "alejandra" },
-      sql = { "sqlfluff" },
+      sql = { "sqlfmt" },
       sh = { "shfmt" },
       c = { "clang-format" },
       cpp = { "clang-format" },
@@ -46,15 +46,6 @@ return {
     formatters = {
       shfmt = {
         prepend_args = { "-i", "2" },
-      },
-      sqlfluff = {
-        args = {
-          "fix",
-          "--dialect",
-          "duckdb",
-          "-",
-        },
-        exit_codes = { 0, 1 },
       },
 
       prettier = {
