@@ -28,6 +28,7 @@
       "ghostty"
       "orbstack"
       "chmouel/lazyworktree/lazyworktree"
+      "openlogi"
     ];
   };
 }
