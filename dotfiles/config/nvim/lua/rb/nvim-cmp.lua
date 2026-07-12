@@ -45,7 +45,7 @@ if not present then
 end
 
 -- Global keymap for toggling ghost text
-vim.keymap.set({ "n", "i" }, "<leader>tg", function()
+vim.keymap.set("n", "<leader>tg", function()
   local current_config = cmp.get_config()
   current_config.experimental.ghost_text = not current_config.experimental.ghost_text
   cmp.setup(current_config)
@@ -67,7 +67,7 @@ cmp.setup({
   end,
   completion = {
     autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged },
-    completeopt = "menu,menuone,noinsert",
+    completeopt = "menu,menuone,noinsert,noselect",
   },
   snippet = {
     expand = function(args)
@@ -93,7 +93,11 @@ cmp.setup({
     ["<C-e>"] = cmp.mapping.abort(),
     ["<CR>"] = cmp.mapping(function(fallback)
       if cmp.visible() and cmp.get_active_entry() then
-        cmp.confirm({ select = false })
+        if vim.bo.filetype == "TelescopePrompt" then
+          fallback()
+        else
+          cmp.confirm({ select = false })
+        end
       else
         fallback()
       end

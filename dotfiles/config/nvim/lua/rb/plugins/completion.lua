@@ -3,7 +3,7 @@ return {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     keys = {
-      { "<leader>tg", mode = { "n", "i" }, desc = "Toggle completion ghost text" },
+      { "<leader>tg", mode = "n", desc = "Toggle completion ghost text" },
     },
     dependencies = {
       "onsails/lspkind.nvim",
