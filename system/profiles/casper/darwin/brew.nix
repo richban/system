@@ -8,13 +8,34 @@
       "PeonPing/tap/peon-ping"
     ];
     taps = [
-      "1password/tap"
-      "AlexsJones/llmfit"
-      "gromgit/brewtils"
-      "nikitabobko/tap"
+      {
+        name = "1password/tap";
+        trusted = true;
+      }
+      {
+        name = "AlexsJones/llmfit";
+        trusted = true;
+      }
+      {
+        name = "felixkratz/formulae";
+        trusted = true;
+      }
+      {
+        name = "gromgit/brewtils";
+        trusted = true;
+      }
+      {
+        name = "nikitabobko/tap";
+        trusted = true;
+      }
+      {
+        name = "PeonPing/tap";
+        trusted = true;
+      }
       {
         name = "chmouel/lazyworktree";
         clone_target = "https://github.com/chmouel/lazyworktree.git";
+        trusted = true;
       }
     ];
     casks = [

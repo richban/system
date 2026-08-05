@@ -25,23 +25,29 @@
       "--info=inline"
     ];
 
-    fileWidgetOptions = [
-      "--preview 'bat --color=always --plain {}'"
-    ];
+    fileWidget = {
+      options = [
+        "--preview 'bat --color=always --plain {}'"
+      ];
+    };
 
-    changeDirWidgetOptions = [
-      "--preview 'eza -l --tree --level=2 --color=always {}'"
-    ];
+    changeDirWidget = {
+      options = [
+        "--preview 'eza -l --tree --level=2 --color=always {}'"
+      ];
+    };
 
-    historyWidgetOptions = [
-      "--height=40%"
-      "--layout=reverse"
-      "--border"
-      "--ansi"
-      # Process command with syntax highlighting
-      "--preview 'echo {} | bat --color=always --plain --language=sh'"
-      "--preview-window=:hidden"
-    ];
+    historyWidget = {
+      options = [
+        "--height=40%"
+        "--layout=reverse"
+        "--border"
+        "--ansi"
+        # Process command with syntax highlighting
+        "--preview 'echo {} | bat --color=always --plain --language=sh'"
+        "--preview-window=:hidden"
+      ];
+    };
   };
 
   programs.starship = {

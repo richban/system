@@ -6,6 +6,8 @@
   home.packages = with pkgs; [
     jdk21_headless
     sqlfluff # SQL linter
-    python3Packages.sqlfmt # SQL formatter
+    (python3Packages.sqlfmt.overrideAttrs (oldAttrs: {
+      dontCheckPythonMetadata = true;
+    })) # SQL formatter
   ];
 }
