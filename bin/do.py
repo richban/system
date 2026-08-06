@@ -297,20 +297,40 @@ def switch(
         return
     elif cfg == FlakeOutputs.NIXOS:
         cmd = "sudo nixos-rebuild switch --flake"
+        flake = f"{REMOTE_FLAKE if remote else FLAKE_PATH}#{host}"
+        flags = ["--show-trace", "--impure"]
+        run_cmd(cmd.split() + [flake] + flags)
     elif cfg == FlakeOutputs.DARWIN:
         cmd = "sudo darwin-rebuild switch --flake"
+        flake = f"{REMOTE_FLAKE if remote else FLAKE_PATH}#{host}"
+        flags = ["--show-trace", "--impure"]
+        run_cmd(cmd.split() + [flake] + flags)
     elif cfg == FlakeOutputs.HOME_MANAGER:
-        cmd = "home-manager switch --flake"
+        home_flake = f"{REMOTE_FLAKE if remote else FLAKE_PATH}#homeConfigurations.{host}.activationPackage"
+        run_cmd(["nix", "build", home_flake, "--impure"])
+        run_cmd(["./result/activate"])
     else:
         typer.secho("could not infer system type.", fg=Colors.ERROR.value)
         raise typer.Abort()
 
-    if remote:
-        flake = f"{REMOTE_FLAKE}#{host}"
-    else:
-        flake = f"{FLAKE_PATH}#{host}"
-    flags = ["--show-trace", "--impure"]
-    run_cmd(cmd.split() + [flake] + flags)
+
+@app.command(
+    help="builds and activates home-manager configuration without requiring sudo or full system rebuild",
+)
+def home(
+    host: str = typer.Argument(
+        DEFAULT_HOST,
+        help="the hostname of the configuration to build",
+    ),
+    remote: bool = typer.Option(
+        default=False,
+        hidden=not is_local,
+        help="whether to fetch current changes from the remote",
+    ),
+):
+    flake = f"{REMOTE_FLAKE if remote else FLAKE_PATH}#homeConfigurations.{host}.activationPackage"
+    run_cmd(["nix", "build", flake, "--impure"])
+    run_cmd(["./result/activate"])
 
 
 @app.command(hidden=not is_local, help="cache the output environment of flake.nix")
