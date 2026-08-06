@@ -69,11 +69,14 @@ This is a Nix-based system configuration repository that manages macOS systems u
 The primary interface is through the `sysdo` command (implemented in `bin/do.py`):
 
 ```bash
+# Fast user-level Home Manager update (dotfiles, zsh, user configs - NO sudo needed)
+nix run .#sysdo home [melchior@aarch64-darwin]
+
+# Full system rebuild (macOS system preferences, Aerospace, Homebrew, PAM - requires sudo)
+nix run .#sysdo switch [melchior@aarch64-darwin]
+
 # Build configuration without applying
 nix run .#sysdo build [melchior@aarch64-darwin]
-
-# Apply configuration changes
-nix run .#sysdo switch [melchior@aarch64-darwin]
 
 # Bootstrap new system (first-time setup)
 nix run .#sysdo bootstrap [melchior@aarch64-darwin]
@@ -110,11 +113,11 @@ nix build .#homeConfigurations.melchior@aarch64-darwin.activationPackage
 When `sysdo` is not available:
 
 ```bash
-# Darwin system rebuild
+# Darwin system rebuild (system settings, brew, Aerospace - requires sudo)
 sudo darwin-rebuild switch --flake .#melchior@aarch64-darwin
 
-# Home-manager rebuild  
-home-manager switch --flake .#melchior@aarch64-darwin
+# Direct fast Home-manager activation (no sudo)
+nix build .#homeConfigurations.melchior@aarch64-darwin.activationPackage && ./result/activate
 ```
 
 ## Configuration Patterns
