@@ -33,6 +33,14 @@
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
     enableCompletion = true;
+    completionInit = ''
+      autoload -U compinit
+      if [[ -n ''${ZDOTDIR:-$HOME}/.zcompdump(#qN.m+1) ]]; then
+        compinit -C
+      else
+        compinit
+      fi
+    '';
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
     shellAliases = import ./aliases.nix {inherit pkgs;};

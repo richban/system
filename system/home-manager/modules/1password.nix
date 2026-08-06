@@ -28,9 +28,14 @@ in {
 
   programs.zsh = {
     initContent = lib.mkIf pkgs.stdenvNoCC.isDarwin ''
-      if command -v op >/dev/null; then
-        eval "$(op completion zsh)"; compdef _op op
-      fi
+      _lazy_op_completion() {
+        unfunction _lazy_op_completion
+        if command -v op >/dev/null; then
+          eval "$(op completion zsh)"
+          compdef _op op
+        fi
+      }
+      compdef _lazy_op_completion op
     '';
     shellAliases = aliases;
   };
