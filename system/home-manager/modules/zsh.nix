@@ -1,18 +1,9 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }: {
   home = {
-    activation = {
-      generateFabricAliases = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        if [ -f "$HOME/.functions" ]; then
-          source "$HOME/.functions"
-          create_fabric_aliases
-        fi
-      '';
-    };
     file.functions = {
       source = ../../../dotfiles/functions;
       target = ".functions";
@@ -123,10 +114,6 @@
       # Source custom functions
       . ~/.functions
 
-      # Load statically generated Fabric pattern aliases
-      if [ -f "$HOME/.config/fabric/fabric_aliases.zsh" ]; then
-        source "$HOME/.config/fabric/fabric_aliases.zsh"
-      fi
     '';
 
     history = {

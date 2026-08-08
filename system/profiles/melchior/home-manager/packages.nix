@@ -15,7 +15,6 @@
 
     jdk21_headless
 
-    # fabric-ai
     # yt-dlp
   ];
 }

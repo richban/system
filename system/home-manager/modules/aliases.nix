@@ -33,6 +33,4 @@
   dos2lf = "dos2unix 'find ./ -type f'";
 
   mux = "tmuxinator";
-  fabric-list = "list_fabric_patterns";
-  fabric-refresh = "create_fabric_aliases";
 }
