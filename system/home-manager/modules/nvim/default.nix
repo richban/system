@@ -5,10 +5,15 @@
   flakeRoot,
   ...
 }: let
-  # Map all grammars to their corresponding plugins
+  # Map all grammars to their corresponding plugins, replacing outdated tree-sitter-diff with 0.1.0
+  updatedDiff = pkgs.vimPlugins.nvim-treesitter.grammarToPlugin pkgs.tree-sitter-grammars.tree-sitter-diff;
   treesitterGrammars = pkgs.symlinkJoin {
     name = "nvim-treesitter-grammars";
-    paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
+    paths = map (p:
+      if (p.pname or "") == "nvim-treesitter-grammar-diff"
+      then updatedDiff
+      else p)
+    (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
   };
 in {
   xdg.configFile."nvim/init.lua".enable = lib.mkForce false;
