@@ -5,7 +5,7 @@
       "felixkratz/formulae/borders"
       "dust"
       "btop"
-      "PeonPing/tap/peon-ping"
+      "peonping/tap/peon-ping"
     ];
     taps = [
       {
@@ -13,7 +13,7 @@
         trusted = true;
       }
       {
-        name = "AlexsJones/llmfit";
+        name = "alexsjones/llmfit";
         trusted = true;
       }
       {
@@ -29,7 +29,7 @@
         trusted = true;
       }
       {
-        name = "PeonPing/tap";
+        name = "peonping/tap";
         trusted = true;
       }
       {
