@@ -47,7 +47,14 @@ function M.lsp_init()
   end
 
   -- Signature help configuration
-  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
+  vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config_opts)
+    return vim.lsp.handlers.signature_help(
+      err,
+      result,
+      ctx,
+      vim.tbl_extend("force", config_opts or {}, { border = "rounded" })
+    )
+  end
 
   -- Jump directly to the first available definition every time.
   -- vim.lsp.handlers["textDocument/definition"] = function(_, result)

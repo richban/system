@@ -290,10 +290,19 @@ return {
       require("rb.lsp.lspsaga")
     end,
   },
+
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      bind = false, -- Do not automatically trigger while typing
+      floating_window = false, -- Disable automatic floating window on '(' or ','
+      hint_enable = false, -- Disable inline virtual text
+      always_trigger = false,
+      handler_opts = {
+        border = "rounded",
+      },
+    },
     config = function(_, opts)
       require("lsp_signature").setup(opts)
     end,
