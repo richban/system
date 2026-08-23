@@ -28,7 +28,15 @@ function M.on_attach(client, buffer)
   gK - Show signature help (useful when writing function calls)
   --]]
   map("K", vim.lsp.buf.hover, "Hover Documentation")
-  self:map("gK", vim.lsp.buf.signature_help, { desc = "Signature Help", has = "signatureHelp" })
+  self:map("gK", function()
+    require("lsp_signature").toggle_float_win()
+  end, { desc = "Signature Help", has = "signatureHelp" })
+  self:map("<C-k>", function()
+    require("lsp_signature").toggle_float_win()
+  end, { mode = "i", desc = "Signature Help", has = "signatureHelp" })
+  self:map("<C-s>", function()
+    require("lsp_signature").toggle_float_win()
+  end, { mode = "i", desc = "Signature Help", has = "signatureHelp" })
 
   --[[ Symbols
   Key mappings for symbol search and navigation:

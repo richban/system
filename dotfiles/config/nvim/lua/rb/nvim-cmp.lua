@@ -69,6 +69,11 @@ cmp.setup({
     autocomplete = false,
     completeopt = "menu,menuone,noinsert,noselect",
   },
+  view = {
+    docs = {
+      auto_open = false,
+    },
+  },
   snippet = {
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
@@ -92,8 +97,15 @@ cmp.setup({
         cmp.complete()
       end
     end, { "i", "c" }),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-d>"] = function()
+      if cmp.visible_docs() then
+        cmp.close_docs()
+      else
+        cmp.open_docs()
+      end
+    end,
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-y>"] = cmp.mapping(
       cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Insert,

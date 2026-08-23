@@ -295,13 +295,14 @@ return {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {
-      bind = false, -- Do not automatically trigger while typing
-      floating_window = false, -- Disable automatic floating window on '(' or ','
-      hint_enable = false, -- Disable inline virtual text
-      always_trigger = false,
+      bind = true,
+      doc_lines = 10,
+      floating_window = false, -- Do not show automatically while typing
+      hint_enable = false, -- Do not show inline virtual text
       handler_opts = {
         border = "rounded",
       },
+      toggle_key = "<C-k>", -- Toggle signature window on demand
     },
     config = function(_, opts)
       require("lsp_signature").setup(opts)
