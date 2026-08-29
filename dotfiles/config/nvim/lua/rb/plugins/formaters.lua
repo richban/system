@@ -19,16 +19,16 @@ return {
     formatters_by_ft = {
       lua = { "stylua" },
       python = { "ruff_format" },
-      javascript = { "prettierd", "prettier" },
-      typescript = { "prettierd", "prettier" },
-      javascriptreact = { "prettierd", "prettier" },
-      typescriptreact = { "prettierd", "prettier" },
-      json = { "prettierd", "prettier" },
-      yaml = { "prettierd", "prettier" },
-      markdown = { "prettierd", "prettier" },
-      html = { "prettierd", "prettier" },
-      css = { "prettierd", "prettier" },
-      scss = { "prettierd", "prettier" },
+      javascript = { "prettierd", "prettier", stop_after_first = true },
+      typescript = { "prettierd", "prettier", stop_after_first = true },
+      javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+      typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+      json = { "prettierd", "prettier", stop_after_first = true },
+      yaml = { "prettierd", "prettier", stop_after_first = true },
+      markdown = { "prettierd", "prettier", stop_after_first = true },
+      html = { "prettierd", "prettier", stop_after_first = true },
+      css = { "prettierd", "prettier", stop_after_first = true },
+      scss = { "prettierd", "prettier", stop_after_first = true },
       nix = { "alejandra" },
       sql = { "sqlfmt" },
       sh = { "shfmt" },
@@ -36,11 +36,10 @@ return {
       cpp = { "clang-format" },
       ["*"] = { "trim_whitespace", "trim_newlines" },
     },
-    -- Set up format-on-save
-    format_on_save = {
-      timeout_ms = 500,
+    -- Set up format-after-save (async background formatting, zero save delay)
+    format_after_save = {
       lsp_fallback = true,
-      async = false,
+      async = true,
     },
     -- Customize formatters
     formatters = {
@@ -56,13 +55,6 @@ return {
           "--style={BasedOnStyle: Google, IndentWidth: 2, UseTab: Never, ColumnLimit: 100}",
         },
       },
-    },
-    -- Use stop_after_first for JavaScript
-    javascript = {
-      stop_after_first = true,
-    },
-    typescript = {
-      stop_after_first = true,
     },
   },
   init = function()
