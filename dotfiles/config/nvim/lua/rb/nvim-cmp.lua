@@ -164,42 +164,50 @@ cmp.setup({
       before = function(entry, vim_item)
         vim_item.menu = ({
           nvim_lsp = "[LSP]",
+          luasnip = "[Snippet]",
           nvim_lua = "",
-          treesitter = "",
           path = "[Path]",
-          buffer = "[buffer]",
+          buffer = "[Buffer]",
+          treesitter = "",
           zsh = "",
-          vsnip = "",
           spell = "暈",
           codeium = "",
           copilot = "",
         })[entry.source.name]
-        -- Get the full snippet (and only keep first line)
-        -- local word = entry:get_insert_text()
-        -- if entry.copletion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-        --   word = vim.lsp.util.parse_snippet(word)
-        -- end
-        -- word = str.oneline(word)
-        -- if
-        --   entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
-        --   and string.sub(vim_item.abbr, -1, -1) == "~"
-        -- then
-        --   word = word .. "~"
-        -- end
-        -- vim_item.abbr = word
         return vim_item
       end,
     }),
   },
-  sources = {
-    { name = "nvim_lsp", priority = 1000 },
-    { name = "copilot", priority = 900 },
-    { name = "nvim_lsp_document_symbol", priority = 600 },
-    { name = "buffer", priority = 500 },
-    { name = "path", priority = 250 },
-    { name = "treesitter", priority = 200 },
-    { name = "spell", priority = 100 },
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
   },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp", priority = 1000 },
+    { name = "luasnip", priority = 750 },
+    { name = "path", priority = 500 },
+  }, {
+    {
+      name = "buffer",
+      priority = 250,
+      keyword_length = 3,
+      option = {
+        get_bufnrs = function()
+          return { vim.api.nvim_get_current_buf() }
+        end,
+      },
+    },
+  }),
   experimental = { ghost_text = true, native_menu = false },
   window = {
     documentation = cmp.config.window.bordered(),
