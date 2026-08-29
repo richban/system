@@ -26,10 +26,11 @@
     enableCompletion = true;
     completionInit = ''
       autoload -U compinit
-      if [[ -n ''${ZDOTDIR:-$HOME}/.zcompdump(#qN.m+1) ]]; then
-        compinit -C
+      local zcdump="''${ZDOTDIR:-$HOME}/.zcompdump"
+      if [[ -f "$zcdump" && "$(head -n 1 "$zcdump" 2>/dev/null)" == *"version: $ZSH_VERSION"* ]]; then
+        compinit -C -d "$zcdump"
       else
-        compinit
+        compinit -d "$zcdump"
       fi
     '';
     syntaxHighlighting.enable = true;
