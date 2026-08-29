@@ -96,7 +96,6 @@ return {
 
       local servers = {
         nil_ls = { manual_install = true }, -- installed via nix
-        ty = { manual_install = false }, -- installed via: uv tool install ty@latest
         bashls = true,
         lua_ls = true,
         cssls = true,
@@ -164,68 +163,19 @@ return {
         },
         html = true,
         terraformls = { filetypes = { "terraform", "hcl" } },
-        pylsp = {
-          enabled = true,
-          before_init = function(initialize_params, config)
-            config.settings.pylsp.plugins.jedi = config.settings.pylsp.plugins.jedi or {}
-
-            -- 1. Check if a virtual environment is active in the environment
-            local active_venv = os.getenv("VIRTUAL_ENV")
-            if active_venv then
-              local venv_python = active_venv .. "/bin/python"
-              if vim.fn.executable(venv_python) == 1 then
-                config.settings.pylsp.plugins.jedi.environment = venv_python
-                return
-              end
-            end
-
-            -- 2. Fallback to auto-detecting a local virtualenv in the project root
-            local root = initialize_params.rootPath
-            if type(root) ~= "string" and type(initialize_params.rootUri) == "string" then
-              root = vim.uri_to_fname(initialize_params.rootUri)
-            end
-            if type(root) == "string" then
-              local venvs = { ".venv", "venv", "env" }
-              for _, venv in ipairs(venvs) do
-                local venv_python = root .. "/" .. venv .. "/bin/python"
-                if vim.fn.executable(venv_python) == 1 then
-                  config.settings.pylsp.plugins.jedi.environment = venv_python
-                  break
-                end
-              end
-            end
-          end,
+        basedpyright = {
           settings = {
-            pylsp = {
-              plugins = {
-                -- Disable other linters and formatters
-                jedi_completion = { enabled = true, fuzzy = true },
-                pycodestyle = { enabled = false },
-                pyflakes = { enabled = false },
-                mccabe = { enabled = false },
-                pylint = { enabled = false },
-                yapf = { enabled = false },
-                autopep8 = { enabled = false },
-                black = { enabled = false },
-                isort = { enabled = false },
-                -- Keep documentation and type checking
-                jedi_hover = { enabled = true },
-                jedi_references = { enabled = true },
-                jedi_signature_help = { enabled = true },
-                jedi_symbols = { enabled = true, all_scopes = true },
-                pydocstyle = { enabled = false },
-                pylsp_mypy = { enabled = false }, -- disabled: ty handles type checking
-                -- Enable Ruff for both linting and formatting
-                ruff = {
-                  enabled = true,
-                  lineLength = 120,
-                  select = { "E", "F", "W", "I", "N", "B", "A", "C4", "PT", "RUF", "D" },
-                  ignore = { "E501" },
-                },
+            basedpyright = {
+              analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "openFilesOnly",
+                typeCheckingMode = "basic",
               },
             },
           },
         },
+        ruff = true,
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
@@ -267,16 +217,6 @@ return {
         vim.lsp.config(server_name, config)
         vim.lsp.enable(server_name)
       end
-
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = function(args)
-          require("conform").format({
-            bufnr = args.buf,
-            lsp_fallback = true,
-            quiet = true,
-          })
-        end,
-      })
     end,
   },
   {
