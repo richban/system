@@ -14,10 +14,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 -- Highlight on yank
--- See `:help vim.highlight.on_yank()`
+-- See `:help vim.hl.hl_op()`
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank()
+    (vim.hl and vim.hl.hl_op or vim.highlight.on_yank)()
   end,
   group = augroup("highlight_yank"),
   pattern = "*",

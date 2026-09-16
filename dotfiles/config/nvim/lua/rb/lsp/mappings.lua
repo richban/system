@@ -151,7 +151,7 @@ function M.on_attach(client, buffer)
   <leader>pt - Run tests for current file
   <leader>pv - Show active or local virtual environment info
   --]]
-  if client.name == "pylsp" then
+  if client.name == "basedpyright" or client.name == "pyright" then
     vim.keymap.set("n", "<leader>po", function()
       local ok, conform = pcall(require, "conform")
       if ok then

@@ -4,7 +4,7 @@ return {
     branch = "main",
     init = function()
       -- Inject the Nix parsers path so Neovim can find the parser files
-      vim.opt.rtp:prepend(vim.fn.expand("~/.local/share/nvim/nix/nvim-treesitter-parsers"))
+      vim.opt.rtp:append(vim.fn.expand("~/.local/share/nvim/nix/nvim-treesitter-parsers"))
 
       -- Enable native highlighting
       vim.api.nvim_create_autocmd("FileType", {
