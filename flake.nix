@@ -19,7 +19,14 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    brew-src = {
+      url = "tarball+https://github.com/Homebrew/brew/archive/refs/tags/7.0.2.tar.gz";
+      flake = false;
+    };
+    nix-homebrew = {
+      url = "github:zhaofengli/nix-homebrew";
+      inputs.brew-src.follows = "brew-src";
+    };
     devenv = {
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
