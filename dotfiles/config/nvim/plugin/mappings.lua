@@ -53,18 +53,10 @@ key_map("n", "<leader>qc", "<cmd>cclose<CR>", { desc = "Close quickfix list" })
 key_map("n", "<leader>Q", "<cmd>qall!<CR>", { desc = "Quit all, discard changes" })
 key_map("n", "<leader>W", "<cmd>wqall<CR>", { desc = "Write all and quit" })
 
--- ── Misc ────────────────────────────────────────────────────────────────────
+-- ── Git ─────────────────────────────────────────────────────────────────────
 
--- Open a vertical diff of the current file against the index (staged version).
-key_map("n", "<leader>gv", "<cmd>Gvdiffsplit<CR>", { desc = "Fugitive: vertical diff" })
--- Show `git blame` for every line of the current file in a scroll-bound side window.
-key_map("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "Fugitive: blame file" })
--- Load every past revision of the current file into the quickfix list (file history).
-key_map("n", "<leader>gh", "<cmd>0Gclog!<CR>", { desc = "Fugitive: file history" })
--- During a merge conflict in a 3-way diff (`:Gvdiffsplit!`): take the hunk from the
--- left side (//2 = target/ours) or the right side (//3 = merge/theirs).
-key_map("n", "<leader>gj", "<cmd>diffget //2<CR>", { desc = "Fugitive: take ours (left)" })
-key_map("n", "<leader>gk", "<cmd>diffget //3<CR>", { desc = "Fugitive: take theirs (right)" })
+-- Full-file git blame in a scroll-bound split (via gitsigns).
+key_map("n", "<leader>gB", "<cmd>Gitsigns blame<CR>", { desc = "Git blame (full file)" })
 
 -- ── Yank with file path ─────────────────────────────────────────────────────
 -- Copy the visual selection prefixed with its file path (handy for pasting into chats/issues).
