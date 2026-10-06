@@ -129,7 +129,7 @@ end
 
 --- TypeScript specific keymaps (tsserver / ts_ls)
 local function typescript(map, client)
-  map("<leader>to", function()
+  map("<leader>co", function()
     client:exec_cmd({
       title = "Organize Imports",
       command = "_typescript.organizeImports",
@@ -137,11 +137,7 @@ local function typescript(map, client)
     })
   end, "Organize Imports")
 
-  map("<leader>tc", function()
-    vim.lsp.buf.code_action({ context = { only = { "quickfix" } }, apply = true })
-  end, "Fix Current")
-
-  map("<leader>ti", function()
+  map("<leader>ci", function()
     vim.lsp.buf.code_action({ context = { only = { "source.addMissingImports" } }, apply = true })
   end, "Import All")
 end
@@ -212,11 +208,9 @@ end
 
 --- Python-only keymaps (basedpyright / pyright).
 local function python(map)
-  map("<leader>po", conform_or_shell("ruff_organize_imports", "ruff check --select I --fix", true), "Organize Imports")
-  map("<leader>pc", conform_or_shell("ruff_fix", "ruff check --fix", true), "Auto-Fix Errors")
-  map("<leader>pf", conform_or_shell("ruff_format", "ruff format", true), "Format Buffer")
+  map("<leader>co", conform_or_shell("ruff_organize_imports", "ruff check --select I --fix", true), "Organize Imports")
 
-  map("<leader>pt", function()
+  map("<leader>ct", function()
     local test_file = find_python_test_file()
     if test_file then
       vim.cmd("!python -m pytest " .. vim.fn.shellescape(test_file) .. " -v")
@@ -225,7 +219,7 @@ local function python(map)
     end
   end, "Run Tests")
 
-  map("<leader>pv", show_python_venv, "Show Virtual Env")
+  map("<leader>cv", show_python_venv, "Show Virtual Env")
 end
 
 ---------------------------------------------------------------------------
