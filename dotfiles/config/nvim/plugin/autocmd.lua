@@ -2,92 +2,76 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("mnv_" .. name, { clear = true })
 end
 
--- go to last loc when opening a buffer
+-- Go to the last cursor position when re-opening a file.
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
+  callback = function(event)
+    -- Skip commit messages etc., where starting at the top is what you want.
+    if vim.tbl_contains({ "gitcommit", "gitrebase" }, vim.bo[event.buf].filetype) then
+      return
+    end
+    local mark = vim.api.nvim_buf_get_mark(event.buf, '"')
+    local lcount = vim.api.nvim_buf_line_count(event.buf)
     if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
     end
   end,
 })
--- Highlight on yank
--- See `:help vim.hl.hl_op()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    (vim.hl and vim.hl.hl_op or vim.highlight.on_yank)()
-  end,
+
+-- Briefly highlight yanked and pasted text. See `:help vim.hl.hl_op()`.
+vim.api.nvim_create_autocmd({ "TextYankPost", "TextPutPost" }, {
   group = augroup("highlight_yank"),
-  pattern = "*",
+  callback = function()
+    vim.hl.hl_op()
+  end,
 })
 
+-- TypeScript: organize imports on save (only asks ts_ls, not every attached client).
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("TS_OrganizeImports", { clear = true }),
+  group = augroup("ts_organize_imports"),
   pattern = { "*.ts", "*.tsx" },
-  callback = function()
-    local params = {
-      command = "_typescript.organizeImports",
-      arguments = { vim.api.nvim_buf_get_name(0) },
-    }
-    pcall(vim.lsp.buf_request_sync, 0, "workspace/executeCommand", params, 1000)
+  callback = function(event)
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = event.buf, name = "ts_ls" })) do
+      client:request_sync("workspace/executeCommand", {
+        command = "_typescript.organizeImports",
+        arguments = { vim.api.nvim_buf_get_name(event.buf) },
+      }, 1000, event.buf)
+    end
   end,
 })
 
--- set markdown FTs
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufFilePre", "BufRead" }, {
-  group = vim.api.nvim_create_augroup("SetMarkdownFt", { clear = true }),
-  pattern = { "*.markdown", "*.mdown", "*.mkd", "*.mkdn", "*.mdwn", "*.md", "*.MD" },
-  callback = function()
-    -- Set filetype to markdown
-    vim.cmd("set ft=markdown")
-  end,
-})
-
--- Trim trailing whitespace on save
+-- Trim trailing whitespace on save, without touching the search register/history or the view.
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("TrimWhiteSpace", { clear = true }),
-  pattern = "*",
-  callback = function()
-    local l = vim.fn.line(".")
-    local c = vim.fn.col(".")
-    vim.cmd("%s/\\s\\+$//e")
-    vim.fn.cursor(l, c)
+  group = augroup("trim_whitespace"),
+  callback = function(event)
+    local bo = vim.bo[event.buf]
+    -- Markdown uses two trailing spaces as a hard line break; diffs/binary must stay untouched.
+    if bo.binary or not bo.modifiable or vim.tbl_contains({ "markdown", "diff", "gitcommit" }, bo.filetype) then
+      return
+    end
+    local view = vim.fn.winsaveview()
+    vim.cmd([[keeppatterns keepjumps silent! %s/\s\+$//e]])
+    vim.fn.winrestview(view)
   end,
 })
 
--- windows to close
+-- Close these auxiliary windows with `q` (and keep them out of the buffer list).
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
-    "OverseerForm",
-    "OverseerList",
     "checkhealth",
-    "floggraph",
     "fugitive",
+    "fugitiveblame",
     "git",
-    "gitcommit",
     "help",
-    "lspinfo",
     "man",
-    "neotest-output",
-    "neotest-summary",
     "qf",
-    "query",
-    "spectre_panel",
-    "startuptime",
-    "toggleterm",
-    "tsplayground",
-    "vim",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buf = event.buf, silent = true, desc = "Close window" })
   end,
 })
 
--- Enable hotreload for real-time buffer updates when files change on disk
-pcall(function()
-  require("rb.hotreload").setup()
-end)
+-- Enable hotreload for real-time buffer updates when files change on disk.
+require("rb.hotreload").setup()

@@ -1,107 +1,79 @@
+-- General keymaps.
+-- NOTE: `vim.keymap.set` is non-recursive by default (no need for `noremap = true`).
+-- Use `remap = true` when the rhs must trigger another mapping (`noremap = false` is ignored).
+-- NOTE: plugin keymaps declared via lazy.nvim `keys = {}` are registered before this file is
+-- sourced, so anything defined here would silently override them. Check before adding new keys.
 local key_map = vim.keymap.set
 
-vim.cmd([[tnoremap <Esc> <C-\><C-n> ]])
-key_map("i", "<C-c>", "<ESC>", { noremap = true, silent = true })
--- Join yanked text on a yank (needed for terminal mode copies)
--- DISABLED: a visual-mode `yy` mapping makes every visual `y` wait `timeoutlen` (1s)
--- to see if a second `y` follows, so yanking felt laggy. It also called
--- `yank#Osc52Yank()`, which no longer exists. Neovim >= 0.10 handles OSC 52 natively.
--- key_map(
---   "v",
---   "yy",
---   "y<CR>:let @\"=substitute(@\", '\\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>",
---   { noremap = true, silent = true }
--- )
--- Move selected lines
-key_map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
-key_map("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
--- Toggle Paste mode
-key_map("n", "<leader>p", ":set paste!<CR>", { noremap = true, silent = true })
--- Window navigation - handled by tmux-nav plugin
--- key_map("", "<C-J>", "<C-W><C-J>", { noremap = true, silent = true })
--- key_map("", "<C-K>", "<C-W><C-K>", { noremap = true, silent = true })
--- key_map("", "<C-L>", "<C-W><C-L>", { noremap = true, silent = true })
--- key_map("", "<C-H>", "<C-W><C-H>", { noremap = true, silent = true })
--- Adjusting splits
-key_map("n", "<silent> <leader>>", ":vertical resize +10<CR>", { noremap = true, silent = true })
-key_map("n", "<silent> <leader><", ":vertical resize -10<CR>", { noremap = true, silent = true })
-key_map("n", "<silent> <leader>+", ":resize +10<CR>", { noremap = true, silent = true })
-key_map("n", "<silent> <leader>-", ":resize -10<CR>", { noremap = true, silent = true })
--- Change directory to current directory (moved to avoid LSP conflicts)
-key_map("n", "<leader>pd", ":cd %:p:h<CR>:pwd<CR>", { noremap = true, silent = true })
+-- ── Terminal / insert ───────────────────────────────────────────────────────
 
--- map <leader>ghw :h <C-R>=expand("<cword>")<CR><CR>
--- map <leader>pw :Rg <C-R>=expand("<cword>")<CR><CR>
+-- <Esc> in a :terminal buffer leaves terminal-insert mode (back to Normal mode).
+-- Caveat: TUI apps running in the terminal (fzf, lazygit, nested nvim) never see <Esc>.
+key_map("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
--- this should be a default
-key_map("n", "<C-^>", ":b#<CR>", { noremap = true, silent = true })
+-- Make <C-c> behave exactly like <Esc> in Insert mode (plain <C-c> skips InsertLeave
+-- autocmds and abbreviations).
+key_map("i", "<C-c>", "<Esc>", { silent = true, desc = "Escape" })
 
--- use ZQ for :q! (quit & discard changes)
--- Discard all changed buffers & quit
-key_map("n", "<Leader>Q", ":qall!<CR>", { noremap = true, silent = true })
--- write all and quit
-key_map("n", "<Leader>W", ":wqall<CR>", { noremap = true, silent = true })
+-- ── Editing ─────────────────────────────────────────────────────────────────
 
-key_map("n", "<space>t", ":Inspect<CR>", { noremap = true, silent = true })
+-- Visual mode: move the selected lines down (J) / up (K) and re-indent (`=`), keeping the
+-- selection (`gv`) so you can press J/K repeatedly.
+key_map("x", "J", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move selection down" })
+key_map("x", "K", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move selection up" })
 
--- open quickfix / close (moved to avoid LSP conflicts)
-key_map("n", "<leader>qo", ":cope<cr>", { noremap = false, silent = true })
-key_map("n", "<leader>qc", ":cclose<cr>", { noremap = false, silent = true })
+-- Replace the word under the cursor with the last yank, without clobbering the register:
+-- `viw` selects the inner word, visual `P` replaces it and keeps the register intact.
+key_map("n", ",r", "viwP", { desc = "Replace word with last yank" })
 
--- Surround word under cursor w/ backticks (required vim-surround)
-key_map("n", "<leader>`", "ysiW`", { noremap = false })
--- REPLACE: delete inner word & replace with last yanked (including system)
-key_map("n", ",r", '"_diwhp', { noremap = true })
+-- Paste over a visual selection WITHOUT yanking the replaced text (keeps the register, so you
+-- can paste the same text repeatedly). Visual `P` does exactly that natively.
+key_map("x", "p", "P", { desc = "Paste without yanking selection" })
 
--- Move between Windows
-key_map("n", "<up>", "<C-w><up>", { noremap = false })
-key_map("n", "<down>", "<C-w><down>", { noremap = false })
-key_map("n", "<left>", "<C-w><left>", { noremap = false })
-key_map("n", "<right>", "<C-w><right>", { noremap = false })
+-- ── Windows ─────────────────────────────────────────────────────────────────
 
--- Replace word under cursor in Buffer (case-sensitive
-key_map("n", "<leader>sr", ":%s/<C-R><C-W>//gI<left><left><left>", { noremap = false })
--- Replace word under cursor on Line (case-sensitive)
-key_map("n", "<leader>sl", ":s/<C-R><C-W>//gI<left><left><left>", { noremap = false })
+-- Arrow keys jump between split windows (instead of moving the cursor).
+key_map("n", "<Up>", "<C-w><Up>", { desc = "Window up" })
+key_map("n", "<Down>", "<C-w><Down>", { desc = "Window down" })
+key_map("n", "<Left>", "<C-w><Left>", { desc = "Window left" })
+key_map("n", "<Right>", "<C-w><Right>", { desc = "Window right" })
 
-key_map(
-  "n",
-  "F",
-  "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-  {}
-)
--- key_map('n', 'F', "<cmd>lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-key_map(
-  "n",
-  "T",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>",
-  {}
-)
--- key_map('n', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>", {})
+-- Resize the current split by 10 columns/rows.
+key_map("n", "<leader>>", "<cmd>vertical resize +10<CR>", { desc = "Wider split" })
+key_map("n", "<leader><", "<cmd>vertical resize -10<CR>", { desc = "Narrower split" })
+key_map("n", "<leader>+", "<cmd>resize +10<CR>", { desc = "Taller split" })
+key_map("n", "<leader>-", "<cmd>resize -10<CR>", { desc = "Shorter split" })
 
--- Auto indent
--- key_map("n", "i", function()
---   if #vim.fn.getline(".") == 0 then
---     return [["_cc]]
---   else
---     return "i"
---   end
--- end, { expr = true })
+-- ── Quickfix / quitting ─────────────────────────────────────────────────────
 
--- Paste over currently selected text without yanking it
-key_map("v", "p", '"_dP')
+key_map("n", "<leader>qo", "<cmd>copen<CR>", { desc = "Open quickfix list" })
+key_map("n", "<leader>qc", "<cmd>cclose<CR>", { desc = "Close quickfix list" })
 
-vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>Gvdiffsplit<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>gb", "<cmd>Git blame<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>gh", "<cmd>0Gclog!<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>gj", "<cmd>diffget //2<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>gk", "<cmd>diffget //3<CR>", { noremap = true, silent = true })
+-- (Use the built-in `ZQ` to quit the current window discarding changes.)
+key_map("n", "<leader>Q", "<cmd>qall!<CR>", { desc = "Quit all, discard changes" })
+key_map("n", "<leader>W", "<cmd>wqall<CR>", { desc = "Write all and quit" })
+
+-- ── Misc ────────────────────────────────────────────────────────────────────
+
+-- Open a vertical diff of the current file against the index (staged version).
+key_map("n", "<leader>gv", "<cmd>Gvdiffsplit<CR>", { desc = "Fugitive: vertical diff" })
+-- Show `git blame` for every line of the current file in a scroll-bound side window.
+key_map("n", "<leader>gB", "<cmd>Git blame<CR>", { desc = "Fugitive: blame file" })
+-- Load every past revision of the current file into the quickfix list (file history).
+key_map("n", "<leader>gh", "<cmd>0Gclog!<CR>", { desc = "Fugitive: file history" })
+-- During a merge conflict in a 3-way diff (`:Gvdiffsplit!`): take the hunk from the
+-- left side (//2 = target/ours) or the right side (//3 = merge/theirs).
+key_map("n", "<leader>gj", "<cmd>diffget //2<CR>", { desc = "Fugitive: take ours (left)" })
+key_map("n", "<leader>gk", "<cmd>diffget //3<CR>", { desc = "Fugitive: take theirs (right)" })
+
+-- ── Yank with file path ─────────────────────────────────────────────────────
+-- Copy the visual selection prefixed with its file path (handy for pasting into chats/issues).
 
 local yank = require("rb.yank")
-key_map("v", "<leader>ya", function()
+key_map("x", "<leader>ya", function()
   yank.yank_visual_with_path(yank.get_buffer_absolute(), "absolute")
 end, { desc = "[Y]ank selection with [A]bsolute path" })
 
-key_map("v", "<leader>yr", function()
+key_map("x", "<leader>yr", function()
   yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), "relative")
 end, { desc = "[Y]ank selection with [R]elative path" })
