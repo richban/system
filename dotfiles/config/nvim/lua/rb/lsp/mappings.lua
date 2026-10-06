@@ -1,341 +1,355 @@
+--[[
+LSP keymaps
+===========
+Buffer-local keymaps that are set when a language server attaches to a buffer.
+
+Entry point: `M.on_attach(client, bufnr)` (called from rb/plugins/lsp.lua).
+
+How to read this file:
+  1. Helpers           – small utilities used by the keymap groups
+  2. Keymap groups     – one function per topic (navigation, diagnostics, ...)
+  3. on_attach         – wires the groups together; read this first for an overview
+]]
+
 local M = {}
 
-function M.on_attach(client, buffer)
-  local self = M.new(client, buffer)
-  local opts = { noremap = true, silent = true }
+---------------------------------------------------------------------------
+-- 1. Helpers
+---------------------------------------------------------------------------
 
-  local map = function(keys, func, desc)
-    vim.keymap.set("n", keys, func, { buffer = buffer, desc = "LSP: " .. desc })
-  end
+--- Create a `map` function bound to one client + buffer.
+---
+--- Usage: map(lhs, rhs, desc, opts?)
+---   rhs   function, or a string which is run as an Ex command (e.g. "Lspsaga code_action")
+---   opts  { mode = "n"|"i"|{...}, expr = bool, method = "textDocument/..." }
+---         `method`: only create the mapping if the server supports that LSP method.
+---@param client vim.lsp.Client
+---@param bufnr integer
+---@param prefix string shown in the keymap description, e.g. "LSP" -> "LSP: Rename"
+local function make_mapper(client, bufnr, prefix)
+  return function(lhs, rhs, desc, opts)
+    opts = opts or {}
 
-  --[[ Navigation
-  Key mappings for code navigation and jumping between symbols:
-  gd - Jump to definition of symbol under cursor
-  gD - Jump to declaration (useful in header files)
-  grr - Find all references of symbol under cursor (0.11 default)
-  gri - Jump to implementation (0.11 default)
-  <leader>D - Jump to type definition
-  --]]
-  self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
-  map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-  self:map("grr", "Telescope lsp_references", { desc = "Find References" })
-  map("gri", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-  map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-
-  --[[ Documentation
-  Key mappings for viewing documentation and signatures:
-  K - Show hover documentation for symbol under cursor
-  gK - Show signature help (useful when writing function calls)
-  --]]
-  map("K", vim.lsp.buf.hover, "Hover Documentation")
-  self:map("gK", function()
-    require("lsp_signature").toggle_float_win()
-  end, { desc = "Signature Help", has = "signatureHelp" })
-  self:map("<C-k>", function()
-    require("lsp_signature").toggle_float_win()
-  end, { mode = "i", desc = "Signature Help", has = "signatureHelp" })
-  self:map("<C-s>", function()
-    require("lsp_signature").toggle_float_win()
-  end, { mode = "i", desc = "Signature Help", has = "signatureHelp" })
-
-  --[[ Symbols
-  Key mappings for symbol search and navigation:
-  gO - List all symbols in current document (0.11 default)
-  <leader>ds - List all symbols in current document (kept for compatibility)
-  <leader>ws - List all symbols in current workspace/project
-  --]]
-  map("gO", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-  map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-  map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-
-  self:map("[d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
-  self:map("]d", M.diagnostic_goto(false), { desc = "Prev Diagnostic" })
-  self:map("]e", M.diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
-  self:map("[e", M.diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-  self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
-  self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
-
-  --[[ Code Actions
-  Key mappings for code modifications and refactoring:
-  gra - Show available code actions (0.11 default)
-  grn - Rename symbol under cursor (0.11 default)
-  <leader>ca - Show available code actions (kept for compatibility)
-  <leader>rn - Rename symbol under cursor (kept for compatibility)
-  <leader>cw - Toggle virtual lines diagnostics
-  <leader>cv - Toggle virtual text diagnostics
-  --]]
-  self:map("gra", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
-  self:map("grn", M.rename, { expr = true, desc = "Rename", has = "rename" })
-  self:map("<leader>ca", "Lspsaga code_action", { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
-  self:map("<leader>rn", M.rename, { expr = true, desc = "Rename", has = "rename" })
-  self:map("<leader>cw", function()
-    local new_config = not vim.diagnostic.config().virtual_lines
-    vim.diagnostic.config({ virtual_lines = new_config })
-  end, { desc = "Toggle Virtual Lines Diagnostics" })
-  self:map("<leader>cv", function()
-    local current_config = vim.diagnostic.config()
-    if current_config.virtual_text then
-      vim.diagnostic.config({ virtual_text = false })
-      print("Virtual text diagnostics disabled")
-    else
-      vim.diagnostic.config({
-        virtual_text = {
-          spacing = 4,
-          prefix = require("rb.icons").diagnostics.BoldInformation,
-        },
-      })
-      print("Virtual text diagnostics enabled")
+    if opts.method and not client:supports_method(opts.method, bufnr) then
+      return
     end
-  end, { desc = "Toggle Virtual Text Diagnostics" })
 
-  --[[ LSP Information
-  Key mappings for LSP debugging and information:
-  gh - Show definition and references in Lspsaga
-  <leader>li - Show active LSP client information
-  <leader>ll - Show LSP log file path
-  --]]
-  vim.keymap.set(
-    "n",
-    "gh",
-    "<cmd>Lspsaga lsp_finder<CR>",
-    { buffer = buffer, desc = "LSP: Show Definition & References" }
-  )
-  vim.keymap.set(
-    "n",
-    "<leader>li",
-    ":lua print(vim.inspect(vim.lsp.get_clients()))<CR>",
-    { buffer = buffer, desc = "LSP: Show Info" }
-  )
-  vim.keymap.set(
-    "n",
-    "<leader>ll",
-    ":lua print(vim.lsp.get_log_path())<CR>",
-    { buffer = buffer, desc = "LSP: Show Log Path" }
-  )
+    if type(rhs) == "string" then
+      rhs = "<cmd>" .. rhs .. "<CR>"
+    end
 
-  --[[ TypeScript Specific
-  Key mappings only active in TypeScript files:
-  <leader>to - Organize imports automatically
-  <leader>tc - Fix current code issue
-  <leader>ti - Import all missing imports
-  --]]
-  if client.name == "tsserver" or client.name == "ts_ls" then
-    vim.keymap.set("n", "<leader>to", function()
-      local params = {
-        command = "_typescript.organizeImports",
-        arguments = { vim.api.nvim_buf_get_name(0) },
-      }
-      vim.lsp.buf.execute_command(params)
-    end, { buffer = buffer, desc = "TS: Organize Imports" })
-
-    vim.keymap.set("n", "<leader>tc", function()
-      vim.lsp.buf.code_action({
-        context = { only = { "quickfix" } },
-        apply = true,
-      })
-    end, { buffer = buffer, desc = "TS: Fix Current" })
-
-    vim.keymap.set("n", "<leader>ti", function()
-      vim.lsp.buf.code_action({
-        context = { only = { "source.addMissingImports" } },
-        apply = true,
-      })
-    end, { buffer = buffer, desc = "TS: Import All" })
-  end
-
-  --[[ Python Specific
-  Key mappings only active in Python files:
-  <leader>po - Organize imports with ruff via conform.nvim
-  <leader>pc - Auto-fix lint errors with ruff via conform.nvim
-  <leader>pf - Format with ruff via conform.nvim
-  <leader>pt - Run tests for current file
-  <leader>pv - Show active or local virtual environment info
-  --]]
-  if client.name == "basedpyright" or client.name == "pyright" then
-    vim.keymap.set("n", "<leader>po", function()
-      local ok, conform = pcall(require, "conform")
-      if ok then
-        conform.format({ formatters = { "ruff_organize_imports" }, async = true })
-      else
-        vim.cmd("silent !ruff check --select I --fix " .. vim.fn.expand("%"))
-        vim.cmd("edit!")
-      end
-    end, { buffer = buffer, desc = "Python: Organize Imports" })
-
-    vim.keymap.set("n", "<leader>pc", function()
-      local ok, conform = pcall(require, "conform")
-      if ok then
-        conform.format({ formatters = { "ruff_fix" }, async = true })
-      else
-        vim.cmd("!ruff check " .. vim.fn.expand("%"))
-      end
-    end, { buffer = buffer, desc = "Python: Auto-Fix Errors" })
-
-    vim.keymap.set("n", "<leader>pf", function()
-      local ok, conform = pcall(require, "conform")
-      if ok then
-        conform.format({ formatters = { "ruff_format" }, async = true })
-      else
-        vim.cmd("silent !ruff format " .. vim.fn.expand("%"))
-        vim.cmd("edit!")
-      end
-    end, { buffer = buffer, desc = "Python: Format Buffer" })
-
-    vim.keymap.set("n", "<leader>pt", function()
-      local file = vim.fn.expand("%")
-      if file:match("test_.*%.py$") or file:match(".*_test%.py$") then
-        vim.cmd("!python -m pytest " .. file .. " -v")
-      else
-        local test_file = file:gsub("%.py$", "_test.py"):gsub("^(.*/)", "%1test_")
-        if vim.fn.filereadable(test_file) == 1 then
-          vim.cmd("!python -m pytest " .. test_file .. " -v")
-        else
-          print("No test file found for " .. file)
-        end
-      end
-    end, { buffer = buffer, desc = "Python: Run Tests" })
-
-    vim.keymap.set("n", "<leader>pv", function()
-      local venv = os.getenv("VIRTUAL_ENV")
-      if venv then
-        print("Virtual environment (active): " .. venv)
-      else
-        -- Fallback to checking local workspace directory
-        local root = vim.fs.root(0, { ".venv", "venv", "env" })
-        if root then
-          for _, name in ipairs({ ".venv", "venv", "env" }) do
-            local path = root .. "/" .. name
-            if vim.fn.isdirectory(path) == 1 then
-              print("Virtual environment (detected): " .. path)
-              return
-            end
-          end
-        end
-        print("No virtual environment active or detected")
-      end
-    end, { buffer = buffer, desc = "Python: Show Virtual Env" })
-  end
-
-  --[[ Formatting
-  Key mappings for code formatting:
-  <leader>cf - Format current buffer
-  <leader>cF - Format selected region (visual mode)
-  --]]
-  -- self:map("<leader>cf", function()
-  --   vim.lsp.buf.format({ async = true })
-  -- end, { desc = "Format Document", has = "documentFormatting" })
-  -- self:map("<leader>cF", function()
-  --   vim.lsp.buf.format({ async = true })
-  -- end, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
-
-  --[[ Workspace
-  Key mappings for workspace management:
-  <leader>wa - Add folder to workspace
-  <leader>wr - Remove folder from workspace
-  <leader>wl - List workspace folders
-  --]]
-  self:map("<leader>wa", vim.lsp.buf.add_workspace_folder, { desc = "Workspace Add Folder" })
-  self:map("<leader>wr", vim.lsp.buf.remove_workspace_folder, { desc = "Workspace Remove Folder" })
-  self:map("<leader>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, { desc = "Workspace List Folders" })
-
-  --[[ Diagnostics
-  Additional diagnostic mappings:
-  <leader>cd - Open diagnostic float
-  <leader>cl - Show diagnostics in line
-  <leader>cq - Add diagnostic to quickfix
-  --]]
-  self:map("<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-  self:map("<leader>cl", vim.diagnostic.setloclist, { desc = "Location List" })
-  self:map("<leader>cq", vim.diagnostic.setqflist, { desc = "Quickfix List" })
-
-  --[[ Code Navigation
-  Additional code navigation mappings:
-  gi - Go to implementation (kept for muscle memory)
-  <leader>ci - Show incoming calls
-  <leader>co - Show outgoing calls
-  --]]
-  self:map("gi", "Telescope lsp_implementations", { desc = "Goto Implementation" })
-  self:map("<leader>ci", "Lspsaga incoming_calls", { desc = "Incoming Calls" })
-  self:map("<leader>co", "Lspsaga outgoing_calls", { desc = "Outgoing Calls" })
-
-  --[[ Code Lens
-  Code lens actions:
-  grx - Run code lens action (0.12 default)
-  --]]
-  self:map("grx", vim.lsp.codelens.run, { desc = "Code Lens", has = "codeLens" })
-
-  --[[ Additional Features
-  Enhanced code interaction:
-  <leader>ch - Highlight symbol occurrences
-  <leader>cs - Document structure
-  --]]
-  self:map("<leader>ch", vim.lsp.buf.document_highlight, { desc = "Highlight Symbol" })
-  self:map("<leader>cs", "Telescope lsp_document_symbols", { desc = "Document Symbols" })
-
-  -- Auto highlight references when cursor holds
-  if client.server_capabilities.documentHighlightProvider then
-    vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    vim.api.nvim_create_autocmd("CursorHold", {
-      group = "lsp_document_highlight",
-      buffer = buffer,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd("CursorMoved", {
-      group = "lsp_document_highlight",
-      buffer = buffer,
-      callback = vim.lsp.buf.clear_references,
+    vim.keymap.set(opts.mode or "n", lhs, rhs, {
+      buffer = bufnr,
+      silent = true,
+      expr = opts.expr,
+      desc = prefix .. ": " .. desc,
     })
   end
 end
 
-function M.new(client, buffer)
-  return setmetatable({ client = client, buffer = buffer }, { __index = M })
-end
-
-function M:has(cap)
-  return self.client.server_capabilities[cap .. "Provider"]
-end
-
-function M:map(lhs, rhs, opts)
-  opts = opts or {}
-  if opts.has and not self:has(opts.has) then
-    return
+--- Open a Snacks picker if snacks.nvim is loaded, otherwise use the built-in LSP function.
+---@param snacks_picker string name of the picker, e.g. "lsp_definitions"
+---@param fallback function built-in alternative, e.g. vim.lsp.buf.definition
+local function picker(snacks_picker, fallback)
+  return function()
+    if _G.Snacks then
+      Snacks.picker[snacks_picker]()
+    else
+      fallback()
+    end
   end
-  vim.keymap.set(
-    opts.mode or "n",
-    lhs,
-    type(rhs) == "string" and ("<cmd>%s<cr>"):format(rhs) or rhs,
-    ---@diagnostic disable-next-line: no-unknown
-    { silent = true, buffer = self.buffer, expr = opts.expr, desc = opts.desc }
-  )
 end
 
-function M.rename()
+--- Jump to the next (count = 1) or previous (count = -1) diagnostic, optionally of one severity.
+---@param count integer
+---@param severity? "ERROR"|"WARN"|"INFO"|"HINT"
+local function jump_diagnostic(count, severity)
+  return function()
+    vim.diagnostic.jump({
+      count = count,
+      float = true,
+      severity = severity and vim.diagnostic.severity[severity] or nil,
+    })
+  end
+end
+
+--- Rename the symbol under the cursor.
+--- Used as an `expr` mapping, so it returns the keys to execute.
+--- Preference: inc-rename.nvim > Lspsaga > built-in.
+local function rename()
   if pcall(require, "inc_rename") then
     return ":IncRename " .. vim.fn.expand("<cword>")
+  end
+
+  -- Lspsaga's rename is much better than the built-in one for project-wide renames
+  if pcall(require, "lspsaga") then
+    return ":Lspsaga rename<CR>"
+  end
+
+  -- Defer to avoid "Not allowed to change text or change window" inside an expr mapping
+  vim.defer_fn(vim.lsp.buf.rename, 10)
+  return ""
+end
+
+local function toggle_signature_help()
+  require("lsp_signature").toggle_float_win()
+end
+
+local function toggle_virtual_lines()
+  local enabled = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = enabled })
+end
+
+local function toggle_virtual_text()
+  if vim.diagnostic.config().virtual_text then
+    vim.diagnostic.config({ virtual_text = false })
+    vim.notify("Virtual text diagnostics disabled")
   else
-    -- Use Lspsaga if available, it's MUCH better than the built-in rename for project-wide renames
-    local has_saga, _ = pcall(require, "lspsaga")
-    if has_saga then
-      return ":Lspsaga rename<CR>"
-    else
-      -- Use defer_fn to avoid the "Not allowed to change text or change window" error
-      vim.defer_fn(function()
-        vim.lsp.buf.rename()
-      end, 10)
-      return ""
+    vim.diagnostic.config({
+      virtual_text = { spacing = 4, prefix = require("rb.icons").diagnostics.BoldInformation },
+    })
+    vim.notify("Virtual text diagnostics enabled")
+  end
+end
+
+---------------------------------------------------------------------------
+-- 2. Keymap groups
+---------------------------------------------------------------------------
+
+--- Jumping to definitions, references, implementations and symbols.
+local function navigation(map)
+  map("gd", picker("lsp_definitions", vim.lsp.buf.definition), "Goto Definition")
+  map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+  map("grr", picker("lsp_references", vim.lsp.buf.references), "Find References")
+  map("<leader>D", picker("lsp_type_definitions", vim.lsp.buf.type_definition), "Type Definition")
+
+  -- Implementation: `gri` is the Neovim 0.11 default, `gi` kept for muscle memory
+  local implementations = picker("lsp_implementations", vim.lsp.buf.implementation)
+  map("gri", implementations, "Goto Implementation")
+  map("gi", implementations, "Goto Implementation")
+
+  -- Document symbols: `gO` is the Neovim 0.11 default, the others are aliases
+  local document_symbols = picker("lsp_symbols", vim.lsp.buf.document_symbol)
+  map("gO", document_symbols, "Document Symbols")
+  map("<leader>ds", document_symbols, "Document Symbols")
+  map("<leader>cs", document_symbols, "Document Symbols")
+
+  map("<leader>ws", picker("lsp_workspace_symbols", vim.lsp.buf.workspace_symbol), "Workspace Symbols")
+
+  -- Call hierarchy
+  map("<leader>ci", "Lspsaga incoming_calls", "Incoming Calls")
+  map("<leader>co", "Lspsaga outgoing_calls", "Outgoing Calls")
+  map("gh", "Lspsaga lsp_finder", "Show Definition & References")
+end
+
+--- Hover docs and function signatures.
+local function documentation(map)
+  map("K", vim.lsp.buf.hover, "Hover Documentation")
+
+  local sig = { method = "textDocument/signatureHelp" }
+  map("gK", toggle_signature_help, "Signature Help", sig)
+  map("<C-k>", toggle_signature_help, "Signature Help", vim.tbl_extend("force", sig, { mode = "i" }))
+  map("<C-s>", toggle_signature_help, "Signature Help", vim.tbl_extend("force", sig, { mode = "i" }))
+end
+
+--- Moving between and displaying diagnostics. Convention: `]` = next, `[` = previous.
+local function diagnostics(map)
+  map("]d", jump_diagnostic(1), "Next Diagnostic")
+  map("[d", jump_diagnostic(-1), "Prev Diagnostic")
+  map("]e", jump_diagnostic(1, "ERROR"), "Next Error")
+  map("[e", jump_diagnostic(-1, "ERROR"), "Prev Error")
+  map("]w", jump_diagnostic(1, "WARN"), "Next Warning")
+  map("[w", jump_diagnostic(-1, "WARN"), "Prev Warning")
+
+  map("<leader>cd", vim.diagnostic.open_float, "Line Diagnostics")
+  map("<leader>cl", vim.diagnostic.setloclist, "Diagnostics to Location List")
+  map("<leader>cq", vim.diagnostic.setqflist, "Diagnostics to Quickfix List")
+
+  map("<leader>cw", toggle_virtual_lines, "Toggle Virtual Lines Diagnostics")
+  map("<leader>cv", toggle_virtual_text, "Toggle Virtual Text Diagnostics")
+end
+
+--- Code actions, rename, code lens.
+local function code_actions(map)
+  -- `gra` / `grn` are the Neovim 0.11 defaults, `<leader>ca` / `<leader>rn` kept as aliases
+  local code_action = { mode = { "n", "v" }, method = "textDocument/codeAction" }
+  map("gra", "Lspsaga code_action", "Code Action", code_action)
+  map("<leader>ca", "Lspsaga code_action", "Code Action", code_action)
+
+  local rename_opts = { expr = true, method = "textDocument/rename" }
+  map("grn", rename, "Rename", rename_opts)
+  map("<leader>rn", rename, "Rename", rename_opts)
+
+  map("grx", vim.lsp.codelens.run, "Run Code Lens", { method = "textDocument/codeLens" })
+  map("<leader>ch", vim.lsp.buf.document_highlight, "Highlight Symbol")
+
+  -- Formatting is handled by conform.nvim (see rb/plugins/formaters.lua)
+end
+
+--- Workspace folders and LSP debugging info.
+local function workspace(map)
+  map("<leader>wa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
+  map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
+  map("<leader>wl", function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, "Workspace List Folders")
+
+  map("<leader>li", function()
+    print(vim.inspect(vim.lsp.get_clients({ bufnr = 0 })))
+  end, "Show Attached Clients")
+  map("<leader>ll", function()
+    print(vim.lsp.get_log_path())
+  end, "Show Log Path")
+end
+
+--- TypeScript-only keymaps (tsserver / ts_ls).
+local function typescript(map, client)
+  map("<leader>to", function()
+    client:exec_cmd({
+      title = "Organize Imports",
+      command = "_typescript.organizeImports",
+      arguments = { vim.api.nvim_buf_get_name(0) },
+    })
+  end, "Organize Imports")
+
+  map("<leader>tc", function()
+    vim.lsp.buf.code_action({ context = { only = { "quickfix" } }, apply = true })
+  end, "Fix Current")
+
+  map("<leader>ti", function()
+    vim.lsp.buf.code_action({ context = { only = { "source.addMissingImports" } }, apply = true })
+  end, "Import All")
+end
+
+--- Run a conform.nvim formatter; if conform isn't installed, run a shell command instead.
+---@param formatter string conform formatter name
+---@param shell_cmd string fallback command; the current file path is appended
+---@param reload boolean reload the buffer after the shell command (it edits the file on disk)
+local function conform_or_shell(formatter, shell_cmd, reload)
+  return function()
+    local ok, conform = pcall(require, "conform")
+    if ok then
+      conform.format({ formatters = { formatter }, async = true })
+      return
+    end
+    vim.cmd("silent !" .. shell_cmd .. " " .. vim.fn.shellescape(vim.fn.expand("%")))
+    if reload then
+      vim.cmd("edit!")
     end
   end
 end
 
-function M.diagnostic_goto(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go({ severity = severity })
+--- Find the pytest file for the current buffer (or the buffer itself if it's a test).
+---@return string|nil
+local function find_python_test_file()
+  local file = vim.fn.expand("%")
+  local name = vim.fn.fnamemodify(file, ":t:r") -- "foo" for "src/foo.py"
+  local dir = vim.fn.fnamemodify(file, ":h")
+
+  if name:match("^test_") or name:match("_test$") then
+    return file
   end
+
+  local candidates = {
+    dir .. "/test_" .. name .. ".py",
+    dir .. "/" .. name .. "_test.py",
+    "tests/test_" .. name .. ".py",
+  }
+  for _, candidate in ipairs(candidates) do
+    if vim.fn.filereadable(candidate) == 1 then
+      return candidate
+    end
+  end
+  return nil
+end
+
+--- Print the active virtualenv, or one found in the project root.
+local function show_python_venv()
+  local active = os.getenv("VIRTUAL_ENV")
+  if active then
+    print("Virtual environment (active): " .. active)
+    return
+  end
+
+  local venv_names = { ".venv", "venv", "env" }
+  local root = vim.fs.root(0, venv_names)
+  if root then
+    for _, name in ipairs(venv_names) do
+      local path = root .. "/" .. name
+      if vim.fn.isdirectory(path) == 1 then
+        print("Virtual environment (detected): " .. path)
+        return
+      end
+    end
+  end
+  print("No virtual environment active or detected")
+end
+
+--- Python-only keymaps (basedpyright / pyright).
+local function python(map)
+  map("<leader>po", conform_or_shell("ruff_organize_imports", "ruff check --select I --fix", true), "Organize Imports")
+  map("<leader>pc", conform_or_shell("ruff_fix", "ruff check --fix", true), "Auto-Fix Errors")
+  map("<leader>pf", conform_or_shell("ruff_format", "ruff format", true), "Format Buffer")
+
+  map("<leader>pt", function()
+    local test_file = find_python_test_file()
+    if test_file then
+      vim.cmd("!python -m pytest " .. vim.fn.shellescape(test_file) .. " -v")
+    else
+      print("No test file found for " .. vim.fn.expand("%"))
+    end
+  end, "Run Tests")
+
+  map("<leader>pv", show_python_venv, "Show Virtual Env")
+end
+
+--- Highlight other occurrences of the symbol under the cursor after a short pause.
+local function highlight_references_on_hold(client, bufnr)
+  if not client:supports_method("textDocument/documentHighlight", bufnr) then
+    return
+  end
+
+  -- One group per buffer, so attaching to a new buffer doesn't wipe out the others
+  local group = vim.api.nvim_create_augroup("rb_lsp_highlight_" .. bufnr, { clear = true })
+  vim.api.nvim_create_autocmd("CursorHold", {
+    group = group,
+    buffer = bufnr,
+    callback = vim.lsp.buf.document_highlight,
+  })
+  vim.api.nvim_create_autocmd("CursorMoved", {
+    group = group,
+    buffer = bufnr,
+    callback = vim.lsp.buf.clear_references,
+  })
+end
+
+---------------------------------------------------------------------------
+-- 3. on_attach
+---------------------------------------------------------------------------
+
+local TYPESCRIPT_SERVERS = { tsserver = true, ts_ls = true }
+local PYTHON_SERVERS = { basedpyright = true, pyright = true }
+
+---@param client vim.lsp.Client
+---@param bufnr integer
+function M.on_attach(client, bufnr)
+  local map = make_mapper(client, bufnr, "LSP")
+
+  navigation(map)
+  documentation(map)
+  diagnostics(map)
+  code_actions(map)
+  workspace(map)
+
+  if TYPESCRIPT_SERVERS[client.name] then
+    typescript(make_mapper(client, bufnr, "TS"), client)
+  end
+
+  if PYTHON_SERVERS[client.name] then
+    python(make_mapper(client, bufnr, "Python"))
+  end
+
+  highlight_references_on_hold(client, bufnr)
 end
 
 return M

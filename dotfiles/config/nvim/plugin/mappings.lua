@@ -3,12 +3,15 @@ local key_map = vim.keymap.set
 vim.cmd([[tnoremap <Esc> <C-\><C-n> ]])
 key_map("i", "<C-c>", "<ESC>", { noremap = true, silent = true })
 -- Join yanked text on a yank (needed for terminal mode copies)
-key_map(
-  "v",
-  "yy",
-  "y<CR>:let @\"=substitute(@\", '\\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>",
-  { noremap = true, silent = true }
-)
+-- DISABLED: a visual-mode `yy` mapping makes every visual `y` wait `timeoutlen` (1s)
+-- to see if a second `y` follows, so yanking felt laggy. It also called
+-- `yank#Osc52Yank()`, which no longer exists. Neovim >= 0.10 handles OSC 52 natively.
+-- key_map(
+--   "v",
+--   "yy",
+--   "y<CR>:let @\"=substitute(@\", '\\n', '', 'g')<CR>:call yank#Osc52Yank()<CR>",
+--   { noremap = true, silent = true }
+-- )
 -- Move selected lines
 key_map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 key_map("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
