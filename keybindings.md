@@ -2,79 +2,114 @@
 
 ## Neovim
 
-### Telescope
+### Snacks.nvim (Pickers & Utilities)
 
 | Key | Function | Description |
 |---|---|---|
-| `<leader>sh` | `builtin.help_tags` | [S]earch [H]elp |
-| `<leader>sk` | `builtin.keymaps` | [S]earch [K]eymaps |
-| `<leader>sf` | `builtin.find_files` | [S]earch [F]iles |
-| `<leader>ss` | `builtin.builtin` | [S]earch [S]elect Telescope |
-| `<leader>sw` | `builtin.grep_string` | [S]earch current [W]ord |
-| `<leader>sg` | `builtin.live_grep` | [S]earch by [G]rep |
-| `<leader>sd` | `builtin.diagnostics` | [S]earch [D]iagnostics |
-| `<leader>sr` | `builtin.resume` | [S]earch [R]esume |
-| `<leader>s.` | `builtin.oldfiles` | [S]earch Recent Files ("." for repeat) |
-| `<C-b>` | `builtin.buffers` | [ ] Find existing buffers |
-| `<leader><leader>` | `Telescope frecency` | |
-| `<leader>/` | `builtin.current_buffer_fuzzy_find` | [/] Fuzzily search in current buffer |
-| `<leader>s/` | `builtin.live_grep` | [S]earch [/] in Open Files |
-| `<leader>f/` | `grep_last_search` | |
-| `<C-p>` | `git_files` | |
-| `<leader>sc` | `git_commits` | |
-| `<leader>sb` | `git_branches` | |
-| `<leader>so` | `vim_options` | |
-| `<leader>/c` | `commands` | |
-| `<leader>/r` | `registers` | |
-| `<leader>/m` | `marks` | |
-| `<leader>/t` | `treesitter` | |
-| `<leader>fB` | `builtin` | |
+| `<C-p>` | `Snacks.picker.smart()` | Smart Find Files (Frecency + Buffers + Git) |
+| `<leader><space>` | `Snacks.picker.smart()` | Smart Find Files |
+| `<leader>,` / `<leader>fb` | `Snacks.picker.buffers()` | Buffers |
+| `<leader>/` / `<leader>sg` | `Snacks.picker.grep()` | Grep workspace |
+| `<leader>:` | `Snacks.picker.command_history()` | Command History |
+| `<leader>n` | `Snacks.picker.notifications()` | Notification History |
+| `<leader>e` | `Snacks.explorer()` | File Explorer |
+| `<leader>fc` | `Snacks.picker.files({ cwd = config })` | Find Config File |
+| `<leader>ff` | `Snacks.picker.files()` | Find Files |
+| `<leader>fg` | `Snacks.picker.git_files()` | Find Git Files |
+| `<leader>fp` / `<leader>pr` | `Snacks.picker.projects()` | Projects (Recent & Discovered) |
+| `<leader>ps` | `SessionManager save_current_session` | Save Project Session |
+| `<leader>pl` | `SessionManager load_session` | Load Project Session |
+| `<leader>po` | `SessionManager load_last_session` | Open Last Session |
+| `<leader>px` | `SessionManager delete_session` | Delete Project Session |
+| `<leader>pd` | Project root navigation | Go to Project Root Directory |
+| `<leader>fr` / `<leader>s.` | `Snacks.picker.recent()` | Recent Files |
+| `<leader>gb` | `Snacks.picker.git_branches()` | Git Branches |
+| `<leader>gl` | `Snacks.picker.git_log()` | Git Log |
+| `<leader>gL` | `Snacks.picker.git_log_line()` | Git Log Line |
+| `<leader>gs` | `Snacks.picker.git_status()` | Git Status |
+| `<leader>gS` | `Snacks.picker.git_stash()` | Git Stash |
+| `<leader>gd` | `Snacks.picker.git_diff()` | Git Diff (Hunks) |
+| `<leader>gf` | `Snacks.picker.git_log_file()` | Git Log File |
+| `<leader>gi` / `<leader>gI` | `Snacks.picker.gh_issue()` | GitHub Issues (open / all) |
+| `<leader>gp` / `<leader>gP` | `Snacks.picker.gh_pr()` | GitHub Pull Requests (open / all) |
+| `<leader>sb` | `Snacks.picker.lines()` | Buffer Lines |
+| `<leader>sB` | `Snacks.picker.grep_buffers()` | Grep Open Buffers |
+| `<leader>sw` | `Snacks.picker.grep_word()` | Grep Word / Selection |
+| `<leader>s"` | `Snacks.picker.registers()` | Registers |
+| `<leader>s/` | `Snacks.picker.search_history()` | Search History |
+| `<leader>sa` | `Snacks.picker.autocmds()` | Autocmds |
+| `<leader>sc` | `Snacks.picker.command_history()` | Command History |
+| `<leader>sC` | `Snacks.picker.commands()` | Commands |
+| `<leader>sd` | `Snacks.picker.diagnostics()` | Workspace Diagnostics |
+| `<leader>sD` | `Snacks.picker.diagnostics_buffer()` | Buffer Diagnostics |
+| `<leader>sh` | `Snacks.picker.help()` | Help Pages |
+| `<leader>sH` | `Snacks.picker.highlights()` | Highlights |
+| `<leader>si` | `Snacks.picker.icons()` | Icons |
+| `<leader>sj` | `Snacks.picker.jumps()` | Jumps |
+| `<leader>sk` | `Snacks.picker.keymaps()` | Keymaps |
+| `<leader>sl` | `Snacks.picker.loclist()` | Location List |
+| `<leader>sm` | `Snacks.picker.marks()` | Marks |
+| `<leader>sM` | `Snacks.picker.man()` | Man Pages |
+| `<leader>sp` | `Snacks.picker.lazy()` | Plugin Spec Search |
+| `<leader>sq` | `Snacks.picker.qflist()` | Quickfix List |
+| `<leader>sR` | `Snacks.picker.resume()` | Resume Last Picker |
+| `<leader>su` | `Snacks.picker.undo()` | Undo History |
+| `<leader>uC` | `Snacks.picker.colorschemes()` | Colorschemes |
+| `<leader>z` / `<leader>Z` | `Snacks.zen()` / `zoom()` | Zen Mode / Zoom |
+| `<leader>.` / `<leader>S` | `Snacks.scratch()` | Toggle / Select Scratch Buffer |
+| `<leader>bd` | `Snacks.bufdelete()` | Delete Buffer (preserve layout) |
+| `<leader>cR` | `Snacks.rename.rename_file()` | Rename File |
+| `<leader>gB` | `Snacks.gitbrowse()` | Open in GitHub/Browser |
+| `<leader>gg` | `Snacks.lazygit()` | Lazygit |
+| `<leader>un` | `Snacks.notifier.hide()` | Dismiss Notifications |
+| `<c-/>` | `Snacks.terminal()` | Toggle Floating Terminal |
+| `]]` / `[[` | `Snacks.words.jump()` | Next / Prev Reference |
+| `<leader>u[s/w/d/l/c/T/b/h/g/D]` | `Snacks.toggle.*` | Quick Option Toggles |
+
 
 ### LSP
 
+#### General Navigation & Pickers (via Snacks.nvim)
 | Key | Function | Description |
 |---|---|---|
-| `gd` | `Telescope lsp_definitions` | Goto Definition |
-| `gD` | `vim.lsp.buf.declaration` | [G]oto [D]eclaration |
-| `gr` | `Telescope lsp_references` | Find References |
-| `gI` | `require("telescope.builtin").lsp_implementations` | [G]oto [I]mplementation |
-| `<leader>D` | `require("telescope.builtin").lsp_type_definitions` | Type [D]efinition |
-| `K` | `vim.lsp.buf.hover` | Hover Documentation |
-| `gK` | `vim.lsp.buf.signature_help` | Signature Help |
-| `<leader>ds` | `require("telescope.builtin").lsp_document_symbols` | [D]ocument [S]ymbols |
-| `<leader>ws` | `require("telescope.builtin").lsp_dynamic_workspace_symbols` | [W]orkspace [S]ymbols |
-| `[d` | `M.diagnostic_goto(true)` | Next Diagnostic |
-| `]d` | `M.diagnostic_goto(false)` | Prev Diagnostic |
-| `]e` | `M.diagnostic_goto(true, "ERROR")` | Next Error |
-| `[e` | `M.diagnostic_goto(false, "ERROR")` | Prev Error |
-| `]w` | `M.diagnostic_goto(true, "WARNING")` | Next Warning |
-| `[w` | `M.diagnostic_goto(false, "WARNING")` | Prev Warning |
-| `<leader>ca` | `Lspsaga code_action` | Code Action |
-| `<leader>rn` | `M.rename` | Rename |
-| `<leader>cw` | `Toggle Virtual Lines Diagnostics` | |
-| `gh` | `Lspsaga lsp_finder` | Show Definition & References |
-| `<leader>li` | `print(vim.inspect(vim.lsp.get_clients()))` | Show Info |
-| `<leader>ll` | `print(vim.lsp.get_log_path())` | Show Log Path |
-| `<leader>to` | `:TSLspOrganize` | TS: Organize Imports |
-| `<leader>tc` | `:TSLspFixCurrent` | TS: Fix Current |
-| `<leader>ti` | `:TSLspImportAll` | TS: Import All |
-| `<leader>po` | `Organize Imports with ruff` | Python: Organize Imports |
-| `<leader>pc` | `Check with Ruff` | Python: Check with Ruff |
-| `<leader>pf` | `Format with Ruff` | Python: Format with Ruff |
-| `<leader>pt` | `Run Tests` | Python: Run Tests |
-| `<leader>pv` | `Show Virtual Env` | Python: Show Virtual Env |
-| `<leader>wa` | `vim.lsp.buf.add_workspace_folder` | Workspace Add Folder |
-| `<leader>wr` | `vim.lsp.buf.remove_workspace_folder` | Workspace Remove Folder |
-| `<leader>wl` | `print(vim.inspect(vim.lsp.buf.list_workspace_folders()))` | Workspace List Folders |
-| `<leader>cd` | `vim.diagnostic.open_float` | Line Diagnostics |
-| `<leader>cl` | `vim.diagnostic.setloclist` | Location List |
-| `<leader>cq` | `vim.diagnostic.setqflist` | Quickfix List |
-| `gi` | `Telescope lsp_implementations` | Goto Implementation |
-| `<leader>ci` | `Lspsaga incoming_calls` | Incoming Calls |
-| `<leader>co` | `Lspsaga outgoing_calls` | Outgoing Calls |
-| `<leader>cl` | `vim.lsp.codelens.run` | Code Lens |
-| `<leader>ch` | `vim.lsp.buf.document_highlight` | Highlight Symbol |
-| `<leader>cs` | `Telescope lsp_document_symbols` | Document Symbols |
+| `gd` | `Snacks.picker.lsp_definitions()` | Goto Definition |
+| `gD` | `Snacks.picker.lsp_declarations()` | Goto Declaration |
+| `gr` | `Snacks.picker.lsp_references()` | Find References |
+| `gI` | `Snacks.picker.lsp_implementations()` | Goto Implementation |
+| `gy` | `Snacks.picker.lsp_type_definitions()` | Goto Type Definition |
+| `gai` | `Snacks.picker.lsp_incoming_calls()` | Incoming Calls |
+| `gao` | `Snacks.picker.lsp_outgoing_calls()` | Outgoing Calls |
+| `<leader>ss` | `Snacks.picker.lsp_symbols()` | Document Symbols |
+| `<leader>sS` | `Snacks.picker.lsp_workspace_symbols()` | Workspace Symbols |
+| `<leader>sd` | `Snacks.picker.diagnostics()` | Workspace Diagnostics |
+| `<leader>sD` | `Snacks.picker.diagnostics_buffer()` | Buffer Diagnostics |
+
+#### Buffer-Local LSP Operations
+| Key | Function | Description |
+|---|---|---|
+| `K` | `vim.lsp.buf.hover()` | Hover Documentation |
+| `<C-k>` (insert) | `vim.lsp.buf.signature_help()` | Signature Help |
+| `gh` | `Lspsaga lsp_finder` | Interactive Def & Ref Finder |
+| `]d` / `[d` | `vim.diagnostic.jump()` | Next / Prev Diagnostic |
+| `]e` / `[e` | `vim.diagnostic.jump(ERROR)` | Next / Prev Error |
+| `]w` / `[w` | `vim.diagnostic.jump(WARN)` | Next / Prev Warning |
+| `<leader>cd` | `vim.diagnostic.open_float()` | Line Diagnostics Float |
+| `gra` / `<leader>ca` | `Lspsaga code_action` | Code Action |
+| `grn` / `<leader>rn` | `Lspsaga rename` | Rename Symbol |
+| `grx` | `vim.lsp.codelens.run()` | Run Code Lens |
+| `<leader>li` | `vim.notify(...)` | Show Attached Clients |
+| `<leader>ll` | `vim.notify(...)` | Show Log Path |
+
+#### Language Workflows (under `<leader>c` [C]ode)
+| Key | Function | Description |
+|---|---|---|
+| `<leader>co` | Organize Imports | Organize Imports (Python Ruff / TS `organizeImports`) |
+| `<leader>ci` | TypeScript Import All | TS: Add Missing Imports |
+| `<leader>cf` | `conform.format()` | Code Format (`conform.nvim` - ruff / prettier / etc.) |
+| `<leader>ca` / `gra` | `Lspsaga code_action` | Code Action / Auto-Fix (Ruff fixes, TS fixes) |
+| `<leader>ct` | Pytest Runner | Python: Run Tests (auto-detects test file) |
+| `<leader>cv` | Virtualenv Info | Python: Show Virtual Env (`vim.notify`) |
+
 
 ### General
 
@@ -94,13 +129,13 @@
 | `<leader><` | `:vertical resize -10<CR>` | Adjusting splits |
 | `<leader>+` | `:resize +10<CR>` | Adjusting splits |
 | `<leader>-` | `:resize -10<CR>` | Adjusting splits |
-| `<leader>cd` | `:cd %:p:h<CR>:pwd<CR>` | Change directory to current directory |
+| `<leader>pd` | `:cd %:p:h<CR>:pwd<CR>` | Change directory to current buffer directory |
 | `<C-^>` | `:b#<CR>` | |
 | `<Leader>Q` | `:qall!<CR>` | Discard all changed buffers & quit |
 | `<Leader>W` | `:wqall<CR>` | write all and quit |
-| `<space>t` | `:TSHighlightCapturesUnderCursor<CR>` | |
-| `<leader>co` | `:cope<cr>` | open quickfix |
-| `<leader>cl` | `:cclose<cr>` | close quickfix |
+| `<space>t` | `:Inspect<CR>` | Treesitter highlight inspection |
+| `<leader>qo` | `:cope<cr>` | Open quickfix |
+| `<leader>qc` | `:cclose<cr>` | Close quickfix |
 | ``<leader>` `` | `ysiW` | Surround word under cursor w/ backticks |
 | `,r` | `"_diwhp` | REPLACE: delete inner word & replace with last yanked |
 | `<up>` | `<C-w><up>` | Move between Windows |

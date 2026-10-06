@@ -85,6 +85,7 @@ return {
           -- File tree / navigation
           nvimtree = true,
           telescope = { enabled = true },
+          snacks = true,
 
           -- UI chrome
           notify = true,
